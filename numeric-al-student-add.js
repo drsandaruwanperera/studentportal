@@ -34,15 +34,21 @@ function isALId(value) {
 
 function getSelectedCategory() {
     return document.querySelector(
-        "#addModal .category-btn.selected"
+        "#addModal .category-btn.selected, #addModal .category-btn.active"
     )?.dataset.type || "";
 }
 
 function showALMode() {
     const section = document.getElementById("alSeriesSection");
     const help = document.getElementById("studentIdHelp");
+    const idInput = document.getElementById("newStudentId");
 
     if (section) section.style.display = "none";
+
+    if (idInput) {
+        idInput.placeholder = "Enter A/L Student ID";
+        idInput.removeAttribute("readonly");
+    }
 
     if (help) {
         help.textContent =
@@ -57,15 +63,22 @@ function setup() {
 
     if (!saveButton || !idInput || !passwordInput) return;
 
+    // A/L does not require an admission-series selection.
+    // Hide the legacy series UI immediately so it cannot remain visible
+    // when the modal opens with A/L already selected.
+    if (getSelectedCategory() === "al") {
+        showALMode();
+    }
+
     document
         .querySelectorAll("#addModal .category-btn")
         .forEach(button => {
             button.addEventListener("click", () => {
-                if (button.dataset.type === "al") showALMode();
+                if (button.dataset.type === "al") {
+                    showALMode();
+                }
             });
         });
-
-    if (getSelectedCategory() === "al") showALMode();
 
     saveButton.addEventListener(
         "click",
