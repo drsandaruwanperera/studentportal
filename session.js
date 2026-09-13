@@ -47,3 +47,26 @@ document.addEventListener(
 
     }
 );
+
+
+// ==========================
+// Numeric A/L Add Support
+// ==========================
+// students.html already loads this session file before students.js.
+// Load the small A/L override only on the student-management page so
+// numeric A/L IDs can be added without changing other admin pages.
+
+if (
+    window.location.pathname.endsWith("/students.html") ||
+    window.location.pathname.endsWith("/students")
+) {
+
+    import("./numeric-al-student-add.js?v=1")
+        .catch(error => {
+            console.error(
+                "Numeric A/L add support failed to load:",
+                error
+            );
+        });
+
+}
