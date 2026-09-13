@@ -1,5 +1,5 @@
-// A/L import compatibility layer for admission IDs such as 27C13017.
-// Loaded from session.js before import-students.js and intercepts only A/L imports.
+// A/L import compatibility layer for special admission IDs.
+// Loaded from session.js and intercepts only A/L imports.
 
 import {
     db,
@@ -11,6 +11,7 @@ import {
 } from "./firebase.js";
 
 const SPECIAL_AL_IDS = new Set([
+    "A26172",
     "27C13017", "27C01102", "27C20135", "27C11014", "27C13007",
     "27C13027", "27C60149", "27C13011", "27C13026", "27C13025",
     "27C13013", "27C13014", "27C60187", "27C20193", "27C11153",
@@ -53,7 +54,6 @@ function findColumn(keys, names) {
 
 async function importALCompat() {
     const file = document.getElementById("excelFile")?.files?.[0];
-    const result = getResultBox();
     if (!file) {
         showResult("Please select an Excel file.", false);
         return;
@@ -109,8 +109,7 @@ async function importALCompat() {
         const skippedIds = [];
         const failed = [];
 
-        for (let index = 0; index < prepared.length; index++) {
-            const item = prepared[index];
+        for (const item of prepared) {
             try {
                 const studentRef = doc(db, "students", item.id);
                 const existing = await getDoc(studentRef);
@@ -134,7 +133,6 @@ async function importALCompat() {
                     nicNumber: ""
                 };
 
-                // Keep the same A/L paper initialization used by the existing importer.
                 for (let paperNumber = 1; paperNumber <= 10; paperNumber++) {
                     const paper = "paper" + String(paperNumber).padStart(2, "0");
                     const settings = paperSettings[paper];
@@ -173,7 +171,6 @@ function bindALImportCompatibility() {
         const selectedType = document.getElementById("selectedType")?.value;
         if (selectedType !== "al") return;
 
-        // Capture phase runs before the existing import-students.js click handler.
         event.preventDefault();
         event.stopImmediatePropagation();
         importALCompat();
