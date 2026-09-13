@@ -16,66 +16,134 @@ const toggleConfirmPassword = document.getElementById("toggleConfirmPassword");
 const loggedIn = sessionStorage.getItem("loggedIn") === "true";
 const studentId = (sessionStorage.getItem("studentId") || "").trim().toUpperCase();
 
-const AL_NUMERIC_STUDENT_IDS = new Set([
-"5118","9928","10008","10077","10093","12596","12651","12704","12705","12721","12758","13272","13821","14042","14043","14230","15130","15290","15324","15831","15995","16008","16010","16012","16013","16014","16016","16021","16022","16025","16030","16031","16044","16045","16046","16048","16049","16050","16052","16054","16059","16067","16068","16074","16081","16084","16106","16118","16124","16147","16157","16251","16294","16299","16335","16341","16343","16354","16356","16365","16370","16373","16375","16389","16390","16398","16399","16400","16418","16464","16501","16505","16529","16584","16585","16586","16737","16867","16938","16954","17065","17284","17415","17416"
-]);
+function isALStudentData(data, id = studentId) {
+    const values = [
+        data?.studentType,
+        data?.category,
+        data?.studentCategory,
+        data?.grade
+    ]
+        .map(value => String(value ?? "").trim().toLowerCase())
+        .filter(Boolean);
 
-function isALStudentId(id) {
-    const clean = String(id || "").trim().toUpperCase();
-    return AL_NUMERIC_STUDENT_IDS.has(clean) || /^A2[789]\d{3}$/.test(clean);
+    if (values.some(value => [
+        "al",
+        "a/l",
+        "a level",
+        "advanced",
+        "advanced level"
+    ].includes(value))) {
+        return true;
+    }
+
+    // Legacy A/L accounts can still be recognised by their A-prefix.
+    return /^A2[789]\d{3}$/.test(
+        String(id || "").trim().toUpperCase()
+    );
 }
 
 function showMessage(message, type = "error") {
     if (!registrationMessage) return;
     registrationMessage.textContent = message;
-    registrationMessage.className = "registration-message " + (type === "success" ? "success" : "error");
+    registrationMessage.className =
+        "registration-message " +
+        (type === "success" ? "success" : "error");
 }
+
 function clearMessage() {
     if (registrationMessage) {
         registrationMessage.textContent = "";
         registrationMessage.className = "registration-message";
     }
 }
+
 function setupPasswordToggle(button, input) {
     if (!button || !input) return;
+
     button.addEventListener("click", () => {
         const visible = input.type === "password";
         input.type = visible ? "text" : "password";
         button.textContent = visible ? "🙈" : "🙊";
-        button.setAttribute("aria-label", visible ? "Hide password" : "Show password");
+        button.setAttribute(
+            "aria-label",
+            visible ? "Hide password" : "Show password"
+        );
     });
 }
+
 function updatePasswordRequirements() {
     const password = newPasswordInput?.value || "";
     const confirm = confirmPasswordInput?.value || "";
     const lengthOK = password.length >= 6;
     const matchOK = password.length > 0 && password === confirm;
+
     if (requirementLength) {
         requirementLength.classList.toggle("valid", lengthOK);
         const icon = requirementLength.querySelector("span");
         if (icon) icon.textContent = lengthOK ? "✓" : "○";
     }
+
     if (requirementMatch) {
         requirementMatch.classList.toggle("valid", matchOK);
         const icon = requirementMatch.querySelector("span");
         if (icon) icon.textContent = matchOK ? "✓" : "○";
     }
 }
+
 function validateName(value) {
-    const clean = String(value || "").trim().replace(/\s+/g, " ");
-    return clean.length >= 3 ? { valid: true, value: clean } : { valid: false, message: "Please enter your full name." };
+    const clean = String(value || "")
+        .trim()
+        .replace(/\s+/g, " ");
+
+    return clean.length >= 3
+        ? { valid: true, value: clean }
+        : { valid: false, message: "Please enter your full name." };
 }
+
 function validateNIC(value) {
-    const clean = String(value || "").trim().toUpperCase().replace(/\s+/g, "");
-    if (!clean) return { valid: false, message: "Please enter your NIC number." };
-    if (!/^\d{9}[VX]$/i.test(clean) && !/^\d{12}$/.test(clean)) return { valid: false, message: "Please enter a valid NIC number." };
+    const clean = String(value || "")
+        .trim()
+        .toUpperCase()
+        .replace(/\s+/g, "");
+
+    if (!clean) {
+        return {
+            valid: false,
+            message: "Please enter your NIC number."
+        };
+    }
+
+    if (
+        !/^\d{9}[VX]$/i.test(clean) &&
+        !/^\d{12}$/.test(clean)
+    ) {
+        return {
+            valid: false,
+            message: "Please enter a valid NIC number."
+        };
+    }
+
     return { valid: true, value: clean };
 }
+
 function validatePassword() {
     const password = newPasswordInput?.value || "";
     const confirm = confirmPasswordInput?.value || "";
-    if (password.length < 6) return { valid: false, message: "Password must contain at least 6 characters." };
-    if (password !== confirm) return { valid: false, message: "Passwords do not match." };
+
+    if (password.length < 6) {
+        return {
+            valid: false,
+            message: "Password must contain at least 6 characters."
+        };
+    }
+
+    if (password !== confirm) {
+        return {
+            valid: false,
+            message: "Passwords do not match."
+        };
+    }
+
     return { valid: true, value: password };
 }
 
@@ -83,86 +151,187 @@ if (!loggedIn || !studentId) {
     window.location.replace("index.html");
 }
 
-if (loggedIn && studentId && !isALStudentId(studentId)) {
-    alert("A/L Student Registration Only.\n\nThis registration page is only available for A/L students.");
-    sessionStorage.removeItem("loggedIn");
-    sessionStorage.removeItem("studentId");
-    sessionStorage.removeItem("studentName");
-    window.location.replace("index.html");
+if (registrationStudentId) {
+    registrationStudentId.value = studentId;
 }
 
-if (registrationStudentId) registrationStudentId.value = studentId;
 setupPasswordToggle(toggleNewPassword, newPasswordInput);
 setupPasswordToggle(toggleConfirmPassword, confirmPasswordInput);
-[newPasswordInput, confirmPasswordInput].forEach(input => input?.addEventListener("input", () => { updatePasswordRequirements(); clearMessage(); }));
-[fullNameInput, nicNumberInput].forEach(input => input?.addEventListener("input", clearMessage));
+
+[newPasswordInput, confirmPasswordInput].forEach(input =>
+    input?.addEventListener("input", () => {
+        updatePasswordRequirements();
+        clearMessage();
+    })
+);
+
+[fullNameInput, nicNumberInput].forEach(input =>
+    input?.addEventListener("input", clearMessage)
+);
+
 registrationConfirm?.addEventListener("change", clearMessage);
 
 async function loadStudent() {
     try {
-        if (!isALStudentId(studentId)) return showMessage("This registration page is only for A/L students.");
         const snap = await getDoc(doc(db, "students", studentId));
-        if (!snap.exists()) return showMessage("A/L student account could not be found.");
+
+        if (!snap.exists()) {
+            alert("Student account could not be found.");
+            window.location.replace("index.html");
+            return;
+        }
+
         const data = snap.data();
-        if (data?.profileCompleted === true && data?.registrationCompleted === true && data?.mustChangePassword !== true) {
+
+        if (!isALStudentData(data, studentId)) {
+            alert(
+                "A/L Student Registration Only.\n\n" +
+                "This registration page is only available for A/L students."
+            );
+            window.location.replace("index.html");
+            return;
+        }
+
+        if (
+            data?.profileCompleted === true &&
+            data?.registrationCompleted === true &&
+            data?.mustChangePassword !== true
+        ) {
             window.location.replace("dashboard.html");
             return;
         }
-        if (fullNameInput) fullNameInput.value = data?.fullName || data?.name || data?.studentName || "";
-        if (nicNumberInput && data?.nicNumber) nicNumberInput.value = String(data.nicNumber);
+
+        if (fullNameInput) {
+            fullNameInput.value =
+                data?.fullName ||
+                data?.name ||
+                data?.studentName ||
+                "";
+        }
+
+        if (nicNumberInput && data?.nicNumber) {
+            nicNumberInput.value = String(data.nicNumber);
+        }
     } catch (error) {
         console.error("Load registration error:", error);
-        showMessage("Unable to load your registration details. Please try again.");
+        showMessage(
+            "Unable to load your registration details. Please try again."
+        );
     }
 }
 
 async function completeRegistration() {
-    if (!loggedIn || !studentId) return window.location.replace("index.html");
-    if (!isALStudentId(studentId)) return showMessage("Only A/L students can complete registration.");
-    const name = validateName(fullNameInput?.value);
-    if (!name.valid) { showMessage(name.message); fullNameInput?.focus(); return; }
-    const nic = validateNIC(nicNumberInput?.value);
-    if (!nic.valid) { showMessage(nic.message); nicNumberInput?.focus(); return; }
-    const password = validatePassword();
-    if (!password.valid) { showMessage(password.message); newPasswordInput?.focus(); return; }
-    if (!registrationConfirm?.checked) return showMessage("Please confirm that the information provided is accurate.");
-
-    if (completeRegistrationBtn) {
-        completeRegistrationBtn.disabled = true;
-        completeRegistrationBtn.innerHTML = "<span>Completing Registration...</span>";
+    if (!loggedIn || !studentId) {
+        return window.location.replace("index.html");
     }
-    showMessage("Saving your registration...", "success");
+
     try {
         const studentRef = doc(db, "students", studentId);
         const snap = await getDoc(studentRef);
-        if (!snap.exists()) throw new Error("A/L student account not found.");
+
+        if (!snap.exists()) {
+            return showMessage("A/L student account not found.");
+        }
+
+        const data = snap.data();
+
+        if (!isALStudentData(data, studentId)) {
+            return showMessage(
+                "Only A/L students can complete registration."
+            );
+        }
+
+        const name = validateName(fullNameInput?.value);
+        if (!name.valid) {
+            showMessage(name.message);
+            fullNameInput?.focus();
+            return;
+        }
+
+        const nic = validateNIC(nicNumberInput?.value);
+        if (!nic.valid) {
+            showMessage(nic.message);
+            nicNumberInput?.focus();
+            return;
+        }
+
+        const password = validatePassword();
+        if (!password.valid) {
+            showMessage(password.message);
+            newPasswordInput?.focus();
+            return;
+        }
+
+        if (!registrationConfirm?.checked) {
+            return showMessage(
+                "Please confirm that the information provided is accurate."
+            );
+        }
+
+        if (completeRegistrationBtn) {
+            completeRegistrationBtn.disabled = true;
+            completeRegistrationBtn.innerHTML =
+                "<span>Completing Registration...</span>";
+        }
+
+        showMessage("Saving your registration...", "success");
+
         await updateDoc(studentRef, {
-            fullName: name.value, name: name.value, studentName: name.value,
-            nicNumber: nic.value, password: password.value,
-            mustChangePassword: false, profileCompleted: true, registrationCompleted: true,
-            lastActiveAt: Date.now(), registrationCompletedAt: Date.now(),
-            category: "A/L", studentCategory: "A/L"
+            fullName: name.value,
+            name: name.value,
+            studentName: name.value,
+            nicNumber: nic.value,
+            password: password.value,
+            mustChangePassword: false,
+            profileCompleted: true,
+            registrationCompleted: true,
+            lastActiveAt: Date.now(),
+            registrationCompletedAt: Date.now(),
+            studentType: "al",
+            category: "A/L",
+            studentCategory: "A/L"
         });
+
         sessionStorage.setItem("studentName", name.value);
         sessionStorage.setItem("studentNIC", nic.value);
         sessionStorage.setItem("loggedIn", "true");
         sessionStorage.setItem("studentId", studentId);
-        showMessage("A/L registration completed successfully. Redirecting...", "success");
-        setTimeout(() => window.location.replace("dashboard.html"), 800);
+
+        showMessage(
+            "A/L registration completed successfully. Redirecting...",
+            "success"
+        );
+
+        setTimeout(() => {
+            window.location.replace("dashboard.html");
+        }, 800);
     } catch (error) {
         console.error("Registration error:", error);
-        showMessage(error?.message || "Unable to complete registration. Please try again.");
+        showMessage(
+            error?.message ||
+            "Unable to complete registration. Please try again."
+        );
     } finally {
         if (completeRegistrationBtn) {
             completeRegistrationBtn.disabled = false;
-            completeRegistrationBtn.innerHTML = "<span>Complete Registration</span><span>→</span>";
+            completeRegistrationBtn.innerHTML =
+                "<span>Complete Registration</span><span>→</span>";
         }
     }
 }
 
 completeRegistrationBtn?.addEventListener("click", completeRegistration);
-[fullNameInput, nicNumberInput, newPasswordInput, confirmPasswordInput].forEach(input => input?.addEventListener("keydown", e => {
-    if (e.key === "Enter") { e.preventDefault(); completeRegistration(); }
-}));
 
-if (isALStudentId(studentId)) loadStudent();
+[fullNameInput, nicNumberInput, newPasswordInput, confirmPasswordInput].forEach(
+    input =>
+        input?.addEventListener("keydown", e => {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                completeRegistration();
+            }
+        })
+);
+
+if (loggedIn && studentId) {
+    loadStudent();
+}
