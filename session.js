@@ -70,3 +70,26 @@ if (
         });
 
 }
+
+
+// ==========================
+// Alphanumeric A/L Import Support
+// ==========================
+// The bulk importer originally accepted only A27000/A28000/A29000
+// admission numbers plus a fixed set of numeric A/L IDs. Some valid
+// A/L admission IDs use formats such as 27C13017 and 27N71072.
+
+if (
+    window.location.pathname.endsWith("/import-students.html") ||
+    window.location.pathname.endsWith("/import-students")
+) {
+
+    import("./al-import-compat.js?v=1")
+        .catch(error => {
+            console.error(
+                "A/L import compatibility failed to load:",
+                error
+            );
+        });
+
+}
