@@ -135,4 +135,8 @@ if (
     import("./dashboard-enhancements.js?v=1").catch((error) => {
         console.error("Dashboard enhancement module failed to load:", error);
     });
+
+    import("./dashboard-paper-count-fix.js?v=1").catch((error) => {
+        console.error("Dashboard paper count fix failed to load:", error);
+    });
 }
