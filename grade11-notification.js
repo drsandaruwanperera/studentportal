@@ -1,17 +1,26 @@
 // Grade 11-only dashboard notification for the latest Top Ranking results.
 
-const grade = String(
-    sessionStorage.getItem("studentGrade") ||
-    sessionStorage.getItem("studentType") ||
-    ""
-).toLowerCase().replace(/\s/g, "");
+function isGrade11Student() {
+    const values = [
+        sessionStorage.getItem("studentType"),
+        sessionStorage.getItem("studentGrade")
+    ]
+        .map(value => String(value || "").trim().toLowerCase().replace(/[\s_-]+/g, ""));
 
-if (grade === "11" || grade === "grade11") {
+    return values.includes("grade11") || values.includes("11");
+}
+
+if (isGrade11Student()) {
     const style = document.createElement("style");
     style.textContent = `
         #grade11ResultNotice {
             position: relative;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            width: 100%;
+            box-sizing: border-box;
             border: 1px solid rgba(166,255,46,.16);
             background:
                 radial-gradient(circle at 92% 12%, rgba(166,255,46,.08), transparent 28%),
@@ -42,7 +51,7 @@ if (grade === "11" || grade === "grade11") {
         }
         #grade11ResultNotice .result-notice-copy {
             min-width: 0;
-            flex: 1;
+            flex: 1 1 auto;
         }
         #grade11ResultNotice .result-notice-copy strong {
             display: block;
@@ -79,6 +88,7 @@ if (grade === "11" || grade === "grade11") {
             font-size: 10px;
             font-weight: 800;
             text-decoration: none;
+            white-space: nowrap;
             transition: transform .2s ease, background .2s ease, border-color .2s ease;
         }
         #grade11ResultNotice .result-notice-action:hover {
@@ -92,15 +102,25 @@ if (grade === "11" || grade === "grade11") {
             82%, 100% { left: 120%; opacity: 0; }
         }
         @media(max-width:700px) {
-            #grade11ResultNotice { align-items: flex-start !important; }
-            #grade11ResultNotice .result-notice-action { width: 100%; text-align: center; }
+            #grade11ResultNotice {
+                align-items: flex-start !important;
+                flex-wrap: wrap;
+            }
+            #grade11ResultNotice .result-notice-copy {
+                flex: 1 1 calc(100% - 58px);
+            }
+            #grade11ResultNotice .result-notice-action {
+                width: 100%;
+                text-align: center;
+            }
         }
     `;
     document.head.appendChild(style);
 
     function render() {
         const list = document.getElementById("portalNotificationList");
-        if (!list || document.getElementById("grade11ResultNotice")) return Boolean(list);
+        if (!list) return false;
+        if (document.getElementById("grade11ResultNotice")) return true;
 
         list.innerHTML = `
             <div class="portal-notice" id="grade11ResultNotice">
@@ -114,7 +134,7 @@ if (grade === "11" || grade === "grade11") {
             </div>
         `;
 
-        document.getElementById("grade11ResultNoticeLink")?.addEventListener("click", (event) => {
+        document.getElementById("grade11ResultNoticeLink")?.addEventListener("click", event => {
             event.preventDefault();
             document.getElementById("grade11ResultsSection")?.scrollIntoView({ behavior: "smooth", block: "start" });
         });
@@ -122,15 +142,27 @@ if (grade === "11" || grade === "grade11") {
         return true;
     }
 
-    const boot = () => {
+    function boot() {
         if (render()) return;
+
         const observer = new MutationObserver(() => {
             if (render()) observer.disconnect();
         });
         observer.observe(document.body, { childList: true, subtree: true });
-        window.setTimeout(() => observer.disconnect(), 10000);
-    };
 
-    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot, { once: true });
-    else boot();
+        // Covers slow dashboard module loading without relying on a single timing race.
+        let attempts = 0;
+        const retry = window.setInterval(() => {
+            attempts += 1;
+            if (render() || attempts >= 30) window.clearInterval(retry);
+        }, 250);
+
+        window.setTimeout(() => observer.disconnect(), 10000);
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", boot, { once: true });
+    } else {
+        boot();
+    }
 }
