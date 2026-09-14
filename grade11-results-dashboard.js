@@ -1,4 +1,12 @@
 import { GRADE11_RESULTS } from './grade11-results-data.js';
+import { TOP_RANKING_EXAM_02 } from './grade11-results-exam02.js';
+
+// Keep the existing Exam 01 dataset, but replace Exam 02 with the
+// latest values transcribed from the uploaded 2026 O/L PDF.
+const RESULTS = {
+    ...GRADE11_RESULTS,
+    'Top Ranking Exam 02': TOP_RANKING_EXAM_02
+};
 
 const id = String(sessionStorage.getItem('studentId') || '').trim().toUpperCase();
 const type = String(sessionStorage.getItem('studentType') || sessionStorage.getItem('studentGrade') || '').trim().toLowerCase();
@@ -7,7 +15,7 @@ if (['11','grade11','grade 11'].includes(type)) {
     const content = document.querySelector('.content');
     const nav = document.querySelector('.sidebar-nav');
     if (content && !document.getElementById('grade11ResultsSection')) {
-        const results = Object.entries(GRADE11_RESULTS).map(([exam, rows]) => {
+        const results = Object.entries(RESULTS).map(([exam, rows]) => {
             const row = rows.find(item => String(item.id).toUpperCase() === id);
             return row ? { exam, ...row } : null;
         }).filter(Boolean);
