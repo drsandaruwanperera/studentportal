@@ -69,8 +69,4 @@ if (
     import("./grade11-results-dashboard.js?v=1").catch((error) => {
         console.error("Grade 11 results module failed to load:", error);
     });
-
-    import("./grade11-notification.js?v=1").catch((error) => {
-        console.error("Grade 11 notification module failed to load:", error);
-    });
 }
