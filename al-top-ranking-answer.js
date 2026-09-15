@@ -51,18 +51,21 @@ window.addEventListener("beforeprint", () => {
     document.body.style.display = "none";
 });
 
+function isALStudent(data) {
+    const values = [data?.studentType, data?.grade, data?.stream, data?.studentLevel]
+        .map(value => String(value || "").trim().toLowerCase());
+    return values.some(value =>
+        ["al", "a/l", "a level", "advanced", "advanced level", "advanced level (a/l)"].includes(value)
+    );
+}
+
 async function verifyALAccess() {
-    // The route is intended for logged-in A/L students. The existing paper
-    // access page already gates the route; this extra check prevents direct
-    // access by non-A/L sessions.
     if (!studentId) return false;
     try {
         const { db, doc, getDoc } = await import("./firebase.js");
         const snap = await getDoc(doc(db, "students", studentId));
         if (!snap.exists()) return false;
-        const data = snap.data() || {};
-        const value = String(data.studentType || data.grade || "").trim().toLowerCase();
-        return ["al", "a/l", "a level", "advanced", "advanced level"].includes(value);
+        return isALStudent(snap.data() || {});
     } catch (error) {
         console.error("Answer access check failed:", error);
         return false;
@@ -70,14 +73,21 @@ async function verifyALAccess() {
 }
 
 async function renderPDF() {
+    if (!loading || !pages) return;
+
     const allowed = await verifyALAccess();
     if (!allowed) {
-        loading.textContent = "This answer is available only to authorized A/L students.";
+        loading.innerHTML = `<div class="error"><h2>Answer access unavailable</h2><p>Please log in with your authorized A/L student account and try again.</p></div>`;
         return;
     }
 
     try {
-        const pdf = await pdfjsLib.getDocument({ url: pdfUrl }).promise;
+        const pdf = await pdfjsLib.getDocument({
+            url: pdfUrl,
+            disableAutoFetch: false,
+            disableStream: false
+        }).promise;
+
         loading.remove();
 
         for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
@@ -110,7 +120,7 @@ async function renderPDF() {
         }
     } catch (error) {
         console.error("Answer PDF failed to load:", error);
-        loading.innerHTML = `<div class="error"><h2>Answer temporarily unavailable</h2><p>Please try again shortly.</p></div>`;
+        loading.innerHTML = `<div class="error"><h2>Answer temporarily unavailable</h2><p>Please refresh and try again.</p></div>`;
     }
 }
 
