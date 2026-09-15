@@ -13,6 +13,9 @@ const pdfName = type === "second"
     : `paper-${paper}-1st-answer.pdf`;
 const pdfUrl = `answers/al-top-ranking/september/${pdfName}`;
 
+// PDF.js needs an explicit worker when served as local static assets.
+pdfjsLib.GlobalWorkerOptions.workerSrc = "./pdfjs/build/pdf.worker.mjs";
+
 const title = document.getElementById("title");
 const kicker = document.getElementById("kicker");
 const loading = document.getElementById("loading");
@@ -51,21 +54,16 @@ window.addEventListener("beforeprint", () => {
     document.body.style.display = "none";
 });
 
-function isALStudent(data) {
-    const values = [data?.studentType, data?.grade, data?.stream, data?.studentLevel]
-        .map(value => String(value || "").trim().toLowerCase());
-    return values.some(value =>
-        ["al", "a/l", "a level", "advanced", "advanced level", "advanced level (a/l)"].includes(value)
-    );
-}
-
 async function verifyALAccess() {
     if (!studentId) return false;
     try {
         const { db, doc, getDoc } = await import("./firebase.js");
         const snap = await getDoc(doc(db, "students", studentId));
         if (!snap.exists()) return false;
-        return isALStudent(snap.data() || {});
+        const data = snap.data() || {};
+        const values = [data.studentType, data.grade, data.stream, data.studentLevel]
+            .map(value => String(value || "").trim().toLowerCase());
+        return values.some(value => ["al", "a/l", "a level", "advanced", "advanced level"].includes(value));
     } catch (error) {
         console.error("Answer access check failed:", error);
         return false;
@@ -73,21 +71,14 @@ async function verifyALAccess() {
 }
 
 async function renderPDF() {
-    if (!loading || !pages) return;
-
     const allowed = await verifyALAccess();
     if (!allowed) {
-        loading.innerHTML = `<div class="error"><h2>Answer access unavailable</h2><p>Please log in with your authorized A/L student account and try again.</p></div>`;
+        loading.textContent = "This answer is available only to authorized A/L students.";
         return;
     }
 
     try {
-        const pdf = await pdfjsLib.getDocument({
-            url: pdfUrl,
-            disableAutoFetch: false,
-            disableStream: false
-        }).promise;
-
+        const pdf = await pdfjsLib.getDocument({ url: pdfUrl, disableAutoFetch: false }).promise;
         loading.remove();
 
         for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
