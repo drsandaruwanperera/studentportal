@@ -95,8 +95,9 @@ function ensureStyles() {
 }
 
 function renderALAnswerNotification() {
+    const section = document.getElementById("notificationSection");
     const list = document.getElementById("portalNotificationList");
-    if (!list || !isALStudent()) return false;
+    if (!section || !list || !isALStudent()) return false;
 
     if (document.getElementById("alAnswerReleaseNotification")) return true;
 
@@ -114,7 +115,9 @@ function renderALAnswerNotification() {
         <a class="al-release-link" href="al-top-ranking-paper.html?paper=01&month=september">View Answers</a>
     `;
 
-    list.prepend(item);
+    // Keep the release card outside the dynamic notification list so that
+    // loadNotifications() cannot replace/remove it after rendering.
+    section.insertBefore(item, list);
     return true;
 }
 
