@@ -1778,7 +1778,7 @@ document
                         ) {
 
                             studentIdHelp.textContent =
-                                "Select A27000, A28000 or A29000 series, then enter the Student ID manually.";
+                                "Select A27000, A28000, A29000 or 27C series, then enter the Student ID manually.";
 
                         }
 
@@ -2060,7 +2060,9 @@ alSeriesButtons.forEach(
                             ? "A27000"
                             : series === "28000"
                                 ? "A28000"
-                                : "A29000";
+                                : series === "29000"
+                                    ? "A29000"
+                                    : "27C";
 
 
                     studentIdHelp.textContent =
@@ -2093,6 +2095,15 @@ function validateALSeries(
         )
             .trim()
             .toUpperCase();
+
+
+    if (
+        selectedSeries === "27C"
+    ) {
+
+        return /^27C\d{5}$/.test(id);
+
+    }
 
 
     if (
@@ -2292,7 +2303,7 @@ if (
                 ) {
 
                     alert(
-                        "Please select A27000, A28000 or A29000 series."
+                        "Please select A27000, A28000, A29000 or 27C series."
                     );
 
 
@@ -2313,7 +2324,9 @@ if (
                             ? "A27000"
                             : selectedALSeries === "28000"
                                 ? "A28000"
-                                : "A29000";
+                                : selectedALSeries === "29000"
+                                    ? "A29000"
+                                    : "27C";
 
 
                     alert(
