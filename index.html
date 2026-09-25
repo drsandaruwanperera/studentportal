@@ -140,9 +140,13 @@
                         Unable to sign in?
                         Contact the System Administrator.
                     </span>
-                    <a href="tel:0779011780">
-                        📞 077 901 1780
-                    </a>
+                    <button
+                        type="button"
+                        class="open-whatsapp-help"
+                        id="openWhatsAppHelp"
+                    >
+                        💬 Chat with Support
+                    </button>
                 </div>
             </div>
 
@@ -156,6 +160,351 @@
     </section>
 
 </main>
+
+<!-- WhatsApp support widget -->
+<div class="whatsapp-widget" id="whatsappWidget" aria-live="polite">
+    <div class="whatsapp-widget-header">
+        <div class="whatsapp-brand">
+            <div class="whatsapp-logo" aria-hidden="true">
+                <svg viewBox="0 0 32 32">
+                    <path fill="currentColor" d="M19.11 17.4c-.27-.14-1.61-.79-1.86-.88-.25-.09-.43-.14-.61.14-.18.27-.7.88-.86 1.06-.16.18-.32.2-.59.07-.27-.14-1.13-.42-2.15-1.34-.79-.7-1.33-1.56-1.49-1.83-.16-.27-.02-.42.12-.56.12-.12.27-.32.41-.48.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.14-.61-1.47-.84-2.01-.22-.52-.45-.45-.61-.46h-.52c-.18 0-.48.07-.73.34-.25.27-.95.93-.95 2.27s.98 2.63 1.11 2.81c.14.18 1.93 2.95 4.68 4.13.65.28 1.16.45 1.56.58.66.21 1.26.18 1.73.11.53-.08 1.61-.66 1.84-1.3.23-.64.23-1.18.16-1.3-.07-.11-.25-.18-.52-.32z"/>
+                    <path fill="currentColor" d="M16.02 3.2c-7.06 0-12.8 5.74-12.8 12.8 0 2.26.6 4.47 1.74 6.41L3.1 28.9l6.64-1.74a12.75 12.75 0 0 0 6.28 1.65h.01c7.06 0 12.8-5.74 12.8-12.8S23.08 3.2 16.02 3.2zm0 23.45h-.01a10.63 10.63 0 0 1-5.42-1.49l-.39-.23-3.94 1.03 1.05-3.84-.25-.4a10.65 10.65 0 1 1 8.96 4.93z"/>
+                </svg>
+            </div>
+            <div>
+                <strong>Dr. Sandaruwan LMS</strong>
+                <span>CHAT WITH SUPPORT</span>
+            </div>
+        </div>
+        <button type="button" class="whatsapp-close" id="closeWhatsAppHelp" aria-label="Close support">×</button>
+    </div>
+
+    <div class="whatsapp-welcome">
+        <h3>Hi there! 👋 Welcome to Dr. Sandaruwan LMS</h3>
+        <p>How can we help you today?</p>
+        <div class="whatsapp-status">
+            <span></span>
+            We usually reply within a few minutes
+        </div>
+    </div>
+
+    <div class="whatsapp-team">
+        <h3>Choose Who to Chat With</h3>
+
+        <div class="whatsapp-agent">
+            <div class="agent-avatar" aria-hidden="true">👨🏻‍💻</div>
+            <div class="agent-info">
+                <strong>System Administrator 01</strong>
+                <span>Account access, technical issues and support</span>
+            </div>
+            <a
+                class="whatsapp-chat-btn"
+                href="https://wa.me/94779011780"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <span>▣</span> Chat Now
+            </a>
+        </div>
+
+        <div class="whatsapp-agent">
+            <div class="agent-avatar" aria-hidden="true">👨🏻‍💻</div>
+            <div class="agent-info">
+                <strong>System Administrator 02</strong>
+                <span>Account access, technical issues and support</span>
+            </div>
+            <a
+                class="whatsapp-chat-btn"
+                href="https://wa.me/94777771498"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <span>▣</span> Chat Now
+            </a>
+        </div>
+    </div>
+
+    <div class="whatsapp-widget-footer">
+        <span>Chat</span>
+        <span>Help</span>
+    </div>
+</div>
+
+<button
+    type="button"
+    class="whatsapp-fab"
+    id="whatsappFab"
+    aria-label="Open WhatsApp support"
+    aria-expanded="true"
+>
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+        <path fill="currentColor" d="M19.11 17.4c-.27-.14-1.61-.79-1.86-.88-.25-.09-.43-.14-.61.14-.18.27-.7.88-.86 1.06-.16.18-.32.2-.59.07-.27-.14-1.13-.42-2.15-1.34-.79-.7-1.33-1.56-1.49-1.83-.16-.27-.02-.42.12-.56.12-.12.27-.32.41-.48.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.14-.61-1.47-.84-2.01-.22-.52-.45-.45-.61-.46h-.52c-.18 0-.48.07-.73.34-.25.27-.95.93-.95 2.27s.98 2.63 1.11 2.81c.14.18 1.93 2.95 4.68 4.13.65.28 1.16.45 1.56.58.66.21 1.26.18 1.73.11.53-.08 1.61-.66 1.84-1.3.23-.64.23-1.18.16-1.3-.07-.11-.25-.18-.52-.32z"/>
+        <path fill="currentColor" d="M16.02 3.2c-7.06 0-12.8 5.74-12.8 12.8 0 2.26.6 4.47 1.74 6.41L3.1 28.9l6.64-1.74a12.75 12.75 0 0 0 6.28 1.65h.01c7.06 0 12.8-5.74 12.8-12.8S23.08 3.2 16.02 3.2zm0 23.45h-.01a10.63 10.63 0 0 1-5.42-1.49l-.39-.23-3.94 1.03 1.05-3.84-.25-.4a10.65 10.65 0 1 1 8.96 4.93z"/>
+    </svg>
+</button>
+
+<style>
+    .open-whatsapp-help {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 2px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: #4338ca;
+        font: inherit;
+        font-size: 11px;
+        font-weight: 750;
+        cursor: pointer;
+    }
+
+    .open-whatsapp-help:hover {
+        text-decoration: underline;
+    }
+
+    .whatsapp-widget {
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        z-index: 1000;
+        width: min(390px, calc(100vw - 32px));
+        overflow: hidden;
+        border: 1px solid rgba(41, 189, 111, 0.35);
+        border-radius: 22px;
+        background: #081b2d;
+        color: #f5f8fc;
+        box-shadow: 0 24px 70px rgba(2, 12, 24, 0.42);
+        font-family: Inter, "Segoe UI", Arial, sans-serif;
+    }
+
+    .whatsapp-widget-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 16px;
+        border-bottom: 1px solid rgba(255,255,255,.09);
+    }
+
+    .whatsapp-brand {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+    }
+
+    .whatsapp-logo {
+        width: 43px;
+        height: 43px;
+        display: grid;
+        place-items: center;
+        border-radius: 12px;
+        background: #22c55e;
+        color: white;
+    }
+
+    .whatsapp-logo svg,
+    .whatsapp-fab svg {
+        width: 25px;
+        height: 25px;
+    }
+
+    .whatsapp-brand strong {
+        display: block;
+        font-size: 14px;
+        font-weight: 800;
+    }
+
+    .whatsapp-brand span {
+        display: block;
+        margin-top: 2px;
+        color: #69d99a;
+        font-size: 9px;
+        font-weight: 800;
+        letter-spacing: 1px;
+    }
+
+    .whatsapp-close {
+        border: 0;
+        background: transparent;
+        color: #9baabd;
+        font-size: 26px;
+        line-height: 1;
+        cursor: pointer;
+    }
+
+    .whatsapp-close:hover {
+        color: white;
+    }
+
+    .whatsapp-welcome {
+        margin: 16px;
+        padding: 18px 16px;
+        border: 1px solid rgba(34, 197, 94, 0.28);
+        border-radius: 17px;
+        background: linear-gradient(135deg, #10344a, #0d293d);
+    }
+
+    .whatsapp-welcome h3,
+    .whatsapp-team h3 {
+        margin: 0;
+        font-size: 16px;
+        line-height: 1.35;
+    }
+
+    .whatsapp-welcome p {
+        margin: 8px 0 9px;
+        color: #aebdca;
+        font-size: 12px;
+    }
+
+    .whatsapp-status {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        color: #b6c5d1;
+        font-size: 10px;
+    }
+
+    .whatsapp-status span {
+        width: 8px;
+        height: 8px;
+        flex: 0 0 8px;
+        border-radius: 50%;
+        background: #22c55e;
+        box-shadow: 0 0 0 4px rgba(34,197,94,.1);
+    }
+
+    .whatsapp-team {
+        padding: 0 16px 16px;
+    }
+
+    .whatsapp-team h3 {
+        margin-bottom: 11px;
+        font-size: 16px;
+    }
+
+    .whatsapp-agent {
+        display: grid;
+        grid-template-columns: 42px 1fr auto;
+        align-items: center;
+        gap: 9px;
+        margin-top: 8px;
+        padding: 11px;
+        border: 1px solid rgba(255,255,255,.09);
+        border-radius: 16px;
+        background: #10273b;
+    }
+
+    .agent-avatar {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: #dbeafe;
+        font-size: 21px;
+    }
+
+    .agent-info {
+        min-width: 0;
+    }
+
+    .agent-info strong {
+        display: block;
+        margin-bottom: 3px;
+        color: #f3f7fb;
+        font-size: 11px;
+    }
+
+    .agent-info span {
+        display: block;
+        color: #9fb0bf;
+        font-size: 8.5px;
+        line-height: 1.35;
+    }
+
+    .whatsapp-chat-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        min-width: 88px;
+        padding: 10px 9px;
+        border-radius: 10px;
+        background: #16b957;
+        color: white;
+        font-size: 9.5px;
+        font-weight: 800;
+        text-decoration: none;
+        transition: transform .18s ease, background .18s ease;
+    }
+
+    .whatsapp-chat-btn:hover {
+        background: #20c866;
+        transform: translateY(-1px);
+    }
+
+    .whatsapp-widget-footer {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border-top: 1px solid rgba(255,255,255,.08);
+        background: #061626;
+    }
+
+    .whatsapp-widget-footer span {
+        padding: 13px 10px;
+        text-align: center;
+        color: #ffffff;
+        font-size: 10px;
+        font-weight: 750;
+    }
+
+    .whatsapp-widget-footer span:first-child {
+        background: rgba(34,197,94,.14);
+    }
+
+    .whatsapp-fab {
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        z-index: 999;
+        display: none;
+        width: 58px;
+        height: 58px;
+        place-items: center;
+        border: 0;
+        border-radius: 50%;
+        background: #16b957;
+        color: white;
+        box-shadow: 0 14px 35px rgba(2, 12, 24, .3);
+        cursor: pointer;
+    }
+
+    @media (max-width: 760px) {
+        .whatsapp-widget {
+            right: 10px;
+            bottom: 10px;
+            width: calc(100vw - 20px);
+            border-radius: 20px;
+        }
+
+        .whatsapp-agent {
+            grid-template-columns: 38px minmax(0, 1fr);
+        }
+
+        .agent-avatar {
+            width: 38px;
+            height: 38px;
+            font-size: 18px;
+        }
+
+        .whatsapp-chat-btn {
+            grid-column: 2;
+            justify-self: start;
+            margin-top: 2px;
+        }
+    }
+</style>
 
 <script>
 
@@ -180,6 +529,29 @@ if (togglePassword && passwordInput) {
         }
     });
 }
+
+const whatsappWidget = document.getElementById("whatsappWidget");
+const whatsappFab = document.getElementById("whatsappFab");
+const closeWhatsAppHelp = document.getElementById("closeWhatsAppHelp");
+const openWhatsAppHelp = document.getElementById("openWhatsAppHelp");
+
+function closeWhatsAppWidget() {
+    if (!whatsappWidget || !whatsappFab) return;
+    whatsappWidget.style.display = "none";
+    whatsappFab.style.display = "grid";
+    whatsappFab.setAttribute("aria-expanded", "false");
+}
+
+function openWhatsAppWidget() {
+    if (!whatsappWidget || !whatsappFab) return;
+    whatsappWidget.style.display = "";
+    whatsappFab.style.display = "none";
+    whatsappFab.setAttribute("aria-expanded", "true");
+}
+
+closeWhatsAppHelp?.addEventListener("click", closeWhatsAppWidget);
+whatsappFab?.addEventListener("click", openWhatsAppWidget);
+openWhatsAppHelp?.addEventListener("click", openWhatsAppWidget);
 
 </script>
 
