@@ -26,13 +26,5 @@ if (['11','grade11','grade 11'].includes(type)) {
         const footer = content.querySelector('.footer');
         if (footer) content.insertBefore(section, footer); else content.appendChild(section);
     }
-    if (nav && !document.getElementById('grade11ResultsNav')) {
-        const link = document.createElement('a');
-        link.href = '#grade11ResultsSection';
-        link.className = 'sidebar-link';
-        link.id = 'grade11ResultsNav';
-        link.innerHTML = '<span class="nav-icon">🏆</span><span>Results</span>';
-        link.onclick = e => { e.preventDefault(); document.getElementById('grade11ResultsSection')?.scrollIntoView({behavior:'smooth'}); };
-        nav.appendChild(link);
-    }
+    // Results is already a permanent sidebar item. Do not inject a duplicate nav item here.
 }
