@@ -9,14 +9,39 @@
 <section class="results"><h2>Previous Results</h2><p class="hint" id="hint">Published examination results linked to your Student ID will appear here.</p><div id="resultGrid" class="result-grid"><div class="empty">Loading results…</div></div></section></main>
 <div class="theme"><button id="light">☀ Light</button><button id="dark">◐ Dark</button></div>
 <script type="module">
-import {db,doc,getDoc} from "./firebase.js";
+import {db,doc,getDoc,collection,query,where,getDocs} from "./firebase.js";
 import {GRADE11_RESULTS} from "./grade11-results-data.js";
 import {TOP_RANKING_EXAM_02} from "./grade11-results-exam02.js";
 if(sessionStorage.getItem("loggedIn")!=="true")location.replace("index.html");
-const L=document.getElementById("light"),D=document.getElementById("dark");function theme(t){document.body.classList.toggle("dark-mode",t==="dark");localStorage.setItem("lmsTheme",t);L.classList.toggle("active",t!=="dark");D.classList.toggle("active",t==="dark")}L.onclick=()=>theme("light");D.onclick=()=>theme("dark");theme(localStorage.getItem("lmsTheme")||"light");
-const id=String(sessionStorage.getItem("studentId")||"").trim().toUpperCase();const type=String(sessionStorage.getItem("studentGrade")||sessionStorage.getItem("studentType")||"").trim().toLowerCase();
-const label=document.getElementById("programLabel");label.textContent=type.includes("11")?"Grade 11 Progress":type.includes("10")?"Grade 10 Progress":(type.includes("al")||type.includes("advanced"))?"Advanced Level Progress":"Student Progress";
-const all={...GRADE11_RESULTS,"Top Ranking Exam 02":TOP_RANKING_EXAM_02};const rows=Object.entries(all).flatMap(([exam,list])=>{const r=list.find(x=>String(x.id).toUpperCase()===id);return r?[{exam,...r}]:[]});
-const grid=document.getElementById("resultGrid");if(rows.length){document.getElementById("hint").textContent="Published Grade 11 results for your Student ID.";grid.innerHTML=rows.map(r=>'<article class="result"><div class="result-top"><span>'+r.exam+'</span><span>Published</span></div><div class="score">'+r.score+'<small>/100</small></div><div class="rname">'+r.name+'</div></article>').join("")}else{document.getElementById("hint").textContent="No published result was found for this Student ID yet.";grid.innerHTML='<div class="empty">No published result was found for this student number yet.</div>'}
+const L=document.getElementById("light"),D=document.getElementById("dark");
+function theme(t){document.body.classList.toggle("dark-mode",t==="dark");localStorage.setItem("lmsTheme",t);L.classList.toggle("active",t!=="dark");D.classList.toggle("active",t==="dark")}
+L.onclick=()=>theme("light");D.onclick=()=>theme("dark");theme(localStorage.getItem("lmsTheme")||"light");
+const id=String(sessionStorage.getItem("studentId")||"").trim().toUpperCase();
+const type=String(sessionStorage.getItem("studentGrade")||sessionStorage.getItem("studentType")||"").trim().toLowerCase();
+const label=document.getElementById("programLabel");
+label.textContent=type.includes("11")?"Grade 11 Progress":type.includes("10")?"Grade 10 Progress":(type.includes("al")||type.includes("advanced"))?"Advanced Level Progress":"Student Progress";
+const grid=document.getElementById("resultGrid");
+async function loadResults(){
+  try{
+    const snap=await getDocs(query(collection(db,"studentResults"),where("studentId","==",id)));
+    const rows=[];
+    snap.forEach(d=>{const r=d.data();if(r.published!==false)rows.push(r)});
+    if(rows.length){
+      document.getElementById("hint").textContent="Published results linked to your Student ID.";
+      grid.innerHTML=rows.map(r=>'<article class="result"><div class="result-top"><span>'+r.exam+'</span><span>Published</span></div><div class="score">'+r.score+'<small>/'+r.maxScore+'</small></div><div class="rname">'+r.studentName+'</div></article>').join("");
+      return;
+    }
+  }catch(e){console.error("Dynamic results load failed",e)}
+  const all={...GRADE11_RESULTS,"Top Ranking Exam 02":TOP_RANKING_EXAM_02};
+  const rows=Object.entries(all).flatMap(([exam,list])=>{const r=list.find(x=>String(x.id).toUpperCase()===id);return r?[{exam,...r}]:[]});
+  if(rows.length&&type.includes("11")){
+    document.getElementById("hint").textContent="Published Grade 11 results for your Student ID.";
+    grid.innerHTML=rows.map(r=>'<article class="result"><div class="result-top"><span>'+r.exam+'</span><span>Published</span></div><div class="score">'+r.score+'<small>/100</small></div><div class="rname">'+r.name+'</div></article>').join("");
+  }else{
+    document.getElementById("hint").textContent="No published result was found for this Student ID yet.";
+    grid.innerHTML='<div class="empty">No published result was found for this student number yet.</div>';
+  }
+}
+loadResults();
 try{const snap=await getDoc(doc(db,"students",id));if(snap.exists()){const data=snap.data();let total=0,viewed=0;for(let i=1;i<=50;i++){const k="paper"+String(i).padStart(2,"0")+"Viewed";if(Object.prototype.hasOwnProperty.call(data,k)){total++;if(data[k]===true)viewed++}}const pct=total?Math.round(viewed/total*100):0;document.getElementById("total").textContent=total;document.getElementById("viewed").textContent=viewed;document.getElementById("progressPct").textContent=pct+"%";document.getElementById("progressFill").style.width=pct+"%"}}catch(e){console.error("Progress data load failed",e)}
 </script><nav class="mobile-nav"><a href="dashboard.html">⌂<span>Dashboard</span></a><a class="" href="my-program.html">▣<span>My Program</span></a><a class="active" href="progress.html">◩<span>Progress</span></a><a class="" href="support.html">◉<span>Support</span></a></nav></body></html>
