@@ -37,7 +37,7 @@
 @media(max-width:480px){
     .summary-grid{grid-template-columns:repeat(3,1fr)}.summary-card{min-height:125px}.summary-icon{width:38px;height:38px;font-size:16px;margin-bottom:13px}.summary-info strong{font-size:21px}.summary-info span{font-size:6.5px}.summary-info small{font-size:7.5px}.hero-card{min-height:240px}.hero-card h2{font-size:22px}
 }
-</style>
+.dashboard-mobile-nav{display:none}@media(max-width:800px){.dashboard-mobile-nav{position:fixed;display:grid;grid-template-columns:repeat(4,1fr);left:10px;right:10px;bottom:10px;z-index:1300;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);border:1px solid #e7eaf0;border-radius:17px;padding:6px;box-shadow:0 15px 35px rgba(15,23,42,.12)}.dashboard-mobile-nav a{display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 3px;border-radius:11px;text-decoration:none;color:#78849a;font-size:8px;font-weight:800}.dashboard-mobile-nav a.active{background:#eeeaff;color:#5b4cf6}body.dark-mode .dashboard-mobile-nav{background:rgba(17,24,39,.95);border-color:#29344b}body.dark-mode .dashboard-mobile-nav a{color:#aeb7c9}body.dark-mode .dashboard-mobile-nav a.active{background:#29235d;color:#fff}}</style>
 
 </head>
 
@@ -1454,6 +1454,6 @@ applyLmsTheme(localStorage.getItem("lmsTheme") || "light");
 
 </script>
 
-</body>
+<nav class="dashboard-mobile-nav"><a class="active" href="dashboard.html">⌂<span>Dashboard</span></a><a href="my-program.html">▣<span>My Program</span></a><a href="progress.html">◩<span>Progress</span></a><a href="support.html">◉<span>Support</span></a></nav></body>
 
 </html>
