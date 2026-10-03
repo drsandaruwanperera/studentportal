@@ -181,11 +181,6 @@
 
         <!-- LOGOUT -->
 
-        <div class="theme-switch" aria-label="Theme mode">
-            <button type="button" id="lightThemeBtn">☀ Light</button>
-            <button type="button" id="darkThemeBtn">◐ Dark</button>
-        </div>
-
         <button
             type="button"
             class="sidebar-logout"
@@ -581,391 +576,22 @@
                         </div>
                         <span class="quick-card-arrow">→</span>
                     </a>
+                    <article class="quick-access-card quick-theme-card" aria-label="Theme settings">
+                        <div class="quick-card-icon">☀️</div>
+                        <div class="quick-card-body">
+                            <span>APPEARANCE</span>
+                            <strong>Theme</strong>
+                            <small>Choose Light or Dark mode</small>
+                            <div class="theme-card-controls" role="group" aria-label="Theme mode">
+                                <button type="button" class="theme-card-btn" id="lightThemeBtn" aria-label="Use light mode">☀ Light</button>
+                                <button type="button" class="theme-card-btn" id="darkThemeBtn" aria-label="Use dark mode">☾ Dark</button>
+                            </div>
+                        </div>
+                    </article>
 
                 </div>
 
             </section>
-
-
-            <!-- =================================================
-                 STUDY MATERIALS HEADER
-            ================================================== -->
-
-            <section class="section-header">
-
-
-                <div>
-
-                    <p class="section-label">
-                        LEARNING RESOURCES
-                    </p>
-
-
-                    <h2>
-                        Study Materials
-                    </h2>
-
-
-                    <p>
-                        Access your learning resources
-                        and examination papers.
-                    </p>
-
-                </div>
-
-
-                <div class="live-status">
-
-                    <span></span>
-
-                    Available
-
-                </div>
-
-            </section>
-
-
-
-            <!-- =================================================
-                 MATERIAL CARDS
-            ================================================== -->
-
-            <section
-                class="material-grid"
-                id="materialGrid"
-            >
-
-
-                <!-- =================================================
-                     MODEL PAPERS
-                ================================================== -->
-
-                <article
-                    class="material-card model-card"
-                    id="modelPapersCard"
-                    role="button"
-                    tabindex="0"
-                >
-
-
-                    <div class="material-card-top">
-
-
-                        <div class="material-icon purple-bg">
-                            🏆
-                        </div>
-
-
-                        <span class="material-arrow">
-                            →
-                        </span>
-
-                    </div>
-
-
-                    <div class="material-card-content">
-
-
-                        <span class="material-label">
-                            PRACTICE
-                        </span>
-
-
-                        <h3 id="modelPapersTitle">
-    🏆 TOP Ranking
-</h3>
-
-<p id="modelPapersDescription">
-    Grade 11 TOP Ranking Papers
-</p>
-
-<div class="material-link">
-    Explore TOP Ranking
-    <span>→</span>
-</div>
-
-                </article>
-
-
-
-                <!-- =================================================
-                     PAST / PROVINCE PAPERS
-                ================================================== -->
-
-                <article
-                    class="material-card past-card"
-                    id="pastPapersCard"
-                    role="button"
-                    tabindex="0"
-                >
-
-
-                    <div class="material-card-top">
-
-
-                        <div class="material-icon blue-bg">
-                            📖
-                        </div>
-
-
-                        <span class="material-arrow">
-                            →
-                        </span>
-
-                    </div>
-
-
-                    <div class="material-card-content">
-
-
-                        <span class="material-label">
-                            EXAMINATION
-                        </span>
-
-
-                        <h3 id="pastPapersTitle">
-                            Past Papers
-                        </h3>
-
-
-                        <p id="pastPapersDescription">
-                            Previous examination papers
-                            for your preparation.
-                        </p>
-
-
-                        <div class="material-link">
-                            Explore Papers
-                            <span>→</span>
-                        </div>
-
-                    </div>
-
-                </article>
-
-
-            </section>
-
-
-
-            <!-- =================================================
-                 QUICK ACTIVITY
-            ================================================== -->
-
-            <section class="activity-section">
-
-
-                <div class="activity-header">
-
-                    <div>
-
-                        <p class="section-label">
-                            RECENT ACTIVITY
-                        </p>
-
-
-                        <h2>
-                            Your Learning Activity
-                        </h2>
-
-                    </div>
-
-
-                    <span class="activity-count">
-                        Live
-                    </span>
-
-                </div>
-
-
-                <div class="activity-grid">
-
-
-                    <div class="activity-item">
-
-                        <div class="activity-icon">
-                            📘
-                        </div>
-
-
-                        <div>
-
-                            <strong>
-                                Model Papers
-                            </strong>
-
-                            <span>
-                                Practice your available
-                                model papers.
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="activity-item">
-
-                        <div class="activity-icon">
-                            📖
-                        </div>
-
-
-                        <div>
-
-                            <strong>
-                                Examination Papers
-                            </strong>
-
-                            <span>
-                                Review previous examination
-                                papers.
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="activity-item">
-
-                        <div class="activity-icon">
-                            📈
-                        </div>
-
-
-                        <div>
-
-                            <strong>
-                                Track Progress
-                            </strong>
-
-                            <span>
-                                Monitor your paper completion.
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-
-            <!-- =================================================
-                 ANNOUNCEMENTS
-            ================================================== -->
-
-            <section class="announcement-card">
-
-
-                <div class="announcement-icon">
-                    📢
-                </div>
-
-
-                <div class="announcement-content">
-
-                    <p class="section-label">
-                        ANNOUNCEMENTS
-                    </p>
-
-
-                    <h3>
-                        Stay Updated
-                    </h3>
-
-
-                    <p>
-                        Stay updated with the latest
-                        information and important notices.
-                    </p>
-
-                </div>
-
-
-                <a
-                    href="announcements.html"
-                    class="announcement-status"
-                    style="text-decoration:none"
-                >
-                    View All →
-                </a>
-
-            </section>
-
-
-
-            <!-- =================================================
-                 SUPPORT
-            ================================================== -->
-
-            <section class="support-card">
-
-
-                <div class="support-icon">
-                    🛟
-                </div>
-
-
-                <div>
-
-                    <p class="section-label">
-                        SUPPORT
-                    </p>
-
-
-                    <h3>
-                        Need Assistance?
-                    </h3>
-
-
-                    <p>
-                        Contact the system administrator
-                        if you need help.
-                    </p>
-
-
-                    <a
-                        href="support.html"
-                        class="support-link"
-                    >
-                        💬 Open WhatsApp Support →
-                    </a>
-
-                </div>
-
-            </section>
-
-
-
-            <!-- =================================================
-                 FOOTER
-            ================================================== -->
-
-            <footer class="footer">
-
-
-                <div>
-
-                    <strong>
-                        Student Assessment Portal
-                    </strong>
-
-                    <span>
-                        © 2026
-                    </span>
-
-                </div>
-
-
-                <span>
-                    Secure Student Access
-                </span>
-
-            </footer>
 
 
         </div>
@@ -1505,10 +1131,14 @@ document.addEventListener(
 const lightThemeBtn=document.getElementById("lightThemeBtn");
 const darkThemeBtn=document.getElementById("darkThemeBtn");
 function applyLmsTheme(theme){
-    document.body.classList.toggle("dark-mode", theme === "dark");
-    localStorage.setItem("lmsTheme", theme);
-    lightThemeBtn?.classList.toggle("active", theme !== "dark");
-    darkThemeBtn?.classList.toggle("active", theme === "dark");
+    const isDark = theme === "dark";
+    document.body.classList.toggle("dark-mode", isDark);
+    localStorage.setItem("lmsTheme", isDark ? "dark" : "light");
+    lightThemeBtn?.classList.toggle("active", !isDark);
+    darkThemeBtn?.classList.toggle("active", isDark);
+    document.querySelector(".quick-theme-card .quick-card-icon")?.replaceChildren(
+        document.createTextNode(isDark ? "🌙" : "☀️")
+    );
 }
 lightThemeBtn?.addEventListener("click",()=>applyLmsTheme("light"));
 darkThemeBtn?.addEventListener("click",()=>applyLmsTheme("dark"));
