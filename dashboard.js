@@ -504,13 +504,19 @@ async function loadStudent() {
 
         const data = snapshot.data();
         const type = getGradeType(
+            sessionStorage.getItem("studentType") ||
             data.studentType ||
             storedGrade ||
             data.grade
         );
 
         const gradeInfo = getDashboardData(type);
+        const sessionStudentName =
+            sessionStorage.getItem("studentName") ||
+            sessionStorage.getItem("studentId");
+
         const studentName =
+            sessionStudentName ||
             data.name ||
             data.studentName ||
             data.fullName ||
