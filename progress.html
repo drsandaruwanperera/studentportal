@@ -50,6 +50,32 @@ body{min-height:100vh;background:radial-gradient(circle at 78% 8%,rgba(103,60,25
 @media(max-width:800px){.main{padding:20px 15px 85px!important}.top h1{font-size:24px!important}.stats{grid-template-columns:1fr 1fr}.result-grid{grid-template-columns:1fr}.side{display:none}}
 @media(max-width:480px){.stats{grid-template-columns:1fr}.hero{padding:23px 20px!important}}
 @media(prefers-reduced-motion:reduce){.hero:before,.hero:after{animation:none}}
+</style><style id="progress-performance-center">
+.main{max-width:none!important;padding:32px 42px 70px!important}
+.top h1{font-size:31px!important;letter-spacing:-.8px}
+.performance-hero{padding:28px 32px!important;min-height:185px!important}
+.hero-content{display:flex;align-items:center;justify-content:space-between;position:relative;z-index:2}
+.hero-copy{flex:1;max-width:850px}
+.hero-score{display:flex;align-items:baseline;gap:9px;margin:4px 0 10px}.hero-score b{font-size:38px!important}.hero-score span{font-size:11px;color:rgba(255,255,255,.7)}
+.hero-copy p{margin:9px 0 0;font-size:9px;color:rgba(255,255,255,.72)}
+.hero-orbit{position:relative;width:230px;height:120px;flex:none}.hero-orbit>span{position:absolute;right:75px;top:30px;font-size:46px;filter:drop-shadow(0 12px 18px rgba(0,0,0,.2));animation:floatTarget 3.5s ease-in-out infinite}
+.hero-circle{position:absolute;border:1px solid rgba(255,255,255,.18);border-radius:50%;transform:rotate(-18deg)}.hero-circle.c1{width:210px;height:85px;right:0;top:20px;animation:spinOrbit 10s linear infinite}.hero-circle.c2{width:135px;height:58px;right:35px;top:34px;animation:spinOrbit 7s linear infinite reverse}.hero-dot{position:absolute;width:9px;height:9px;border-radius:50%;background:#fff;right:26px;top:25px;box-shadow:0 0 18px #fff;animation:dotPulse 2.5s ease-in-out infinite}
+.stats{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:15px!important}
+.stat{display:flex;align-items:center;gap:14px;min-height:106px}.stat-icon{width:43px;height:43px;border-radius:13px;display:grid;place-items:center;font-size:18px;font-weight:900;flex:none}.stat-blue .stat-icon{background:#173d79;color:#63a8ff}.stat-green .stat-icon{background:#123e35;color:#5ce0b5}.stat-purple .stat-icon{background:#30245d;color:#bcaeff}.stat-gold .stat-icon{background:#403619;color:#ffd05b}
+.stat b{margin-top:4px!important;font-size:27px!important}.stat span{display:block;margin-top:3px}
+.performance-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(300px,.85fr);gap:15px;margin-bottom:18px}
+.panel{background:linear-gradient(145deg,#111a30,#0d1527);border:1px solid rgba(148,163,184,.14);border-radius:20px;padding:21px;box-shadow:0 16px 38px rgba(0,0,0,.2)}
+.panel-head,.results-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.panel h2,.results h2{margin:0;color:#fff!important;font-size:18px!important}.panel p{margin:4px 0 16px;color:#78869e;font-size:10px}.panel-badge,.results-count{font-size:8px;font-weight:900;color:#8f82ff;background:#29235d;border:1px solid #453b8a;border-radius:8px;padding:5px 8px}
+.score-bars{display:grid;gap:13px;padding-top:2px}.bar-item{display:grid;gap:6px}.bar-label{display:flex;justify-content:space-between;gap:10px;font-size:9px;color:#9aa6ba}.bar-label span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.bar-label b{color:#fff}.bar-track,.mini-track{height:8px;background:#26324a;border-radius:99px;overflow:hidden}.bar-track i,.mini-track i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#6844ff,#2ea9e6);box-shadow:0 0 14px rgba(104,68,255,.25)}
+.insight-row{display:flex;justify-content:space-between;align-items:center;margin:8px 0;font-size:10px;color:#8f9db5}.insight-row strong{font-size:17px;color:#fff}.mini-track{height:9px}.insight-list{display:grid;gap:13px;margin-top:22px}.insight-list div{display:grid;grid-template-columns:10px 1fr auto;align-items:center;gap:8px;font-size:9px;color:#8f9db5}.insight-list b{color:#fff}.dot{width:8px;height:8px;border-radius:50%}.dot.green{background:#20c997}.dot.orange{background:#f59e0b}.dot.blue{background:#38a5ff}
+.results{padding:22px!important}.results-head{margin-bottom:15px}.results-head .hint{margin:4px 0 0!important}.result-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}
+.result{display:flex;gap:12px;align-items:center;padding:15px!important;background:linear-gradient(145deg,#151f38,#101827)!important}.result-icon{width:40px;height:40px;display:grid;place-items:center;background:#24345c;border-radius:12px;flex:none;font-size:17px}.result-body{min-width:0;flex:1}.result-top{display:flex;justify-content:space-between;gap:10px;align-items:center}.result-top span{font-size:10px;color:#f1f5ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.result-top em{font-style:normal;font-size:7px;color:#5ce0b5;background:#123e35;padding:4px 6px;border-radius:7px;white-space:nowrap}.result-main{display:flex;justify-content:space-between;align-items:end;gap:10px;margin:7px 0}.result-main strong{display:block;color:#9aa6ba;font-size:9px}.result-main small{display:block;color:#66758e;font-size:8px;margin-top:3px}.score{margin:0!important;font-size:21px!important;color:#b9adff!important;text-align:right}.score small{display:inline!important;font-size:9px!important;margin:0!important}.score b{display:block;color:#fff;font-size:8px;margin-top:2px}.result-progress{height:5px;background:#26324a;border-radius:99px;overflow:hidden}.result-progress i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#6d4aff,#2ca8e6)}
+.empty{grid-column:1/-1}
+@keyframes floatTarget{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-8px) rotate(3deg)}}@keyframes spinOrbit{to{transform:rotate(-18deg) rotate(360deg)}}@keyframes dotPulse{0%,100%{opacity:.5;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+@media(max-width:1050px){.stats{grid-template-columns:repeat(2,1fr)!important}.performance-grid{grid-template-columns:1fr}.hero-orbit{opacity:.55}}
+@media(max-width:800px){.main{padding:22px 15px 85px!important}.performance-hero{padding:23px 20px!important}.hero-orbit{position:absolute;right:-45px;bottom:-20px;opacity:.35}.result-grid{grid-template-columns:1fr!important}}
+@media(max-width:520px){.stats{grid-template-columns:1fr!important}.hero-score b{font-size:31px!important}.results-head{display:block}.results-count{display:inline-block;margin-top:8px}}
+@media(prefers-reduced-motion:reduce){.hero-circle,.hero-orbit>span,.hero-dot{animation:none!important}}
 </style></head><body>
 <aside class="side"><div class="brand"><div class="logo">🎓</div><div><b>Dr. Sandaruwan</b><span>LMS • Student Portal</span></div></div><nav><a href="dashboard.html">▦ <span>Dashboard</span></a><a href="my-program.html">📚 <span>My Program</span></a><a class="active" href="progress.html">◆ <span>Results</span></a><a href="announcements.html">🔔 <span>Announcements</span></a><a href="support.html">🛟 <span>Support</span></a></nav><div class="side-bottom">
   <div class="progress-profile">
@@ -58,44 +84,132 @@ body{min-height:100vh;background:radial-gradient(circle at 78% 8%,rgba(103,60,25
   </div>
   <a class="logout" href="index.html">↪ Logout</a>
 </div></aside>
-<main class="main"><div class="top"><div><h1>Progress &amp; Results</h1><p>Track your current preparation and view published previous results.</p></div><a class="back" href="dashboard.html">← Dashboard</a></div>
-<section class="hero"><div class="hero-row"><div><small>OVERALL PROGRESS</small><h2 id="programLabel">Student Progress</h2></div><b id="progressPct">0%</b></div><div class="track"><div class="fill" id="progressFill"></div></div></section>
-<section class="stats"><div class="stat"><small>TOTAL PAPERS</small><b id="total">0</b><span>Available papers</span></div><div class="stat"><small>PAPERS COMPLETED</small><b id="viewed">0</b><span>Viewed / completed</span></div><div class="stat"><small>ACCOUNT STATUS</small><b style="color:#16a56a">Active</b><span>Student account</span></div></section>
-<section class="results"><h2>Previous Results</h2><p class="hint" id="hint">Published examination results linked to your Student ID will appear here.</p><div id="resultGrid" class="result-grid"><div class="empty">Loading results…</div></div></section></main>
+<main class="main">
+  <div class="top">
+    <div><h1>Progress &amp; Results</h1><p>Track your learning performance and view published examination results.</p></div>
+    <a class="back" href="dashboard.html">← Dashboard</a>
+  </div>
+
+  <section class="hero performance-hero">
+    <div class="hero-content">
+      <div class="hero-copy">
+        <small>OVERALL PROGRESS</small>
+        <h2 id="programLabel">Student Progress</h2>
+        <div class="hero-score"><b id="progressPct">0%</b><span>Complete</span></div>
+        <div class="track"><div class="fill" id="progressFill"></div></div>
+        <p><strong id="completedLabel">0</strong> completed out of <strong id="totalLabel">0</strong> tracked papers</p>
+      </div>
+      <div class="hero-orbit"><div class="hero-circle c1"></div><div class="hero-circle c2"></div><div class="hero-dot"></div><span>🎯</span></div>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stat stat-blue"><div class="stat-icon">▣</div><div><small>TOTAL PAPERS</small><b id="total">0</b><span>Available / tracked papers</span></div></div>
+    <div class="stat stat-green"><div class="stat-icon">✓</div><div><small>COMPLETED</small><b id="viewed">0</b><span>Papers you have finished</span></div></div>
+    <div class="stat stat-purple"><div class="stat-icon">◷</div><div><small>REMAINING</small><b id="remaining">0</b><span>Papers still to complete</span></div></div>
+    <div class="stat stat-gold"><div class="stat-icon">★</div><div><small>AVERAGE RESULT</small><b id="averageScore">—</b><span>Across published results</span></div></div>
+  </section>
+
+  <section class="performance-grid">
+    <div class="panel trend-panel">
+      <div class="panel-head"><div><h2>Performance Overview</h2><p>Your published scores at a glance</p></div><span class="panel-badge">LIVE</span></div>
+      <div id="scoreBars" class="score-bars"><div class="empty">Loading performance…</div></div>
+    </div>
+    <div class="panel insight-panel">
+      <div class="panel-head"><div><h2>Learning Summary</h2><p>Current paper activity</p></div></div>
+      <div class="insight-row"><span>Completion</span><strong id="summaryCompletion">0%</strong></div>
+      <div class="mini-track"><i id="summaryFill"></i></div>
+      <div class="insight-list">
+        <div><span class="dot green"></span><span>Completed papers</span><b id="summaryCompleted">0</b></div>
+        <div><span class="dot orange"></span><span>Remaining papers</span><b id="summaryRemaining">0</b></div>
+        <div><span class="dot blue"></span><span>Published results</span><b id="summaryResults">0</b></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="results">
+    <div class="results-head"><div><h2>Recent Paper &amp; Examination Results</h2><p class="hint" id="hint">Published results linked to your Student ID will appear here.</p></div><span class="results-count" id="resultsCount">0 Results</span></div>
+    <div id="resultGrid" class="result-grid"><div class="empty">Loading results…</div></div>
+  </section>
+</main>
 <script type="module">
 import {db,doc,getDoc,collection,query,where,getDocs} from "./firebase.js";
 import {GRADE11_RESULTS} from "./grade11-results-data.js";
 import {TOP_RANKING_EXAM_02} from "./grade11-results-exam02.js";
 if(sessionStorage.getItem("loggedIn")!=="true")location.replace("index.html");
-document.body.classList.add('dark-mode');localStorage.setItem('lmsTheme','dark');
+document.body.classList.add("dark-mode");localStorage.setItem("lmsTheme","dark");
+
 const id=String(sessionStorage.getItem("studentId")||"").trim().toUpperCase();
 const type=String(sessionStorage.getItem("studentGrade")||sessionStorage.getItem("studentType")||"").trim().toLowerCase();
 const label=document.getElementById("programLabel");
 label.textContent=type.includes("11")?"Grade 11 Progress":type.includes("10")?"Grade 10 Progress":(type.includes("al")||type.includes("advanced"))?"Advanced Level Progress":"Student Progress";
+
 const grid=document.getElementById("resultGrid");
+const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
+let publishedRows=[];
+
+function renderRows(rows){
+  publishedRows=rows;
+  document.getElementById("resultsCount").textContent=rows.length+" Result"+(rows.length===1?"":"s");
+  if(!rows.length){
+    grid.innerHTML='<div class="empty">No published result was found for this student number yet.</div>';
+    document.getElementById("hint").textContent="No published examination result is available yet.";
+  }else{
+    document.getElementById("hint").textContent="Published results linked to your Student ID.";
+    grid.innerHTML=rows.map(r=>{
+      const max=Number(r.maxScore)||100, score=Number(r.score)||0, pct=Math.round(score/max*100);
+      return '<article class="result"><div class="result-icon">📄</div><div class="result-body"><div class="result-top"><span>'+esc(r.exam||"Examination Paper")+'</span><em>Published</em></div><div class="result-main"><div><strong>'+esc(r.studentName||"Student")+'</strong><small>'+esc(r.grade||"Student")+'</small></div><div class="score">'+score+'<small>/'+max+'</small><b>'+pct+'%</b></div></div><div class="result-progress"><i style="width:'+Math.min(100,pct)+'%"></i></div></div></article>';
+    }).join("");
+  }
+  const avg=rows.length?Math.round(rows.reduce((s,r)=>s+(Number(r.score)||0)/Math.max(1,Number(r.maxScore)||100)*100,0)/rows.length):null;
+  document.getElementById("averageScore").textContent=avg===null?"—":avg+"%";
+  document.getElementById("summaryResults").textContent=rows.length;
+  renderBars(rows);
+}
+
+function renderBars(rows){
+  const box=document.getElementById("scoreBars");
+  if(!rows.length){box.innerHTML='<div class="empty">Complete or publish a paper result to see performance here.</div>';return;}
+  const recent=rows.slice(-6);
+  box.innerHTML=recent.map(r=>{
+    const pct=Math.round((Number(r.score)||0)/Math.max(1,Number(r.maxScore)||100)*100);
+    return '<div class="bar-item"><div class="bar-label"><span>'+esc(r.exam||"Paper")+'</span><b>'+pct+'%</b></div><div class="bar-track"><i style="width:'+Math.min(100,pct)+'%"></i></div></div>';
+  }).join("");
+}
+
 async function loadResults(){
   try{
     const snap=await getDocs(query(collection(db,"studentResults"),where("studentId","==",id)));
     const rows=[];
     snap.forEach(d=>{const r=d.data();if(r.published!==false)rows.push(r)});
-    if(rows.length){
-      document.getElementById("hint").textContent="Published results linked to your Student ID.";
-      grid.innerHTML=rows.map(r=>'<article class="result"><div class="result-top"><span>'+r.exam+'</span><span>Published</span></div><div class="score">'+r.score+'<small>/'+r.maxScore+'</small></div><div class="rname">'+r.studentName+'</div></article>').join("");
-      return;
-    }
+    if(rows.length){renderRows(rows);return;}
   }catch(e){console.error("Dynamic results load failed",e)}
   const all={...GRADE11_RESULTS,"Top Ranking Exam 02":TOP_RANKING_EXAM_02};
-  const rows=Object.entries(all).flatMap(([exam,list])=>{const r=list.find(x=>String(x.id).toUpperCase()===id);return r?[{exam,...r}]:[]});
-  if(rows.length&&type.includes("11")){
-    document.getElementById("hint").textContent="Published Grade 11 results for your Student ID.";
-    grid.innerHTML=rows.map(r=>'<article class="result"><div class="result-top"><span>'+r.exam+'</span><span>Published</span></div><div class="score">'+r.score+'<small>/100</small></div><div class="rname">'+r.name+'</div></article>').join("");
-  }else{
-    document.getElementById("hint").textContent="No published result was found for this Student ID yet.";
-    grid.innerHTML='<div class="empty">No published result was found for this student number yet.</div>';
-  }
+  const rows=Object.entries(all).flatMap(([exam,list])=>{const r=list.find(x=>String(x.id).toUpperCase()===id);return r?[{exam,studentName:r.name,grade:"Grade 11",score:r.score,maxScore:100}]:[]});
+  if(rows.length&&type.includes("11"))renderRows(rows);
+  else renderRows([]);
 }
 loadResults();
-try{const snap=await getDoc(doc(db,"students",id));if(snap.exists()){const data=snap.data();let total=0,viewed=0;for(let i=1;i<=50;i++){const k="paper"+String(i).padStart(2,"0")+"Viewed";if(Object.prototype.hasOwnProperty.call(data,k)){total++;if(data[k]===true)viewed++}}const pct=total?Math.round(viewed/total*100):0;document.getElementById("total").textContent=total;document.getElementById("viewed").textContent=viewed;document.getElementById("progressPct").textContent=pct+"%";document.getElementById("progressFill").style.width=pct+"%"}}catch(e){console.error("Progress data load failed",e)}
+
+try{
+  const snap=await getDoc(doc(db,"students",id));
+  if(snap.exists()){
+    const data=snap.data();let total=0,viewed=0;
+    for(let i=1;i<=50;i++){const k="paper"+String(i).padStart(2,"0")+"Viewed";if(Object.prototype.hasOwnProperty.call(data,k)){total++;if(data[k]===true)viewed++}}
+    const pct=total?Math.round(viewed/total*100):0;
+    document.getElementById("total").textContent=total;
+    document.getElementById("viewed").textContent=viewed;
+    document.getElementById("remaining").textContent=Math.max(0,total-viewed);
+    document.getElementById("progressPct").textContent=pct+"%";
+    document.getElementById("progressFill").style.width=pct+"%";
+    document.getElementById("completedLabel").textContent=viewed;
+    document.getElementById("totalLabel").textContent=total;
+    document.getElementById("summaryCompletion").textContent=pct+"%";
+    document.getElementById("summaryCompleted").textContent=viewed;
+    document.getElementById("summaryRemaining").textContent=Math.max(0,total-viewed);
+    document.getElementById("summaryFill").style.width=pct+"%";
+  }
+}catch(e){console.error("Progress data load failed",e)}
 </script><nav class="mobile-nav"><a href="dashboard.html">⌂<span>Dashboard</span></a><a class="" href="my-program.html">▣<span>My Program</span></a><a class="active" href="progress.html">◩<span>Progress</span></a><a class="" href="support.html">◉<span>Support</span></a></nav><script>
 const studentName=String(sessionStorage.getItem("studentName")||sessionStorage.getItem("studentId")||"Student");
 const rawGrade=String(sessionStorage.getItem("studentGrade")||sessionStorage.getItem("studentType")||"Student").toLowerCase().replace(/[\s_-]+/g,"");
