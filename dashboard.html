@@ -576,18 +576,7 @@
                         </div>
                         <span class="quick-card-arrow">→</span>
                     </a>
-                    <article class="quick-access-card quick-theme-card" aria-label="Theme settings">
-                        <div class="quick-card-icon">☀️</div>
-                        <div class="quick-card-body">
-                            <span>APPEARANCE</span>
-                            <strong>Theme</strong>
-                            <small>Choose Light or Dark mode</small>
-                            <div class="theme-card-controls" role="group" aria-label="Theme mode">
-                                <button type="button" class="theme-card-btn" id="lightThemeBtn" aria-label="Use light mode">☀ Light</button>
-                                <button type="button" class="theme-card-btn" id="darkThemeBtn" aria-label="Use dark mode">☾ Dark</button>
-                            </div>
-                        </div>
-                    </article>
+
 
                 </div>
 
@@ -1128,23 +1117,7 @@ document.addEventListener(
     sync();
     new MutationObserver(sync).observe(document.getElementById('topStudentName')||document.body,{subtree:true,childList:true,characterData:true});
 })();
-const lightThemeBtn=document.getElementById("lightThemeBtn");
-const darkThemeBtn=document.getElementById("darkThemeBtn");
-function applyLmsTheme(theme){
-    const isDark = theme === "dark";
-    document.body.classList.toggle("dark-mode", isDark);
-    localStorage.setItem("lmsTheme", isDark ? "dark" : "light");
-    lightThemeBtn?.classList.toggle("active", !isDark);
-    darkThemeBtn?.classList.toggle("active", isDark);
-    document.querySelector(".quick-theme-card .quick-card-icon")?.replaceChildren(
-        document.createTextNode(isDark ? "🌙" : "☀️")
-    );
-}
-lightThemeBtn?.addEventListener("click",()=>applyLmsTheme("light"));
-darkThemeBtn?.addEventListener("click",()=>applyLmsTheme("dark"));
-applyLmsTheme(localStorage.getItem("lmsTheme") || "light");
-
-</script>
+document.body.classList.add("dark-mode");</script>
 
 <nav class="dashboard-mobile-nav"><a class="active" href="dashboard.html">⌂<span>Dashboard</span></a><a href="my-program.html">▣<span>My Program</span></a><a href="progress.html">◩<span>Progress</span></a><a href="support.html">◉<span>Support</span></a></nav></body>
 
