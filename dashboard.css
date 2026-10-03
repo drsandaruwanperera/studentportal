@@ -1895,3 +1895,48 @@ body {
     }
 
 }
+
+/* =====================================================
+   LMS LIGHT MODE + THEME SYSTEM
+===================================================== */
+body{background:#f6f8ff;color:#172033}
+body .sidebar{background:#fff;color:#172033;border-right:1px solid #e7eaf0;box-shadow:8px 0 30px rgba(15,23,42,.05)}
+body .brand-text strong,body .student-account-info strong{color:#172033}
+body .brand-text span,body .student-account-info span{color:#8a94a8}
+body .sidebar-section-title{color:#7b879b}
+body .sidebar-link{color:#596579}
+body .sidebar-link:hover{background:#f1efff;color:#4b3edb}
+body .sidebar-link.active{color:#fff}
+body .student-account{border-top-color:#e7eaf0}
+body .student-avatar{background:#eeeaff}
+body .sidebar-logout{background:#fff1f1;color:#ef4444;border-color:#ffdede}
+body .top-header{background:rgba(255,255,255,.94);backdrop-filter:blur(12px)}
+body .search-box{background:#f8f9fc}
+body .hero-card{background:linear-gradient(120deg,#5b4cf6 0%,#477ce5 100%)}
+body .material-card,body .activity-item,body .announcement-card,body .support-card{background:#fff}
+body .theme-switch{display:flex;gap:5px;padding:5px;background:#fff;border:1px solid #e7eaf0;border-radius:12px}
+.theme-switch button{border:0;background:transparent;border-radius:8px;padding:7px 10px;font-size:10px;font-weight:800;color:#667085;cursor:pointer}
+.theme-switch button.active{background:#eeeaff;color:#5b4cf6}
+body.dark-mode{background:#0b1220;color:#eef2ff}
+body.dark-mode .sidebar{background:#111827;color:#fff;border-right-color:#263147}
+body.dark-mode .brand-text strong,body.dark-mode .student-account-info strong{color:#fff}
+body.dark-mode .brand-text span,body.dark-mode .student-account-info span{color:#aeb7c9}
+body.dark-mode .sidebar-section-title{color:#78849a}
+body.dark-mode .sidebar-link{color:#aeb7c9}
+body.dark-mode .sidebar-link:hover{background:#1c2639;color:#fff}
+body.dark-mode .student-account{border-top-color:#263147}
+body.dark-mode .student-avatar{background:#283248}
+body.dark-mode .sidebar-logout{background:#241a1d;color:#ff9b9b;border-color:#4b292d}
+body.dark-mode .top-header{background:rgba(11,18,32,.94);border-bottom-color:#263147}
+body.dark-mode .welcome-small,body.dark-mode .section-header p,body.dark-mode .material-card p,body.dark-mode .activity-item span,body.dark-mode .announcement-content p:last-child,body.dark-mode .support-card p{color:#9aa6ba}
+body.dark-mode .welcome-small span,body.dark-mode .top-left h1,body.dark-mode .summary-info strong,body.dark-mode .material-card h3,body.dark-mode .activity-item strong,body.dark-mode .announcement-content h3,body.dark-mode .support-card h3{color:#fff}
+body.dark-mode .search-box,body.dark-mode .icon-button,body.dark-mode .summary-card,body.dark-mode .material-card,body.dark-mode .activity-item,body.dark-mode .announcement-card,body.dark-mode .support-card{background:#151d2f;border-color:#29344b;color:#eef2ff}
+body.dark-mode .search-box input{color:#fff}
+body.dark-mode .search-box input::placeholder{color:#7f8aa0}
+body.dark-mode .theme-switch{background:#151d2f;border-color:#29344b}
+body.dark-mode .theme-switch button{color:#aeb7c9}
+body.dark-mode .theme-switch button.active{background:#29235d;color:#fff}
+@media(max-width:800px){
+ body .theme-switch{position:fixed;left:15px;right:15px;bottom:15px;z-index:1300;justify-content:center}
+ body .theme-switch button{flex:1}
+}
