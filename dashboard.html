@@ -39,10 +39,39 @@
 }
 .dashboard-mobile-nav{display:none}@media(max-width:800px){.dashboard-mobile-nav{position:fixed;display:grid;grid-template-columns:repeat(4,1fr);left:10px;right:10px;bottom:10px;z-index:1300;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);border:1px solid #e7eaf0;border-radius:17px;padding:6px;box-shadow:0 15px 35px rgba(15,23,42,.12)}.dashboard-mobile-nav a{display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 3px;border-radius:11px;text-decoration:none;color:#78849a;font-size:8px;font-weight:800}.dashboard-mobile-nav a.active{background:#eeeaff;color:#5b4cf6}body.dark-mode .dashboard-mobile-nav{background:rgba(17,24,39,.95);border-color:#29344b}body.dark-mode .dashboard-mobile-nav a{color:#aeb7c9}body.dark-mode .dashboard-mobile-nav a.active{background:#29235d;color:#fff}}</style>
 
-</head>
+<style id="lms-reference-dashboard">
+:root{--lms-bg:#f4f5fa;--lms-panel:#fff;--lms-border:#e4e7ef;--lms-text:#111a36;--lms-muted:#8991aa;--lms-purple:#5b4cf6}
+body{background:var(--lms-bg)!important;color:var(--lms-text)!important;font-family:Inter,"Segoe UI",Arial,sans-serif}
+.app{min-height:100vh}
+.sidebar{width:250px!important;background:#fff!important;border-right:1px solid #e4e7ef!important;box-shadow:none!important;padding:0 14px!important}
+.sidebar-brand{height:88px;padding:15px 8px!important;border-bottom:1px solid #edf0f5}
+.brand-logo{width:44px!important;height:44px!important;border-radius:12px!important}
+.brand-text strong{font-size:15px!important}.brand-text span{font-size:9px!important}
+.sidebar-section-title{padding:25px 12px 9px!important;font-size:9px!important;letter-spacing:1.2px}
+.sidebar-nav{gap:3px!important}
+.sidebar-link{height:43px!important;border-radius:11px!important;padding:0 13px!important;font-size:12px!important}
+.sidebar-link.active{background:#eaf0f4!important;color:#0d2841!important;box-shadow:none!important}
+.sidebar-link:hover{background:#f1f4f7!important;color:#172b42!important}
+.student-account{border-top:1px solid #edf0f5!important;padding-top:14px!important}
+.sidebar-logout{margin-bottom:15px!important}
+.main-content{width:calc(100% - 250px)!important;margin-left:250px!important;max-width:none!important;background:var(--lms-bg)}
+.lms-header{height:86px;padding:0 30px;display:flex;align-items:center;justify-content:space-between;background:#f8f8fc;border-bottom:1px solid #e9ebf1}
+.lms-header-title p{margin:0 0 2px;color:#9299ad;font-size:12px}.lms-header-title p span{color:#6f7890}.lms-header-title h1{margin:0;font-size:25px;letter-spacing:-.5px;color:#111a36}
+.lms-header-actions{display:flex;align-items:center;gap:16px}.lms-search{width:240px;height:41px;border:1px solid #e2e5ed;border-radius:12px;background:#fff;display:flex;align-items:center;padding:0 13px;gap:8px}.lms-search span{font-size:22px;color:#8d96ab}.lms-search input{border:0;outline:0;width:100%;font-size:11px;color:#30384f;background:transparent}.lms-search input::placeholder{color:#9aa1b5}
+.lms-notification{width:36px;height:36px;border:0;background:transparent;color:#657087;font-size:20px;position:relative}.lms-notification i{position:absolute;width:6px;height:6px;border-radius:50%;background:#ef476f;right:5px;top:6px}
+.lms-user{display:flex;align-items:center;gap:10px;padding-left:2px}.lms-avatar{width:42px;height:42px;border-radius:13px;background:#477c91;color:#fff;display:grid;place-items:center;font-weight:800}.lms-user strong{display:block;font-size:11px;max-width:150px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.lms-user span{display:block;color:#8b93a8;font-size:9px;margin-top:2px}.lms-user .lms-user-arrow{display:block;color:#9ba3b5;font-size:16px;margin-left:4px}
+.lms-dashboard{padding:0 30px 45px}.lms-stat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,220px));gap:14px;padding:26px 0 22px}.lms-stat-card{height:82px;background:#fff;border:1px solid #e5e8ef;border-radius:15px;padding:13px 16px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 5px 18px rgba(25,35,65,.025)}.lms-stat-card strong{display:block;font-size:25px;line-height:1;color:#10182f}.lms-stat-card span{display:block;color:#8d95aa;font-size:10px;margin-top:5px}.lms-stat-icon{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;font-size:17px}.lms-stat-icon.purple{background:#eeeaff;color:#5b4cf6}.lms-stat-icon.blue{background:#e9f3ff;color:#3486e7}.lms-stat-icon.green{background:#e8f8f1;color:#18a568}
+.lms-dashboard-grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start}.lms-section-heading{display:flex;justify-content:space-between;align-items:center;margin:0 0 12px}.lms-section-heading h2,.widget-heading h2{font-size:16px;margin:0;color:#10182f}.lms-section-heading a,.widget-heading a{font-size:10px;font-weight:700;color:#355f77;text-decoration:none}.announcement-panel{background:#fff;border:1px solid #e4e7ef;border-radius:16px;padding:17px 20px;margin-bottom:12px;box-shadow:0 5px 18px rgba(25,35,65,.025)}.announcement-panel.secondary{padding-bottom:18px}.announcement-panel-head{display:flex;align-items:center;gap:9px}.announcement-panel-head strong{font-size:13px}.announcement-panel-head time{margin-left:auto;color:#9aa2b4;font-size:9px}.announcement-bell{color:#477c91;font-size:17px}.announcement-pill{background:#eaf3f6;color:#3d7287;border-radius:15px;padding:5px 8px;font-size:8px;font-weight:700}.announcement-panel p{color:#536079;font-size:11px;line-height:1.75;margin:10px 0 7px}.announcement-link{font-size:9px;color:#5b4cf6;text-decoration:none;font-weight:800}
+.lms-widget{background:#fff;border:1px solid #e4e7ef;border-radius:17px;padding:20px;margin-bottom:18px;box-shadow:0 5px 18px rgba(25,35,65,.025)}.widget-heading{display:flex;justify-content:space-between;align-items:center}.widget-heading h2{font-size:15px}.widget-subtitle{font-size:10px;color:#9aa2b4;margin:6px 0 14px}.deadline-empty{display:flex;align-items:center;gap:11px;margin-top:22px;padding:10px 0}.deadline-icon{width:38px;height:38px;border-radius:11px;background:#edf5f8;color:#477c91;display:grid;place-items:center;font-size:19px}.deadline-empty strong{display:block;font-size:10px}.deadline-empty span{display:block;color:#9aa2b4;font-size:9px;margin-top:3px}
+.overall-progress{display:flex;align-items:center;gap:20px}.progress-ring{width:112px;height:112px;border-radius:50%;background:conic-gradient(#477c91 0deg,#477c91 0deg,#e6edf0 0deg);display:grid;place-items:center;position:relative;flex:none}.progress-ring:after{content:"";position:absolute;width:82px;height:82px;border-radius:50%;background:#fff}.progress-ring>div{position:relative;z-index:2;text-align:center}.progress-ring strong{display:block;font-size:22px;color:#314b59}.progress-ring span{display:block;font-size:8px;color:#9299ad;margin-top:1px}.progress-legend{display:flex;flex-direction:column;gap:10px}.progress-legend div{display:flex;align-items:center;gap:7px;font-size:9px;color:#687188}.legend-dot{width:9px;height:9px;border-radius:3px;display:block}.legend-dot.passed{background:#1baa67}.legend-dot.pending{background:#f2a41d}.legend-dot.total{background:#b9d0d9}
+.lms-quick-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}.lms-quick-row a{display:flex;align-items:center;gap:12px;padding:14px 16px;background:#fff;border:1px solid #e4e7ef;border-radius:14px;text-decoration:none;color:#172039}.lms-quick-row a>span{width:38px;height:38px;border-radius:11px;background:#eef2f5;display:grid;place-items:center}.lms-quick-row strong{display:block;font-size:11px}.lms-quick-row small{display:block;color:#9299aa;font-size:8px;margin-top:3px}.lms-quick-row b{margin-left:auto;color:#9ba4b4}
+body.dark-mode{background:var(--lms-bg)!important}
+@media(max-width:1000px){.lms-dashboard-grid{grid-template-columns:1fr}.lms-side-column{display:grid;grid-template-columns:1fr 1fr;gap:14px}.lms-widget{margin-bottom:0}.lms-quick-row{grid-template-columns:1fr 1fr}.lms-stat-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:800px){.sidebar{width:285px!important}.main-content{width:100%!important;margin-left:0!important}.lms-header{height:auto;min-height:76px;padding:14px 15px}.lms-header-actions{gap:7px}.lms-search{display:none}.lms-user>div:nth-child(2),.lms-user-arrow{display:none}.lms-dashboard{padding:0 15px 80px}.lms-stat-grid{grid-template-columns:1fr 1fr;gap:10px;padding:17px 0}.lms-stat-card:last-child{grid-column:span 2}.lms-dashboard-grid{display:block}.lms-side-column{display:block;margin-top:14px}.lms-widget{margin-bottom:12px}.lms-quick-row{grid-template-columns:1fr}.lms-section-heading{margin-top:4px}.announcement-panel{padding:15px}.announcement-panel-head time{display:none}}
+</style></head>
 
 
-<body class="dark-mode">
+<body>
 
 <header class="mobile-lms-header">
     <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
@@ -207,387 +236,126 @@
     ====================================================== -->
 
     <main class="main-content">
-
-
-        <!-- =================================================
-             TOP HEADER
-        ================================================== -->
-
-        <header class="top-header">
-
-
-            <div class="top-left">
-
-                <p class="welcome-small">
-                    Welcome back,
-                    <span id="topStudentName">
-                        Student
-                    </span>
-                    👋
-                </p>
-
-
-                <h1>
-                    <span id="dashboardTitle">
-                        Student Dashboard
-                    </span>
-
-                    <span
-                        class="grade-badge"
-                        id="gradeBadge"
-                    >
-                        Student
-                    </span>
-                </h1>
-
+        <header class="lms-header">
+            <div class="lms-header-title">
+                <p>Welcome back, <span id="topStudentName">Student</span></p>
+                <h1>Dashboard</h1>
             </div>
-
-
-            <div class="top-right">
-
-
-                <!-- SEARCH -->
-
-                <div class="search-box">
-
-                    <span>
-                        🔍
-                    </span>
-
-                    <input
-                        type="text"
-                        placeholder="Search papers, subjects..."
-                        id="paperSearch"
-                    >
-
+            <div class="lms-header-actions">
+                <div class="lms-search">
+                    <span>⌕</span>
+                    <input id="paperSearch" type="text" placeholder="Search units, papers...">
                 </div>
-
-
-                <!-- NOTIFICATION -->
-
-                <button
-                    type="button"
-                    class="icon-button"
-                    aria-label="Notifications"
-                >
-
-                    🔔
-
-                    <span class="notification-dot"></span>
-
-                </button>
-
-
-                <!-- USER -->
-
-                <div class="top-user">
-
-                    <div class="top-user-avatar">
-                        👤
+                <button class="lms-notification" type="button" aria-label="Notifications">♧<i></i></button>
+                <div class="lms-user">
+                    <div class="lms-avatar" id="topUserAvatar">S</div>
+                    <div>
+                        <strong id="topStudentId">—</strong>
+                        <span id="topStudentType">Student</span>
                     </div>
-
-                    <div class="top-user-info">
-
-                        <strong id="topStudentId">
-                            —
-                        </strong>
-
-                        <span id="topStudentType">
-                            Student
-                        </span>
-
-                    </div>
-
+                    <span class="lms-user-arrow">↪</span>
                 </div>
-
             </div>
-
         </header>
 
-
-
-        <!-- =================================================
-             CONTENT
-        ================================================== -->
-
-        <div class="content">
-
-
-            <!-- =================================================
-                 WELCOME / HERO
-            ================================================== -->
-
-            <section class="hero-card">
-
-
-                <div class="hero-content">
-
-
-                    <div class="hero-badges">
-
-                        <span class="hero-badge">
-                            Student Portal
-                        </span>
-
-                        <span
-                            class="hero-badge grade"
-                            id="heroGrade"
-                        >
-                            —
-                        </span>
-
-                    </div>
-
-
-                    <h2 id="greeting">
-                        Welcome, Student 👋
-                    </h2>
-
-
-                    <p id="gradeLabel">
-                        Ready to continue your preparation?
-                    </p>
-
-
-                    <div class="hero-progress">
-
-
-                        <div class="hero-progress-top">
-
-                            <span>
-                                Your Progress
-                            </span>
-
-                            <strong id="progressValue">
-                                0%
-                            </strong>
-
-                        </div>
-
-
-                        <div class="progress-track">
-
-                            <div
-                                class="progress-fill"
-                                id="progressFill"
-                            ></div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="hero-decoration">
-
-                    <div class="circle circle-one"></div>
-
-                    <div class="circle circle-two"></div>
-
-                    <div class="circle circle-three"></div>
-
-                </div>
-
-            </section>
-
-
-
-            <!-- =================================================
-                 SUMMARY
-            ================================================== -->
-
-            <section class="summary-grid">
-
-
-                <!-- TOTAL -->
-
-                <article class="summary-card">
-
-                    <div class="summary-icon purple">
-                        📚
-                    </div>
-
-
-                    <div class="summary-info">
-
-                        <span>
-                            TOTAL PAPERS
-                        </span>
-
-                        <strong id="totalPapers">
-                            0
-                        </strong>
-
-                        <small>
-                            Available papers
-                        </small>
-
-                    </div>
-
-                </article>
-
-
-
-                <!-- VIEWED -->
-
-                <article class="summary-card">
-
-                    <div class="summary-icon blue">
-                        📄
-                    </div>
-
-
-                    <div class="summary-info">
-
-                        <span>
-                            PAPERS VIEWED
-                        </span>
-
-                        <strong id="viewedPapers">
-                            0
-                        </strong>
-
-                        <small>
-                            Completed papers
-                        </small>
-
-                    </div>
-
-                </article>
-
-
-
-                <!-- STATUS -->
-
-                <article class="summary-card">
-
-                    <div class="summary-icon green">
-                        🟢
-                    </div>
-
-
-                    <div class="summary-info">
-
-                        <span>
-                            ACCOUNT STATUS
-                        </span>
-
-                        <strong>
-                            Active
-                        </strong>
-
-                        <small id="onlineStatus">
-                            <span class="online-dot"></span>
-                            Online
-                        </small>
-
-                    </div>
-
-                </article>
-
-
-
-                <!-- PROGRESS -->
-
-                <article class="summary-card">
-
-                    <div class="summary-icon orange">
-                        🎯
-                    </div>
-
-
-                    <div class="summary-info">
-
-                        <span>
-                            PROGRESS
-                        </span>
-
-                        <strong id="summaryProgress">
-                            0%
-                        </strong>
-
-                        <small>
-                            Paper completion
-                        </small>
-
-                    </div>
-
-                </article>
-
-
-            </section>
-
-
-
-
-            <!-- =================================================
-                 QUICK ACCESS
-            ================================================== -->
-
-            <section class="quick-access-section">
-
-                <div class="quick-access-header">
+        <div class="lms-dashboard">
+            <section class="lms-stat-grid">
+                <article class="lms-stat-card">
                     <div>
-                        <p class="section-label">QUICK ACCESS</p>
-                        <h2>Continue Learning</h2>
-                        <p>Jump directly to the most important areas of your LMS.</p>
+                        <strong id="progressValue">0%</strong>
+                        <span>Course complete</span>
                     </div>
-                </div>
-
-                <div class="quick-access-grid">
-
-                    <a class="quick-access-card quick-program" href="my-program.html">
-                        <div class="quick-card-icon">📚</div>
-                        <div class="quick-card-body">
-                            <span>PROGRAM</span>
-                            <strong>My Program</strong>
-                            <small>Lessons, papers & resources</small>
-                        </div>
-                        <span class="quick-card-arrow">→</span>
-                    </a>
-
-                    <a class="quick-access-card quick-progress" href="progress.html">
-                        <div class="quick-card-icon">📈</div>
-                        <div class="quick-card-body">
-                            <span>PERFORMANCE</span>
-                            <strong>My Progress</strong>
-                            <small>Track papers & previous results</small>
-                        </div>
-                        <span class="quick-card-arrow">→</span>
-                    </a>
-
-                    <a class="quick-access-card quick-news" href="announcements.html">
-                        <div class="quick-card-icon">🔔</div>
-                        <div class="quick-card-body">
-                            <span>UPDATES</span>
-                            <strong>Announcements</strong>
-                            <small>Portal notices & updates</small>
-                        </div>
-                        <span class="quick-card-arrow">→</span>
-                    </a>
-
-                    <a class="quick-access-card quick-support" href="support.html">
-                        <div class="quick-card-icon">💬</div>
-                        <div class="quick-card-body">
-                            <span>HELP CENTER</span>
-                            <strong>Student Support</strong>
-                            <small>Get help via WhatsApp</small>
-                        </div>
-                        <span class="quick-card-arrow">→</span>
-                    </a>
-
-
-                </div>
-
+                    <div class="lms-stat-icon purple">◔</div>
+                </article>
+                <article class="lms-stat-card">
+                    <div>
+                        <strong id="viewedPapers">0</strong>
+                        <span>Active tasks</span>
+                    </div>
+                    <div class="lms-stat-icon blue">✓</div>
+                </article>
+                <article class="lms-stat-card">
+                    <div>
+                        <strong id="totalPapers">0</strong>
+                        <span>Units / papers available</span>
+                    </div>
+                    <div class="lms-stat-icon green">▣</div>
+                </article>
             </section>
 
+            <section class="lms-dashboard-grid">
+                <div class="lms-main-column">
+                    <div class="lms-section-heading">
+                        <h2>Announcements</h2>
+                        <a href="announcements.html">View all</a>
+                    </div>
 
+                    <article class="announcement-panel">
+                        <div class="announcement-panel-head">
+                            <span class="announcement-bell">⌁</span>
+                            <strong>Latest LMS Updates</strong>
+                            <span class="announcement-pill">Updates</span>
+                            <time>Student Portal</time>
+                        </div>
+                        <p>Check the announcements section for the latest class notices, learning resources and important examination updates.</p>
+                        <a class="announcement-link" href="announcements.html">View announcements →</a>
+                    </article>
+
+                    <article class="announcement-panel secondary">
+                        <div class="announcement-panel-head">
+                            <span class="announcement-bell">◈</span>
+                            <strong>Learning Resources</strong>
+                            <time>My Program</time>
+                        </div>
+                        <p>Your grade-specific papers and learning resources are available from My Program.</p>
+                        <a class="announcement-link" href="my-program.html">Open My Program →</a>
+                    </article>
+                </div>
+
+                <aside class="lms-side-column">
+                    <section class="lms-widget">
+                        <div class="widget-heading">
+                            <h2>Upcoming deadlines</h2>
+                            <a href="progress.html">Calendar</a>
+                        </div>
+                        <div class="deadline-empty">
+                            <div class="deadline-icon">◷</div>
+                            <div>
+                                <strong>No upcoming deadlines</strong>
+                                <span>New tasks will appear here.</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="lms-widget progress-widget">
+                        <div class="widget-heading">
+                            <h2>Overall progress</h2>
+                        </div>
+                        <p class="widget-subtitle">Papers completed</p>
+                        <div class="overall-progress">
+                            <div class="progress-ring" id="dashboardProgressRing">
+                                <div>
+                                    <strong id="dashboardProgressPercent">0%</strong>
+                                    <span>complete</span>
+                                </div>
+                            </div>
+                            <div class="progress-legend">
+                                <div><i class="legend-dot passed"></i><span id="dashboardViewedLabel">0 completed</span></div>
+                                <div><i class="legend-dot pending"></i><span id="dashboardPendingLabel">0 remaining</span></div>
+                                <div><i class="legend-dot total"></i><span id="dashboardTotalLabel">0 total</span></div>
+                            </div>
+                        </div>
+                    </section>
+                </aside>
+            </section>
+
+            <section class="lms-quick-row">
+                <a href="my-program.html"><span>📚</span><div><strong>My Program</strong><small>Grade-specific resources</small></div><b>→</b></a>
+                <a href="progress.html"><span>📈</span><div><strong>My Progress</strong><small>Results and completion</small></div><b>→</b></a>
+                <a href="support.html"><span>◉</span><div><strong>Support</strong><small>Get help when needed</small></div><b>→</b></a>
+            </section>
         </div>
-
-    </main>
-
-</div>
+    </main></div>
 
 
 
@@ -633,6 +401,9 @@ document.addEventListener(
                 "studentName"
             ) || studentId;
 
+
+        const avatarEl = document.getElementById("topUserAvatar");
+        if (avatarEl && studentName) avatarEl.textContent = studentName.charAt(0).toUpperCase();
 
         const idElements = [
 
@@ -1119,6 +890,29 @@ document.addEventListener(
 })();
 </script>
 
-<nav class="dashboard-mobile-nav"><a class="active" href="dashboard.html">⌂<span>Dashboard</span></a><a href="my-program.html">▣<span>My Program</span></a><a href="progress.html">◩<span>Progress</span></a><a href="support.html">◉<span>Support</span></a></nav></body>
+<nav class="dashboard-mobile-nav"><a class="active" href="dashboard.html">⌂<span>Dashboard</span></a><a href="my-program.html">▣<span>My Program</span></a><a href="progress.html">◩<span>Progress</span></a><a href="support.html">◉<span>Support</span></a></nav><script>
+(function(){
+  const p=document.getElementById("progressValue");
+  const ring=document.getElementById("dashboardProgressRing");
+  const pct=document.getElementById("dashboardProgressPercent");
+  const viewed=document.getElementById("viewedPapers");
+  const total=document.getElementById("totalPapers");
+  const viewedLabel=document.getElementById("dashboardViewedLabel");
+  const pendingLabel=document.getElementById("dashboardPendingLabel");
+  const totalLabel=document.getElementById("dashboardTotalLabel");
+  function sync(){
+    const value=Math.max(0,Math.min(100,parseInt((p?.textContent||"0").replace("%",""),10)||0));
+    const v=parseInt(viewed?.textContent||"0",10)||0;
+    const t=parseInt(total?.textContent||"0",10)||0;
+    if(pct)pct.textContent=value+"%";
+    if(ring)ring.style.background="conic-gradient(#477c91 "+(value*3.6)+"deg,#e6edf0 0deg)";
+    if(viewedLabel)viewedLabel.textContent=v+" completed";
+    if(pendingLabel)pendingLabel.textContent=Math.max(t-v,0)+" remaining";
+    if(totalLabel)totalLabel.textContent=t+" total";
+  }
+  sync();
+  [p,viewed,total].filter(Boolean).forEach(el=>new MutationObserver(sync).observe(el,{childList:true,characterData:true,subtree:true}));
+})();
+</script></body>
 
 </html>
