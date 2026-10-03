@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LMS Program Publishing | Admin</title>
+<link rel="stylesheet" href="admin.css?v=22">
+<style>
+.page-shell{padding:28px 34px 60px}.control-hero{padding:28px;border:1px solid rgba(255,255,255,.1);border-radius:22px;background:linear-gradient(135deg,#27205f,#4037c9 55%,#6d28d9);box-shadow:0 20px 55px rgba(0,0,0,.22);margin-bottom:22px}.control-hero .eyebrow{color:#a6ff2e;font-size:10px;font-weight:850;letter-spacing:1.3px}.control-hero h1{margin:7px 0;color:#fff;font-size:30px}.control-hero p{color:rgba(255,255,255,.72);font-size:13px}.control-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.control-card{position:relative;padding:22px;border-radius:18px;background:rgba(17,24,43,.94);border:1px solid rgba(255,255,255,.1);box-shadow:0 12px 32px rgba(0,0,0,.16);overflow:hidden}.control-card:before{content:"";position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(90deg,#5b4bff,#a6ff2e)}.control-top{display:flex;align-items:center;justify-content:space-between;gap:12px}.control-icon{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:rgba(91,75,255,.14);font-size:22px}.status{padding:7px 10px;border-radius:999px;font-size:9px;font-weight:850}.status.published{background:rgba(74,222,128,.09);color:#4ade80;border:1px solid rgba(74,222,128,.2)}.status.unpublished{background:rgba(255,107,122,.08);color:#ff9aa5;border:1px solid rgba(255,107,122,.18)}.control-card h2{margin:17px 0 5px;color:#f4f7ff;font-size:17px}.control-card p{min-height:38px;color:#aeb8ce;font-size:11px;line-height:1.55}.publish-btn{width:100%;margin-top:17px;min-height:43px;border:0;border-radius:11px;background:linear-gradient(135deg,#5b4bff,#4037c9);color:#fff;font-size:11px;font-weight:800;cursor:pointer;transition:.2s}.publish-btn.unpublish{background:linear-gradient(135deg,#a82d43,#d4475b)}.publish-btn:disabled{opacity:.55;cursor:wait}.note{margin-top:18px;padding:14px 16px;border-radius:13px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);color:#8f9bb2;font-size:10px;line-height:1.55}
+@media(max-width:1000px){.control-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:650px){.page-shell{padding:15px}.control-grid{grid-template-columns:1fr}.control-hero h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="admin-layout">
+<aside class="sidebar">
+<div class="sidebar-brand"><div class="brand-logo">🎓</div><div><h2>Student</h2><span>Assessment Portal</span></div></div>
+<div class="sidebar-label">ADMINISTRATION</div>
+<nav class="sidebar-nav">
+<a href="admin.html" class="nav-item">🏠 <span>Dashboard</span></a>
+<a href="students.html" class="nav-item">👥 <span>Students</span></a>
+<a href="paper-management.html" class="nav-item">📚 <span>Paper Management</span></a>
+<a href="admin-program-control.html" class="nav-item active">🎛️ <span>Program Publishing</span></a>
+<a href="admin-results.html" class="nav-item">🏆 <span>Results Management</span></a>
+</nav>
+<div class="sidebar-bottom"><a class="logout-btn" href="admin.html">← Back to Admin</a></div>
+</aside>
+<main class="main-content page-shell">
+<section class="control-hero"><div class="eyebrow">LMS CONTENT CONTROL</div><h1>Program Publishing</h1><p>Publish or unpublish student-facing learning materials without editing the student portal code.</p></section>
+<section class="control-grid" id="controlGrid"></section>
+<div class="note">Default behaviour is published when no setting exists yet. Changing a card to Unpublished hides it from the student <b>My Program</b> page.</div>
+</main>
+</div>
+<script type="module">
+import {db,doc,getDoc,setDoc,onSnapshot,collection} from "./firebase.js";
+const role=(sessionStorage.getItem("adminRole")||"").toLowerCase();
+if(sessionStorage.getItem("adminLoggedIn")!=="true") location.replace("admin-login.html");
+if(!["full","superadmin"].includes(role)){alert("Super Admin only.");location.replace("admin.html");}
+const items=[
+ {id:"videoLessons",icon:"🎥",title:"Video Lessons",desc:"Recorded lessons and learning sessions."},
+ {id:"modelPapers",icon:"🏆",title:"Model / TOP Ranking Papers",desc:"Practice papers based on the student's grade."},
+ {id:"pastPapers",icon:"📖",title:"Past Papers",desc:"Previous examination papers for practice."},
+ {id:"revisionNotes",icon:"🟢",title:"Revision Notes",desc:"Structured revision material and key concepts."},
+ {id:"answerSchemes",icon:"📝",title:"Answer Schemes",desc:"Review answers and improve examination technique."},
+ {id:"examPreparation",icon:"📅",title:"Exam Preparation",desc:"Track paper completion and published results."}
+];
+const state={};
+const grid=document.getElementById("controlGrid");
+function render(){
+ grid.innerHTML=items.map(x=>{
+  const published=state[x.id]!==false;
+  return '<article class="control-card"><div class="control-top"><div class="control-icon">'+x.icon+'</div><span class="status '+(published?"published":"unpublished")+'">'+(published?"PUBLISHED":"UNPUBLISHED")+'</span></div><h2>'+x.title+'</h2><p>'+x.desc+'</p><button class="publish-btn '+(published?"unpublish":"")+'" data-id="'+x.id+'">'+(published?"Unpublish":"Publish")+'</button></article>';
+ }).join("");
+ grid.querySelectorAll(".publish-btn").forEach(btn=>btn.onclick=async()=>{
+  const id=btn.dataset.id;btn.disabled=true;
+  const next=state[id]===false;
+  await setDoc(doc(db,"lmsProgramContent",id),{published:next,updatedAt:new Date().toISOString()},{merge:true});
+  state[id]=next;render();
+ });
+}
+onSnapshot(collection(db,"lmsProgramContent"),snap=>{items.forEach(x=>state[x.id]=true);snap.forEach(d=>{if(Object.prototype.hasOwnProperty.call(state,d.id))state[d.id]=d.data().published!==false});render()},()=>{render()});
+</script>
+</body></html>
