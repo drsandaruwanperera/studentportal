@@ -2324,3 +2324,123 @@ body.dark-mode .theme-card-btn.active{
         font-size:7.5px;
     }
 }
+
+
+
+/* =====================================================
+   FINAL DARK LMS OVERRIDES
+   Keeps the dashboard consistently dark across cached
+   and legacy stylesheet rules.
+===================================================== */
+html,body{
+    background:#080d1b !important;
+    color:#f5f7ff !important;
+}
+body .main-content{
+    background:transparent !important;
+}
+body .lms-header{
+    background:rgba(8,13,27,.96) !important;
+    color:#f5f7ff !important;
+    border-bottom:1px solid rgba(148,163,184,.12) !important;
+}
+body .lms-header-title h1,
+body .lms-section-heading h2,
+body .widget-heading h2{
+    color:#f5f7ff !important;
+}
+body .lms-header-title p,
+body .widget-subtitle{
+    color:#78869e !important;
+}
+body .lms-header-title p span{
+    color:#cbd5e1 !important;
+}
+body .lms-search{
+    background:#10182c !important;
+    border:1px solid #293653 !important;
+}
+body .lms-search input{
+    color:#f8fafc !important;
+}
+body .lms-search input::placeholder{
+    color:#6f7d95 !important;
+}
+body .lms-stat-card{
+    color:#fff !important;
+    border-color:rgba(255,255,255,.08) !important;
+    box-shadow:0 15px 38px rgba(0,0,0,.22) !important;
+}
+body .lms-stat-card:nth-child(1){
+    background:linear-gradient(135deg,#5428df,#713cff) !important;
+}
+body .lms-stat-card:nth-child(2){
+    background:linear-gradient(135deg,#1554d8,#356ff0) !important;
+}
+body .lms-stat-card:nth-child(3){
+    background:linear-gradient(135deg,#078b69,#159fbb) !important;
+}
+body .lms-stat-card strong{
+    color:#fff !important;
+}
+body .lms-stat-card span{
+    color:rgba(255,255,255,.76) !important;
+}
+body .announcement-panel,
+body .lms-widget{
+    background:linear-gradient(145deg,#111a30,#0d1527) !important;
+    border:1px solid rgba(148,163,184,.14) !important;
+    color:#f5f7ff !important;
+    box-shadow:0 16px 40px rgba(0,0,0,.22) !important;
+}
+body .announcement-panel-head strong,
+body .dashboard-announcement-copy strong{
+    color:#f5f7ff !important;
+}
+body .announcement-panel p,
+body .dashboard-announcement-copy p{
+    color:#8f9db5 !important;
+}
+body .announcement-panel time,
+body .dashboard-announcement-date{
+    color:#68768e !important;
+}
+body .dashboard-announcement-card{
+    border-bottom-color:rgba(148,163,184,.10) !important;
+}
+body .dashboard-announcement-icon{
+    background:linear-gradient(145deg,#273e8f,#354fd2) !important;
+    color:#fff !important;
+}
+body .progress-ring{
+    background:conic-gradient(#6f5cff 0deg,#6f5cff 0deg,#27324b 0deg) !important;
+}
+body .progress-ring:after{
+    background:#10192d !important;
+}
+body .progress-ring strong{
+    color:#fff !important;
+}
+body .progress-ring span,
+body .progress-legend div{
+    color:#8f9db5 !important;
+}
+body .lms-quick-row a{
+    background:linear-gradient(145deg,#111b32,#0f172a) !important;
+    border:1px solid rgba(148,163,184,.14) !important;
+    color:#f5f7ff !important;
+}
+body .lms-quick-row strong{
+    color:#f5f7ff !important;
+}
+body .lms-quick-row small{
+    color:#8290a7 !important;
+}
+@media(max-width:800px){
+    body .lms-header{
+        background:#080d1b !important;
+    }
+    body .lms-stat-card{
+        min-height:100px !important;
+    }
+}
