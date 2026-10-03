@@ -2444,3 +2444,18 @@ body .lms-quick-row small{
         min-height:100px !important;
     }
 }
+
+/* Unified student navigation accent */
+.sidebar-nav .sidebar-link:not(.active) .nav-icon{
+    color:#8b7cff !important;
+    font-size:15px !important;
+    width:24px;
+    text-align:center;
+    filter:none !important;
+}
+.sidebar-nav .sidebar-link:not(.active):hover .nav-icon{
+    color:#a99cff !important;
+}
+.sidebar-nav .sidebar-link.active .nav-icon{
+    color:#ffffff !important;
+}
