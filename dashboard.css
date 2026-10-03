@@ -1940,3 +1940,11 @@ body.dark-mode .theme-switch button.active{background:#29235d;color:#fff}
  body .theme-switch{position:fixed;left:15px;right:15px;bottom:15px;z-index:1300;justify-content:center}
  body .theme-switch button{flex:1}
 }
+
+@media(max-width:800px){
+ body .summary-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ body .summary-grid .summary-card:nth-child(4){display:flex}
+ body .summary-card{min-height:112px;padding:13px}
+ body .summary-info strong{font-size:21px}
+ body .content{padding-bottom:90px}
+}
