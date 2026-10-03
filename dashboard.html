@@ -68,6 +68,19 @@ body{background:var(--lms-bg)!important;color:var(--lms-text)!important;font-fam
 body.dark-mode{background:var(--lms-bg)!important}
 @media(max-width:1000px){.lms-dashboard-grid{grid-template-columns:1fr}.lms-side-column{display:grid;grid-template-columns:1fr 1fr;gap:14px}.lms-widget{margin-bottom:0}.lms-quick-row{grid-template-columns:1fr 1fr}.lms-stat-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:800px){.sidebar{width:285px!important}.main-content{width:100%!important;margin-left:0!important}.lms-header{height:auto;min-height:76px;padding:14px 15px}.lms-header-actions{gap:7px}.lms-search{display:none}.lms-user>div:nth-child(2),.lms-user-arrow{display:none}.lms-dashboard{padding:0 15px 80px}.lms-stat-grid{grid-template-columns:1fr 1fr;gap:10px;padding:17px 0}.lms-stat-card:last-child{grid-column:span 2}.lms-dashboard-grid{display:block}.lms-side-column{display:block;margin-top:14px}.lms-widget{margin-bottom:12px}.lms-quick-row{grid-template-columns:1fr}.lms-section-heading{margin-top:4px}.announcement-panel{padding:15px}.announcement-panel-head time{display:none}}
+ 
+.dashboard-announcement-feed{display:grid;gap:10px;margin-top:14px}
+.dashboard-announcement-card{display:flex;gap:10px;align-items:flex-start;padding:11px 0;border-bottom:1px solid #edf0f4}
+.dashboard-announcement-card:last-child{border-bottom:0;padding-bottom:0}
+.dashboard-announcement-icon{width:34px;height:34px;border-radius:10px;background:#eef4f6;color:#477c91;display:grid;place-items:center;flex:none;font-size:15px}
+.dashboard-announcement-copy{min-width:0}
+.dashboard-announcement-copy strong{display:block;font-size:10px;line-height:1.35;color:#182039;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dashboard-announcement-copy p{margin:3px 0 0;color:#7d879b;font-size:9px;line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.dashboard-announcement-meta{display:flex;align-items:center;gap:6px;margin-top:5px}
+.dashboard-announcement-tag{font-size:7px;font-weight:800;color:#477c91;background:#edf5f7;border-radius:8px;padding:3px 6px}
+.dashboard-announcement-date{font-size:7px;color:#a0a7b6}
+.dashboard-announcement-loading,.dashboard-announcement-empty{padding:14px 0;color:#9299aa;font-size:9px}
+@media(max-width:1000px){.dashboard-announcement-card{padding:9px 0}}
 </style></head>
 
 
@@ -313,17 +326,16 @@ body.dark-mode{background:var(--lms-bg)!important}
                 </div>
 
                 <aside class="lms-side-column">
-                    <section class="lms-widget">
+                    <section class="lms-widget announcement-feed-widget">
                         <div class="widget-heading">
-                            <h2>Upcoming deadlines</h2>
-                            <a href="progress.html">Calendar</a>
-                        </div>
-                        <div class="deadline-empty">
-                            <div class="deadline-icon">◷</div>
                             <div>
-                                <strong>No upcoming deadlines</strong>
-                                <span>New tasks will appear here.</span>
+                                <h2>Latest announcements</h2>
+                                <p class="widget-subtitle">Important updates for you</p>
                             </div>
+                            <a href="announcements.html">View all</a>
+                        </div>
+                        <div id="dashboardAnnouncementFeed" class="dashboard-announcement-feed">
+                            <div class="dashboard-announcement-loading">Loading announcements…</div>
                         </div>
                     </section>
 
@@ -912,6 +924,49 @@ document.addEventListener(
   }
   sync();
   [p,viewed,total].filter(Boolean).forEach(el=>new MutationObserver(sync).observe(el,{childList:true,characterData:true,subtree:true}));
+})();
+</script><script type="module">
+import {db,collection,getDocs} from "./firebase.js";
+(function(){
+  const feed=document.getElementById("dashboardAnnouncementFeed");
+  if(!feed)return;
+  const esc=(v)=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
+  const timeValue=(v)=>{
+    if(!v)return 0;
+    if(typeof v.toMillis==="function")return v.toMillis();
+    const n=Number(v); return Number.isFinite(n)?n:0;
+  };
+  const dateValue=(v)=>{
+    const n=timeValue(v); return n?new Date(n).toLocaleDateString("en-GB",{day:"2-digit",month:"short"}):"";
+  };
+  async function load(){
+    try{
+      const snap=await getDocs(collection(db,"announcements"));
+      const grade=(sessionStorage.getItem("studentGrade")||"").toLowerCase().replace(/\s/g,"");
+      const now=Date.now();
+      const items=snap.docs.map(d=>({id:d.id,...d.data()}))
+        .filter(x=>{
+          if(x.enabled===false||x.active===false)return false;
+          if(x.expiresAt&&timeValue(x.expiresAt)<now)return false;
+          if(!x.grade)return true;
+          const g=String(x.grade).toLowerCase().replace(/\s/g,"");
+          return g==="all"||g===grade;
+        })
+        .sort((a,b)=>timeValue(b.createdAt)-timeValue(a.createdAt))
+        .slice(0,4);
+      if(!items.length){
+        feed.innerHTML='<div class="dashboard-announcement-empty">No new announcements right now.</div>';
+        return;
+      }
+      feed.innerHTML=items.map(x=>'<article class="dashboard-announcement-card"><div class="dashboard-announcement-icon">📢</div><div class="dashboard-announcement-copy"><strong>'+esc(x.title||"Portal Update")+'</strong><p>'+esc(x.message||x.description||"Important information for students.")+'</p><div class="dashboard-announcement-meta"><span class="dashboard-announcement-tag">UPDATE</span>'+(x.createdAt?'<span class="dashboard-announcement-date">'+esc(dateValue(x.createdAt))+'</span>':"")+'</div></div></article>').join("");
+    }catch(e){
+      console.info("Could not load dashboard announcements.",e);
+      feed.innerHTML='<div class="dashboard-announcement-empty">No new announcements right now.</div>';
+    }
+  }
+  load();
+  const notify=document.querySelector(".lms-notification");
+  notify?.addEventListener("click",()=>document.querySelector(".announcement-feed-widget")?.scrollIntoView({behavior:"smooth",block:"center"}));
 })();
 </script></body>
 
