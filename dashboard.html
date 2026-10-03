@@ -178,6 +178,18 @@ body{background:radial-gradient(circle at 76% 10%,rgba(103,60,255,.10),transpare
 .sidebar-nav .sidebar-link.active .nav-icon{color:#fff!important}
 .sidebar-nav .sidebar-link:not(.active) .nav-icon{color:#8b7cff!important}
 .sidebar-nav .sidebar-link:hover .nav-icon{color:#b0a5ff!important}
+</style><style id="colorful-sidebar-icons">
+.sidebar-nav .sidebar-link:nth-child(1) .nav-icon{color:#8b5cf6!important}
+.sidebar-nav .sidebar-link:nth-child(2) .nav-icon{color:#38bdf8!important}
+.sidebar-nav .sidebar-link:nth-child(3) .nav-icon{color:#a78bfa!important}
+.sidebar-nav .sidebar-link:nth-child(4) .nav-icon{color:#f59e0b!important}
+.sidebar-nav .sidebar-link:nth-child(5) .nav-icon{color:#22c55e!important}
+.sidebar-nav .sidebar-link.active .nav-icon{color:#fff!important}
+.sidebar-nav .sidebar-link:hover .nav-icon{filter:brightness(1.2)}
+.professional-profile{display:flex!important;align-items:center!important;gap:11px!important}
+.professional-profile .student-avatar{width:42px!important;height:42px!important;border-radius:13px!important;background:linear-gradient(145deg,#293c80,#3b82f6)!important;color:#fff!important;display:grid!important;place-items:center!important;font-weight:800!important}
+.professional-profile .student-account-info strong{display:block!important;color:#f5f7ff!important;font-size:11px!important;max-width:135px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+.professional-profile .student-account-info span{display:block!important;color:#8290a7!important;font-size:9px!important;margin-top:3px!important}
 </style></head>
 
 
@@ -294,23 +306,13 @@ body{background:radial-gradient(circle at 76% 10%,rgba(103,60,255,.10),transpare
 
         <!-- STUDENT ACCOUNT -->
 
-        <div class="student-account">
+        <div class="student-account professional-profile">
 
-            <div class="student-avatar">
-                👤
-            </div>
-
+            <div class="student-avatar" id="sidebarStudentAvatar">S</div>
 
             <div class="student-account-info">
-
-                <strong id="sidebarStudentId">
-                    —
-                </strong>
-
-                <span id="sidebarStudentGrade">
-                    Student
-                </span>
-
+                <strong id="sidebarStudentId">Student</strong>
+                <span id="sidebarStudentGrade">Student</span>
             </div>
 
         </div>
@@ -358,7 +360,7 @@ body{background:radial-gradient(circle at 76% 10%,rgba(103,60,255,.10),transpare
                 <div class="lms-user">
                     <div class="lms-avatar" id="topUserAvatar">S</div>
                     <div>
-                        <strong id="topStudentId">—</strong>
+                        <strong id="topStudentId">Student</strong>
                         <span id="topStudentType">Student</span>
                     </div>
                     <span class="lms-user-arrow">↪</span>
@@ -484,15 +486,7 @@ document.addEventListener(
         if (avatarEl && studentName) avatarEl.textContent = studentName.charAt(0).toUpperCase();
 
         const idElements = [
-
-            document.getElementById(
-                "sidebarStudentId"
-            ),
-
-            document.getElementById(
-                "topStudentId"
-            )
-
+            document.getElementById("topStudentId")
         ];
 
 
@@ -600,11 +594,13 @@ document.addEventListener(
 
 
         if (topName) {
-
-            topName.textContent =
-                studentName;
-
+            topName.textContent = studentName;
         }
+
+        const sidebarName = document.getElementById("sidebarStudentId");
+        const sidebarAvatar = document.getElementById("sidebarStudentAvatar");
+        if (sidebarName) sidebarName.textContent = studentName;
+        if (sidebarAvatar && studentName) sidebarAvatar.textContent = studentName.charAt(0).toUpperCase();
 
 
 
