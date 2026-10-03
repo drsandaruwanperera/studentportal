@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Results Management | Admin</title><link rel="stylesheet" href="admin.css?v=22">
+<style>
+.results-shell{padding:28px 34px 60px}.results-hero{padding:28px;border-radius:22px;background:linear-gradient(135deg,#27205f,#4037c9 55%,#6d28d9);margin-bottom:20px}.results-hero small{color:#a6ff2e;font-size:10px;font-weight:850;letter-spacing:1.3px}.results-hero h1{color:#fff;margin:7px 0;font-size:30px}.results-hero p{color:rgba(255,255,255,.72);font-size:13px}.result-layout{display:grid;grid-template-columns:360px minmax(0,1fr);gap:18px}.panel{padding:22px;background:rgba(17,24,43,.94);border:1px solid rgba(255,255,255,.1);border-radius:18px;box-shadow:0 12px 32px rgba(0,0,0,.16)}.panel h2{color:#f4f7ff;font-size:18px;margin-bottom:16px}.field{margin-bottom:12px}.field label{display:block;color:#8f9bb2;font-size:9px;font-weight:800;margin-bottom:6px;letter-spacing:.05em}.field input,.field select{width:100%;height:42px;border:1px solid rgba(255,255,255,.1);border-radius:10px;background:#0d1426;color:#f4f7ff;padding:0 11px;outline:none;font-size:11px}.field input:focus,.field select:focus{border-color:#5b4bff;box-shadow:0 0 0 3px rgba(91,75,255,.1)}.form-actions{display:flex;gap:8px;margin-top:15px}.btn{min-height:42px;padding:0 15px;border:0;border-radius:10px;font-size:10px;font-weight:800;cursor:pointer}.primary{background:linear-gradient(135deg,#5b4bff,#4037c9);color:#fff}.secondary{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#c5cee0}.tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}.tab{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.035);color:#aeb8ce;padding:8px 12px;border-radius:999px;font-size:9px;font-weight:800;cursor:pointer}.tab.active{background:#5b4bff;color:#fff;border-color:#5b4bff}.result-list{display:grid;gap:10px}.result-row{display:grid;grid-template-columns:1.1fr .8fr .8fr .65fr auto;align-items:center;gap:12px;padding:14px;border:1px solid rgba(255,255,255,.08);border-radius:13px;background:rgba(21,31,53,.72)}.result-row strong{display:block;color:#f4f7ff;font-size:11px}.result-row span{display:block;color:#8f9bb2;font-size:9px;margin-top:3px}.result-score{color:#a6ff2e!important;font-weight:900!important;font-size:15px!important}.row-actions{display:flex;gap:6px}.small-btn{min-height:34px;padding:0 10px;border:0;border-radius:8px;background:#4037c9;color:#fff;font-size:9px;font-weight:800;cursor:pointer}.small-btn.publish{background:#147d52}.small-btn.unpublish{background:#a82d43}.small-btn.delete{background:#642433}.empty{padding:28px;text-align:center;color:#7f8ba3;border:1px dashed rgba(255,255,255,.1);border-radius:12px;font-size:10px}
+@media(max-width:1000px){.result-layout{grid-template-columns:1fr}.result-row{grid-template-columns:1fr 1fr 1fr}.row-actions{grid-column:1/-1}}@media(max-width:600px){.results-shell{padding:15px}.results-hero h1{font-size:24px}.result-row{grid-template-columns:1fr 1fr}.result-row>div:first-child{grid-column:1/-1}}
+</style>
+</head>
+<body>
+<div class="admin-layout">
+<aside class="sidebar">
+<div class="sidebar-brand"><div class="brand-logo">🎓</div><div><h2>Student</h2><span>Assessment Portal</span></div></div>
+<div class="sidebar-label">ADMINISTRATION</div><nav class="sidebar-nav">
+<a href="admin.html" class="nav-item">🏠 <span>Dashboard</span></a>
+<a href="students.html" class="nav-item">👥 <span>Students</span></a>
+<a href="paper-management.html" class="nav-item">📚 <span>Paper Management</span></a>
+<a href="admin-program-control.html" class="nav-item">🎛️ <span>Program Publishing</span></a>
+<a href="admin-results.html" class="nav-item active">🏆 <span>Results Management</span></a>
+</nav><div class="sidebar-bottom"><a class="logout-btn" href="admin.html">← Back to Admin</a></div>
+</aside>
+<main class="main-content results-shell">
+<section class="results-hero"><small>RESULTS CONTROL CENTER</small><h1>Results Management</h1><p>Add, update, publish and unpublish results separately for Grade 10, Grade 11 and Advanced Level.</p></section>
+<div class="result-layout">
+<section class="panel"><h2 id="formTitle">Add Result</h2>
+<form id="resultForm">
+<div class="field"><label>GRADE / CATEGORY</label><select id="grade"><option value="grade10">Grade 10</option><option value="grade11">Grade 11</option><option value="al">Advanced Level (A/L)</option></select></div>
+<div class="field"><label>STUDENT ID</label><input id="studentId" required placeholder="e.g. 110001"></div>
+<div class="field"><label>STUDENT NAME</label><input id="studentName" required></div>
+<div class="field"><label>EXAM / RESULT TITLE</label><input id="exam" required placeholder="e.g. Term Test 01"></div>
+<div class="field"><label>SCORE</label><input id="score" type="number" min="0" required></div>
+<div class="field"><label>MAX SCORE</label><input id="maxScore" type="number" min="1" value="100" required></div>
+<div class="form-actions"><button class="btn primary" type="submit">Save Result</button><button class="btn secondary" type="button" id="clear">Clear</button></div>
+</form></section>
+<section class="panel"><h2>Published / Draft Results</h2><div class="tabs"><button class="tab active" data-grade="grade10">Grade 10</button><button class="tab" data-grade="grade11">Grade 11</button><button class="tab" data-grade="al">A/L</button></div><div id="list" class="result-list"><div class="empty">Loading…</div></div></section>
+</div>
+</main></div>
+<script type="module">
+import {db,collection,doc,setDoc,deleteDoc,onSnapshot} from "./firebase.js";
+const role=(sessionStorage.getItem("adminRole")||"").toLowerCase();
+if(sessionStorage.getItem("adminLoggedIn")!=="true")location.replace("admin-login.html");
+if(!["full","superadmin"].includes(role)){alert("Super Admin only.");location.replace("admin.html");}
+const form=document.getElementById("resultForm"),list=document.getElementById("list"),clear=document.getElementById("clear"),formTitle=document.getElementById("formTitle");
+const grade=document.getElementById("grade"),studentId=document.getElementById("studentId"),studentName=document.getElementById("studentName"),exam=document.getElementById("exam"),score=document.getElementById("score"),maxScore=document.getElementById("maxScore");
+let editing=null,currentGrade="grade10",rows=[];
+const slug=s=>s.toLowerCase().trim().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+function reset(){editing=null;form.reset();grade.value=currentGrade;maxScore.value=100;formTitle.textContent="Add Result"}
+function draw(){const data=rows.filter(r=>r.grade===currentGrade);if(!data.length){list.innerHTML='<div class="empty">No results added for this category yet.</div>';return}list.innerHTML=data.map(r=>'<div class="result-row"><div><strong>'+r.studentName+'</strong><span>'+r.studentId+' • '+r.exam+'</span></div><div><span>Status</span><strong>'+((r.published===false)?"Draft":"Published")+'</strong></div><div><span>Grade</span><strong>'+r.grade.toUpperCase()+'</strong></div><div><span>Score</span><strong class="result-score">'+r.score+'/'+r.maxScore+'</strong></div><div class="row-actions"><button class="small-btn" data-edit="'+r.id+'">Edit</button><button class="small-btn '+(r.published===false?"publish":"unpublish")+'" data-pub="'+r.id+'">'+(r.published===false?"Publish":"Unpublish")+'</button><button class="small-btn delete" data-del="'+r.id+'">Delete</button></div></div>').join("");
+list.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>{const r=rows.find(x=>x.id===b.dataset.edit);if(!r)return;editing=r.id;grade.value=r.grade;studentId.value=r.studentId;studentName.value=r.studentName;exam.value=r.exam;score.value=r.score;maxScore.value=r.maxScore;formTitle.textContent="Update Result"});
+list.querySelectorAll("[data-pub]").forEach(b=>b.onclick=async()=>{const r=rows.find(x=>x.id===b.dataset.pub);if(r)await setDoc(doc(db,"studentResults",r.id),{published:r.published===false},{merge:true})});
+list.querySelectorAll("[data-del]").forEach(b=>b.onclick=async()=>{if(confirm("Delete this result?"))await deleteDoc(doc(db,"studentResults",b.dataset.del))});
+}
+form.onsubmit=async e=>{e.preventDefault();const g=grade.value,sid=studentId.value.trim().toUpperCase(),id=editing||g+"_"+sid+"_"+slug(exam.value);await setDoc(doc(db,"studentResults",id),{grade:g,studentId:sid,studentName:studentName.value.trim(),exam:exam.value.trim(),score:Number(score.value),maxScore:Number(maxScore.value),published:true,updatedAt:new Date().toISOString()},{merge:true});currentGrade=g;reset()};
+clear.onclick=reset;
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));t.classList.add("active");currentGrade=t.dataset.grade;draw()});
+onSnapshot(collection(db,"studentResults"),snap=>{rows=[];snap.forEach(d=>rows.push({id:d.id,...d.data()}));draw()},()=>draw());
+</script>
+</body></html>
