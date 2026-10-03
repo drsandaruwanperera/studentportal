@@ -537,9 +537,9 @@ document.addEventListener(
 
 
         const studentType =
-            sessionStorage.getItem(
-                "studentType"
-            ) || "Student";
+            sessionStorage.getItem("studentType") ||
+            sessionStorage.getItem("studentGrade") ||
+            "Student";
 
 
         const studentName =
@@ -577,37 +577,16 @@ document.addEventListener(
             "Student";
 
 
-        if (
-            studentType
-                .toLowerCase()
-                .includes("grade10")
-        ) {
+        const normalizedType = studentType.toLowerCase().replace(/[\s_-]+/g,"");
 
-            typeText =
-                "Grade 10 Student";
-
-        }
-
-        else if (
-            studentType
-                .toLowerCase()
-                .includes("grade11")
-        ) {
-
-            typeText =
-                "Grade 11 Student";
-
-        }
-
-        else if (
-            studentType
-                .toLowerCase()
-                .includes("al")
-        ) {
-
-            typeText =
-                "A/L Student";
-
+        if (normalizedType.includes("grade10")) {
+            typeText = "Grade 10 Student";
+        } else if (normalizedType.includes("grade11")) {
+            typeText = "Grade 11 Student";
+        } else if (normalizedType === "al" || normalizedType.includes("advancedlevel") || normalizedType.includes("a/l")) {
+            typeText = "A/L Student";
+        } else if (sessionStorage.getItem("studentGrade")) {
+            typeText = sessionStorage.getItem("studentGrade") + " Student";
         }
 
 
