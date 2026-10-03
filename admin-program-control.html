@@ -31,10 +31,17 @@
 </main>
 </div>
 <script type="module">
-import {db,doc,getDoc,setDoc,onSnapshot,collection} from "./firebase.js";
+import {db,doc,setDoc,onSnapshot,collection} from "./firebase.js";
+
 const role=(sessionStorage.getItem("adminRole")||"").toLowerCase();
-if(sessionStorage.getItem("adminLoggedIn")!=="true") location.replace("admin-login.html");
-if(!["full","superadmin"].includes(role)){alert("Super Admin only.");location.replace("admin.html");}
+if(sessionStorage.getItem("adminLoggedIn")!=="true"){
+  location.replace("admin-login.html");
+}
+if(!["full","superadmin"].includes(role)){
+  alert("Super Admin only.");
+  location.replace("admin.html");
+}
+
 const items=[
  {id:"videoLessons",icon:"🎥",title:"Video Lessons",desc:"Recorded lessons and learning sessions."},
  {id:"modelPapers",icon:"🏆",title:"Model / TOP Ranking Papers",desc:"Practice papers based on the student's grade."},
@@ -43,20 +50,79 @@ const items=[
  {id:"answerSchemes",icon:"📝",title:"Answer Schemes",desc:"Review answers and improve examination technique."},
  {id:"examPreparation",icon:"📅",title:"Exam Preparation",desc:"Track paper completion and published results."}
 ];
-const state={};
+
+const state=Object.fromEntries(items.map(x=>[x.id,true]));
+const pending=new Set();
 const grid=document.getElementById("controlGrid");
+
 function render(){
- grid.innerHTML=items.map(x=>{
-  const published=state[x.id]!==false;
-  return '<article class="control-card"><div class="control-top"><div class="control-icon">'+x.icon+'</div><span class="status '+(published?"published":"unpublished")+'">'+(published?"PUBLISHED":"UNPUBLISHED")+'</span></div><h2>'+x.title+'</h2><p>'+x.desc+'</p><div class="control-actions"><button class="publish-btn '+(published?"unpublish":"")+'" data-toggle="'+x.id+'">'+(published?"Unpublish":"Publish")+'</button><button class="save-btn" data-save="'+x.id+'">Save Changes</button></div><div class="dirty" data-dirty="'+x.id+'" style="display:none">● Unsaved change</div></article>';
- }).join("");
- grid.querySelectorAll(".publish-btn").forEach(btn=>btn.onclick=async()=>{
-  const id=btn.dataset.id;btn.disabled=true;
-  const next=state[id]===false;
-  await setDoc(doc(db,"lmsProgramContent",id),{published:next,updatedAt:new Date().toISOString()},{merge:true});
-  state[id]=next;render();
- });
+  grid.innerHTML=items.map(x=>{
+    const published=state[x.id]!==false;
+    const dirty=pending.has(x.id);
+    return '<article class="control-card">'+
+      '<div class="control-top"><div class="control-icon">'+x.icon+'</div>'+
+      '<span class="status '+(published?"published":"unpublished")+'">'+(published?"PUBLISHED":"UNPUBLISHED")+'</span></div>'+
+      '<h2>'+x.title+'</h2><p>'+x.desc+'</p>'+
+      '<div class="control-actions">'+
+      '<button type="button" class="publish-btn '+(published?"unpublish":"")+'" data-toggle="'+x.id+'">'+(published?"Unpublish":"Publish")+'</button>'+
+      '<button type="button" class="save-btn '+(dirty?"":"")+'" data-save="'+x.id+'">'+(dirty?"Save Changes":"Saved ✓")+'</button>'+
+      '</div>'+
+      '<div class="dirty" data-dirty="'+x.id+'" style="display:'+(dirty?"inline-flex":"none")+'">● Unsaved change</div>'+
+      '</article>';
+  }).join("");
+
+  grid.querySelectorAll("[data-toggle]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const id=btn.dataset.toggle;
+      state[id]=state[id]===false;
+      pending.add(id);
+      render();
+    });
+  });
+
+  grid.querySelectorAll("[data-save]").forEach(btn=>{
+    btn.addEventListener("click",async()=>{
+      const id=btn.dataset.save;
+      if(!pending.has(id)){
+        btn.textContent="Already Saved ✓";
+        setTimeout(()=>render(),900);
+        return;
+      }
+      btn.disabled=true;
+      btn.textContent="Saving...";
+      try{
+        await setDoc(doc(db,"lmsProgramContent",id),{
+          published:state[id]!==false,
+          updatedAt:new Date().toISOString()
+        },{merge:true});
+        pending.delete(id);
+        render();
+      }catch(error){
+        console.error("Program publishing save failed:",error);
+        btn.disabled=false;
+        btn.textContent="Save Failed — Retry";
+        alert("Save failed. Firebase Firestore rejected the write. Check the admin Firestore permission.");
+      }
+    });
+  });
 }
-onSnapshot(collection(db,"lmsProgramContent"),snap=>{items.forEach(x=>state[x.id]=true);snap.forEach(d=>{if(Object.prototype.hasOwnProperty.call(state,d.id))state[d.id]=d.data().published!==false});render()},()=>{render()});
+
+onSnapshot(
+  collection(db,"lmsProgramContent"),
+  snapshot=>{
+    snapshot.forEach(d=>{
+      if(Object.prototype.hasOwnProperty.call(state,d.id) && !pending.has(d.id)){
+        state[d.id]=d.data().published!==false;
+      }
+    });
+    render();
+  },
+  error=>{
+    console.error("Program publishing realtime listener failed:",error);
+    render();
+  }
+);
+
+render();
 </script>
 </body></html>
