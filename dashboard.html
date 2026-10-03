@@ -116,104 +116,35 @@
 
 
             <a
-                href="#"
+                href="my-program.html"
                 class="sidebar-link"
-                id="myPapersNav"
             >
-
-                <span class="nav-icon">
-                    📚
-                </span>
-
-                <span>
-                    My Papers
-                </span>
-
+                <span class="nav-icon">📚</span>
+                <span>My Program</span>
             </a>
 
-
             <a
-                href="#"
+                href="progress.html"
                 class="sidebar-link"
-                id="modelPapersNav"
             >
-
-                <span class="nav-icon">
-                    📘
-                </span>
-
-                <span>
-                    Model Papers
-                </span>
-
+                <span class="nav-icon">📈</span>
+                <span>Progress</span>
             </a>
 
-
             <a
-                href="#"
+                href="announcements.html"
                 class="sidebar-link"
-                id="pastPapersNav"
             >
-
-                <span class="nav-icon">
-                    📖
-                </span>
-
-                <span>
-                    Past Papers
-                </span>
-
+                <span class="nav-icon">🔔</span>
+                <span>Announcements</span>
             </a>
 
-
             <a
-                href="#"
+                href="support.html"
                 class="sidebar-link"
-                id="myProgressNav"
             >
-
-                <span class="nav-icon">
-                    📈
-                </span>
-
-                <span>
-                    My Progress
-                </span>
-
-            </a>
-
-
-            <a
-                href="#"
-                class="sidebar-link"
-                id="announcementsNav"
-            >
-
-                <span class="nav-icon">
-                    🔔
-                </span>
-
-                <span>
-                    Announcements
-                </span>
-
-            </a>
-
-
-            <a
-                href="#"
-                class="sidebar-link"
-                id="supportNav"
-            >
-
-                <span class="nav-icon">
-                    🛟
-                </span>
-
-                <span>
-                    Support
-                </span>
-
+                <span class="nav-icon">🛟</span>
+                <span>Support</span>
             </a>
 
         </nav>
@@ -249,6 +180,11 @@
 
 
         <!-- LOGOUT -->
+
+        <div class="theme-switch" aria-label="Theme mode">
+            <button type="button" id="lightThemeBtn">☀ Light</button>
+            <button type="button" id="darkThemeBtn">◐ Dark</button>
+        </div>
 
         <button
             type="button"
@@ -888,9 +824,13 @@
                 </div>
 
 
-                <span class="announcement-status">
-                    No new announcements
-                </span>
+                <a
+                    href="announcements.html"
+                    class="announcement-status"
+                    style="text-decoration:none"
+                >
+                    View All →
+                </a>
 
             </section>
 
@@ -927,10 +867,10 @@
 
 
                     <a
-                        href="tel:0779011780"
+                        href="support.html"
                         class="support-link"
                     >
-                        📞 077 901 1780
+                        💬 Open WhatsApp Support →
                     </a>
 
                 </div>
@@ -1500,6 +1440,18 @@ document.addEventListener(
     sync();
     new MutationObserver(sync).observe(document.getElementById('topStudentName')||document.body,{subtree:true,childList:true,characterData:true});
 })();
+const lightThemeBtn=document.getElementById("lightThemeBtn");
+const darkThemeBtn=document.getElementById("darkThemeBtn");
+function applyLmsTheme(theme){
+    document.body.classList.toggle("dark-mode", theme === "dark");
+    localStorage.setItem("lmsTheme", theme);
+    lightThemeBtn?.classList.toggle("active", theme !== "dark");
+    darkThemeBtn?.classList.toggle("active", theme === "dark");
+}
+lightThemeBtn?.addEventListener("click",()=>applyLmsTheme("light"));
+darkThemeBtn?.addEventListener("click",()=>applyLmsTheme("dark"));
+applyLmsTheme(localStorage.getItem("lmsTheme") || "light");
+
 </script>
 
 </body>
