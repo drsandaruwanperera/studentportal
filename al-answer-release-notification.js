@@ -1,3 +1,5 @@
+import {db,doc,onSnapshot} from "./firebase.js";
+
 // A/L-only notification for the released Top Ranking Paper 01 answers.
 
 function normalize(value) {
@@ -94,10 +96,16 @@ function ensureStyles() {
     document.head.appendChild(style);
 }
 
+let legacyVisible = false;
+
 function renderALAnswerNotification() {
     const section = document.getElementById("notificationSection");
     const list = document.getElementById("portalNotificationList");
     if (!section || !list || !isALStudent()) return false;
+    if (!legacyVisible) {
+        document.getElementById("alAnswerReleaseNotification")?.remove();
+        return false;
+    }
 
     if (document.getElementById("alAnswerReleaseNotification")) return true;
 
@@ -121,8 +129,28 @@ function renderALAnswerNotification() {
     return true;
 }
 
+function watchLegacyAnnouncement() {
+    onSnapshot(doc(db, "announcements", "legacy-al-answer-release-paper01-september2026"), (snap) => {
+        const data = snap.exists() ? snap.data() : null;
+        legacyVisible = !!data &&
+            data.enabled !== false &&
+            data.active !== false &&
+            data.showOnDashboard !== false &&
+            (!data.expiresAt ||
+                (typeof data.expiresAt?.toMillis === "function"
+                    ? data.expiresAt.toMillis()
+                    : Date.parse(data.expiresAt) || Number(data.expiresAt) || 0) > Date.now());
+        if (legacyVisible) renderALAnswerNotification();
+        else document.getElementById("alAnswerReleaseNotification")?.remove();
+    }, () => {
+        legacyVisible = false;
+        document.getElementById("alAnswerReleaseNotification")?.remove();
+    });
+}
+
 function init() {
     if (!isALStudent()) return;
+    watchLegacyAnnouncement();
 
     if (renderALAnswerNotification()) return;
 
