@@ -6,7 +6,7 @@
 <style>
 .results-shell{padding:28px 34px 60px}.results-hero{padding:28px;border-radius:22px;background:linear-gradient(135deg,#27205f,#4037c9 55%,#6d28d9);margin-bottom:20px}.results-hero small{color:#a6ff2e;font-size:10px;font-weight:850;letter-spacing:1.3px}.results-hero h1{color:#fff;margin:7px 0;font-size:30px}.results-hero p{color:rgba(255,255,255,.72);font-size:13px}.result-layout{display:grid;grid-template-columns:360px minmax(0,1fr);gap:18px}.panel{padding:22px;background:rgba(17,24,43,.94);border:1px solid rgba(255,255,255,.1);border-radius:18px;box-shadow:0 12px 32px rgba(0,0,0,.16)}.panel h2{color:#f4f7ff;font-size:18px;margin-bottom:16px}.field{margin-bottom:12px}.field label{display:block;color:#8f9bb2;font-size:9px;font-weight:800;margin-bottom:6px;letter-spacing:.05em}.field input,.field select{width:100%;height:42px;border:1px solid rgba(255,255,255,.1);border-radius:10px;background:#0d1426;color:#f4f7ff;padding:0 11px;outline:none;font-size:11px}.field input:focus,.field select:focus{border-color:#5b4bff;box-shadow:0 0 0 3px rgba(91,75,255,.1)}.form-actions{display:flex;gap:8px;margin-top:15px}.btn{min-height:42px;padding:0 15px;border:0;border-radius:10px;font-size:10px;font-weight:800;cursor:pointer}.primary{background:linear-gradient(135deg,#5b4bff,#4037c9);color:#fff}.secondary{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#c5cee0}.tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}.tab{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.035);color:#aeb8ce;padding:8px 12px;border-radius:999px;font-size:9px;font-weight:800;cursor:pointer}.tab.active{background:#5b4bff;color:#fff;border-color:#5b4bff}.result-list{display:grid;gap:10px}.result-row{display:grid;grid-template-columns:1.1fr .8fr .8fr .65fr auto;align-items:center;gap:12px;padding:14px;border:1px solid rgba(255,255,255,.08);border-radius:13px;background:rgba(21,31,53,.72)}.result-row strong{display:block;color:#f4f7ff;font-size:11px}.result-row span{display:block;color:#8f9bb2;font-size:9px;margin-top:3px}.result-score{color:#a6ff2e!important;font-weight:900!important;font-size:15px!important}.row-actions{display:flex;gap:6px}.small-btn{min-height:34px;padding:0 10px;border:0;border-radius:8px;background:#4037c9;color:#fff;font-size:9px;font-weight:800;cursor:pointer}.small-btn.publish{background:#147d52}.small-btn.unpublish{background:#a82d43}.small-btn.delete{background:#642433}.empty{padding:28px;text-align:center;color:#7f8ba3;border:1px dashed rgba(255,255,255,.1);border-radius:12px;font-size:10px}
 @media(max-width:1000px){.result-layout{grid-template-columns:1fr}.result-row{grid-template-columns:1fr 1fr 1fr}.row-actions{grid-column:1/-1}}@media(max-width:600px){.results-shell{padding:15px}.results-hero h1{font-size:24px}.result-row{grid-template-columns:1fr 1fr}.result-row>div:first-child{grid-column:1/-1}}
-</style>
+.pdf-import{margin:0 0 18px;padding:20px;background:linear-gradient(145deg,#111a30,#0d1527);border:1px solid rgba(255,255,255,.1);border-radius:18px}.pdf-import-head{display:flex;justify-content:space-between;gap:15px;align-items:flex-start}.pdf-import h2{margin:0 0 6px;color:#fff;font-size:17px}.pdf-import p{margin:0;color:#8795ad;font-size:10px;line-height:1.6}.pdf-import-grid{display:grid;grid-template-columns:1fr 1fr 1.4fr auto;gap:10px;align-items:end;margin-top:15px}.pdf-field label{display:block;color:#8f9bb2;font-size:8px;font-weight:850;margin-bottom:6px;letter-spacing:.08em}.pdf-field input,.pdf-field select{width:100%;height:40px;border:1px solid rgba(255,255,255,.1);border-radius:9px;background:#091121;color:#fff;padding:0 10px;font-size:10px}.pdf-import-btn{height:40px;padding:0 15px;border:0;border-radius:9px;background:linear-gradient(135deg,#5b4bff,#4037c9);color:#fff;font-size:10px;font-weight:850;cursor:pointer}.pdf-import-btn:disabled{opacity:.55;cursor:wait}.pdf-import-status{margin-top:12px;padding:10px 12px;border-radius:9px;background:rgba(255,255,255,.035);color:#9eabc0;font-size:9px;line-height:1.5}.pdf-import-status.success{color:#86efac}.pdf-import-status.error{color:#fda4af}.pdf-preview{margin-top:12px;display:none}.pdf-preview.show{display:block}.pdf-preview table{width:100%;border-collapse:collapse}.pdf-preview th,.pdf-preview td{padding:9px 10px;text-align:left;border-bottom:1px solid rgba(255,255,255,.07);font-size:9px}.pdf-preview th{color:#78879f;text-transform:uppercase;font-size:8px}.pdf-preview td{color:#d8deea}.match-ok{color:#86efac;font-weight:800}@media(max-width:850px){.pdf-import-grid{grid-template-columns:1fr 1fr}.pdf-import-btn{width:100%}}@media(max-width:600px){.pdf-import-grid{grid-template-columns:1fr}.pdf-import-head{display:block}}</style>
 </head>
 <body>
 <div class="admin-layout">
@@ -21,7 +21,7 @@
 </nav><div class="sidebar-bottom"><a class="logout-btn" href="admin.html">← Back to Admin</a></div>
 </aside>
 <main class="main-content results-shell">
-<section class="results-hero"><small>RESULTS CONTROL CENTER</small><h1>Results Management</h1><p>Add, update, publish and unpublish results separately for Grade 10, Grade 11 and Advanced Level.</p></section>
+<section class="results-hero"><small>RESULTS CONTROL CENTER</small><h1>Results Management</h1><p>Add, update, publish and unpublish results separately for Grade 10, Grade 11 and Advanced Level.</p></section><section class="pdf-import"><div class="pdf-import-head"><div><h2>📄 Import Results from PDF</h2><p>Upload a text-based results PDF. The system matches Student IDs against the live student database and prepares marks automatically. No PDF is stored in GitHub.</p></div><span style="color:#a6ff2e;font-size:8px;font-weight:850;letter-spacing:1px">SUPER ADMIN</span></div><div class="pdf-import-grid"><div class="pdf-field"><label>RESULT PDF</label><input id="resultsPdf" type="file" accept="application/pdf"></div><div class="pdf-field"><label>GRADE / CATEGORY</label><select id="pdfGrade"><option value="grade10">Grade 10</option><option value="grade11">Grade 11</option><option value="al">Advanced Level (A/L)</option></select></div><div class="pdf-field"><label>RESULT TITLE</label><input id="pdfExam" placeholder="e.g. Term Test 01"></div><div class="pdf-field"><label>MAX SCORE</label><input id="pdfMaxScore" type="number" min="1" value="100"></div></div><div style="display:flex;gap:9px;margin-top:11px;align-items:center"><button id="analyzePdf" class="pdf-import-btn" type="button">Analyze PDF</button><button id="savePdfResults" class="pdf-import-btn" type="button" style="display:none;background:#147d52">Publish Matched Results</button></div><div id="pdfStatus" class="pdf-import-status">Select a PDF to analyze.</div><div id="pdfPreview" class="pdf-preview"></div></section>
 <div class="result-layout">
 <section class="panel"><h2 id="formTitle">Add Result</h2>
 <form id="resultForm">
@@ -37,7 +37,7 @@
 </div>
 </main></div>
 <script type="module">
-import {db,collection,doc,setDoc,deleteDoc,onSnapshot} from "./firebase.js";
+import {db,collection,doc,setDoc,deleteDoc,onSnapshot,getDocs} from "./firebase.js";
 const role=(sessionStorage.getItem("adminRole")||"").toLowerCase();
 if(sessionStorage.getItem("adminLoggedIn")!=="true")location.replace("admin-login.html");
 if(!["full","superadmin"].includes(role)){alert("Super Admin only.");location.replace("admin.html");}
@@ -55,5 +55,147 @@ form.onsubmit=async e=>{e.preventDefault();const g=grade.value,sid=studentId.val
 clear.onclick=reset;
 document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));t.classList.add("active");currentGrade=t.dataset.grade;draw()});
 onSnapshot(collection(db,"studentResults"),snap=>{rows=[];snap.forEach(d=>rows.push({id:d.id,...d.data()}));draw()},()=>draw());
+
+const resultsPdf=document.getElementById("resultsPdf");
+const pdfGrade=document.getElementById("pdfGrade");
+const pdfExam=document.getElementById("pdfExam");
+const pdfMaxScore=document.getElementById("pdfMaxScore");
+const analyzePdf=document.getElementById("analyzePdf");
+const savePdfResults=document.getElementById("savePdfResults");
+const pdfStatus=document.getElementById("pdfStatus");
+const pdfPreview=document.getElementById("pdfPreview");
+let pdfMatches=[];
+
+function setPdfStatus(message,type=""){
+  pdfStatus.textContent=message;
+  pdfStatus.className="pdf-import-status"+(type?" "+type:"");
+}
+
+function normalizeId(v){return String(v||"").trim().toUpperCase();}
+
+function parseScoreFromText(text,maxScore){
+  const clean=String(text||"").replace(/[,]/g," ");
+  const pair=[...clean.matchAll(/(\d{1,3}(?:\.\d+)?)\s*(?:\/|of|out\s+of)\s*(\d{1,3}(?:\.\d+)?)/gi)];
+  if(pair.length){
+    const m=pair[pair.length-1];
+    const score=Number(m[1]), max=Number(m[2]);
+    if(Number.isFinite(score)&&Number.isFinite(max)&&score<=max)return {score,maxScore:max};
+  }
+  const nums=[...clean.matchAll(/\b\d{1,3}(?:\.\d+)?\b/g)].map(m=>Number(m[0])).filter(n=>Number.isFinite(n));
+  const valid=nums.filter(n=>n<=Number(maxScore));
+  if(!valid.length)return null;
+  return {score:valid[valid.length-1],maxScore:Number(maxScore)};
+}
+
+async function extractPdfText(file){
+  const pdfjsLib=await import("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs");
+  pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs";
+  const bytes=await file.arrayBuffer();
+  const pdf=await pdfjsLib.getDocument({data:new Uint8Array(bytes)}).promise;
+  const lines=[];
+  for(let pageNo=1;pageNo<=pdf.numPages;pageNo++){
+    const page=await pdf.getPage(pageNo);
+    const content=await page.getTextContent();
+    const rows={};
+    content.items.forEach(item=>{
+      const y=Math.round((item.transform?.[5]||0)*10)/10;
+      const x=item.transform?.[4]||0;
+      if(!rows[y])rows[y]=[];
+      rows[y].push({x,text:item.str||""});
+    });
+    Object.keys(rows).sort((a,b)=>Number(b)-Number(a)).forEach(y=>{
+      const line=rows[y].sort((a,b)=>a.x-b.x).map(x=>x.text).join(" ").replace(/\s+/g," ").trim();
+      if(line)lines.push(line);
+    });
+  }
+  return lines;
+}
+
+function lineHasStudentId(line,sid){
+  const tokens=String(line||"").replace(/[^A-Za-z0-9]+/g," ").toUpperCase().split(/\s+/).filter(Boolean);
+  return tokens.includes(sid);
+}
+
+async function analyzeResultsPdf(){
+  const file=resultsPdf?.files?.[0];
+  const title=pdfExam.value.trim();
+  const max=Number(pdfMaxScore.value);
+  if(!file){setPdfStatus("Please select a PDF file.","error");return;}
+  if(!title){setPdfStatus("Enter the result title before analyzing.","error");return;}
+  if(!max||max<1){setPdfStatus("Enter a valid maximum score.","error");return;}
+  analyzePdf.disabled=true;
+  savePdfResults.style.display="none";
+  pdfPreview.classList.remove("show");
+  setPdfStatus("Reading PDF and matching Student IDs...");
+  try{
+    const lines=await extractPdfText(file);
+    if(!lines.length)throw new Error("No selectable text was found. This PDF may be scanned/image-only.");
+    const snap=await getDocs(collection(db,"students"));
+    const students=snap.docs.map(d=>({id:d.id,data:d.data()}));
+    const target=pdfGrade.value;
+    const scoped=students.filter(s=>{
+      const g=String(s.data?.studentType||s.data?.grade||"").toLowerCase().replace(/[^a-z0-9]/g,"");
+      const id=normalizeId(s.id);
+      if(target==="grade10")return g==="grade10"||g==="10"||(/^\d{5}$/.test(id)&&Number(id)>=27000&&Number(id)<=27999);
+      if(target==="grade11")return g==="grade11"||g==="11"||(/^\d{5}$/.test(id)&&Number(id)>=26000&&Number(id)<=26999);
+      return g==="al"||g==="alevel"||g==="advancedlevel"||/^A\d{5}$/.test(id);
+    });
+    pdfMatches=[];
+    for(const student of scoped){
+      const sid=normalizeId(student.id);
+      const foundIndex=lines.findIndex(line=>lineHasStudentId(line,sid));
+      if(foundIndex<0)continue;
+      const context=lines.slice(foundIndex,foundIndex+3).join(" ");
+      const scoreData=parseScoreFromText(context.replaceAll(sid," "),max);
+      if(scoreData){
+        pdfMatches.push({studentId:sid,studentName:student.data?.fullName||student.data?.name||student.data?.studentName||"Student",grade:target,exam:title,score:scoreData.score,maxScore:scoreData.maxScore});
+      }
+    }
+    const unique=new Map(pdfMatches.map(x=>[x.studentId,x]));
+    pdfMatches=[...unique.values()];
+    if(!pdfMatches.length){
+      setPdfStatus("No student IDs with readable marks were matched. Check the PDF format, grade and result title.","error");
+      return;
+    }
+    pdfPreview.innerHTML="<table><thead><tr><th>Student ID</th><th>Student</th><th>Result</th><th>Status</th></tr></thead><tbody>"+pdfMatches.map(x=>"<tr><td>"+escapeHTML(x.studentId)+"</td><td>"+escapeHTML(x.studentName)+"</td><td><strong>"+x.score+"/"+x.maxScore+"</strong></td><td class='match-ok'>Matched</td></tr>").join("")+"</tbody></table>";
+    pdfPreview.classList.add("show");
+    savePdfResults.style.display="inline-flex";
+    setPdfStatus(pdfMatches.length+" student result(s) matched successfully. Review the preview, then publish.","success");
+  }catch(error){
+    console.error("PDF results import failed:",error);
+    setPdfStatus(error.message||"Could not read the PDF.","error");
+  }finally{analyzePdf.disabled=false;}
+}
+
+analyzePdf?.addEventListener("click",analyzeResultsPdf);
+
+savePdfResults?.addEventListener("click",async()=>{
+  if(!pdfMatches.length)return;
+  savePdfResults.disabled=true;
+  savePdfResults.textContent="Publishing...";
+  try{
+    for(const item of pdfMatches){
+      const id=pdfGrade.value+"_"+item.studentId+"_"+slug(item.exam);
+      await setDoc(doc(db,"studentResults",id),{
+        grade:item.grade,studentId:item.studentId,studentName:item.studentName,exam:item.exam,
+        score:Number(item.score),maxScore:Number(item.maxScore),published:true,
+        source:"pdf-import",updatedAt:new Date().toISOString()
+      },{merge:true});
+    }
+    currentGrade=pdfGrade.value;
+    document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x.dataset.grade===currentGrade));
+    setPdfStatus(pdfMatches.length+" result(s) published. Students will see their marks automatically.","success");
+    savePdfResults.style.display="none";
+    pdfMatches=[];
+    resultsPdf.value="";
+    draw();
+  }catch(error){
+    console.error("Publishing imported results failed:",error);
+    setPdfStatus("Publishing failed: "+error.message,"error");
+  }finally{
+    savePdfResults.disabled=false;
+    savePdfResults.textContent="Publish Matched Results";
+  }
+});
 </script>
 </body></html>
