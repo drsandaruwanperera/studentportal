@@ -1068,16 +1068,15 @@ document.addEventListener(
   [p,viewed,total].filter(Boolean).forEach(el=>new MutationObserver(sync).observe(el,{childList:true,characterData:true,subtree:true}));
 })();
 </script><script type="module">
-import {db,collection,getDocs} from "./firebase.js";
+import {db,collection,onSnapshot} from "./firebase.js";
 (function(){
   const summary=document.getElementById("dashboardAnnouncementSummary");
   if(!summary)return;
   const esc=(v)=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
   const timeValue=(v)=>{if(!v)return 0;if(typeof v.toMillis==="function")return v.toMillis();const n=Number(v);return Number.isFinite(n)?n:0};
   const dateValue=(v)=>{const n=timeValue(v);return n?new Date(n).toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"numeric"}):"Latest"};
-  async function load(){
+  function renderAnnouncements(snap){
     try{
-      const snap=await getDocs(collection(db,"announcements"));
       const normalizeGrade=(v)=>String(v||"").toLowerCase().replace(/[^a-z0-9]/g,"");
       const grade=normalizeGrade(sessionStorage.getItem("studentGrade")||sessionStorage.getItem("studentType")||"");
       const now=Date.now();
@@ -1093,25 +1092,32 @@ import {db,collection,getDocs} from "./firebase.js";
         };
         return Array.isArray(target)?target.some(matches):matches(target);
       };
+
       const items=snap.docs.map(d=>({id:d.id,...d.data()}))
         .filter(x=>!["legacy-grade11-top-ranking-results","legacy-al-answer-release-paper01-september2026"].includes(x.id))
-        .filter(x=>{
-          if(x.enabled===false||x.active===false)return false;
-          if(x.expiresAt&&timeValue(x.expiresAt)<now)return false;
-          return matchesGrade(x);
-        })
+        .filter(x=>x.enabled!==false && x.active!==false)
+        .filter(x=>x.showOnDashboard!==false)
+        .filter(x=>!x.expiresAt || timeValue(x.expiresAt)>=now)
+        .filter(matchesGrade)
         .sort((a,b)=>timeValue(b.createdAt)-timeValue(a.createdAt));
+
       if(!items.length){
         summary.innerHTML='<div class="dashboard-summary-empty">No new announcements right now.</div>';
         return;
       }
+
       summary.innerHTML=items.map((x,i)=>'<a class="dashboard-summary-card" href="announcements.html?id='+encodeURIComponent(x.id)+'"><div class="dashboard-summary-number">'+String(i+1).padStart(2,"0")+'</div><div class="dashboard-summary-icon">📢</div><div class="dashboard-summary-copy"><div class="dashboard-summary-top"><strong>'+esc(x.title||"Portal Update")+'</strong><span>'+esc(dateValue(x.createdAt))+'</span></div><p>'+esc(x.message||x.description||"Important information for students.")+'</p><div class="dashboard-summary-meta"><span>ANNOUNCEMENT</span><b>View details →</b></div></div></a>').join("");
     }catch(e){
-      console.info("Could not load dashboard announcements.",e);
-      summary.innerHTML='<div class="dashboard-summary-empty">No new announcements right now.</div>';
+      console.error("Could not render dashboard announcements.",e);
+      summary.innerHTML='<div class="dashboard-summary-empty">Unable to load announcements right now.</div>';
     }
   }
-  load();
+
+  onSnapshot(collection(db,"announcements"),renderAnnouncements,(error)=>{
+    console.error("Dashboard announcements listener failed.",error);
+    summary.innerHTML='<div class="dashboard-summary-empty">Unable to load announcements right now.</div>';
+  });
+
 })();
 </script><script>
 (function(){
