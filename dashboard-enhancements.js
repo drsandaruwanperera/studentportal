@@ -519,6 +519,7 @@ function loadNotifications() {
         onSnapshot(collection(db, "announcements"), (snap) => {
             const items = snap.docs
                 .map((d) => ({ id:d.id, ...d.data() }))
+                .filter((item) => item.showOnDashboard !== false)
                 .filter(announcementMatchesStudent)
                 .sort((a,b) => timestampValue(b.createdAt) - timestampValue(a.createdAt))
                 .slice(0, 6);
