@@ -1077,15 +1077,26 @@ import {db,collection,getDocs} from "./firebase.js";
   async function load(){
     try{
       const snap=await getDocs(collection(db,"announcements"));
-      const grade=(sessionStorage.getItem("studentGrade")||sessionStorage.getItem("studentType")||"").toLowerCase().replace(/\s/g,"");
+      const normalizeGrade=(v)=>String(v||"").toLowerCase().replace(/[^a-z0-9]/g,"");
+      const grade=normalizeGrade(sessionStorage.getItem("studentGrade")||sessionStorage.getItem("studentType")||"");
       const now=Date.now();
+      const matchesGrade=(x)=>{
+        const target=x.grade??x.targetGrade??x.targetAudience??"all";
+        const matches=(v)=>{
+          const g=normalizeGrade(v);
+          if(!g||g==="all"||g==="allstudents")return true;
+          if(g==="grade10")return grade.includes("10");
+          if(g==="grade11")return grade.includes("11");
+          if(g==="al"||g==="alevel"||g==="advancedlevel")return grade==="al"||grade.includes("advanced");
+          return g===grade;
+        };
+        return Array.isArray(target)?target.some(matches):matches(target);
+      };
       const items=snap.docs.map(d=>({id:d.id,...d.data()}))
         .filter(x=>{
           if(x.enabled===false||x.active===false)return false;
           if(x.expiresAt&&timeValue(x.expiresAt)<now)return false;
-          if(!x.grade)return true;
-          const g=String(x.grade).toLowerCase().replace(/\s/g,"");
-          return g==="all"||g===grade;
+          return matchesGrade(x);
         })
         .sort((a,b)=>timeValue(b.createdAt)-timeValue(a.createdAt))
         .slice(0,3);
