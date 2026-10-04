@@ -6,7 +6,13 @@ const adminLoggedIn =
     sessionStorage.getItem("adminLoggedIn") === "true";
 
 const adminRole =
-    sessionStorage.getItem("adminRole") || "limited";
+    String(sessionStorage.getItem("adminRole") || "limited")
+        .trim()
+        .toLowerCase()
+        .replace(/[\s_-]+/g, "");
+
+const isSuperAdmin =
+    adminRole === "superadmin" || adminRole === "full";
 
 
 // ==========================
@@ -19,11 +25,53 @@ if (!adminLoggedIn) {
 
 
 // ==========================
+// SUPER ADMIN PAGE PROTECTION
+// ==========================
+// Limited admins are intentionally restricted to Student Management.
+// This protects direct URL access as well as sidebar visibility.
+
+const superAdminPages = [
+    "admin.html",
+    "admin-program-control.html",
+    "admin-results.html",
+    "admin-announcements.html",
+    "paper-management.html",
+    "paper-settings.html",
+    "import-students.html",
+    "onboarding-report.html",
+    "student-deletion.html",
+    "reports.html",
+    "statistics.html",
+    "website-dashboard.html",
+    "gallery.html",
+    "programs.html",
+    "about.html",
+    "results.html",
+    "testimonials.html",
+    "resources.html",
+    "classes.html",
+    "faq.html",
+    "contact.html",
+    "settings.html"
+];
+
+const currentAdminPage =
+    window.location.pathname.split("/").pop().toLowerCase();
+
+if (
+    adminLoggedIn &&
+    !isSuperAdmin &&
+    superAdminPages.includes(currentAdminPage)
+) {
+    window.location.replace("students.html");
+}
+
+// ==========================
 // Hide Full Admin Features
 // ==========================
 
 document.addEventListener("DOMContentLoaded", () => {
-    if (adminRole !== "full") {
+    if (!isSuperAdmin) {
         document.querySelectorAll(".full-admin-only").forEach(element => {
             element.style.display = "none";
         });
