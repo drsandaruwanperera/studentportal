@@ -264,6 +264,13 @@ body{background:radial-gradient(circle at 76% 10%,rgba(103,60,255,.10),transpare
 .announcement-modal-tag{display:inline-block;background:#1b2b43;color:#6db2ff;border-radius:8px;padding:5px 7px;font-size:7px;font-weight:900;letter-spacing:.5px}.announcement-modal-card h2{color:#fff;font-size:20px;margin:11px 0 5px}.announcement-modal-card time{color:#697791;font-size:8px}.announcement-modal-card p{color:#9aa7bb;font-size:11px;line-height:1.75;margin:16px 0 22px;white-space:pre-wrap}
 .announcement-modal-actions{display:flex;gap:9px}.announcement-modal-actions a,.announcement-modal-actions button{border:1px solid rgba(148,163,184,.15);border-radius:10px;padding:10px 13px;font-size:8px;font-weight:800;text-decoration:none;cursor:pointer}.announcement-modal-actions a{background:#6038ff;color:#fff}.announcement-modal-actions button{background:#141f34;color:#9aa7bb}
 @media(max-width:800px){.portal-notification-popover{top:68px;left:12px;right:12px;width:auto}.announcement-modal-card{padding:23px}.notification-count{right:-4px}}
+</style><style id="unified-dashboard-sidebar-final">
+.sidebar{width:250px!important;position:fixed!important;left:0!important;top:0!important;bottom:0!important;height:100vh!important}
+.sidebar-nav .sidebar-link{height:43px!important;border-radius:11px!important}
+.sidebar-logout{height:42px!important;border-radius:10px!important;background:#ef4444!important;color:#fff!important;border:0!important;display:flex!important;align-items:center!important;justify-content:center!important;font-weight:850!important;box-shadow:0 10px 22px rgba(239,68,68,.18)!important}
+.sidebar-logout:hover{background:#dc2626!important;color:#fff!important}
+.lms-notification{font-size:18px!important;color:#fff!important}
+.lms-notification i{background:#ff4d6d!important}
 </style></head>
 
 
@@ -400,13 +407,7 @@ body{background:radial-gradient(circle at 76% 10%,rgba(103,60,255,.10),transpare
             id="logoutBtn"
         >
 
-            <span>
-                ↪
-            </span>
-
-            <span>
-                Logout
-            </span>
+            <span>Logout</span>
 
         </button>
 
@@ -430,7 +431,7 @@ body{background:radial-gradient(circle at 76% 10%,rgba(103,60,255,.10),transpare
                     <span>⌕</span>
                     <input id="paperSearch" type="text" placeholder="Search units, papers, announcements...">
                 </div>
-                <button class="lms-notification" type="button" aria-label="Notifications">♧<i></i></button>
+                <button class="lms-notification" type="button" aria-label="Notifications">🔔<i></i></button>
                 <div class="lms-user">
                     <div class="lms-avatar" id="topUserAvatar">S</div>
                     <div>
