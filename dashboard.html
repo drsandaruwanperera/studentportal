@@ -1093,13 +1093,13 @@ import {db,collection,getDocs} from "./firebase.js";
         return Array.isArray(target)?target.some(matches):matches(target);
       };
       const items=snap.docs.map(d=>({id:d.id,...d.data()}))
+        .filter(x=>!["legacy-grade11-top-ranking-results","legacy-al-answer-release-paper01-september2026"].includes(x.id))
         .filter(x=>{
           if(x.enabled===false||x.active===false)return false;
           if(x.expiresAt&&timeValue(x.expiresAt)<now)return false;
           return matchesGrade(x);
         })
-        .sort((a,b)=>timeValue(b.createdAt)-timeValue(a.createdAt))
-        .slice(0,3);
+        .sort((a,b)=>timeValue(b.createdAt)-timeValue(a.createdAt));
       if(!items.length){
         summary.innerHTML='<div class="dashboard-summary-empty">No new announcements right now.</div>';
         return;
