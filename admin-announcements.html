@@ -6,7 +6,18 @@
 <title>Announcements Management | Admin</title>
 <link rel="stylesheet" href="admin.css?v=22">
 <style>
-.page-shell{padding:28px 34px 60px}.hero{padding:28px;border:1px solid rgba(255,255,255,.1);border-radius:22px;background:linear-gradient(135deg,#27205f,#4037c9 55%,#6d28d9);box-shadow:0 20px 55px rgba(0,0,0,.22);margin-bottom:22px}.eyebrow{color:#a6ff2e;font-size:10px;font-weight:850;letter-spacing:1.3px}.hero h1{margin:7px 0;color:#fff;font-size:30px}.hero p{color:rgba(255,255,255,.72);font-size:13px}.layout{display:grid;grid-template-columns:minmax(320px,.85fr) minmax(420px,1.5fr);gap:18px}.card{padding:22px;border-radius:18px;background:rgba(17,24,43,.94);border:1px solid rgba(255,255,255,.1);box-shadow:0 12px 32px rgba(0,0,0,.16)}.card h2{margin:0 0 17px;color:#f4f7ff;font-size:18px}.form-grid{display:grid;gap:12px}.field label{display:block;color:#aeb8ce;font-size:10px;font-weight:800;margin-bottom:6px}.field input,.field textarea,.field select{width:100%;border:1px solid rgba(255,255,255,.12);background:#0e1628;color:#f5f7ff;border-radius:11px;padding:11px 12px;font:inherit;font-size:11px;outline:none}.field textarea{min-height:125px;resize:vertical}.checks{display:grid;gap:9px;margin-top:2px}.check{display:flex;align-items:center;gap:8px;color:#b9c3d6;font-size:11px}.check input{accent-color:#6d5cff}.actions{display:flex;gap:9px;margin-top:15px}.btn{flex:1;min-height:42px;border:0;border-radius:11px;color:#fff;font-size:11px;font-weight:800;cursor:pointer}.btn.primary{background:linear-gradient(135deg,#5b4bff,#4037c9)}.btn.secondary{background:#24324a;color:#b9c3d6}.btn.danger{background:#9f3046}.btn:disabled{opacity:.55;cursor:wait}.list{display:grid;gap:10px;max-height:720px;overflow:auto}.item{padding:15px;border-radius:14px;background:#111a30;border:1px solid rgba(255,255,255,.08)}.item-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.item h3{margin:0;color:#fff;font-size:14px}.meta{color:#78869e;font-size:9px;margin-top:4px}.item p{margin:10px 0 0;color:#9aa7bd;font-size:10px;line-height:1.55}.badge{padding:5px 8px;border-radius:999px;font-size:8px;font-weight:850;white-space:nowrap}.badge.on{background:rgba(74,222,128,.1);color:#4ade80}.badge.off{background:rgba(255,107,122,.09);color:#ff9aa5}.item-actions{display:flex;gap:7px;margin-top:12px}.small{border:0;border-radius:8px;padding:8px 11px;background:#24324a;color:#c7d0df;font-size:9px;font-weight:800;cursor:pointer}.small.red{background:#572436;color:#ffb4bf}.empty{padding:30px;text-align:center;border:1px dashed rgba(255,255,255,.12);border-radius:14px;color:#7f8ba2;font-size:11px}@media(max-width:950px){.layout{grid-template-columns:1fr}}@media(max-width:650px){.page-shell{padding:15px}.hero h1{font-size:24px}}
+.page-shell{padding:28px 34px 60px}.hero{padding:28px;border:1px solid rgba(255,255,255,.1);border-radius:22px;background:linear-gradient(135deg,#27205f,#4037c9 55%,#6d28d9);box-shadow:0 20px 55px rgba(0,0,0,.22);margin-bottom:22px}.eyebrow{color:#a6ff2e;font-size:10px;font-weight:850;letter-spacing:1.3px}.hero h1{margin:7px 0;color:#fff;font-size:30px}.hero p{color:rgba(255,255,255,.72);font-size:13px}.layout{display:grid;grid-template-columns:minmax(320px,.85fr) minmax(420px,1.5fr);gap:18px}.card{padding:22px;border-radius:18px;background:rgba(17,24,43,.94);border:1px solid rgba(255,255,255,.1);box-shadow:0 12px 32px rgba(0,0,0,.16)}.card h2{margin:0 0 17px;color:#f4f7ff;font-size:18px}.form-grid{display:grid;gap:12px}.field label{display:block;color:#aeb8ce;font-size:10px;font-weight:800;margin-bottom:6px}.field input,.field textarea,.field select{width:100%;border:1px solid rgba(255,255,255,.12);background:#0e1628;color:#f5f7ff;border-radius:11px;padding:11px 12px;font:inherit;font-size:11px;outline:none}.field textarea{min-height:125px;resize:vertical}.checks{display:grid;gap:9px;margin-top:2px}.check{display:flex;align-items:center;gap:8px;color:#b9c3d6;font-size:11px}.check input{accent-color:#6d5cff}.actions{display:flex;gap:9px;margin-top:15px}.btn{flex:1;min-height:42px;border:0;border-radius:11px;color:#fff;font-size:11px;font-weight:800;cursor:pointer}.btn.primary{background:linear-gradient(135deg,#5b4bff,#4037c9)}.btn.secondary{background:#24324a;color:#b9c3d6}.btn.danger{background:#9f3046}.btn:disabled{opacity:.55;cursor:wait}.list{display:grid;gap:10px;max-height:720px;overflow:auto}.item{padding:15px;border-radius:14px;background:#111a30;border:1px solid rgba(255,255,255,.08)}.item-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.item h3{margin:0;color:#fff;font-size:14px}.meta{color:#78869e;font-size:9px;margin-top:4px}.item p{margin:10px 0 0;color:#9aa7bd;font-size:10px;line-height:1.55}.badge{padding:5px 8px;border-radius:999px;font-size:8px;font-weight:850;white-space:nowrap}.badge.on{background:rgba(74,222,128,.1);color:#4ade80}.badge.off{background:rgba(255,107,122,.09);color:#ff9aa5}.item-actions{display:flex;gap:7px;margin-top:12px}.small{border:0;border-radius:8px;padding:8px 11px;background:#24324a;color:#c7d0df;font-size:9px;font-weight:800;cursor:pointer}.small.red{background:#572436;color:#ffb4bf}
+.legacy-grid{display:grid;gap:10px}
+.legacy-item{padding:14px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:#0f172a}
+.legacy-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.legacy-item h3{margin:0;color:#fff;font-size:13px}
+.legacy-item p{margin:7px 0 0;color:#8f9db5;font-size:10px;line-height:1.5}
+.legacy-status{margin-top:8px;font-size:9px;color:#7f8ba2}
+.legacy-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}
+.legacy-actions .small.primary{background:#3b3298;color:#fff}
+.legacy-actions .small.green{background:#173c32;color:#74e2a8}
+.legacy-actions .small.red{background:#572436;color:#ffb4bf}
+.empty{padding:30px;text-align:center;border:1px dashed rgba(255,255,255,.12);border-radius:14px;color:#7f8ba2;font-size:11px}@media(max-width:950px){.layout{grid-template-columns:1fr}}@media(max-width:650px){.page-shell{padding:15px}.hero h1{font-size:24px}}
 </style>
 </head>
 <body>
@@ -25,7 +36,7 @@
 <div class="sidebar-bottom"><a class="logout-btn" href="admin.html">← Back to Admin</a></div>
 </aside>
 <main class="main-content page-shell">
-<section class="hero"><div class="eyebrow">LIVE LMS COMMUNICATION</div><h1>Announcements</h1><p>Create, edit, publish and remove student announcements. Dashboard notifications update in real time from Firestore.</p><button id="seedLegacyBtn" class="btn primary" type="button" style="max-width:280px;margin-top:14px">Add Previous Notifications</button><div id="seedStatus" style="margin-top:8px;color:#aeb8ce;font-size:10px"></div></section>
+<section class="hero"><div class="eyebrow">LIVE LMS COMMUNICATION</div><h1>Announcements</h1><p>Create, edit, publish and remove student announcements. Dashboard notifications update in real time from Firestore.</p><div style="margin-top:14px;color:#d7dcff;font-size:11px;font-weight:800">Previous portal notifications can be managed below.</div></section>
 <div class="layout">
 <section class="card">
 <h2 id="formTitle">Create Announcement</h2>
@@ -40,6 +51,11 @@
 </div>
 <div class="actions"><button class="btn primary" id="saveBtn" type="submit">Publish Announcement</button><button class="btn secondary" id="cancelBtn" type="button" style="display:none">Cancel Edit</button></div>
 </form>
+</section>
+<section class="card">
+<h2>Previous Notifications</h2>
+<p style="margin:-8px 0 15px;color:#7f8ba2;font-size:10px;line-height:1.5">These are the two notifications that were previously shown on the student dashboard. You can show, hide, or permanently delete them.</p>
+<div id="legacyList" class="legacy-grid"><div class="empty">Loading previous notifications…</div></div>
 </section>
 <section class="card"><h2>Live Announcements</h2><div id="list" class="list"><div class="empty">Loading announcements…</div></div></section>
 </div>
@@ -63,8 +79,7 @@ const saveBtn=document.getElementById("saveBtn");
 const cancelBtn=document.getElementById("cancelBtn");
 const formTitle=document.getElementById("formTitle");
 const list=document.getElementById("list");
-const seedLegacyBtn=document.getElementById("seedLegacyBtn");
-const seedStatus=document.getElementById("seedStatus");
+const legacyList=document.getElementById("legacyList");
 let editingId=null;
 
 const esc=v=>String(v??"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
@@ -84,45 +99,6 @@ function editItem(x){
 }
 cancelBtn.addEventListener("click",resetForm);
 
-seedLegacyBtn.addEventListener("click",async()=>{
-  seedLegacyBtn.disabled=true;
-  seedLegacyBtn.textContent="Adding Previous Notifications...";
-  seedStatus.textContent="";
-  const legacy=[
-    {
-      id:"legacy-grade11-top-ranking-results",
-      title:"Top Ranking Results Are Out Now",
-      message:"Your latest Top Ranking result is now available. Scroll down to view your result and marks.",
-      grade:"grade11"
-    },
-    {
-      id:"legacy-al-answer-release-paper01-september2026",
-      title:"Answer Release",
-      message:"A/L Top Ranking Paper 01 — September 2026 answers are now available.",
-      grade:"al"
-    }
-  ];
-  try{
-    await Promise.all(legacy.map(x=>setDoc(doc(db,"announcements",x.id),{
-      title:x.title,
-      message:x.message,
-      grade:x.grade,
-      enabled:true,
-      active:true,
-      showOnDashboard:true,
-      updatedAt:new Date().toISOString(),
-      createdAt:new Date().toISOString()
-    },{merge:true})));
-    seedStatus.textContent="Previous notifications added. Watch the Live Announcements list and student Dashboard for the realtime update.";
-  }catch(error){
-    console.error("Legacy announcement seed failed:",error);
-    seedStatus.textContent="Could not add previous notifications. Check Firestore permissions.";
-  }finally{
-    seedLegacyBtn.disabled=false;
-    seedLegacyBtn.textContent="Add Previous Notifications";
-  }
-});
-
 form.addEventListener("submit",async e=>{
   e.preventDefault(); saveBtn.disabled=true; saveBtn.textContent="Saving...";
   try{
@@ -141,7 +117,48 @@ form.addEventListener("submit",async e=>{
   }finally{saveBtn.disabled=false; if(!editingId) saveBtn.textContent="Publish Announcement";}
 });
 
+const legacyDefinitions=[
+  {id:"legacy-grade11-top-ranking-results",icon:"🏆",title:"Top Ranking Results Are Out Now",message:"Your latest Top Ranking result is now available. Scroll down to view your result and marks.",audience:"Grade 11"},
+  {id:"legacy-al-answer-release-paper01-september2026",icon:"📄",title:"Answer Release",message:"A/L Top Ranking Paper 01 — September 2026 answers are now available.",audience:"A/L"}
+];
+
+function renderLegacyControls(items){
+  if(!legacyList)return;
+  const byId=new Map(items.map(x=>[x.id,x]));
+  legacyList.innerHTML=legacyDefinitions.map(x=>{
+    const item=byId.get(x.id);
+    const published=!!item&&item.enabled!==false&&item.active!==false;
+    const dashboard=published&&item.showOnDashboard!==false;
+    const status=!item?"Not added to Firestore":dashboard?"Visible on Dashboard":published?"Published • Dashboard Hidden":"Hidden";
+    const action=!item
+      ? '<button class="small primary" data-legacy-show="'+x.id+'">Show on Dashboard</button>'
+      : dashboard
+        ? '<button class="small" data-legacy-hide="'+x.id+'">Hide from Dashboard</button>'
+        : '<button class="small green" data-legacy-show="'+x.id+'">Show on Dashboard</button>';
+    return '<article class="legacy-item"><div class="legacy-top"><div><h3>'+x.icon+' '+esc(x.title)+'</h3><p>'+esc(x.message)+'</p></div><span class="badge '+(dashboard?"on":"off")+'">'+(dashboard?"VISIBLE":"HIDDEN")+'</span></div><div class="legacy-status">'+esc(x.audience)+' • '+esc(status)+'</div><div class="legacy-actions">'+action+'<button class="small red" data-legacy-delete="'+x.id+'">Delete</button></div></article>';
+  }).join("");
+  legacyList.querySelectorAll("[data-legacy-show]").forEach(btn=>btn.onclick=async()=>{
+    btn.disabled=true;
+    try{
+      const def=legacyDefinitions.find(x=>x.id===btn.dataset.legacyShow); if(!def)return;
+      await setDoc(doc(db,"announcements",def.id),{title:def.title,message:def.message,grade:def.id.includes("grade11")?"grade11":"al",enabled:true,active:true,showOnDashboard:true,updatedAt:new Date().toISOString(),createdAt:new Date().toISOString()},{merge:true});
+    }catch(error){console.error(error);alert("Could not show this notification. Check Firestore permissions.");}finally{btn.disabled=false;}
+  });
+  legacyList.querySelectorAll("[data-legacy-hide]").forEach(btn=>btn.onclick=async()=>{
+    btn.disabled=true;
+    try{await setDoc(doc(db,"announcements",btn.dataset.legacyHide),{enabled:true,active:true,showOnDashboard:false,updatedAt:new Date().toISOString()},{merge:true});}
+    catch(error){console.error(error);alert("Could not hide this notification. Check Firestore permissions.");}finally{btn.disabled=false;}
+  });
+  legacyList.querySelectorAll("[data-legacy-delete]").forEach(btn=>btn.onclick=async()=>{
+    const def=legacyDefinitions.find(x=>x.id===btn.dataset.legacyDelete); if(!def||!confirm("Delete '"+def.title+"' permanently?"))return;
+    btn.disabled=true;
+    try{await deleteDoc(doc(db,"announcements",def.id));}
+    catch(error){console.error(error);alert("Delete failed. Check Firestore permissions.");}finally{btn.disabled=false;}
+  });
+}
+
 function render(items){
+  renderLegacyControls(items);
   if(!items.length){list.innerHTML='<div class="empty">No announcements yet.</div>';return;}
   list.innerHTML=items.map(x=>{
     const on=x.enabled!==false && x.active!==false;
