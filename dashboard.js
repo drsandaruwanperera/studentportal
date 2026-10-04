@@ -516,11 +516,43 @@ async function loadStudent() {
             sessionStorage.getItem("studentId");
 
         const studentName =
-            sessionStudentName ||
+            data.fullName ||
             data.name ||
             data.studentName ||
-            data.fullName ||
+            data.displayName ||
+            sessionStudentName ||
+            studentId ||
             "Student";
+
+        // Keep the logged-in student's real identity visible in the dashboard sidebar.
+        sessionStorage.setItem("studentName", studentName);
+        sessionStorage.setItem("studentGrade", gradeInfo.grade);
+
+        const sidebarName = document.getElementById("sidebarStudentId");
+        const sidebarGrade = document.getElementById("sidebarStudentGrade");
+        const sidebarAvatar = document.getElementById("sidebarStudentAvatar");
+
+        if (sidebarName) sidebarName.textContent = studentName;
+        if (sidebarGrade) sidebarGrade.textContent =
+            type === "grade10" ? "Grade 10 Student" :
+            type === "grade11" ? "Grade 11 Student" :
+            "A/L Student";
+        if (sidebarAvatar) sidebarAvatar.textContent =
+            String(studentName).trim().charAt(0).toUpperCase() || "S";
+
+        const topStudentId = document.getElementById("topStudentId");
+        const topStudentType = document.getElementById("topStudentType");
+        const topStudentName = document.getElementById("topStudentName");
+        const topUserAvatar = document.getElementById("topUserAvatar");
+
+        if (topStudentId) topStudentId.textContent = studentName;
+        if (topStudentName) topStudentName.textContent = studentName;
+        if (topStudentType) topStudentType.textContent =
+            type === "grade10" ? "Grade 10 Student" :
+            type === "grade11" ? "Grade 11 Student" :
+            "A/L Student";
+        if (topUserAvatar) topUserAvatar.textContent =
+            String(studentName).trim().charAt(0).toUpperCase() || "S";
 
         if (studentIdElement) studentIdElement.textContent = studentId || "";
         if (studentGradeElement) studentGradeElement.textContent = gradeInfo.grade;
