@@ -1,4 +1,4 @@
-import { db, doc, getDoc, updateDoc, collection, getDocs } from "./firebase.js";
+import { db, doc, getDoc, updateDoc, collection, getDocs, onSnapshot } from "./firebase.js";
 
 const studentId = sessionStorage.getItem("studentId");
 const studentRef = studentId ? doc(db, "students", studentId) : null;
@@ -355,43 +355,182 @@ function formatDate(value) {
     return ms ? new Date(ms).toLocaleDateString("en-GB", { day:"2-digit", month:"short", year:"numeric" }) : "";
 }
 
-async function loadNotifications() {
-    const list = document.getElementById("portalNotificationList");
+function normalizeGrade(value) {
+    return String(value || "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, "");
+}
+
+function announcementMatchesStudent(item) {
+    if (item.enabled === false || item.active === false) return false;
+    if (item.expiresAt && timestampValue(item.expiresAt) < Date.now()) return false;
+
+    const studentGrade = normalizeGrade(
+        sessionStorage.getItem("studentGrade") ||
+        sessionStorage.getItem("studentType") ||
+        ""
+    );
+
+    const target = item.grade ?? item.targetGrade ?? item.targetAudience ?? "all";
+
+    if (Array.isArray(target)) {
+        return target.some((value) => {
+            const g = normalizeGrade(value);
+            return !g || g === "all" || g === studentGrade ||
+                (g === "grade10" && studentGrade.includes("10")) ||
+                (g === "grade11" && studentGrade.includes("11")) ||
+                (g === "al" && (studentGrade === "al" || studentGrade.includes("advanced")));
+        });
+    }
+
+    const g = normalizeGrade(target);
+    if (!g || g === "all" || g === "allstudents") return true;
+    if (g === "grade10") return studentGrade.includes("10");
+    if (g === "grade11") return studentGrade.includes("11");
+    if (g === "al" || g === "alevel" || g === "advancedlevel") {
+        return studentGrade === "al" || studentGrade.includes("advanced");
+    }
+    return g === studentGrade;
+}
+
+function announcementDate(value) {
+    const ms = timestampValue(value);
+    return ms ? new Date(ms).toLocaleDateString("en-GB", {
+        day:"2-digit", month:"short", year:"numeric"
+    }) : "Latest";
+}
+
+function ensureNotificationUI() {
+    if (document.getElementById("portalNotificationPopover")) return;
+
+    const bell = document.querySelector(".lms-notification");
+    if (!bell) return;
+
+    bell.innerHTML = `
+        <span class="notification-bell-icon">♧</span>
+        <i class="notification-dot"></i>
+        <b class="notification-count" id="notificationCount">0</b>
+    `;
+
+    const popover = document.createElement("div");
+    popover.id = "portalNotificationPopover";
+    popover.className = "portal-notification-popover";
+    popover.innerHTML = `
+        <div class="portal-popover-head">
+            <div><strong>Notifications</strong><span>Latest updates for you</span></div>
+            <button type="button" id="closeNotificationPopover">×</button>
+        </div>
+        <div id="portalNotificationItems" class="portal-notification-items">
+            <div class="portal-empty">Loading updates…</div>
+        </div>
+        <a class="portal-notification-all" href="announcements.html">View all announcements →</a>
+    `;
+    document.body.appendChild(popover);
+
+    const modal = document.createElement("div");
+    modal.id = "announcementModal";
+    modal.className = "announcement-modal";
+    modal.innerHTML = `
+        <div class="announcement-modal-backdrop" data-close-announcement></div>
+        <article class="announcement-modal-card">
+            <button type="button" class="announcement-modal-close" data-close-announcement>×</button>
+            <div class="announcement-modal-icon">📢</div>
+            <span class="announcement-modal-tag">ANNOUNCEMENT</span>
+            <h2 id="announcementModalTitle">Portal Update</h2>
+            <time id="announcementModalDate"></time>
+            <p id="announcementModalMessage"></p>
+            <div class="announcement-modal-actions">
+                <a href="announcements.html" id="announcementModalViewAll">Open Announcements</a>
+                <button type="button" data-close-announcement>Close</button>
+            </div>
+        </article>
+    `;
+    document.body.appendChild(modal);
+
+    bell.addEventListener("click", (event) => {
+        event.stopPropagation();
+        popover.classList.toggle("open");
+    });
+    document.getElementById("closeNotificationPopover")?.addEventListener("click", () => popover.classList.remove("open"));
+    document.addEventListener("click", (event) => {
+        if (!popover.contains(event.target) && !bell.contains(event.target)) popover.classList.remove("open");
+    });
+    modal.querySelectorAll("[data-close-announcement]").forEach((el) => {
+        el.addEventListener("click", () => modal.classList.remove("open"));
+    });
+}
+
+function openAnnouncementModal(item) {
+    ensureNotificationUI();
+    const modal = document.getElementById("announcementModal");
+    if (!modal) return;
+    document.getElementById("announcementModalTitle").textContent = item.title || "Portal Update";
+    document.getElementById("announcementModalDate").textContent = announcementDate(item.createdAt);
+    document.getElementById("announcementModalMessage").textContent =
+        item.message || item.description || "Important information for students.";
+    const link = document.getElementById("announcementModalViewAll");
+    link.href = item.id
+        ? `announcements.html?id=${encodeURIComponent(item.id)}`
+        : "announcements.html";
+    modal.classList.add("open");
+    document.getElementById("portalNotificationPopover")?.classList.remove("open");
+}
+
+function renderNotificationItems(items) {
+    const list = document.getElementById("portalNotificationItems");
+    const count = document.getElementById("notificationCount");
+    const dot = document.querySelector(".notification-dot");
     if (!list) return;
-    try {
-        const snap = await getDocs(collection(db, "announcements"));
-        const grade = (sessionStorage.getItem("studentGrade") || "").toLowerCase().replace(/\s/g, "");
-        const now = Date.now();
-        const items = snap.docs
-            .map((d) => ({ id:d.id, ...d.data() }))
-            .filter((x) => {
-                if (x.enabled === false || x.active === false) return false;
-                if (x.expiresAt && timestampValue(x.expiresAt) < now) return false;
-                if (!x.grade) return true;
-                const g = String(x.grade).toLowerCase().replace(/\s/g, "");
-                return g === "all" || g === grade;
-            })
-            .sort((a,b) => timestampValue(b.createdAt) - timestampValue(a.createdAt))
-            .slice(0, 4);
 
-        if (!items.length) {
-            list.innerHTML = '<div class="portal-empty">No new notifications right now.</div>';
-            return;
-        }
+    if (count) count.textContent = Math.min(items.length, 9);
+    if (dot) dot.style.display = items.length ? "block" : "none";
 
-        list.innerHTML = items.map((x) => `
-            <article class="portal-notice">
-                <div class="portal-notice-icon">📢</div>
-                <div>
-                    <strong>${esc(x.title || "Portal Update")}</strong>
-                    <p>${esc(x.message || x.description || "Important information for students.")}</p>
-                    ${x.createdAt ? `<time>${esc(formatDate(x.createdAt))}</time>` : ""}
-                </div>
-            </article>
-        `).join("");
-    } catch (error) {
-        console.info("Announcements collection is not available yet.", error);
+    if (!items.length) {
         list.innerHTML = '<div class="portal-empty">No new notifications right now.</div>';
+        return;
+    }
+
+    list.innerHTML = items.map((x) => `
+        <button type="button" class="portal-notification-item" data-announcement-id="${esc(x.id)}">
+            <span class="portal-notification-item-icon">📢</span>
+            <span class="portal-notification-item-copy">
+                <strong>${esc(x.title || "Portal Update")}</strong>
+                <small>${esc(x.message || x.description || "Important information for students.")}</small>
+                <time>${esc(announcementDate(x.createdAt))}</time>
+            </span>
+        </button>
+    `).join("");
+
+    list.querySelectorAll("[data-announcement-id]").forEach((button) => {
+        button.addEventListener("click", () => {
+            const item = items.find((x) => x.id === button.dataset.announcementId);
+            if (item) openAnnouncementModal(item);
+        });
+    });
+}
+
+function loadNotifications() {
+    ensureNotificationUI();
+
+    const list = document.getElementById("portalNotificationItems");
+    if (!list) return;
+
+    try {
+        onSnapshot(collection(db, "announcements"), (snap) => {
+            const items = snap.docs
+                .map((d) => ({ id:d.id, ...d.data() }))
+                .filter(announcementMatchesStudent)
+                .sort((a,b) => timestampValue(b.createdAt) - timestampValue(a.createdAt))
+                .slice(0, 6);
+
+            renderNotificationItems(items);
+        }, (error) => {
+            console.info("Announcements collection is not available yet.", error);
+            renderNotificationItems([]);
+        });
+    } catch (error) {
+        console.info("Notification listener could not start.", error);
+        renderNotificationItems([]);
     }
 }
 
