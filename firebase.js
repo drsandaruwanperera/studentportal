@@ -66,11 +66,4 @@ if (
         console.error("Dashboard paper count fix failed to load:", error);
     });
 
-    import("./grade11-notification.js?v=2").catch((error) => {
-        console.error("Grade 11 notification module failed to load:", error);
-    });
-
-    import("./al-answer-release-notification.js?v=2").catch((error) => {
-        console.error("A/L answer release notification failed to load:", error);
-    });
 }
