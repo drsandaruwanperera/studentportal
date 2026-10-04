@@ -1113,6 +1113,31 @@ import {db,collection,getDocs} from "./firebase.js";
   }
   load();
 })();
+</script><script>
+(function(){
+  function syncDashboardProfile(){
+    const nameKey=sessionStorage.getItem("studentName");
+    const idKey=sessionStorage.getItem("studentId");
+    const rawGrade=sessionStorage.getItem("studentGrade")||sessionStorage.getItem("studentType")||"";
+    const name=(nameKey && nameKey!=="Student" ? nameKey : (idKey||"Student")).trim();
+    const normalized=String(rawGrade).toLowerCase().replace(/[\s_-]+/g,"");
+    let grade=rawGrade||"Student";
+    if(normalized.includes("grade10")) grade="Grade 10 Student";
+    else if(normalized.includes("grade11")) grade="Grade 11 Student";
+    else if(normalized==="al"||normalized.includes("advancedlevel")||normalized.includes("a/l")) grade="A/L Student";
+    else if(!grade || grade==="Student") grade="Student";
+    const nameEl=document.getElementById("sidebarStudentId");
+    const gradeEl=document.getElementById("sidebarStudentGrade");
+    const avatar=document.getElementById("sidebarStudentAvatar");
+    if(nameEl) nameEl.textContent=name;
+    if(gradeEl) gradeEl.textContent=grade;
+    if(avatar) avatar.textContent=(name.charAt(0)||"S").toUpperCase();
+  }
+  syncDashboardProfile();
+  window.addEventListener("storage",syncDashboardProfile);
+  setTimeout(syncDashboardProfile,250);
+  setTimeout(syncDashboardProfile,1000);
+})();
 </script></body>
 
 </html>
