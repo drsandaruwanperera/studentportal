@@ -25,7 +25,7 @@
 <div class="sidebar-bottom"><a class="logout-btn" href="admin.html">← Back to Admin</a></div>
 </aside>
 <main class="main-content page-shell">
-<section class="hero"><div class="eyebrow">LIVE LMS COMMUNICATION</div><h1>Announcements</h1><p>Create, edit, publish and remove student announcements. Dashboard notifications update in real time from Firestore.</p></section>
+<section class="hero"><div class="eyebrow">LIVE LMS COMMUNICATION</div><h1>Announcements</h1><p>Create, edit, publish and remove student announcements. Dashboard notifications update in real time from Firestore.</p><button id="seedLegacyBtn" class="btn primary" type="button" style="max-width:280px;margin-top:14px">Add Previous Notifications</button><div id="seedStatus" style="margin-top:8px;color:#aeb8ce;font-size:10px"></div></section>
 <div class="layout">
 <section class="card">
 <h2 id="formTitle">Create Announcement</h2>
@@ -63,6 +63,8 @@ const saveBtn=document.getElementById("saveBtn");
 const cancelBtn=document.getElementById("cancelBtn");
 const formTitle=document.getElementById("formTitle");
 const list=document.getElementById("list");
+const seedLegacyBtn=document.getElementById("seedLegacyBtn");
+const seedStatus=document.getElementById("seedStatus");
 let editingId=null;
 
 const esc=v=>String(v??"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
@@ -81,6 +83,45 @@ function editItem(x){
   window.scrollTo({top:0,behavior:"smooth"});
 }
 cancelBtn.addEventListener("click",resetForm);
+
+seedLegacyBtn.addEventListener("click",async()=>{
+  seedLegacyBtn.disabled=true;
+  seedLegacyBtn.textContent="Adding Previous Notifications...";
+  seedStatus.textContent="";
+  const legacy=[
+    {
+      id:"legacy-grade11-top-ranking-results",
+      title:"Top Ranking Results Are Out Now",
+      message:"Your latest Top Ranking result is now available. Scroll down to view your result and marks.",
+      grade:"grade11"
+    },
+    {
+      id:"legacy-al-answer-release-paper01-september2026",
+      title:"Answer Release",
+      message:"A/L Top Ranking Paper 01 — September 2026 answers are now available.",
+      grade:"al"
+    }
+  ];
+  try{
+    await Promise.all(legacy.map(x=>setDoc(doc(db,"announcements",x.id),{
+      title:x.title,
+      message:x.message,
+      grade:x.grade,
+      enabled:true,
+      active:true,
+      showOnDashboard:true,
+      updatedAt:new Date().toISOString(),
+      createdAt:new Date().toISOString()
+    },{merge:true})));
+    seedStatus.textContent="Previous notifications added. Watch the Live Announcements list and student Dashboard for the realtime update.";
+  }catch(error){
+    console.error("Legacy announcement seed failed:",error);
+    seedStatus.textContent="Could not add previous notifications. Check Firestore permissions.";
+  }finally{
+    seedLegacyBtn.disabled=false;
+    seedLegacyBtn.textContent="Add Previous Notifications";
+  }
+});
 
 form.addEventListener("submit",async e=>{
   e.preventDefault(); saveBtn.disabled=true; saveBtn.textContent="Saving...";
