@@ -240,7 +240,7 @@ body{background:radial-gradient(circle at 76% 10%,rgba(103,60,255,.10),transpare
 .lms-user{gap:9px!important}.lms-user .lms-avatar{width:42px!important;height:42px!important;border-radius:13px!important;background:linear-gradient(145deg,#2456b8,#3477d5)!important}.lms-user strong{font-size:10px!important}.lms-user span{font-size:8px!important}
 </style><style id="notification-popover-style">
 .lms-notification{cursor:pointer!important}
-.lms-notification .notification-bell-icon{display:block;line-height:1;font-size:19px}
+.lms-notification .notification-bell-icon{display:grid;place-items:center;line-height:1;font-size:19px}.lms-notification .notification-bell-icon svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .lms-notification .notification-dot{display:none;position:absolute;width:7px;height:7px;border-radius:50%;background:#ff3f68;right:4px;top:4px;box-shadow:0 0 0 3px rgba(255,63,104,.12)}
 .notification-count{position:absolute;display:grid;place-items:center;min-width:15px;height:15px;padding:0 3px;right:-3px;top:-4px;border-radius:99px;background:#6f45ff;color:#fff;font-size:7px;line-height:15px;border:2px solid #080d1b}
 .portal-notification-popover{position:fixed;z-index:3000;top:76px;right:82px;width:355px;background:linear-gradient(145deg,#111a30,#0c1425);border:1px solid rgba(148,163,184,.18);border-radius:18px;box-shadow:0 25px 70px rgba(0,0,0,.45);opacity:0;visibility:hidden;transform:translateY(-8px) scale(.98);transition:.18s ease;overflow:hidden}
@@ -286,7 +286,7 @@ body{background:radial-gradient(circle at 76% 10%,rgba(103,60,255,.10),transpare
         <b>Dashboard</b>
     </div>
     <div class="mobile-lms-actions">
-        <button type="button" class="mobile-notification" aria-label="Notifications">♧<i></i></button>
+        <button type="button" class="mobile-notification" aria-label="Notifications"><span class="notification-bell-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg></span><i></i></button>
         <div class="mobile-avatar" id="mobileAvatar">S</div>
     </div>
 </header>
