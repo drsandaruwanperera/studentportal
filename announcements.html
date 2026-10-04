@@ -37,7 +37,7 @@ document.querySelectorAll("#announcementList > article[data-grade]").forEach(car
 onSnapshot(collection(db,"announcements"),snap=>{
  const host=document.getElementById("firestoreAnnouncementList");
  const now=Date.now();
- const items=snap.docs.map(d=>({id:d.id,...d.data()})).filter(x=>{
+ const items=snap.docs.map(d=>({id:d.id,...d.data()})).filter(x=>!["legacy-grade11-top-ranking-results","legacy-al-answer-release-paper01-september2026"].includes(x.id)).filter(x=>{
    if(x.enabled===false||x.active===false)return false;
    if(x.expiresAt){
      const ms=typeof x.expiresAt?.toMillis==="function"?x.expiresAt.toMillis():Number(x.expiresAt);
