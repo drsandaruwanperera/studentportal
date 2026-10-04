@@ -100,6 +100,11 @@ if (!adminLoggedIn) {
 }
 
 
+// Limited administrators are intentionally routed to the only area they can manage.
+if (adminLoggedIn && !isSuperAdmin) {
+    window.location.replace("students.html");
+}
+
 // =====================================================
 // ELEMENTS
 // =====================================================
