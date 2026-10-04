@@ -1,3 +1,5 @@
+import {db,doc,onSnapshot} from "./firebase.js";
+
 // Grade 11-only notification for the latest Top Ranking results.
 
 function isGrade11Student() {
@@ -16,6 +18,7 @@ function isGrade11Student() {
 }
 
 if (isGrade11Student()) {
+    let legacyVisible = false;
     const style = document.createElement("style");
     style.textContent = `
         #grade11ResultNotice {
@@ -69,6 +72,10 @@ if (isGrade11Student()) {
 
     function render() {
         if (!isGrade11Student()) return false;
+        if (!legacyVisible) {
+            document.getElementById("grade11ResultNotice")?.remove();
+            return false;
+        }
         const list = document.getElementById("portalNotificationList");
         if (!list) return false;
         if (document.getElementById("grade11ResultNotice")) return true;
@@ -92,7 +99,27 @@ if (isGrade11Student()) {
         return true;
     }
 
+    function watchLegacyAnnouncement() {
+        onSnapshot(doc(db, "announcements", "legacy-grade11-top-ranking-results"), (snap) => {
+            const data = snap.exists() ? snap.data() : null;
+            legacyVisible = !!data &&
+                data.enabled !== false &&
+                data.active !== false &&
+                data.showOnDashboard !== false &&
+                (!data.expiresAt ||
+                    (typeof data.expiresAt?.toMillis === "function"
+                        ? data.expiresAt.toMillis()
+                        : Date.parse(data.expiresAt) || Number(data.expiresAt) || 0) > Date.now());
+            if (legacyVisible) render();
+            else document.getElementById("grade11ResultNotice")?.remove();
+        }, () => {
+            legacyVisible = false;
+            document.getElementById("grade11ResultNotice")?.remove();
+        });
+    }
+
     function boot() {
+        watchLegacyAnnouncement();
         let attempts = 0;
         const ensure = () => {
             attempts++;
