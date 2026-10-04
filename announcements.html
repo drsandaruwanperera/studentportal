@@ -16,4 +16,45 @@ html,body{background:#080d1b!important;color:#f5f7ff!important}
 <a class="" href="progress.html">◆ <span>Results</span></a>
 <a class="active" href="announcements.html">🔔 <span>Announcements</span></a>
 <a class="" href="support.html">🛟 <span>Support</span></a></nav>
-<div class="side-bottom"><a class="logout" href="index.html">↪ Logout</a></div></aside><main class="main"><div class="top"><div><h1>Announcements</h1><p>Important information and updates for students.</p></div><a class="back" href="dashboard.html">← Dashboard</a></div><div id="announcementList" class="announcement-list"><div class="empty">Loading announcements…</div></div></main><script>if(sessionStorage.getItem("loggedIn")!=="true")location.replace("index.html");document.body.classList.add("dark-mode");localStorage.setItem("lmsTheme","dark");</script><nav class="mobile-nav"><a href="dashboard.html">⌂<span>Dashboard</span></a><a class="" href="my-program.html">▣<span>My Program</span></a><a class="" href="progress.html">◩<span>Progress</span></a><a class="" href="support.html">◉<span>Support</span></a></nav></body></html>
+<div class="side-bottom"><a class="logout" href="index.html">↪ Logout</a></div></aside><main class="main"><div class="top"><div><h1>Announcements</h1><p>Important information and updates for students.</p></div><a class="back" href="dashboard.html">← Dashboard</a></div><div id="announcementList" class="announcement-list">
+<article class="notice" data-grade="grade11">
+  <i>🏆</i><div style="flex:1"><div class="notice-top"><h3>Top Ranking Results Are Out Now</h3><time>Grade 11</time></div><p>Your latest Top Ranking result is now available. Scroll down to view your result and marks.</p><span class="tag">GRADE 11 • RESULTS UPDATE</span></div>
+</article>
+<article class="notice" data-grade="al">
+  <i>📄</i><div style="flex:1"><div class="notice-top"><h3>Answer Release</h3><time>A/L</time></div><p>A/L Top Ranking Paper 01 — September 2026 answers are now available.</p><span class="tag">A/L • ANSWER RELEASE</span></div>
+</article>
+<div id="firestoreAnnouncementList"></div>
+</div></main><script>if(sessionStorage.getItem("loggedIn")!=="true")location.replace("index.html");document.body.classList.add("dark-mode");localStorage.setItem("lmsTheme","dark");</script><nav class="mobile-nav"><a href="dashboard.html">⌂<span>Dashboard</span></a><a class="" href="my-program.html">▣<span>My Program</span></a><a class="" href="progress.html">◩<span>Progress</span></a><a class="" href="support.html">◉<span>Support</span></a></nav><script type="module">
+import {db,collection,onSnapshot} from "./firebase.js";
+const norm=v=>String(v||"").toLowerCase().replace(/[^a-z0-9]/g,"");
+const grade=norm(sessionStorage.getItem("studentGrade")||sessionStorage.getItem("studentType")||"");
+const matches=v=>{
+ const g=norm(v);
+ if(!g||g==="all"||g==="allstudents") return true;
+ if(g==="grade10") return grade.includes("10");
+ if(g==="grade11") return grade.includes("11");
+ if(g==="al"||g==="alevel"||g==="advancedlevel") return grade==="al"||grade.includes("advanced");
+ return g===grade;
+};
+document.querySelectorAll("#announcementList > article[data-grade]").forEach(card=>{
+ const g=card.dataset.grade;
+ card.style.display=matches(g)?"flex":"none";
+});
+onSnapshot(collection(db,"announcements"),snap=>{
+ const host=document.getElementById("firestoreAnnouncementList");
+ const now=Date.now();
+ const items=snap.docs.map(d=>({id:d.id,...d.data()})).filter(x=>{
+   if(x.enabled===false||x.active===false)return false;
+   if(x.expiresAt){
+     const ms=typeof x.expiresAt?.toMillis==="function"?x.expiresAt.toMillis():Number(x.expiresAt);
+     if(ms&&ms<now)return false;
+   }
+   const target=x.grade??x.targetGrade??x.targetAudience??"all";
+   return Array.isArray(target)?target.some(matches):matches(target);
+ }).sort((a,b)=>{
+   const t=x=>typeof x?.toMillis==="function"?x.toMillis():Number(x)||0;
+   return t(b.createdAt)-t(a.createdAt);
+ });
+ host.innerHTML=items.map(x=>`<article class="notice"><i>📢</i><div style="flex:1"><div class="notice-top"><h3>${String(x.title||"Portal Update").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]))}</h3><time>${x.grade||x.targetGrade||"All Students"}</time></div><p>${String(x.message||x.description||"Important information for students.").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]))}</p><span class="tag">ANNOUNCEMENT</span></div></article>`).join("");
+},()=>{});
+</script></body></html>
