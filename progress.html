@@ -76,14 +76,33 @@ body{min-height:100vh;background:radial-gradient(circle at 78% 8%,rgba(103,60,25
 @media(max-width:800px){.main{padding:22px 15px 85px!important}.performance-hero{padding:23px 20px!important}.hero-orbit{position:absolute;right:-45px;bottom:-20px;opacity:.35}.result-grid{grid-template-columns:1fr!important}}
 @media(max-width:520px){.stats{grid-template-columns:1fr!important}.hero-score b{font-size:31px!important}.results-head{display:block}.results-count{display:inline-block;margin-top:8px}}
 @media(prefers-reduced-motion:reduce){.hero-circle,.hero-orbit>span,.hero-dot{animation:none!important}}
+</style><style id="unified-student-sidebar">
+html,body{background:#080d1b!important;color:#f5f7ff!important}
+.side{position:fixed!important;inset:0 auto 0 0!important;width:250px!important;height:100vh!important;background:linear-gradient(180deg,#0b1120,#0d1528)!important;border-right:1px solid rgba(148,163,184,.13)!important;padding:0 14px!important;display:flex!important;flex-direction:column!important;z-index:100!important;box-shadow:18px 0 50px rgba(0,0,0,.24)!important}
+.brand{height:84px!important;min-height:84px!important;padding:15px 8px!important;display:flex!important;gap:11px!important;align-items:center!important;border-bottom:1px solid rgba(148,163,184,.10)!important}
+.logo{width:44px!important;height:44px!important;border-radius:13px!important;background:linear-gradient(135deg,#693cff,#8b5cf6)!important;display:grid!important;place-items:center!important;color:#fff!important;font-size:22px!important;box-shadow:0 12px 30px rgba(103,60,255,.28)!important}
+.brand b{display:block!important;color:#fff!important;font-size:16px!important}.brand span{display:block!important;color:#7f8ba4!important;font-size:10px!important;margin-top:2px!important}
+.sidebar-section-title{padding:25px 12px 9px!important;color:#71809c!important;font-size:9px!important;font-weight:800!important;letter-spacing:1.2px!important}
+.side nav{display:flex!important;flex-direction:column!important;gap:3px!important}
+.side nav a{height:43px!important;display:flex!important;align-items:center!important;gap:11px!important;padding:0 13px!important;border-radius:11px!important;color:#9ca9bf!important;text-decoration:none!important;font-size:12px!important;font-weight:750!important;white-space:nowrap!important}
+.side nav a:hover{background:#151e33!important;color:#fff!important}.side nav a.active{background:linear-gradient(135deg,#6034ff,#743cff)!important;color:#fff!important;box-shadow:0 12px 28px rgba(103,60,255,.22)!important}
+.nav-icon{width:24px!important;text-align:center!important;font-size:15px!important;line-height:1!important;color:#69a8ff!important}.side nav a:nth-child(2) .nav-icon{color:#22d3ee!important}.side nav a:nth-child(3) .nav-icon{color:#a78bfa!important}.side nav a:nth-child(4) .nav-icon{color:#fbbf24!important}.side nav a:nth-child(5) .nav-icon{color:#22c55e!important}.side nav a.active .nav-icon{color:#fff!important}
+.side-bottom{margin-top:auto!important;border-top:1px solid rgba(148,163,184,.10)!important;padding:14px 0 14px!important}
+.side-profile{display:flex!important;align-items:center!important;gap:10px!important;padding:0 7px 13px!important}
+.side-avatar{width:40px!important;height:40px!important;border-radius:12px!important;background:linear-gradient(145deg,#2456b8,#3477d5)!important;color:#fff!important;display:grid!important;place-items:center!important;font-weight:800!important}
+.side-profile strong{display:block!important;color:#fff!important;font-size:10px!important;max-width:150px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}.side-profile span{display:block!important;color:#7f8ba4!important;font-size:9px!important;margin-top:2px!important}
+.logout{display:flex!important;align-items:center!important;justify-content:center!important;width:100%!important;height:42px!important;padding:0!important;border:0!important;border-radius:10px!important;background:#ef4444!important;color:#fff!important;text-decoration:none!important;font-size:11px!important;font-weight:850!important;box-shadow:0 10px 22px rgba(239,68,68,.18)!important}
+.logout:hover{background:#dc2626!important;color:#fff!important}
+.main{margin-left:250px!important;min-height:100vh!important;padding:30px 38px 70px!important;max-width:none!important}
+@media(max-width:800px){.side{position:fixed!important;width:285px!important;max-width:86vw!important;transform:translateX(-105%)!important;transition:transform .25s ease!important}.side.mobile-open{transform:translateX(0)!important}.main{margin-left:0!important;padding:20px 15px 85px!important}.sidebar-section-title{display:block!important}}
 </style></head><body>
-<aside class="side"><div class="brand"><div class="logo">🎓</div><div><b>Dr. Sandaruwan</b><span>LMS • Student Portal</span></div></div><nav><a href="dashboard.html">▦ <span>Dashboard</span></a><a href="my-program.html">📚 <span>My Program</span></a><a class="active" href="progress.html">◆ <span>Results</span></a><a href="announcements.html">🔔 <span>Announcements</span></a><a href="support.html">🛟 <span>Support</span></a></nav><div class="side-bottom">
-  <div class="progress-profile">
-    <div class="progress-avatar" id="sideAvatar">S</div>
-    <div><strong id="sideName">Student</strong><span id="sideGrade">Student</span></div>
-  </div>
-  <a class="logout" href="index.html">↪ Logout</a>
-</div></aside>
+<aside class="side"><div class="brand"><div class="logo">🎓</div><div><b>Dr. Sandaruwan</b><span>LMS • Student Portal</span></div></div><div class="sidebar-section-title">STUDENT PORTAL</div><nav>
+<a href="dashboard.html" data-nav="dashboard"><span class="nav-icon">▦</span><span>Dashboard</span></a>
+<a href="my-program.html" data-nav="program"><span class="nav-icon">▦</span><span>My Program</span></a>
+<a href="progress.html" data-nav="results"><span class="nav-icon">⌁</span><span>Results</span></a>
+<a href="announcements.html" data-nav="announcements"><span class="nav-icon">🔔</span><span>Announcements</span></a>
+<a href="support.html" data-nav="support"><span class="nav-icon">⊕</span><span>Support</span></a></nav>
+<div class="side-bottom"><div class="side-profile"><div class="side-avatar" id="sideAvatar">S</div><div><strong id="sideName">Student</strong><span id="sideGrade">Student</span></div></div><a class="logout" href="index.html">Logout</a></div></aside>
 <main class="main">
   <div class="top">
     <div><h1>Progress &amp; Results</h1><p>Track your learning performance and view published examination results.</p></div>
@@ -210,6 +229,23 @@ try{
     document.getElementById("summaryFill").style.width=pct+"%";
   }
 }catch(e){console.error("Progress data load failed",e)}
+</script><script>
+(function(){
+ if(sessionStorage.getItem("loggedIn")!=="true")location.replace("index.html");
+ const name=sessionStorage.getItem("studentName")||sessionStorage.getItem("studentId")||"Student";
+ const raw=sessionStorage.getItem("studentGrade")||sessionStorage.getItem("studentType")||"Student";
+ const n=String(raw).toLowerCase().replace(/[\s_-]+/g,"");
+ let grade=raw||"Student";
+ if(n.includes("grade10"))grade="Grade 10 Student";
+ else if(n.includes("grade11"))grade="Grade 11 Student";
+ else if(n==="al"||n.includes("advancedlevel")||n.includes("a/l"))grade="A/L Student";
+ document.getElementById("sideName")?.replaceChildren(document.createTextNode(name));
+ document.getElementById("sideGrade")?.replaceChildren(document.createTextNode(grade));
+ const av=document.getElementById("sideAvatar"); if(av)av.textContent=name.charAt(0).toUpperCase();
+ const path=location.pathname.split("/").pop()||"dashboard.html";
+ const key=path==="dashboard.html"?"dashboard":path==="my-program.html"?"program":path==="progress.html"?"results":path==="announcements.html"?"announcements":"support";
+ document.querySelector('.side nav a[data-nav="'+key+'"]')?.classList.add("active");
+})();
 </script><nav class="mobile-nav"><a href="dashboard.html">⌂<span>Dashboard</span></a><a class="" href="my-program.html">▣<span>My Program</span></a><a class="active" href="progress.html">◩<span>Progress</span></a><a class="" href="support.html">◉<span>Support</span></a></nav><script>
 const studentName=String(sessionStorage.getItem("studentName")||sessionStorage.getItem("studentId")||"Student");
 const rawGrade=String(sessionStorage.getItem("studentGrade")||sessionStorage.getItem("studentType")||"Student").toLowerCase().replace(/[\s_-]+/g,"");
