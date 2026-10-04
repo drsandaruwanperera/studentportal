@@ -515,17 +515,32 @@ async function loadStudent() {
             sessionStorage.getItem("studentName") ||
             sessionStorage.getItem("studentId");
 
-        const studentName =
+        // The login session is the source of truth for the displayed identity.
+        // Do not overwrite a valid logged-in name with a missing/placeholder
+        // name from Firestore; this was causing the profile to flash correctly
+        // and then revert to "Student".
+        const firebaseName =
             data.fullName ||
             data.name ||
             data.studentName ||
             data.displayName ||
-            sessionStudentName ||
-            studentId ||
-            "Student";
+            "";
+
+        const hasValidSessionName =
+            sessionStudentName &&
+            String(sessionStudentName).trim() &&
+            String(sessionStudentName).trim().toLowerCase() !== "student";
+
+        const studentName =
+            hasValidSessionName
+                ? String(sessionStudentName).trim()
+                : (String(firebaseName).trim() || studentId || "Student");
+
+        if (!hasValidSessionName && studentName !== "Student") {
+            sessionStorage.setItem("studentName", studentName);
+        }
 
         // Keep the logged-in student's real identity visible in the dashboard sidebar.
-        sessionStorage.setItem("studentName", studentName);
         sessionStorage.setItem("studentGrade", gradeInfo.grade);
 
         const sidebarName = document.getElementById("sidebarStudentId");
