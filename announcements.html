@@ -17,12 +17,6 @@ html,body{background:#080d1b!important;color:#f5f7ff!important}
 <a class="active" href="announcements.html">🔔 <span>Announcements</span></a>
 <a class="" href="support.html">🛟 <span>Support</span></a></nav>
 <div class="side-bottom"><a class="logout" href="index.html">↪ Logout</a></div></aside><main class="main"><div class="top"><div><h1>Announcements</h1><p>Important information and updates for students.</p></div><a class="back" href="dashboard.html">← Dashboard</a></div><div id="announcementList" class="announcement-list">
-<article class="notice" data-grade="grade11">
-  <i>🏆</i><div style="flex:1"><div class="notice-top"><h3>Top Ranking Results Are Out Now</h3><time>Grade 11</time></div><p>Your latest Top Ranking result is now available. Scroll down to view your result and marks.</p><span class="tag">GRADE 11 • RESULTS UPDATE</span></div>
-</article>
-<article class="notice" data-grade="al">
-  <i>📄</i><div style="flex:1"><div class="notice-top"><h3>Answer Release</h3><time>A/L</time></div><p>A/L Top Ranking Paper 01 — September 2026 answers are now available.</p><span class="tag">A/L • ANSWER RELEASE</span></div>
-</article>
 <div id="firestoreAnnouncementList"></div>
 </div></main><script>if(sessionStorage.getItem("loggedIn")!=="true")location.replace("index.html");document.body.classList.add("dark-mode");localStorage.setItem("lmsTheme","dark");</script><nav class="mobile-nav"><a href="dashboard.html">⌂<span>Dashboard</span></a><a class="" href="my-program.html">▣<span>My Program</span></a><a class="" href="progress.html">◩<span>Progress</span></a><a class="" href="support.html">◉<span>Support</span></a></nav><script type="module">
 import {db,collection,onSnapshot} from "./firebase.js";
@@ -55,6 +49,13 @@ onSnapshot(collection(db,"announcements"),snap=>{
    const t=x=>typeof x?.toMillis==="function"?x.toMillis():Number(x)||0;
    return t(b.createdAt)-t(a.createdAt);
  });
- host.innerHTML=items.map(x=>`<article class="notice"><i>📢</i><div style="flex:1"><div class="notice-top"><h3>${String(x.title||"Portal Update").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]))}</h3><time>${x.grade||x.targetGrade||"All Students"}</time></div><p>${String(x.message||x.description||"Important information for students.").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]))}</p><span class="tag">ANNOUNCEMENT</span></div></article>`).join("");
+ host.innerHTML=items.length?items.map(x=>{
+   const target=x.grade||x.targetGrade||"all";
+   const label=String(target).toLowerCase().includes("11")?"Grade 11":String(target).toLowerCase().includes("10")?"Grade 10":(["al","alevel","advancedlevel"].includes(norm(target))?"A/L":"All Students");
+   const icon=label==="Grade 11"?"🏆":label==="A/L"?"📄":"📢";
+   const safeTitle=String(x.title||"Portal Update").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+   const safeMessage=String(x.message||x.description||"Important information for students.").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+   return `<article class="notice"><i>${icon}</i><div style="flex:1"><div class="notice-top"><h3>${safeTitle}</h3><time>${label}</time></div><p>${safeMessage}</p><span class="tag">ANNOUNCEMENT</span></div></article>`;
+  }).join(""):'<div class="empty">No announcements available right now.</div>';
 },()=>{});
 </script></body></html>
