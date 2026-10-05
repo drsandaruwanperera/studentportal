@@ -45,7 +45,8 @@ async function checkPageImage(linkId, statusId, type) {
     if (!link || !status) return;
 
     const viewerUrl = `al-paper-viewer.html?paper=${paperNumber}&type=${type}`;
-    const firstPageUrl = `papers/al-top-ranking/september/paper-${paperNumber}-${type === "second" ? "2nd-paper" : "1st-paper"}/page-01.jpg`;
+    const monthName = String(params.get("month") || "september").toLowerCase();
+    const firstPageUrl = `papers/al-top-ranking/${monthName}/paper-${paperNumber}-${type === "second" ? "2nd-paper" : "1st-paper"}/page-01.jpg`;
 
     try {
         const response = await fetch(firstPageUrl, { method: "HEAD", cache: "no-store" });
