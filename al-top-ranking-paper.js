@@ -142,6 +142,7 @@ async function initialize() {
     }
 
     const pageTitle = document.getElementById("pageTitle");
+    const pageKicker = document.getElementById("pageKicker");
     const paperKicker = document.getElementById("paperKicker");
     const firstDescription = document.getElementById("firstDescription");
     const secondDescription = document.getElementById("secondDescription");
