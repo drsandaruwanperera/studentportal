@@ -11,6 +11,14 @@ if (sessionStorage.getItem("loggedIn") !== "true") {
 const studentId = sessionStorage.getItem("studentId");
 const params = new URLSearchParams(window.location.search);
 const paperNumber = String(params.get("paper") || "01").padStart(2, "0");
+const monthName = String(params.get("month") || "september").toLowerCase();
+const monthNames = {
+    january: "January", february: "February", march: "March", april: "April",
+    may: "May", june: "June", july: "July", august: "August",
+    september: "September", october: "October", november: "November", december: "December"
+};
+const monthLabel = monthNames[monthName] || "September";
+const yearLabel = monthName === "september" ? "2026" : "2026";
 
 async function getStudentData() {
     if (!studentId) return null;
@@ -45,7 +53,6 @@ async function checkPageImage(linkId, statusId, type) {
     if (!link || !status) return;
 
     const viewerUrl = `al-paper-viewer.html?paper=${paperNumber}&type=${type}`;
-    const monthName = String(params.get("month") || "september").toLowerCase();
     const firstPageUrl = `papers/al-top-ranking/${monthName}/paper-${paperNumber}-${type === "second" ? "2nd-paper" : "1st-paper"}/page-01.jpg`;
 
     try {
@@ -72,21 +79,21 @@ function addAnswerSection() {
         <div class="paper-header answer-header">
             <div class="kicker">ANSWER SCHEMES</div>
             <h2>Paper ${paperNumber} Answers</h2>
-            <p>Official answer schemes for the September 2026 Top Ranking Model.</p>
+            <p>Official answer schemes for the ${monthLabel} ${yearLabel} Top Ranking Model.</p>
         </div>
         <div class="papers answer-papers">
             <article class="pdf-card answer-card">
                 <div class="pdf-icon">📘</div>
                 <h3>1st Paper Answer</h3>
-                <p>Complete September 2026 answer scheme for the 1st Paper.</p>
-                <a class="pdf-link" href="al-top-ranking-answer.html?paper=${paperNumber}&type=first">View Answer →</a>
+                <p>Complete ${monthLabel} ${yearLabel} answer scheme for the 1st Paper.</p>
+                <a class="pdf-link" href="al-top-ranking-answer.html?paper=${paperNumber}&type=first&month=${monthName}">View Answer →</a>
                 <div class="status">Protected online viewer</div>
             </article>
             <article class="pdf-card answer-card">
                 <div class="pdf-icon">📗</div>
                 <h3>2nd Paper Answer</h3>
-                <p>Complete September 2026 answer scheme for the 2nd Paper.</p>
-                <a class="pdf-link" href="al-top-ranking-answer.html?paper=${paperNumber}&type=second">View Answer →</a>
+                <p>Complete ${monthLabel} ${yearLabel} answer scheme for the 2nd Paper.</p>
+                <a class="pdf-link" href="al-top-ranking-answer.html?paper=${paperNumber}&type=second&month=${monthName}">View Answer →</a>
                 <div class="status">Protected online viewer</div>
             </article>
         </div>
@@ -133,8 +140,8 @@ async function initialize() {
 
     if (pageTitle) pageTitle.textContent = `Paper ${paperNumber}`;
     if (paperKicker) paperKicker.textContent = `PAPER ${paperNumber}`;
-    if (firstDescription) firstDescription.textContent = `Open the September 2026 Top Ranking Model — Paper ${paperNumber} 1st Paper.`;
-    if (secondDescription) secondDescription.textContent = `Open the September 2026 Top Ranking Model — Paper ${paperNumber} 2nd Paper.`;
+    if (firstDescription) firstDescription.textContent = `Open the ${monthLabel} ${yearLabel} Top Ranking Model — Paper ${paperNumber} 1st Paper.`;
+    if (secondDescription) secondDescription.textContent = `Open the ${monthLabel} ${yearLabel} Top Ranking Model — Paper ${paperNumber} 2nd Paper.`;
 
     await Promise.all([
         checkPageImage("firstPaper", "firstStatus", "first"),
