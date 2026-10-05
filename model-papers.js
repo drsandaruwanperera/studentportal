@@ -5,7 +5,9 @@
 import {
     db,
     doc,
-    getDoc
+    getDoc,
+    collection,
+    onSnapshot
 } from "./firebase.js";
 
 
@@ -222,3 +224,83 @@ document.addEventListener(
         );
     }
 );
+
+
+const monthNames = {
+    january:"January", february:"February", march:"March", april:"April",
+    may:"May", june:"June", july:"July", august:"August",
+    september:"September", october:"October", november:"November", december:"December"
+};
+
+function renderMonthlyPaperSections(items) {
+    const main = document.querySelector("main");
+    const coming = document.querySelector(".coming-section");
+    if (!main) return;
+
+    document.querySelectorAll("[data-monthly-paper-section]").forEach(el => el.remove());
+
+    const groups = {};
+    items.filter(x => x.published !== false).forEach(x => {
+        const key = `${x.year}-${x.month}`;
+        (groups[key] ||= []).push(x);
+    });
+
+    const sortedGroups = Object.entries(groups).sort((a,b) => b[0].localeCompare(a[0]));
+    sortedGroups.forEach(([key, papers]) => {
+        const [year, month] = key.split("-");
+        const section = document.createElement("section");
+        section.className = "month-section monthly-dynamic-section";
+        section.dataset.monthlyPaperSection = key;
+
+        papers.sort((a,b) => Number(a.paperNumber)-Number(b.paperNumber));
+        section.innerHTML = `
+            <div class="section-heading">
+                <div>
+                    <span class="section-kicker">MONTHLY COLLECTION</span>
+                    <h2>${monthNames[month] || month} ${year}</h2>
+                    <p>Top Ranking Model Papers for ${monthNames[month] || month}</p>
+                </div>
+                <span class="month-badge">${(monthNames[month] || month).toUpperCase()}</span>
+            </div>
+            <div class="paper-list">
+                ${papers.map(p => {
+                    const n=String(p.paperNumber).padStart(2,"0");
+                    return `
+                    <article class="paper-card">
+                        <div class="paper-number">${n}</div>
+                        <div class="paper-info">
+                            <span class="paper-kicker">TOP RANKING MODEL</span>
+                            <h3>${p.title || `Paper ${n}`}</h3>
+                            <p>1st Paper and 2nd Paper PDF resources</p>
+                        </div>
+                        <button type="button" class="paper-open" data-month="${month}" data-paper="${n}">
+                            Open Paper ${n} <span>→</span>
+                        </button>
+                    </article>`;
+                }).join("")}
+            </div>`;
+
+        if (coming) main.insertBefore(section, coming);
+        else main.appendChild(section);
+    });
+
+    main.querySelectorAll("[data-month][data-paper]").forEach(btn => {
+        btn.addEventListener("click", () => {
+            window.location.href = `al-top-ranking-paper.html?paper=${btn.dataset.paper}&month=${btn.dataset.month}`;
+        });
+    });
+}
+
+function loadMonthlyTopRankingPapers() {
+    try {
+        onSnapshot(collection(db, "monthlyTopRankingPapers"), snapshot => {
+            renderMonthlyPaperSections(snapshot.docs.map(d => ({id:d.id, ...d.data()})));
+        }, error => {
+            console.info("Monthly top ranking papers are not available yet.", error);
+        });
+    } catch (error) {
+        console.info("Monthly paper listener could not start.", error);
+    }
+}
+
+loadMonthlyTopRankingPapers();
