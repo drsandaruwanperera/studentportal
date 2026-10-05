@@ -47,21 +47,29 @@ function hasPaperAccess(studentData) {
     return value === true || value === "true" || value === 1 || value === "1";
 }
 
-async function checkPageImage(linkId, statusId, type) {
+async function checkPaperResource(linkId, statusId, type) {
     const link = document.getElementById(linkId);
     const status = document.getElementById(statusId);
     if (!link || !status) return;
 
-    const viewerUrl = `al-paper-viewer.html?paper=${paperNumber}&type=${type}`;
-    const firstPageUrl = `papers/al-top-ranking/${monthName}/paper-${paperNumber}-${type === "second" ? "2nd-paper" : "1st-paper"}/page-01.jpg`;
+    const viewerUrl = `al-paper-viewer.html?paper=${paperNumber}&type=${type}&month=${monthName}`;
+    const monthTitle = monthLabel;
+    const monthlyPdfNumber = type === "second"
+        ? String(Number(paperNumber) + 1).padStart(2, "0")
+        : paperNumber;
+    const monthlyPdfUrl = `papers/al-top-ranking/${monthName}/${monthTitle}-Paper-${monthlyPdfNumber}.pdf`;
+    const imageUrl = `papers/al-top-ranking/${monthName}/paper-${paperNumber}-${type === "second" ? "2nd-paper" : "1st-paper"}/page-01.jpg`;
 
     try {
-        const response = await fetch(firstPageUrl, { method: "HEAD", cache: "no-store" });
+        const resourceUrl = monthName === "september" ? imageUrl : monthlyPdfUrl;
+        const response = await fetch(resourceUrl, { method: "HEAD", cache: "no-store" });
         if (response.ok) {
-            link.href = viewerUrl;
+            link.href = monthName === "september" ? viewerUrl : monthlyPdfUrl;
+            link.target = monthName === "september" ? "_self" : "_blank";
+            link.rel = monthName === "september" ? "" : "noopener";
             link.classList.remove("pending");
-            link.textContent = "Open Paper →";
-            status.textContent = "Pages available";
+            link.textContent = monthName === "september" ? "View & Print →" : "Open PDF →";
+            status.textContent = monthName === "september" ? "Pages available" : "PDF available";
         } else {
             status.textContent = "Paper is not uploaded yet.";
         }
@@ -139,16 +147,19 @@ async function initialize() {
     const secondDescription = document.getElementById("secondDescription");
 
     if (pageTitle) pageTitle.textContent = `Paper ${paperNumber}`;
+    if (pageKicker) pageKicker.textContent = `${monthLabel.toUpperCase()} ${yearLabel} • A/L TOP RANKING MODEL`;
     if (paperKicker) paperKicker.textContent = `PAPER ${paperNumber}`;
+    const paperHeaderTitle = document.getElementById("paperHeaderTitle");
+    if (paperHeaderTitle) paperHeaderTitle.textContent = `${monthLabel} Model Paper`;
     if (firstDescription) firstDescription.textContent = `Open the ${monthLabel} ${yearLabel} Top Ranking Model — Paper ${paperNumber} 1st Paper.`;
     if (secondDescription) secondDescription.textContent = `Open the ${monthLabel} ${yearLabel} Top Ranking Model — Paper ${paperNumber} 2nd Paper.`;
 
     await Promise.all([
-        checkPageImage("firstPaper", "firstStatus", "first"),
-        checkPageImage("secondPaper", "secondStatus", "second")
+        checkPaperResource("firstPaper", "firstStatus", "first"),
+        checkPaperResource("secondPaper", "secondStatus", "second")
     ]);
 
-    if (isALStudent(studentData)) addAnswerSection();
+    if (isALStudent(studentData) && monthName === "september") addAnswerSection();
 }
 
 document.addEventListener("DOMContentLoaded", initialize);
