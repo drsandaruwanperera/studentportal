@@ -8,10 +8,18 @@ const studentId = sessionStorage.getItem("studentId");
 const params = new URLSearchParams(window.location.search);
 const type = params.get("type") === "second" ? "second" : "first";
 const paper = String(params.get("paper") || "01").padStart(2, "0");
+const monthName = String(params.get("month") || "september").toLowerCase();
+const monthNames = {
+    january: "January", february: "February", march: "March", april: "April",
+    may: "May", june: "June", july: "July", august: "August",
+    september: "September", october: "October", november: "November", december: "December"
+};
+const monthLabel = monthNames[monthName] || "September";
+const yearLabel = "2026";
 const pdfName = type === "second"
     ? `paper-${paper}-2nd-answer.pdf`
     : `paper-${paper}-1st-answer.pdf`;
-const pdfUrl = `answers/al-top-ranking/september/${pdfName}`;
+const pdfUrl = `answers/al-top-ranking/${monthName}/${pdfName}`;
 
 // PDF.js needs an explicit worker when served as local static assets.
 pdfjsLib.GlobalWorkerOptions.workerSrc = "./pdfjs/build/pdf.worker.mjs";
@@ -23,7 +31,7 @@ const pages = document.getElementById("pages");
 const back = document.getElementById("back");
 
 if (title) title.textContent = `Paper ${paper} • ${type === "second" ? "2nd" : "1st"} Paper Answer`;
-if (kicker) kicker.textContent = `SEPTEMBER 2026 • A/L TOP RANKING • ${type.toUpperCase()} PAPER ANSWER`;
+if (kicker) kicker.textContent = `${monthLabel.toUpperCase()} ${yearLabel} • A/L TOP RANKING • ${type.toUpperCase()} PAPER ANSWER`;
 if (back) back.addEventListener("click", () => history.back());
 
 function blockAccess(event) {
