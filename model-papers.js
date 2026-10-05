@@ -240,7 +240,7 @@ function renderMonthlyPaperSections(items) {
     document.querySelectorAll("[data-monthly-paper-section]").forEach(el => el.remove());
 
     const groups = {};
-    items.filter(x => x.published !== false).forEach(x => {
+    items.filter(x => x.published !== false && String(x.month).toLowerCase() !== "september").forEach(x => {
         const key = `${x.year}-${x.month}`;
         (groups[key] ||= []).push(x);
     });
