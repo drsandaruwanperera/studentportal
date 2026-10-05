@@ -9,7 +9,14 @@
 .page-shell{padding:28px 34px 60px}.control-hero{padding:28px;border:1px solid rgba(255,255,255,.1);border-radius:22px;background:linear-gradient(135deg,#27205f,#4037c9 55%,#6d28d9);box-shadow:0 20px 55px rgba(0,0,0,.22);margin-bottom:22px}.control-hero .eyebrow{color:#a6ff2e;font-size:10px;font-weight:850;letter-spacing:1.3px}.control-hero h1{margin:7px 0;color:#fff;font-size:30px}.control-hero p{color:rgba(255,255,255,.72);font-size:13px}.control-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.control-card{position:relative;padding:22px;border-radius:18px;background:rgba(17,24,43,.94);border:1px solid rgba(255,255,255,.1);box-shadow:0 12px 32px rgba(0,0,0,.16);overflow:hidden}.control-card:before{content:"";position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(90deg,#5b4bff,#a6ff2e)}.control-top{display:flex;align-items:center;justify-content:space-between;gap:12px}.control-icon{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:rgba(91,75,255,.14);font-size:22px}.status{padding:7px 10px;border-radius:999px;font-size:9px;font-weight:850}.status.published{background:rgba(74,222,128,.09);color:#4ade80;border:1px solid rgba(74,222,128,.2)}.status.unpublished{background:rgba(255,107,122,.08);color:#ff9aa5;border:1px solid rgba(255,107,122,.18)}.control-card h2{margin:17px 0 5px;color:#f4f7ff;font-size:17px}.control-card p{min-height:38px;color:#aeb8ce;font-size:11px;line-height:1.55}.control-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:17px}.publish-btn,.save-btn{width:100%;min-height:43px;border:0;border-radius:11px;color:#fff;font-size:11px;font-weight:800;cursor:pointer;transition:.2s}.publish-btn{background:linear-gradient(135deg,#147d52,#1aa56d)}.publish-btn.unpublish{background:linear-gradient(135deg,#a82d43,#d4475b)}.save-btn{background:linear-gradient(135deg,#5b4bff,#4037c9)}.publish-btn:disabled,.save-btn:disabled{opacity:.55;cursor:wait}.save-btn.saved{background:#24324a;color:#aeb8ce}.dirty{display:inline-flex;align-items:center;gap:5px;margin-top:8px;color:#a6ff2e;font-size:9px;font-weight:800}.note{margin-top:18px;padding:14px 16px;border-radius:13px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);color:#8f9bb2;font-size:10px;line-height:1.55}
 @media(max-width:1000px){.control-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:650px){.page-shell{padding:15px}.control-grid{grid-template-columns:1fr}.control-hero h1{font-size:24px}}
 </style>
-</head>
+<style>
+.monthly-paper-admin{margin-top:22px;padding:24px;border:1px solid rgba(255,255,255,.1);border-radius:20px;background:rgba(17,24,43,.94);box-shadow:0 15px 38px rgba(0,0,0,.18)}
+.monthly-paper-hero{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding:4px 0 20px;border-bottom:1px solid rgba(255,255,255,.07)}
+.monthly-paper-hero h2{margin:6px 0;color:#f4f7ff;font-size:21px}.monthly-paper-hero p{color:#aeb8ce;font-size:11px;line-height:1.6;max-width:720px}
+.realtime-pill{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid rgba(74,222,128,.2);border-radius:999px;background:rgba(74,222,128,.07);color:#86efac;font-size:9px;font-weight:850}.realtime-pill i{width:6px;height:6px;border-radius:50%;background:#4ade80}
+.monthly-paper-form{display:grid;grid-template-columns:1.2fr .7fr .8fr 1.4fr;gap:12px;margin-top:20px}.monthly-paper-form label{display:flex;flex-direction:column;gap:6px;color:#9aa8c0;font-size:10px;font-weight:750}.monthly-paper-form input,.monthly-paper-form select{height:42px;padding:0 11px;border:1px solid rgba(255,255,255,.1);border-radius:10px;background:#0c1323;color:#f4f7ff;outline:none}.monthly-paper-form input:focus,.monthly-paper-form select:focus{border-color:#5b4bff;box-shadow:0 0 0 3px rgba(91,75,255,.1)}.wide-field{grid-column:span 2}.optional{color:#64748b;font-weight:500}.publish-check{grid-column:span 2;flex-direction:row!important;align-items:center;gap:8px!important}.publish-check input{width:16px;height:16px}.monthly-save-btn{align-self:end;min-height:42px;border:0;border-radius:10px;background:linear-gradient(135deg,#5b4bff,#7c3aed);color:#fff;font-weight:800;font-size:11px;cursor:pointer}.monthly-save-btn:disabled{opacity:.55;cursor:wait}.monthly-paper-list-head{display:flex;justify-content:space-between;margin-top:24px;padding-top:18px;border-top:1px solid rgba(255,255,255,.07);color:#f4f7ff;font-size:12px}.monthly-paper-list-head span{margin-left:9px;color:#71809a;font-size:10px}.monthly-paper-list{display:grid;gap:9px;margin-top:12px}.monthly-paper-row{display:grid;grid-template-columns:80px 1fr auto auto;align-items:center;gap:14px;padding:13px;border:1px solid rgba(255,255,255,.07);border-radius:12px;background:#101a2d}.monthly-paper-month{color:#a6ff2e;font-size:9px;font-weight:850;text-transform:uppercase}.monthly-paper-row strong{display:block;color:#f4f7ff;font-size:12px}.monthly-paper-row small{display:block;margin-top:3px;color:#71809a;font-size:9px}.monthly-paper-status{padding:6px 8px;border-radius:999px;font-size:8px;font-weight:850}.monthly-paper-status.on{color:#4ade80;background:rgba(74,222,128,.08)}.monthly-paper-status.off{color:#ff9aa5;background:rgba(255,107,122,.08)}.monthly-paper-toggle{min-height:33px;padding:0 10px;border:1px solid rgba(255,255,255,.1);border-radius:8px;background:rgba(255,255,255,.04);color:#cbd5e1;cursor:pointer;font-size:9px;font-weight:750}.monthly-empty{padding:20px;text-align:center;color:#71809a;font-size:11px}
+@media(max-width:850px){.monthly-paper-form{grid-template-columns:1fr 1fr}.wide-field,.publish-check{grid-column:span 2}}@media(max-width:600px){.monthly-paper-admin{padding:17px}.monthly-paper-form{grid-template-columns:1fr}.wide-field,.publish-check{grid-column:span 1}.monthly-paper-hero{flex-direction:column}.monthly-paper-row{grid-template-columns:1fr}.monthly-paper-toggle{width:100%}}
+</style></head>
 <body>
 <div class="admin-layout">
 <aside class="sidebar">
@@ -28,6 +35,49 @@
 <section class="control-hero"><div class="eyebrow">LMS CONTENT CONTROL</div><h1>Program Publishing</h1><p>Publish or unpublish student-facing learning materials without editing the student portal code.</p></section>
 <section class="control-grid" id="controlGrid"></section>
 <div class="note">Default behaviour is published when no setting exists yet. Changing a card to Unpublished hides it from the student <b>My Program</b> page.</div>
+<section class="monthly-paper-admin">
+  <div class="monthly-paper-hero">
+    <div>
+      <div class="eyebrow">A/L TOP RANKING MODEL</div>
+      <h2>Monthly Paper Publishing</h2>
+      <p>Add a month + paper number here. Published papers appear automatically on the student Top Ranking Model page in realtime.</p>
+    </div>
+    <span class="realtime-pill"><i></i> REALTIME</span>
+  </div>
+
+  <form id="monthlyPaperForm" class="monthly-paper-form">
+    <label>Month
+      <select id="paperMonth">
+        <option value="september">September</option>
+        <option value="october" selected>October</option>
+        <option value="november">November</option>
+        <option value="december">December</option>
+      </select>
+    </label>
+    <label>Year
+      <input id="paperYear" type="number" value="2026" min="2024" max="2100">
+    </label>
+    <label>Paper Number
+      <input id="paperNumber" type="number" value="01" min="1" max="50">
+    </label>
+    <label class="wide-field">Paper Title
+      <input id="paperTitle" type="text" placeholder="e.g. Paper 01" value="Paper 01">
+    </label>
+    <label class="wide-field">1st Paper Viewer Path <span class="optional">(optional)</span>
+      <input id="firstPath" type="text" placeholder="papers/al-top-ranking/october/paper-01-1st-paper/">
+    </label>
+    <label class="wide-field">2nd Paper Viewer Path <span class="optional">(optional)</span>
+      <input id="secondPath" type="text" placeholder="papers/al-top-ranking/october/paper-01-2nd-paper/">
+    </label>
+    <label class="publish-check"><input id="paperPublished" type="checkbox" checked> Publish to students immediately</label>
+    <button type="submit" class="monthly-save-btn" id="monthlySaveBtn">＋ Add Monthly Paper</button>
+  </form>
+
+  <div class="monthly-paper-list-head">
+    <div><strong>Published / Saved Monthly Papers</strong><span id="monthlyPaperCount">0 papers</span></div>
+  </div>
+  <div id="monthlyPaperList" class="monthly-paper-list"><div class="monthly-empty">Loading monthly papers…</div></div>
+</section>
 </main>
 </div>
 <script type="module">
@@ -125,4 +175,44 @@ onSnapshot(
 
 render();
 </script>
-</body></html>
+<script type="module">
+import {db,doc,setDoc,deleteDoc,onSnapshot,collection} from "./firebase.js";
+
+const monthEl=document.getElementById("paperMonth"), yearEl=document.getElementById("paperYear"), numberEl=document.getElementById("paperNumber");
+const titleEl=document.getElementById("paperTitle"), firstEl=document.getElementById("firstPath"), secondEl=document.getElementById("secondPath");
+const publishedEl=document.getElementById("paperPublished"), form=document.getElementById("monthlyPaperForm"), list=document.getElementById("monthlyPaperList");
+const count=document.getElementById("monthlyPaperCount"), save=document.getElementById("monthlySaveBtn");
+const monthNames={september:"September",october:"October",november:"November",december:"December"};
+
+function paperId(){return `${yearEl.value}-${monthEl.value}-paper-${String(numberEl.value).padStart(2,"0")}`;}
+function render(rows){
+ rows.sort((a,b)=>String(a.month).localeCompare(String(b.month))||Number(a.paperNumber)-Number(b.paperNumber));
+ count.textContent=`${rows.length} paper${rows.length===1?"":"s"}`;
+ if(!rows.length){list.innerHTML='<div class="monthly-empty">No monthly papers added yet.</div>';return;}
+ list.innerHTML=rows.map(x=>`<div class="monthly-paper-row">
+   <div class="monthly-paper-month">${monthNames[x.month]||x.month} ${x.year}</div>
+   <div><strong>${x.title||"Paper "+String(x.paperNumber).padStart(2,"0")}</strong><small>Paper ${String(x.paperNumber).padStart(2,"0")}</small></div>
+   <span class="monthly-paper-status ${x.published!==false?"on":"off"}">${x.published!==false?"PUBLISHED":"HIDDEN"}</span>
+   <button class="monthly-paper-toggle" data-id="${x.id}" data-published="${x.published!==false}">${x.published!==false?"Hide":"Publish"}</button>
+ </div>`).join("");
+ list.querySelectorAll("[data-id]").forEach(btn=>btn.addEventListener("click",async()=>{
+   btn.disabled=true;
+   await setDoc(doc(db,"monthlyTopRankingPapers",btn.dataset.id),{published:btn.dataset.published!=="true",updatedAt:new Date().toISOString()},{merge:true});
+ }));
+}
+form.addEventListener("submit",async e=>{
+ e.preventDefault(); save.disabled=true; save.textContent="Saving…";
+ try{
+   const id=paperId();
+   await setDoc(doc(db,"monthlyTopRankingPapers",id),{
+     month:monthEl.value,year:Number(yearEl.value),paperNumber:Number(numberEl.value),
+     title:titleEl.value.trim()||`Paper ${String(numberEl.value).padStart(2,"0")}`,
+     firstPath:firstEl.value.trim(),secondPath:secondEl.value.trim(),
+     published:publishedEl.checked,updatedAt:new Date().toISOString()
+   },{merge:true});
+   save.textContent="Saved ✓";
+   setTimeout(()=>{save.disabled=false;save.textContent="＋ Add Monthly Paper"},900);
+ }catch(error){console.error(error);alert("Could not save monthly paper. Check Firestore permission.");save.disabled=false;save.textContent="Retry";}
+});
+onSnapshot(collection(db,"monthlyTopRankingPapers"),snap=>render(snap.docs.map(d=>({id:d.id,...d.data()}))),error=>{console.error(error);list.innerHTML='<div class="monthly-empty">Could not load monthly papers.</div>';});
+</script></body></html>
