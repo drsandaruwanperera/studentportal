@@ -63,7 +63,6 @@ function loadImage(src) {
         image.onload = () => resolve(image);
         image.onerror = () => resolve(null);
         image.oncontextmenu = blockAction;
-        resolve(image);
     });
 }
 
