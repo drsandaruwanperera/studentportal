@@ -54,22 +54,17 @@ async function checkPaperResource(linkId, statusId, type) {
 
     const viewerUrl = `al-paper-viewer.html?paper=${paperNumber}&type=${type}&month=${monthName}`;
     const monthTitle = monthLabel;
-    const monthlyPdfNumber = type === "second"
-        ? String(Number(paperNumber) + 1).padStart(2, "0")
-        : paperNumber;
-    const monthlyPdfUrl = `papers/al-top-ranking/${monthName}/${monthTitle}-Paper-${monthlyPdfNumber}.pdf`;
     const imageUrl = `papers/al-top-ranking/${monthName}/paper-${paperNumber}-${type === "second" ? "2nd-paper" : "1st-paper"}/page-01.jpg`;
 
     try {
-        const resourceUrl = monthName === "september" ? imageUrl : monthlyPdfUrl;
-        const response = await fetch(resourceUrl, { method: "HEAD", cache: "no-store" });
+        const response = await fetch(imageUrl, { method: "HEAD", cache: "no-store" });
         if (response.ok) {
-            link.href = monthName === "september" ? viewerUrl : monthlyPdfUrl;
-            link.target = monthName === "september" ? "_self" : "_blank";
-            link.rel = monthName === "september" ? "" : "noopener";
+            link.href = viewerUrl;
+            link.target = "_self";
+            link.rel = "";
             link.classList.remove("pending");
-            link.textContent = monthName === "september" ? "View & Print →" : "Open PDF →";
-            status.textContent = monthName === "september" ? "Pages available" : "PDF available";
+            link.textContent = "View & Print →";
+            status.textContent = "Pages available";
         } else {
             status.textContent = "Paper is not uploaded yet.";
         }
