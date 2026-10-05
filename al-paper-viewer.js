@@ -73,6 +73,7 @@ function loadImage(src) {
 
         image.addEventListener("contextmenu", blockAction);
         image.addEventListener("dragstart", blockAction);
+        image.src = src;
     });
 }
 
