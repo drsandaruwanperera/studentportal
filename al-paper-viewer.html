@@ -20,6 +20,9 @@
         }
         body {
             margin: 0;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
             min-height: 100vh;
             font-family: "Segoe UI", sans-serif;
             color: var(--portal-text);
@@ -102,74 +105,8 @@
         .empty p { margin: 0; color: var(--portal-muted); }
 
         @media print {
-            @page {
-                size: A4 portrait;
-                margin: 0;
-            }
             html, body {
-                width: 100%;
-                min-width: 0;
-                max-width: none;
-                height: auto;
-                min-height: 0;
-                margin: 0 !important;
-                padding: 0 !important;
-                background: #fff !important;
-                overflow: visible !important;
-            }
-            .toolbar, .page-number, .empty { display: none !important; }
-            .pages {
-                width: 210mm !important;
-                max-width: 210mm !important;
-                min-width: 210mm !important;
-                height: auto;
-                margin: 0 auto !important;
-                padding: 0 !important;
-                display: block;
-            }
-            .page-card {
-                width: 210mm !important;
-                max-width: 210mm !important;
-                min-width: 210mm !important;
-                height: 297mm !important;
-                min-height: 297mm !important;
-                max-height: 297mm !important;
-                padding: 0 !important;
-                margin: 0 !important;
-                border: 0 !important;
-                box-shadow: none !important;
-                border-radius: 0 !important;
-                background: #fff !important;
-                overflow: hidden !important;
-                page-break-inside: avoid;
-                break-inside: avoid;
-                page-break-after: always;
-                break-after: page;
-                display: flex;
-                align-items: flex-start;
-                justify-content: center;
-            }
-            .page-card:last-child {
-                page-break-after: auto;
-                break-after: auto;
-            }
-            .page-card img {
-                display: block;
-                width: 198mm !important;
-                max-width: 198mm !important;
-                min-width: 198mm !important;
-                height: auto !important;
-                max-height: 282mm !important;
-                margin: 0 auto !important;
-                padding: 0 !important;
-                border-radius: 0 !important;
-                object-fit: contain;
-                object-position: top center;
-                flex: 0 0 auto;
-            }
-            .page-card:not(:first-child) {
-                page-break-before: always;
-                break-before: page;
+                display: none !important;
             }
         }
 
@@ -222,7 +159,6 @@
         </div>
         <div class="actions">
             <button class="secondary" type="button" onclick="history.back()">← Back</button>
-            <button type="button" onclick="window.print()">🖨️ Print Paper</button>
         </div>
     </header>
 
@@ -233,6 +169,6 @@
         <p>Please check again after the page images have been uploaded.</p>
     </section>
 
-    <script type="module" src="al-paper-viewer.js?v=750c5998"></script>
+    <script type="module" src="al-paper-viewer.js?v=octpdf3"></script>
 </body>
 </html>
