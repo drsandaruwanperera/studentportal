@@ -509,6 +509,37 @@ function renderNotificationItems(items) {
     });
 }
 
+function loadLatestMonthlyPaper() {
+    try {
+        onSnapshot(collection(db, "monthlyTopRankingPapers"), snapshot => {
+            const items = snapshot.docs
+                .map(d => ({id:d.id, ...d.data()}))
+                .filter(x => x.published !== false)
+                .sort((a,b) => String(b.updatedAt || "").localeCompare(String(a.updatedAt || "")));
+
+            const latest = items[0];
+            if (!latest) return;
+
+            const month = String(latest.month || "").charAt(0).toUpperCase() + String(latest.month || "").slice(1);
+            const number = String(latest.paperNumber || 1).padStart(2, "0");
+            const title = document.getElementById("modelPapersTitle");
+            const description = document.getElementById("modelPapersDescription");
+            const link = document.querySelector("#modelPapersCard .material-link");
+
+            if (title) title.textContent = "🏆 Top Ranking Model";
+            if (description) description.textContent = `${month} ${latest.year || ""} • Paper ${number}`;
+            if (link) {
+                link.innerHTML = "Explore Top Ranking Model <span>→</span>";
+                link.href = "model-papers.html";
+            }
+        }, error => {
+            console.info("Monthly paper dashboard listener unavailable.", error);
+        });
+    } catch (error) {
+        console.info("Monthly paper dashboard listener could not start.", error);
+    }
+}
+
 function loadNotifications() {
     ensureNotificationUI();
 
@@ -603,6 +634,7 @@ async function init() {
     }
 
     loadNotifications();
+    loadLatestMonthlyPaper();
 }
 
 init();
