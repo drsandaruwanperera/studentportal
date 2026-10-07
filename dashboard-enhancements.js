@@ -577,6 +577,34 @@ function loadLatestMonthlyPaper() {
     }
 }
 
+function renderDashboardAnnouncements(items) {
+    const list = document.getElementById("portalNotificationList");
+    if (!list) return;
+
+    if (!items.length) {
+        list.innerHTML = '<div class="portal-empty">No announcements right now.</div>';
+        return;
+    }
+
+    list.innerHTML = items.map((item) => `
+        <button type="button" class="portal-notice dashboard-announcement-item" data-dashboard-announcement-id="${esc(item.id)}">
+            <span class="portal-notice-icon">📢</span>
+            <span>
+                <strong>${esc(item.title || "Portal Update")}</strong>
+                <p>${esc(item.message || item.description || "Important information for students.")}</p>
+                <time>${esc(announcementDate(item.createdAt))}</time>
+            </span>
+        </button>
+    `).join("");
+
+    list.querySelectorAll("[data-dashboard-announcement-id]").forEach((button) => {
+        button.addEventListener("click", () => {
+            const item = items.find((x) => x.id === button.dataset.dashboardAnnouncementId);
+            if (item) openAnnouncementModal(item);
+        });
+    });
+}
+
 function loadNotifications() {
     ensureNotificationUI();
 
@@ -590,10 +618,13 @@ function loadNotifications() {
                 .filter((item) => !["legacy-grade11-top-ranking-results", "legacy-al-answer-release-paper01-september2026"].includes(item.id))
                 .filter((item) => item.showOnDashboard !== false)
                 .filter(announcementMatchesStudent)
-                .sort((a,b) => timestampValue(b.createdAt) - timestampValue(a.createdAt))
-                .slice(0, 6);
+                .sort((a,b) => timestampValue(b.createdAt) - timestampValue(a.createdAt));
 
-            renderNotificationItems(items);
+            // Dashboard shows the complete active announcement feed.
+            renderDashboardAnnouncements(items);
+
+            // Header notification popover keeps a compact latest-6 view.
+            renderNotificationItems(items.slice(0, 6));
         }, (error) => {
             console.info("Announcements collection is not available yet.", error);
             renderNotificationItems([]);
