@@ -617,7 +617,6 @@ function loadNotifications() {
                 .map((d) => ({ id:d.id, ...d.data() }))
                 .filter((item) => !["legacy-grade11-top-ranking-results", "legacy-al-answer-release-paper01-september2026"].includes(item.id))
                 .filter((item) => item.showOnDashboard !== false)
-                .filter(announcementMatchesStudent)
                 .sort((a,b) => timestampValue(b.createdAt) - timestampValue(a.createdAt));
 
             // Dashboard shows the complete active announcement feed.
