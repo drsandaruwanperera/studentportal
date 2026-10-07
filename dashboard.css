@@ -2459,3 +2459,18 @@ body .lms-quick-row small{
 .sidebar-nav .sidebar-link.active .nav-icon{
     color:#ffffff !important;
 }
+
+/* PREMIUM LMS BRAND SYNC — matches main website */
+:root{--background:#0b1020;--card:#11182b;--text:#f4f7ff;--muted:#aeb8ce;--border:rgba(255,255,255,.09);--primary:#5b4bff;--primary-dark:#4037c9;--shadow:0 18px 45px rgba(0,0,0,.24)}
+body{background:radial-gradient(circle at 10% 8%,rgba(64,55,201,.18),transparent 32%),radial-gradient(circle at 92% 90%,rgba(124,58,237,.14),transparent 34%),var(--background);color:var(--text)}
+.sidebar{background:rgba(11,16,32,.96);border-right:1px solid rgba(255,255,255,.07);box-shadow:18px 0 45px rgba(0,0,0,.18);backdrop-filter:blur(18px)}
+.sidebar a{transition:transform .2s ease,background .2s ease,color .2s ease}
+.sidebar a:hover{transform:translateX(3px);background:rgba(91,75,255,.13);color:#fff}
+.sidebar .active{background:linear-gradient(135deg,#4037c9,#7c3aed)!important;color:#fff!important;box-shadow:0 10px 26px rgba(64,55,201,.28)}
+.main-content,.dashboard-main{color:var(--text)}
+.card,.summary-card,.quick-access-card,.dashboard-card{background:rgba(17,24,43,.88)!important;border:1px solid var(--border)!important;box-shadow:var(--shadow)!important;backdrop-filter:blur(14px);transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+.card:hover,.summary-card:hover,.quick-access-card:hover,.dashboard-card:hover{transform:translateY(-4px);border-color:rgba(166,255,46,.18)!important;box-shadow:0 24px 55px rgba(0,0,0,.30)!important}
+h1,h2,h3,h4,strong{color:#f4f7ff}.muted,.subtitle,.description,p{color:#aeb8ce}
+button,.btn,.cta{background:linear-gradient(135deg,#4037c9,#7c3aed)!important;color:#fff!important;border:1px solid rgba(255,255,255,.1)!important;box-shadow:0 10px 26px rgba(64,55,201,.24)}
+button:hover,.btn:hover,.cta:hover{transform:translateY(-2px)}
+@media(max-width:800px){body{background:#0b1020}.mobile-lms-header{background:rgba(11,16,32,.94)!important;border-bottom:1px solid rgba(255,255,255,.08)!important;backdrop-filter:blur(18px)}.mobile-menu-btn{background:#11182b!important}.mobile-menu-btn span{background:#f4f7ff!important}.mobile-lms-title span,.mobile-lms-title strong{color:#8f9bb2!important}.mobile-lms-title b{color:#f4f7ff!important}.mobile-notification{color:#dbe3f5!important}}
