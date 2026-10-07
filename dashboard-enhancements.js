@@ -408,6 +408,7 @@ function ensureNotificationUI() {
 
     bell.innerHTML = `
         <span class="notification-bell-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg></span>
+        <span class="notification-card-copy"><strong>Updates</strong><small>Notifications</small></span>
         <i class="notification-dot"></i>
         <b class="notification-count" id="notificationCount">0</b>
     `;
@@ -449,7 +450,9 @@ function ensureNotificationUI() {
 
     bell.addEventListener("click", (event) => {
         event.stopPropagation();
+        const isOpening = !popover.classList.contains("open");
         popover.classList.toggle("open");
+        if (isOpening) markNotificationsRead();
     });
     document.getElementById("closeNotificationPopover")?.addEventListener("click", () => popover.classList.remove("open"));
     document.addEventListener("click", (event) => {
@@ -476,14 +479,48 @@ function openAnnouncementModal(item) {
     document.getElementById("portalNotificationPopover")?.classList.remove("open");
 }
 
+function notificationReadKey() {
+    return `lmsReadNotifications_${studentId || "guest"}`;
+}
+
+function getReadNotificationIds() {
+    try {
+        return JSON.parse(localStorage.getItem(notificationReadKey()) || "[]");
+    } catch {
+        return [];
+    }
+}
+
+function saveReadNotificationIds(ids) {
+    try {
+        localStorage.setItem(notificationReadKey(), JSON.stringify(ids.slice(-100)));
+    } catch {}
+}
+
+function markNotificationsRead(items = null) {
+    const current = items || window.__portalNotificationItems || [];
+    if (!current.length) return;
+    const ids = current.map(x => x.id).filter(Boolean);
+    const merged = [...new Set([...getReadNotificationIds(), ...ids])];
+    saveReadNotificationIds(merged);
+    renderNotificationItems(current);
+}
+
 function renderNotificationItems(items) {
     const list = document.getElementById("portalNotificationItems");
     const count = document.getElementById("notificationCount");
     const dot = document.querySelector(".notification-dot");
     if (!list) return;
 
-    if (count) count.textContent = Math.min(items.length, 9);
-    if (dot) dot.style.display = items.length ? "block" : "none";
+    window.__portalNotificationItems = items;
+    const readIds = new Set(getReadNotificationIds());
+    const unreadItems = items.filter(item => !readIds.has(item.id));
+
+    if (count) {
+        count.textContent = unreadItems.length > 9 ? "9+" : String(unreadItems.length);
+        count.style.display = unreadItems.length ? "grid" : "none";
+    }
+    if (dot) dot.style.display = unreadItems.length ? "block" : "none";
 
     if (!items.length) {
         list.innerHTML = '<div class="portal-empty">No new notifications right now.</div>';
