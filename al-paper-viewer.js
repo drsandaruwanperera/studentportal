@@ -19,6 +19,7 @@ const pages = document.getElementById("pages");
 const empty = document.getElementById("empty");
 const title = document.getElementById("viewerTitle");
 const kicker = document.getElementById("viewerKicker");
+const printPaperBtn = document.getElementById("printPaperBtn");
 
 if (title) {
     title.textContent = `Paper ${paperNumber} • ${paperType} Paper`;
@@ -26,6 +27,12 @@ if (title) {
 
 if (kicker) {
     kicker.textContent = `${monthLabel.toUpperCase()} 2026 • A/L TOP RANKING MODEL • ${paperType.toUpperCase()} PAPER`;
+}
+
+if (printPaperBtn) {
+    printPaperBtn.addEventListener("click", () => {
+        window.print();
+    });
 }
 
 // Protected viewer: block common browser actions used to copy, save or print.
