@@ -499,12 +499,17 @@ body{background:radial-gradient(circle at 76% 10%,rgba(103,60,255,.10),transpare
 
             <section class="lms-dashboard-grid">
                 <div class="lms-main-column">
-                    <div class="lms-section-heading">
+                    <div class="lms-section-heading dashboard-announcements-heading">
                         <div>
-                            <h2>Announcements</h2>
-                            <p class="announcement-summary-sub">Latest updates from your LMS</p>
+                            <h2>Latest Announcements</h2>
+                            <p class="announcement-summary-sub">Stay updated with the latest news, papers, results and important information.</p>
                         </div>
-                        <a href="announcements.html">View all</a>
+                        <a href="announcements.html">View all →</a>
+                    </div>
+                    <div class="dashboard-announcement-tabs" role="tablist" aria-label="Announcement filters">
+                        <button type="button" class="dashboard-announcement-tab active" data-announcement-filter="all" role="tab" aria-selected="true">All</button>
+                        <button type="button" class="dashboard-announcement-tab" data-announcement-filter="important" role="tab" aria-selected="false">Important</button>
+                        <button type="button" class="dashboard-announcement-tab" data-announcement-filter="results" role="tab" aria-selected="false">Results</button>
                     </div>
                     <div id="dashboardAnnouncementSummary" class="dashboard-announcement-summary">
                         <div class="dashboard-summary-loading">Loading announcements…</div>
