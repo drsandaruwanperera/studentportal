@@ -577,25 +577,51 @@ function loadLatestMonthlyPaper() {
     }
 }
 
+function announcementCategory(item) {
+    const explicit = String(item.category || item.type || item.announcementType || "").toLowerCase().trim();
+    if (explicit.includes("result")) return "results";
+    if (explicit.includes("important") || explicit.includes("urgent")) return "important";
+
+    const text = String(item.title || "") + " " + String(item.message || item.description || "");
+    if (/result|results|marks|mark sheet|rank|ranking|exam result|performance/i.test(text)) return "results";
+    if (/important|urgent|deadline|notice|must read|attention|exam|paper release|answer release/i.test(text)) return "important";
+    return "all";
+}
+
+let dashboardAnnouncementFilter = "all";
+
+function getDashboardAnnouncementItems(items) {
+    if (dashboardAnnouncementFilter === "all") return items;
+    return items.filter((item) => announcementCategory(item) === dashboardAnnouncementFilter);
+}
+
 function renderDashboardAnnouncements(items) {
-    const list = document.getElementById("portalNotificationList");
+    const list = document.getElementById("dashboardAnnouncementSummary") || document.getElementById("portalNotificationList");
     if (!list) return;
 
-    if (!items.length) {
-        list.innerHTML = '<div class="portal-empty">No announcements right now.</div>';
+    const filtered = getDashboardAnnouncementItems(items);
+
+    if (!filtered.length) {
+        list.innerHTML = '<div class="portal-empty">No announcements in this category right now.</div>';
         return;
     }
 
-    list.innerHTML = items.map((item) => `
-        <button type="button" class="portal-notice dashboard-announcement-item" data-dashboard-announcement-id="${esc(item.id)}">
-            <span class="portal-notice-icon">📢</span>
-            <span>
-                <strong>${esc(item.title || "Portal Update")}</strong>
-                <p>${esc(item.message || item.description || "Important information for students.")}</p>
-                <time>${esc(announcementDate(item.createdAt))}</time>
-            </span>
-        </button>
-    `).join("");
+    list.innerHTML = filtered.map((item) => {
+        const category = announcementCategory(item);
+        const label = category === "results" ? "RESULTS" : category === "important" ? "IMPORTANT" : "ANNOUNCEMENT";
+        const icon = category === "results" ? "📊" : category === "important" ? "⚡" : "📢";
+        return `
+            <button type="button" class="portal-notice dashboard-announcement-item" data-dashboard-announcement-id="${esc(item.id)}">
+                <span class="portal-notice-icon">${icon}</span>
+                <span>
+                    <strong>${esc(item.title || "Portal Update")} <em class="dashboard-announcement-category">${label}</em></strong>
+                    <p>${esc(item.message || item.description || "Important information for students.")}</p>
+                    <time>${esc(announcementDate(item.createdAt))}</time>
+                </span>
+                <b class="dashboard-announcement-arrow">›</b>
+            </button>
+        `;
+    }).join("");
 
     list.querySelectorAll("[data-dashboard-announcement-id]").forEach((button) => {
         button.addEventListener("click", () => {
@@ -605,7 +631,26 @@ function renderDashboardAnnouncements(items) {
     });
 }
 
+function setupDashboardAnnouncementFilters() {
+    const tabs = document.querySelectorAll("[data-announcement-filter]");
+    if (!tabs.length || tabs[0].dataset.bound === "1") return;
+
+    tabs.forEach((tab) => {
+        tab.dataset.bound = "1";
+        tab.addEventListener("click", () => {
+            dashboardAnnouncementFilter = tab.dataset.announcementFilter || "all";
+            tabs.forEach((item) => {
+                const active = item === tab;
+                item.classList.toggle("active", active);
+                item.setAttribute("aria-selected", active ? "true" : "false");
+            });
+            renderDashboardAnnouncements(window.__dashboardAnnouncements || []);
+        });
+    });
+}
+
 function loadNotifications() {
+    setupDashboardAnnouncementFilters();
     ensureNotificationUI();
 
     const list = document.getElementById("portalNotificationItems");
@@ -619,7 +664,8 @@ function loadNotifications() {
                 .filter((item) => item.showOnDashboard !== false)
                 .sort((a,b) => timestampValue(b.createdAt) - timestampValue(a.createdAt));
 
-            // Dashboard shows the complete active announcement feed.
+            // Dashboard keeps the complete active announcement feed and local category filters.
+            window.__dashboardAnnouncements = items;
             renderDashboardAnnouncements(items);
 
             // Header notification popover keeps a compact latest-6 view.
