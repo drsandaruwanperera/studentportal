@@ -104,9 +104,42 @@
         .empty h2 { margin: 0 0 8px; }
         .empty p { margin: 0; color: var(--portal-muted); }
 
+        @page { size: A4 portrait; margin: 0; }
         @media print {
             html, body {
-                display: none !important;
+                display: block !important;
+                width: 100%;
+                min-height: auto;
+                background: #fff !important;
+                color: #000 !important;
+            }
+            .toolbar, .page-number, #empty { display: none !important; }
+            .pages {
+                width: 100%;
+                margin: 0;
+                display: block;
+            }
+            .page-card {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                border: 0;
+                border-radius: 0;
+                background: #fff;
+                box-shadow: none;
+                break-after: page;
+                page-break-after: always;
+            }
+            .page-card:last-child {
+                break-after: auto;
+                page-break-after: auto;
+            }
+            .page-card img {
+                display: block;
+                width: 100%;
+                max-width: 100%;
+                height: auto;
+                border-radius: 0;
             }
         }
 
@@ -159,6 +192,7 @@
         </div>
         <div class="actions">
             <button class="secondary" type="button" onclick="history.back()">← Back</button>
+            <button id="printPaperBtn" type="button">🖨️ Print Paper</button>
         </div>
     </header>
 
