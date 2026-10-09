@@ -2674,6 +2674,118 @@ if (
 }
 
 
+
+// =====================================================
+// BULK ADD A/L STUDENTS (28C / 28N ADMISSION IDs)
+// Credentials are entered directly in the admin UI.
+// =====================================================
+const bulkALStudentBtn = document.getElementById("bulkALStudentBtn");
+const bulkALModal = document.getElementById("bulkALModal");
+const closeBulkAL = document.getElementById("closeBulkAL");
+const cancelBulkAL = document.getElementById("cancelBulkAL");
+const saveBulkAL = document.getElementById("saveBulkAL");
+const bulkALCredentials = document.getElementById("bulkALCredentials");
+const bulkALStatus = document.getElementById("bulkALStatus");
+const bulkALMustChange = document.getElementById("bulkALMustChange");
+
+function closeBulkALModal() {
+  if (bulkALModal) bulkALModal.classList.remove("active");
+}
+function openBulkALModal() {
+  if (bulkALStatus) bulkALStatus.textContent = "";
+  if (bulkALModal) bulkALModal.classList.add("active");
+}
+bulkALStudentBtn?.addEventListener("click", openBulkALModal);
+closeBulkAL?.addEventListener("click", closeBulkALModal);
+cancelBulkAL?.addEventListener("click", closeBulkALModal);
+
+saveBulkAL?.addEventListener("click", async () => {
+  const lines = String(bulkALCredentials?.value || "").split(/\r?\n/).map(x => x.trim()).filter(Boolean);
+  if (!lines.length) {
+    bulkALStatus.textContent = "Paste the student IDs and passwords first.";
+    return;
+  }
+
+  const records = [];
+  const errors = [];
+  const seen = new Set();
+  lines.forEach((line, index) => {
+    const parts = line.includes("\t") ? line.split("\t") : line.split(",");
+    const id = String(parts.shift() || "").trim().toUpperCase().replace(/\s+/g, "");
+    const password = parts.join(line.includes("\t") ? "\t" : ",").trim();
+    if (!/^28[CN]\d{5}$/.test(id)) {
+      errors.push("Line " + (index + 1) + ": invalid A/L ID " + (id || "(blank)") + " (expected 28C/28N + 5 digits).");
+    } else if (!password || password.length < 4) {
+      errors.push("Line " + (index + 1) + ": password missing or shorter than 4 characters for " + id + ".");
+    } else if (seen.has(id)) {
+      errors.push("Line " + (index + 1) + ": duplicate ID " + id + " in pasted list.");
+    } else {
+      seen.add(id);
+      records.push({ id, password });
+    }
+  });
+
+  if (errors.length) {
+    bulkALStatus.textContent = "Please fix these lines before importing:\n" + errors.join("\n");
+    return;
+  }
+
+  saveBulkAL.disabled = true;
+  saveBulkAL.textContent = "Adding...";
+  bulkALStatus.textContent = "Checking existing accounts and adding " + records.length + " A/L students...";
+  let added = 0, skipped = 0, failed = [];
+  try {
+    for (const record of records) {
+      try {
+        const ref = doc(db, "students", record.id);
+        const existing = await getDoc(ref);
+        if (existing.exists()) {
+          skipped++;
+          continue;
+        }
+        const studentData = {
+          admissionNumber: record.id,
+          password: record.password,
+          mustChangePassword: bulkALMustChange?.checked !== false,
+          mustChangePassword: true,
+          profileCompleted: false,
+          registrationCompleted: false,
+          studentType: "al",
+          grade: null,
+          fullName: "",
+          name: "",
+          studentName: "",
+          nicNumber: "",
+          createdAt: Date.now(),
+          lastActiveAt: 0
+        };
+        for (let n = 1; n <= TOTAL_PAPERS; n++) {
+          studentData[getPaperField(n)] = false;
+          studentData[getPaperViewedField(n)] = false;
+          studentData[getPaperPagesField(n)] = 10;
+        }
+        await setDoc(ref, studentData);
+        added++;
+      } catch (err) {
+        console.error("Bulk A/L student create failed:", record.id, err);
+        failed.push(record.id + ": " + (err?.message || "write failed"));
+      }
+    }
+    await loadStudents();
+    bulkALStatus.textContent =
+      "Import complete.\nAdded: " + added +
+      "\nSkipped (already existed): " + skipped +
+      "\nFailed: " + failed.length +
+      (failed.length ? "\n" + failed.join("\n") : "");
+    if (!failed.length) {
+      bulkALCredentials.value = "";
+    }
+  } finally {
+    saveBulkAL.disabled = false;
+    saveBulkAL.textContent = "Add A/L Students";
+  }
+});
+
 // =====================================================
 // EDIT MODAL
 // =====================================================
