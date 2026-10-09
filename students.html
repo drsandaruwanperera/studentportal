@@ -1727,15 +1727,14 @@
             </div>
 
 
-            <button
-                type="button"
-                id="addStudentBtn"
-                class="add-student-btn"
-            >
-
-                ＋ Add Student
-
-            </button>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end">
+              <button type="button" id="bulkALStudentBtn" class="add-student-btn" style="background:#152b49;border:1px solid #315d91">＋ Bulk Add A/L</button>
+              <button
+                  type="button"
+                  id="addStudentBtn"
+                  class="add-student-btn"
+              >＋ Add Student</button>
+            </div>
 
         </section>
 
@@ -2313,6 +2312,29 @@
 
 </div>
 
+
+<!-- BULK ADD A/L STUDENTS -->
+<div id="bulkALModal" class="modal-overlay">
+  <div class="modal" style="max-width:760px;width:min(760px,94vw)">
+    <div class="modal-header">
+      <div><h2>Bulk Add A/L Students</h2><p>Add the supplied usernames with their passwords. Passwords stay in this admin form.</p></div>
+      <button type="button" id="closeBulkAL" class="modal-close">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="bulkALCredentials">Student ID and password (one student per line)</label>
+        <textarea id="bulkALCredentials" rows="10" placeholder="28C35471,student-password&#10;28C35064,student-password&#10;28N00280,student-password" style="width:100%;min-height:220px;resize:vertical;background:#0b1427;color:#f3f6ff;border:1px solid #2b3d60;border-radius:12px;padding:14px;font:13px/1.7 monospace"></textarea>
+        <small class="field-help">Format: StudentID,Password (tab-separated also works). Only A/L accounts with IDs starting 28C or 28N are accepted. Existing accounts are skipped, not overwritten.</small>
+      </div>
+      <label style="display:flex;gap:9px;align-items:flex-start;color:#aebbd3;font-size:12px"><input type="checkbox" id="bulkALMustChange" checked style="margin-top:2px"> Require students to complete registration / change password on first login</label>
+      <div id="bulkALStatus" style="margin-top:12px;font-size:12px;white-space:pre-wrap;color:#aebbd3"></div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" id="cancelBulkAL" class="cancel-btn">Cancel</button>
+      <button type="button" id="saveBulkAL" class="save-btn">Add A/L Students</button>
+    </div>
+  </div>
+</div>
 
 <!-- =========================================================
      EDIT STUDENT MODAL
