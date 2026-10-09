@@ -324,64 +324,53 @@ function isAnyEnabled(settings, fields) {
 // LOAD PAPER VISIBILITY SETTINGS
 // =====================================================
 
-async function loadPaperVisibility(type) {
-    try {
-        const settingsRef = doc(db, "paperSettings", type);
-        const snapshot = await getDoc(settingsRef);
+function applyPaperVisibility(type, settings) {
+    if (type === "grade10") {
+        const modelFields = [
+            "grade10_term1_01", "grade10_term1_02", "grade10_term1_03", "grade10_term1_04", "grade10_term1_05",
+            "grade10_term2_01", "grade10_term2_02", "grade10_term2_03", "grade10_term2_04", "grade10_term2_05",
+            "grade10_term3_01", "grade10_term3_02", "grade10_term3_03", "grade10_term3_04", "grade10_term3_05"
+        ];
+        if (modelPapersCard) modelPapersCard.style.display = isAnyEnabled(settings, modelFields) || settings.modelPapersEnabled === true ? "" : "none";
+        if (pastPapersCard) pastPapersCard.style.display = settings.pastPapersEnabled === true ? "" : "none";
+        return;
+    }
 
+    if (type === "grade11") {
+        const topRankingFields = [
+            "grade11_term1_01", "grade11_term1_02", "grade11_term1_03", "grade11_term1_04", "grade11_term1_05",
+            "grade11_term2_01", "grade11_term2_02", "grade11_term2_03", "grade11_term2_04", "grade11_term2_05",
+            "grade11_term3_01", "grade11_term3_02", "grade11_term3_03", "grade11_term3_04", "grade11_term3_05"
+        ];
+        const pastFields = [
+            "grade11_past_01", "grade11_past_02", "grade11_past_03", "grade11_past_04", "grade11_past_05",
+            "grade11_past_06", "grade11_past_07", "grade11_past_08", "grade11_past_09", "grade11_past_10"
+        ];
+        if (modelPapersCard) modelPapersCard.style.display = isAnyEnabled(settings, topRankingFields) || settings.modelPapersEnabled === true ? "" : "none";
+        if (pastPapersCard) pastPapersCard.style.display = isAnyEnabled(settings, pastFields) || settings.pastPapersEnabled === true ? "" : "none";
+        return;
+    }
+
+    if (type === "al") {
+        if (modelPapersCard) modelPapersCard.style.display = settings.modelPapersEnabled === true ? "" : "none";
+        if (pastPapersCard) pastPapersCard.style.display = settings.pastPapersEnabled === true ? "" : "none";
+    }
+}
+
+function startPaperVisibilityRealtime(type) {
+    const settingsRef = doc(db, "paperSettings", type);
+    return onSnapshot(settingsRef, (snapshot) => {
         if (!snapshot.exists()) {
             console.warn("Paper settings not found:", type);
-
             if (modelPapersCard) modelPapersCard.style.display = "none";
             if (pastPapersCard) pastPapersCard.style.display = "none";
             return;
         }
-
-        const settings = snapshot.data();
-        console.log("📚 Paper Settings:", type, settings);
-
-        if (type === "grade10") {
-            const modelFields = [
-                "grade10_term1_01", "grade10_term1_02", "grade10_term1_03", "grade10_term1_04", "grade10_term1_05",
-                "grade10_term2_01", "grade10_term2_02", "grade10_term2_03", "grade10_term2_04", "grade10_term2_05",
-                "grade10_term3_01", "grade10_term3_02", "grade10_term3_03", "grade10_term3_04", "grade10_term3_05"
-            ];
-
-            const modelEnabled = isAnyEnabled(settings, modelFields);
-            const pastEnabled = settings.pastPapersEnabled === true;
-
-            if (modelPapersCard) modelPapersCard.style.display = modelEnabled ? "" : "none";
-            if (pastPapersCard) pastPapersCard.style.display = pastEnabled ? "" : "none";
-        } else if (type === "grade11") {
-            const topRankingFields = [
-                "grade11_term1_01", "grade11_term1_02", "grade11_term1_03", "grade11_term1_04", "grade11_term1_05",
-                "grade11_term2_01", "grade11_term2_02", "grade11_term2_03", "grade11_term2_04", "grade11_term2_05",
-                "grade11_term3_01", "grade11_term3_02", "grade11_term3_03", "grade11_term3_04", "grade11_term3_05"
-            ];
-
-            const pastFields = [
-                "grade11_past_01", "grade11_past_02", "grade11_past_03", "grade11_past_04", "grade11_past_05",
-                "grade11_past_06", "grade11_past_07", "grade11_past_08", "grade11_past_09", "grade11_past_10"
-            ];
-
-            const topRankingEnabled = isAnyEnabled(settings, topRankingFields);
-            const pastEnabled = isAnyEnabled(settings, pastFields);
-
-            if (modelPapersCard) modelPapersCard.style.display = topRankingEnabled ? "" : "none";
-            if (pastPapersCard) pastPapersCard.style.display = pastEnabled ? "" : "none";
-        } else if (type === "al") {
-            const modelEnabled = settings.modelPapersEnabled === true;
-            const pastEnabled = settings.pastPapersEnabled === true;
-
-            if (modelPapersCard) modelPapersCard.style.display = modelEnabled ? "" : "none";
-            if (pastPapersCard) pastPapersCard.style.display = pastEnabled ? "" : "none";
-        }
-    } catch (error) {
-        console.error("❌ Failed to load paper visibility:", error);
-
-        if (modelPapersCard) modelPapersCard.style.display = "none";
-        if (pastPapersCard) pastPapersCard.style.display = "none";
-    }
+        applyPaperVisibility(type, snapshot.data());
+        console.log("🔄 Dashboard paper visibility updated in real time:", type);
+    }, (error) => {
+        console.error("❌ Failed to watch paper visibility:", error);
+    });
 }
 
 
@@ -578,7 +567,7 @@ async function loadStudent() {
         updateMaterialText(type);
         setupModelCard(type);
         setupPastCard(type);
-        await loadPaperVisibility(type);
+        startPaperVisibilityRealtime(type);
         renderPaperStatistics(data);
 
         console.log("====================================");
