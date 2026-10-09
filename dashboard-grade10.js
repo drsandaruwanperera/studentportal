@@ -60,7 +60,8 @@ import {
     db,
     doc,
     getDoc,
-    updateDoc
+    updateDoc,
+    onSnapshot
 } from "./firebase.js";
 
 
@@ -147,131 +148,30 @@ function showElement(element) {
 // LOAD PAPER VISIBILITY
 // =====================================================
 
-async function loadPaperVisibility() {
-
-    try {
-
-        console.log(
-            "📚 Loading Grade 10 paper settings..."
-        );
-
-
-        const snapshot =
-            await getDoc(
-                paperSettingsRef
-            );
-
-
-        // -------------------------------------------------
-        // FIREBASE DOCUMENT DOES NOT EXIST
-        // -------------------------------------------------
-
+function loadPaperVisibility() {
+    onSnapshot(paperSettingsRef, (snapshot) => {
         if (!snapshot.exists()) {
-
-            console.warn(
-                "⚠️ Grade 10 paperSettings document not found."
-            );
-
-
-            // Default:
-            // Show both buttons
-
-            showElement(
-                modelPapersCard
-            );
-
-            showElement(
-                pastPapersCard
-            );
-
+            console.warn("⚠️ Grade 10 paperSettings document not found.");
+            hideElement(modelPapersCard);
+            hideElement(pastPapersCard);
             return;
-
         }
 
+        const settings = snapshot.data();
+        const modelFields = [
+            "grade10_term1_01", "grade10_term1_02", "grade10_term1_03", "grade10_term1_04", "grade10_term1_05",
+            "grade10_term2_01", "grade10_term2_02", "grade10_term2_03", "grade10_term2_04", "grade10_term2_05",
+            "grade10_term3_01", "grade10_term3_02", "grade10_term3_03", "grade10_term3_04", "grade10_term3_05"
+        ];
+        const modelEnabled = settings.modelPapersEnabled === true || modelFields.some((field) => settings[field] === true);
+        const pastEnabled = settings.pastPapersEnabled === true;
 
-        const settings =
-            snapshot.data();
-
-
-        console.log(
-            "✅ Grade 10 paper settings:",
-            settings
-        );
-
-
-        // =================================================
-        // MODEL PAPERS
-        // =================================================
-
-        const modelEnabled =
-            settings.modelPapersEnabled === true;
-
-
-        if (modelEnabled) {
-
-            showElement(
-                modelPapersCard
-            );
-
-            console.log(
-                "🟢 Grade 10 Model Papers: VISIBLE"
-            );
-
-        }
-        else {
-
-            hideElement(
-                modelPapersCard
-            );
-
-            console.log(
-                "🔴 Grade 10 Model Papers: HIDDEN"
-            );
-
-        }
-
-
-        // =================================================
-        // PAST PAPERS
-        // =================================================
-
-        const pastEnabled =
-            settings.pastPapersEnabled === true;
-
-
-        if (pastEnabled) {
-
-            showElement(
-                pastPapersCard
-            );
-
-            console.log(
-                "🟢 Grade 10 Past Papers: VISIBLE"
-            );
-
-        }
-        else {
-
-            hideElement(
-                pastPapersCard
-            );
-
-            console.log(
-                "🔴 Grade 10 Past Papers: HIDDEN"
-            );
-
-        }
-
-    }
-    catch (error) {
-
-        console.error(
-            "❌ Failed to load paper settings:",
-            error
-        );
-
-    }
-
+        modelEnabled ? showElement(modelPapersCard) : hideElement(modelPapersCard);
+        pastEnabled ? showElement(pastPapersCard) : hideElement(pastPapersCard);
+        console.log("🔄 Grade 10 dashboard paper visibility updated in real time.");
+    }, (error) => {
+        console.error("❌ Failed to watch Grade 10 paper settings:", error);
+    });
 }
 
 
