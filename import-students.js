@@ -101,7 +101,9 @@ function detectStudentType(studentId) {
         return { studentType: "al", grade: null };
     }
 
-    if (/^A2[7-9]\d{3}$/.test(value)) {
+    // Current A/L IDs: 28C + five digits or 28N + five digits.
+    // Preserve legacy A27000–A29999 and registered numeric A/L IDs.
+    if (/^28[CN]\d{5}$/.test(value) || /^A2[7-9]\d{3}$/.test(value)) {
         return { studentType: "al", grade: null };
     }
 
@@ -120,7 +122,7 @@ function detectStudentType(studentId) {
 
 function isValidALAdmissionNumber(admissionNumber) {
     const value = normalizeStudentId(admissionNumber);
-    return AL_NUMERIC_STUDENT_IDS.has(value) || /^A2[7-9]\d{3}$/.test(value);
+    return AL_NUMERIC_STUDENT_IDS.has(value) || /^28[CN]\d{5}$/.test(value) || /^A2[7-9]\d{3}$/.test(value);
 }
 
 function validatePassword(password) {
@@ -245,7 +247,7 @@ async function importStudents() {
                 if (passwordError) throw new Error(`Row ${index + 2}: ${passwordError}`);
 
                 if (selected === "al" && !isValidALAdmissionNumber(studentId)) {
-                    throw new Error(`Row ${index + 2}: Invalid A/L Admission Number "${studentId}". Use A27000–A29999 or a registered numeric A/L ID.`);
+                    throw new Error(`Row ${index + 2}: Invalid A/L Admission Number "${studentId}". Use 28C/28N IDs, A27000–A29999, or a registered numeric A/L ID.`);
                 }
 
                 const detected = detectStudentType(studentId);
