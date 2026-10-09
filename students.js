@@ -828,7 +828,7 @@ async function loadStudents() {
                 <tr>
 
                     <td
-                        colspan="7"
+                        colspan="6"
                         style="
                             text-align:center;
                             padding:30px;
@@ -1015,7 +1015,7 @@ function renderStudents() {
             <tr>
 
                 <td
-                    colspan="7"
+                    colspan="6"
                     style="
                         text-align:center;
                         padding:30px;
@@ -1081,13 +1081,7 @@ function renderStudentRow(
         );
 
 
-    const viewed =
-        getViewedCount(
-            data
-        );
-
-
-    const active =
+const active =
         isStudentActive(
             data
         );
@@ -1146,21 +1140,7 @@ function renderStudentRow(
 
                 </span>
 
-            </td>
-
-
-            <td>
-
-                <strong>
-                    ${viewed}
-                </strong>
-
-                / ${TOTAL_PAPERS}
-
-            </td>
-
-
-            <td>
+            </td><td>
 
                 <span
                     class="registration-badge ${statusClass}"
