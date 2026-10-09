@@ -6,7 +6,8 @@ import {
     db,
     doc,
     getDoc,
-    updateDoc
+    updateDoc,
+    onSnapshot
 } from "./firebase.js";
 
 
@@ -70,6 +71,31 @@ const modelPapersCard =
 
 const pastPapersCard =
     document.getElementById("pastPapersCard");
+
+// Keep Grade 11 dashboard cards synced with the admin's live paper settings.
+const grade11PaperSettingsRef = doc(db, "paperSettings", "grade11");
+const grade11ModelFields = [
+    "grade11_term1_01", "grade11_term1_02", "grade11_term1_03", "grade11_term1_04", "grade11_term1_05",
+    "grade11_term2_01", "grade11_term2_02", "grade11_term2_03", "grade11_term2_04", "grade11_term2_05",
+    "grade11_term3_01", "grade11_term3_02", "grade11_term3_03", "grade11_term3_04", "grade11_term3_05"
+];
+const grade11PastFields = [
+    "grade11_past_01", "grade11_past_02", "grade11_past_03", "grade11_past_04", "grade11_past_05",
+    "grade11_past_06", "grade11_past_07", "grade11_past_08", "grade11_past_09", "grade11_past_10"
+];
+onSnapshot(grade11PaperSettingsRef, (snapshot) => {
+    if (!snapshot.exists()) {
+        if (modelPapersCard) modelPapersCard.style.display = "none";
+        if (pastPapersCard) pastPapersCard.style.display = "none";
+        return;
+    }
+    const settings = snapshot.data();
+    const modelEnabled = settings.modelPapersEnabled === true || grade11ModelFields.some((field) => settings[field] === true);
+    const pastEnabled = settings.pastPapersEnabled === true || grade11PastFields.some((field) => settings[field] === true);
+    if (modelPapersCard) modelPapersCard.style.display = modelEnabled ? "" : "none";
+    if (pastPapersCard) pastPapersCard.style.display = pastEnabled ? "" : "none";
+}, (error) => console.error("Failed to watch Grade 11 paper settings:", error));
+
 
 
 // ==========================
