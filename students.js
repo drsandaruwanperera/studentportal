@@ -2689,11 +2689,11 @@ const bulkALStatus = document.getElementById("bulkALStatus");
 const bulkALMustChange = document.getElementById("bulkALMustChange");
 
 function closeBulkALModal() {
-  if (bulkALModal) bulkALModal.classList.remove("active");
+  if (bulkALModal) bulkALModal.classList.remove("show");
 }
 function openBulkALModal() {
   if (bulkALStatus) bulkALStatus.textContent = "";
-  if (bulkALModal) bulkALModal.classList.add("active");
+  if (bulkALModal) bulkALModal.classList.add("show");
 }
 bulkALStudentBtn?.addEventListener("click", openBulkALModal);
 closeBulkAL?.addEventListener("click", closeBulkALModal);
@@ -2746,7 +2746,6 @@ saveBulkAL?.addEventListener("click", async () => {
         const studentData = {
           admissionNumber: record.id,
           password: record.password,
-          mustChangePassword: bulkALMustChange?.checked !== false,
           mustChangePassword: true,
           profileCompleted: false,
           registrationCompleted: false,
