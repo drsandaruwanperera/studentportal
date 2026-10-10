@@ -81,3 +81,79 @@ html[data-student-type="grade10"]{--grade-accent:#00df83;--grade-accent-2:#00a96
 .lms-section-heading>a,.dashboard-summary-number,.dashboard-summary-meta span,.dashboard-summary-meta b,.quick-nav-card>b{color:var(--grade-accent)!important}
 .dashboard-announcement-tab.active,.dashboard-mobile-nav a.active{background:color-mix(in srgb,var(--grade-accent) 17%,#10182a)!important;color:#fff!important}
 .progress-ring{border-color:var(--grade-accent)!important}
+
+
+/* Approved concept alignment: premium navy/purple with lime accent */
+:root{
+  --lms-bg:#0b1020;
+  --lms-panel:#11182b;
+  --lms-panel-2:#151f35;
+  --lms-line:rgba(255,255,255,.10);
+  --lms-text:#f4f7ff;
+  --lms-muted:#aeb8ce;
+  --lms-purple:#5b4bff;
+  --lms-cyan:#a6ff2e;
+}
+html,body{
+  background:
+    radial-gradient(ellipse at 72% -12%,rgba(91,75,255,.19),transparent 40%),
+    radial-gradient(ellipse at 0% 58%,rgba(124,58,237,.10),transparent 36%),
+    #0b1020!important;
+  color:#f4f7ff!important;
+}
+.sidebar{
+  background:linear-gradient(180deg,#0b1020 0%,#10172a 100%)!important;
+  border-right:1px solid rgba(255,255,255,.09)!important;
+}
+.sidebar-link.active{
+  background:linear-gradient(105deg,#4037c9,#5b4bff)!important;
+  color:#fff!important;
+  box-shadow:0 9px 26px rgba(91,75,255,.28)!important;
+}
+.dashboard-learning-banner,.dashboard-analytics-hero,.hero-card{
+  background:
+    radial-gradient(circle at 87% 10%,rgba(166,255,46,.09),transparent 24%),
+    linear-gradient(115deg,#17153d 0%,#201b50 48%,#102b3a 100%)!important;
+  border:1px solid rgba(166,255,46,.20)!important;
+  box-shadow:0 22px 54px rgba(0,0,0,.24)!important;
+}
+.learning-banner-copy h2 b{color:#a6ff2e!important}
+.learning-banner-copy>span{color:#c7c3ff!important}
+.learning-banner-copy p{color:#c1cbe0!important}
+.hero-continue-btn{
+  background:linear-gradient(105deg,#a6ff2e,#d1ff82)!important;
+  color:#11182b!important;
+  box-shadow:0 8px 24px rgba(166,255,46,.14)!important;
+}
+.lms-stat-card,.summary-card,.dashboard-card,.quick-access-card,.lms-widget,.lms-side-column>section{
+  background:linear-gradient(145deg,rgba(21,31,53,.98),rgba(15,23,41,.98))!important;
+  border-color:rgba(255,255,255,.10)!important;
+}
+.lms-stat-card:hover,.summary-card:hover,.dashboard-card:hover,.quick-access-card:hover{
+  border-color:rgba(166,255,46,.32)!important;
+  box-shadow:0 18px 42px rgba(0,0,0,.24)!important;
+}
+.lms-stat-icon,.quick-nav-icon{
+  background:rgba(166,255,46,.08)!important;
+  color:#a6ff2e!important;
+  border-color:rgba(166,255,46,.22)!important;
+}
+.quick-nav-card{
+  background:linear-gradient(145deg,#151f35,#10182b)!important;
+  border-color:rgba(255,255,255,.10)!important;
+}
+.quick-nav-card>b,.lms-section-heading>a,.dashboard-summary-number,
+.dashboard-summary-meta span,.dashboard-summary-meta b{color:#a6ff2e!important}
+.dashboard-summary-card{background:linear-gradient(135deg,#151f35,#11182b)!important}
+html[data-student-type="grade10"]{--grade-accent:#a6ff2e;--grade-accent-2:#68bd16;--grade-glow:rgba(166,255,46,.15);--grade-banner:#243b19}
+html[data-student-type="grade11"]{--grade-accent:#ffb454;--grade-accent-2:#e87824;--grade-glow:rgba(255,180,84,.17);--grade-banner:#43240f}
+html[data-student-type="al"]{--grade-accent:#a99aff;--grade-accent-2:#6952ef;--grade-glow:rgba(139,124,255,.2);--grade-banner:#24194f}
+html[data-student-type="grade10"] .sidebar-link.active,
+html[data-student-type="grade11"] .sidebar-link.active,
+html[data-student-type="al"] .sidebar-link.active{
+  background:linear-gradient(105deg,var(--grade-accent-2),var(--grade-accent))!important;
+  color:#101527!important;
+}
+@media(prefers-reduced-motion:reduce){
+  .lms-stat-card,.summary-card,.dashboard-card,.quick-access-card{transition:none!important}
+}
