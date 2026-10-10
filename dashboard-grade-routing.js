@@ -21,7 +21,8 @@ import {db,doc,getDoc} from "./firebase.js";
     return "";
   };
 
-  const getAlYear = () => {
+  const getAlYear = data => {
+    if ([2027, 2028, 2029].includes(Number(data?.alYear))) return String(data.alYear);
     const match = id.match(/^(?:A)?(27|28|29)/) || id.match(/^(27|28|29)[CN]/);
     if (!match) return "2027";
     return "20" + match[1];
@@ -70,7 +71,7 @@ import {db,doc,getDoc} from "./firebase.js";
     const title = document.querySelector(".learning-banner-copy h2");
     const eyebrow = document.querySelector(".learning-banner-copy>span");
     const description = document.querySelector(".learning-banner-copy p");
-    const alYear = type === "al" ? getAlYear() : "";
+    const alYear = type === "al" ? getAlYear(data) : "";
     const topType = document.getElementById("topStudentType");
     const sideGrade = document.getElementById("sidebarStudentGrade");
     const topGrade = document.getElementById("studentGrade");
