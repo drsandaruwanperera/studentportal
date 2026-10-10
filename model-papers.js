@@ -150,6 +150,38 @@ async function canOpenMonth(year, month) {
   catch (error) { console.error('Monthly access check failed:', error); alert('Could not verify paper access. Please try again.'); return false; }
   return isCurrentMonth(year, month);
 }
+const monthlyAccessOverrides = {};
+function monthIsOpenForUI(year, month) {
+    const key = monthKey(year, month);
+    if (Object.prototype.hasOwnProperty.call(monthlyAccessOverrides, key) && typeof monthlyAccessOverrides[key] === 'boolean') return monthlyAccessOverrides[key];
+    return isCurrentMonth(year, month);
+}
+function updateMonthlyLockButtons() {
+    paperCards.forEach(item => {
+        if (!item.button) return;
+        const open = monthIsOpenForUI(2026, 'september');
+        item.button.disabled = !open;
+        item.button.innerHTML = open ? 'Open Paper ' + item.number + ' →' : '🔒 Locked';
+        item.button.setAttribute('aria-label', open ? 'Open September 2026 Paper ' + item.number : 'September 2026 paper locked');
+        item.card?.classList.toggle('locked', !open);
+    });
+    document.querySelectorAll('[data-month][data-paper]').forEach(btn => {
+        const sectionKey = btn.closest('[data-monthly-paper-section]')?.dataset.monthlyPaperSection || '';
+        const year = sectionKey.split('-')[0];
+        const open = monthIsOpenForUI(year, btn.dataset.month);
+        btn.disabled = !open;
+        btn.innerHTML = open ? 'Open Paper ' + btn.dataset.paper + ' →' : '🔒 Locked';
+        btn.setAttribute('aria-label', open ? 'Open ' + btn.dataset.month + ' ' + year + ' Paper ' + btn.dataset.paper : btn.dataset.month + ' ' + year + ' paper locked');
+    });
+}
+onSnapshot(collection(db, 'monthlyTopRankingAccess'), snapshot => {
+    Object.keys(monthlyAccessOverrides).forEach(key => delete monthlyAccessOverrides[key]);
+    snapshot.forEach(item => {
+        const value = item.data()?.override;
+        if (typeof value === 'boolean') monthlyAccessOverrides[item.id] = value;
+    });
+    updateMonthlyLockButtons();
+}, error => { console.error('Monthly access status could not be loaded:', error); updateMonthlyLockButtons(); });
 async function openPaper(paperNumber, paperButton, paperCard) {
 
     if (!paperButton) {
@@ -300,6 +332,7 @@ function renderMonthlyPaperSections(items) {
             window.location.href = `al-top-ranking-paper.html?paper=${btn.dataset.paper}&month=${btn.dataset.month}&year=${year}`;
         });
     });
+    updateMonthlyLockButtons();
 }
 
 function loadMonthlyTopRankingPapers() {
