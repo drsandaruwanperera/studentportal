@@ -149,8 +149,11 @@ import {db,doc,getDoc} from "./firebase.js";
         console.warn("Could not refresh student grade from profile; using saved login grade.", error);
       }
     }
-    type = type || typeFromValue(sessionStorage.getItem("studentType")) ||
-      typeFromValue(sessionStorage.getItem("studentGrade")) || inferFromId();
+    // The Firebase profile is authoritative; if its category is missing,
+    // infer from the admission ID before falling back to potentially stale session values.
+    type = type || inferFromId() ||
+      typeFromValue(sessionStorage.getItem("studentType")) ||
+      typeFromValue(sessionStorage.getItem("studentGrade"));
     applyGrade(type, studentData);
   }
 
