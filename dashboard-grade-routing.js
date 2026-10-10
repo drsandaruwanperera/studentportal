@@ -76,16 +76,16 @@ import {db,doc,getDoc} from "./firebase.js";
     const topGrade = document.getElementById("studentGrade");
     const gradeLabel = document.getElementById("gradeLabel");
     if (title) title.innerHTML = type === "al"
-      ? "A/L <b>" + alYear + "</b><br>TOP Ranking Papers"
+      ? "Advanced Level<br><b>A/L " + alYear + "</b>"
       : config.label + " Learning Journey<br><b>Achieve Excellence</b>";
     if (eyebrow) eyebrow.textContent = type === "al" ? "YOUR LEARNING JOURNEY" : "YOUR " + config.label.toUpperCase() + " LEARNING JOURNEY";
     if (description) description.textContent = type === "al"
       ? "Prepare for your exams with monthly practice papers, one paper at a time."
       : "Welcome back. Your " + config.label + " papers, learning resources, announcements and progress are organized here for you.";
-    if (topType) topType.textContent = config.label + " Student";
-    if (sideGrade) sideGrade.textContent = config.label + " Student";
-    if (topGrade) topGrade.textContent = config.label;
-    if (gradeLabel) gradeLabel.textContent = config.label;
+    if (topType) topType.textContent = type === "al" ? "A/L " + alYear + " Student" : config.label + " Student";
+    if (sideGrade) sideGrade.textContent = type === "al" ? "A/L " + alYear + " Student" : config.label + " Student";
+    if (topGrade) topGrade.textContent = type === "al" ? "A/L " + alYear : config.label;
+    if (gradeLabel) gradeLabel.textContent = type === "al" ? "A/L " + alYear : config.label;
 
     const model = document.getElementById("modelPapersCard");
     const past = document.getElementById("pastPapersCard");
