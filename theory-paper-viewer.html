@@ -20,34 +20,84 @@
 .state{width:calc(100% - 16px);margin:12px auto;padding:18px 14px}
 .state h2{font-size:16px}.state p{font-size:12px}
 }
+
+#pdfPages{display:flex;flex-direction:column;align-items:center;gap:14px;width:100%;padding:0 0 18px}
+.pdf-page{width:100%;display:flex;justify-content:center;overflow:hidden;background:#fff;border:1px solid #29344b;border-radius:4px;box-shadow:0 4px 16px rgba(0,0,0,.25)}
+.pdf-page canvas{display:block;max-width:100%;height:auto}
+.viewer-wrap{width:min(1100px,calc(100% - 24px));margin:18px auto 32px}
+@media(max-width:700px){.bar{padding:12px 14px;gap:10px}.bar h1{font-size:16px}.eyebrow{font-size:8px}.back{padding:9px 10px;font-size:10px}.viewer-wrap{width:100%;margin:8px auto 0;padding:0 6px calc(8px + env(safe-area-inset-bottom))}#pdfPages{gap:8px}.pdf-page{border-radius:2px}.state{width:calc(100% - 12px);margin:12px auto;padding:18px 12px}}
+
 </style>
 </head>
 <body>
 <header class="bar"><div><div class="eyebrow">A/L 2028 • THEORY EXAMINATION</div><h1 id="title">Paper Viewer</h1></div><a class="back" href="theory-examination.html">← Back to Papers</a></header>
 <main class="viewer-wrap" id="viewerWrap">
-  <section class="state" id="pendingState"><div class="icon">📄</div><h2 id="heading">Answer PDF not uploaded yet</h2><p id="message">The selected answer PDF will appear here after it is added to the LMS.</p></section>
-  <iframe class="viewer" id="answerFrame" title="Theory examination answer PDF" hidden></iframe>
+  <section class="state" id="pendingState"><div class="icon">📄</div><h2 id="heading">Loading answer PDF…</h2><p id="message">Please wait while all pages load.</p></section>
+  <div id="pdfPages" aria-label="Answer PDF pages"></div>
 </main>
-<script>
+<script type="module">
+import * as pdfjsLib from "./pdfjs/build/pdf.mjs";
+pdfjsLib.GlobalWorkerOptions.workerSrc = "./pdfjs/build/pdf.worker.mjs";
 const params=new URLSearchParams(location.search);
 const paper=params.get("paper")==="02"?"02":"01";
 document.title="Paper "+paper+" Answer | A/L 2028";
 document.getElementById("title").textContent="Paper "+paper+" Answer";
 const pdfPath=paper==="01"?"answers/theory-exam-01-answer.pdf":"answers/theory-exam-02-answer.pdf";
-const frame=document.getElementById("answerFrame");
-frame.src=pdfPath+"#toolbar=0&navpanes=0&scrollbar=0";
-frame.hidden=false;
-// Do not infer a missing PDF from an empty iframe document: native PDF viewers
-// commonly expose an empty document body even while the PDF is rendered correctly.
-frame.addEventListener("load",()=>{
-  document.getElementById("pendingState").hidden=true;
+const pagesHost=document.getElementById("pdfPages");
+const pending=document.getElementById("pendingState");
+let loadingTask;
+let renderToken=0;
+async function renderAllPages(){
+  const token=++renderToken;
+  pending.hidden=false;
+  document.getElementById("heading").textContent="Loading answer PDF…";
+  document.getElementById("message").textContent="Loading all pages for your screen.";
+  pagesHost.replaceChildren();
+  try{
+    loadingTask=pdfjsLib.getDocument({url:pdfPath});
+    const pdf=await loadingTask.promise;
+    if(token!==renderToken)return;
+    pending.hidden=true;
+    const width=Math.max(260,pagesHost.clientWidth||window.innerWidth-20);
+    for(let pageNo=1;pageNo<=pdf.numPages;pageNo++){
+      if(token!==renderToken)return;
+      const page=await pdf.getPage(pageNo);
+      const base=page.getViewport({scale:1});
+      const scale=Math.min(width/base.width,2);
+      const viewport=page.getViewport({scale});
+      const section=document.createElement("section");
+      section.className="pdf-page";
+      section.setAttribute("aria-label","Page "+pageNo+" of "+pdf.numPages);
+      const canvas=document.createElement("canvas");
+      const context=canvas.getContext("2d",{alpha:false});
+      const dpr=Math.min(window.devicePixelRatio||1,2);
+      canvas.width=Math.floor(viewport.width*dpr);
+      canvas.height=Math.floor(viewport.height*dpr);
+      canvas.style.width=viewport.width+"px";
+      canvas.style.height=viewport.height+"px";
+      section.appendChild(canvas);
+      pagesHost.appendChild(section);
+      await page.render({canvasContext:context,viewport,transform:dpr!==1?[dpr,0,0,dpr,0,0]:null}).promise;
+    }
+    document.getElementById("message").textContent=pdf.numPages+" pages loaded.";
+  }catch(error){
+    pending.hidden=false;
+    document.getElementById("heading").textContent="Could not load answer PDF";
+    document.getElementById("message").textContent="Please check that the PDF exists in the answers folder and refresh the page.";
+    console.error("Answer PDF render failed:",error);
+  }
+}
+let resizeTimer;
+window.addEventListener("resize",()=>{
+  clearTimeout(resizeTimer);
+  resizeTimer=setTimeout(()=>renderAllPages(),180);
 });
 document.addEventListener("contextmenu",e=>e.preventDefault());
 document.addEventListener("keydown",e=>{
   const k=e.key.toLowerCase();
   if((e.ctrlKey||e.metaKey)&&["s","p","u"].includes(k)){e.preventDefault();e.stopPropagation();}
 });
-document.getElementById("pendingState").hidden=true;
+renderAllPages();
 </script>
 </body>
 </html>
