@@ -23,7 +23,7 @@ import {db,doc,getDoc} from "./firebase.js";
     grade10: {
       label: "Grade 10",
       model: "grade10-model-papers.html",
-      past: "grade10-past-papers.html",
+      past: null,
       modelTitle: "Model Papers",
       pastTitle: "Past Papers",
       modelDescription: "Grade 10 model papers and practice resources",
@@ -85,22 +85,34 @@ import {db,doc,getDoc} from "./firebase.js";
       if (d) d.textContent = config.modelDescription;
     }
     if (past) {
-      past.href = config.past;
+      if (!config.past) {
+        past.style.display = "none";
+      } else {
+        past.style.display = "";
+        past.href = config.past;
       past.setAttribute("aria-label", config.pastTitle);
       const h = document.getElementById("pastPapersTitle");
       const d = document.getElementById("pastPapersDescription");
       if (h) h.textContent = config.pastTitle;
       if (d) d.textContent = config.pastDescription;
+      }
     }
-    document.querySelectorAll('a[href="past-papers.html"]').forEach(a => a.href = config.past);
+    if (config.past) {
+      document.querySelectorAll('a[href="past-papers.html"]').forEach(a => a.href = config.past);
+    }
     document.querySelectorAll('a[href="model-papers.html"]').forEach(a => a.href = config.model);
     const quickPapers = [...document.querySelectorAll(".quick-nav-card")].find(a => /past papers/i.test(a.textContent));
     if (quickPapers) {
-      quickPapers.href = config.past;
-      const label = quickPapers.querySelector("strong");
-      const sub = quickPapers.querySelector("small");
-      if (label) label.textContent = config.pastTitle;
-      if (sub) sub.textContent = config.pastDescription;
+      if (!config.past) {
+        quickPapers.style.display = "none";
+      } else {
+        quickPapers.style.display = "";
+        quickPapers.href = config.past;
+        const label = quickPapers.querySelector("strong");
+        const sub = quickPapers.querySelector("small");
+        if (label) label.textContent = config.pastTitle;
+        if (sub) sub.textContent = config.pastDescription;
+      }
     }
     const quickProgram = [...document.querySelectorAll(".quick-nav-card")].find(a => /my program/i.test(a.textContent));
     if (quickProgram) {
