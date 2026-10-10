@@ -49,9 +49,9 @@ import {db,doc,getDoc} from "./firebase.js";
       label: "Advanced Level",
       model: "model-papers.html",
       past: "province-paper1.html",
-      modelTitle: "Theory Examination",
+      modelTitle: "A/L Model Papers",
       pastTitle: "Province Papers",
-      modelDescription: "A/L theory examination papers and answers for study",
+      modelDescription: "Advanced Level model papers",
       pastDescription: "Provincial examination papers"
     }
   };
@@ -76,11 +76,11 @@ import {db,doc,getDoc} from "./firebase.js";
     const topGrade = document.getElementById("studentGrade");
     const gradeLabel = document.getElementById("gradeLabel");
     if (title) title.innerHTML = type === "al"
-      ? "A/L <b>" + alYear + "</b><br>Theory Examination"
+      ? "A/L <b>" + alYear + "</b><br>TOP Ranking Papers"
       : config.label + " Learning Journey<br><b>Achieve Excellence</b>";
     if (eyebrow) eyebrow.textContent = type === "al" ? "YOUR LEARNING JOURNEY" : "YOUR " + config.label.toUpperCase() + " LEARNING JOURNEY";
     if (description) description.textContent = type === "al"
-      ? "Study theory examination papers and review answers for your A/L preparation."
+      ? "Prepare for your exams with monthly practice papers, one paper at a time."
       : "Welcome back. Your " + config.label + " papers, learning resources, announcements and progress are organized here for you.";
     if (topType) topType.textContent = config.label + " Student";
     if (sideGrade) sideGrade.textContent = config.label + " Student";
