@@ -11,13 +11,20 @@ import {db,doc,getDoc} from "./firebase.js";
     return "";
   };
   const inferFromId = () => {
-    if (/^A2[789]\d{3}$/.test(id)) return "al";
+    // A/L admission IDs: A27000/A28000/A29000 and 27C/28C/29C or 27N/28N/29N series.
+    if (/^A2[789]\d{3}$/.test(id) || /^(?:27|28|29)[CN]/.test(id)) return "al";
     if (/^\d{5}$/.test(id)) {
       const n = Number(id);
       if (n >= 26000 && n <= 26999) return "grade11";
       if (n >= 27000 && n <= 27999) return "grade10";
     }
     return "";
+  };
+
+  const getAlYear = () => {
+    const match = id.match(/^(?:A)?(27|28|29)/) || id.match(/^(27|28|29)[CN]/);
+    if (!match) return "2027";
+    return "20" + match[1];
   };
   const routes = {
     grade10: {
@@ -62,13 +69,18 @@ import {db,doc,getDoc} from "./firebase.js";
     const title = document.querySelector(".learning-banner-copy h2");
     const eyebrow = document.querySelector(".learning-banner-copy>span");
     const description = document.querySelector(".learning-banner-copy p");
+    const alYear = type === "al" ? getAlYear() : "";
     const topType = document.getElementById("topStudentType");
     const sideGrade = document.getElementById("sidebarStudentGrade");
     const topGrade = document.getElementById("studentGrade");
     const gradeLabel = document.getElementById("gradeLabel");
-    if (title) title.innerHTML = config.label + " Learning Journey<br><b>Achieve Excellence</b>";
-    if (eyebrow) eyebrow.textContent = type === "al" ? "YOUR A/L ACCOUNTING JOURNEY" : "YOUR " + config.label.toUpperCase() + " LEARNING JOURNEY";
-    if (description) description.textContent = "Welcome back. Your " + config.label + " papers, learning resources, announcements and progress are organized here for you.";
+    if (title) title.innerHTML = type === "al"
+      ? "A/L <b>" + alYear + "</b><br>TOP Ranking Papers"
+      : config.label + " Learning Journey<br><b>Achieve Excellence</b>";
+    if (eyebrow) eyebrow.textContent = type === "al" ? "YOUR LEARNING JOURNEY" : "YOUR " + config.label.toUpperCase() + " LEARNING JOURNEY";
+    if (description) description.textContent = type === "al"
+      ? "Prepare for your exams with monthly practice papers, one paper at a time."
+      : "Welcome back. Your " + config.label + " papers, learning resources, announcements and progress are organized here for you.";
     if (topType) topType.textContent = config.label + " Student";
     if (sideGrade) sideGrade.textContent = config.label + " Student";
     if (topGrade) topGrade.textContent = config.label;
