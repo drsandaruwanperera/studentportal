@@ -145,6 +145,8 @@ function hasViewedPaper(studentData, paperNumber) {
 function monthKey(year, month) { return `${year}-${String(month).toLowerCase()}`; }
 function isCurrentMonth(year, month) { const now = new Date(); return Number(year) === now.getFullYear() && String(month).toLowerCase() === Object.keys(monthNames)[now.getMonth()]; }
 async function canOpenMonth(year, month) {
+  // Keep the current month's papers open even if an old Firestore override says locked.
+  if (isCurrentMonth(year, month)) return true;
   const key = monthKey(year, month);
   try { const snap = await getDoc(doc(db, 'monthlyTopRankingAccess', key)); if (snap.exists() && typeof snap.data().override === 'boolean') return snap.data().override; }
   catch (error) { console.error('Monthly access check failed:', error); alert('Could not verify paper access. Please try again.'); return false; }
@@ -152,6 +154,8 @@ async function canOpenMonth(year, month) {
 }
 const monthlyAccessOverrides = {};
 function monthIsOpenForUI(year, month) {
+    // Current month should always be clickable; stale lock overrides must not block it.
+    if (isCurrentMonth(year, month)) return true;
     const key = monthKey(year, month);
     if (Object.prototype.hasOwnProperty.call(monthlyAccessOverrides, key) && typeof monthlyAccessOverrides[key] === 'boolean') return monthlyAccessOverrides[key];
     return isCurrentMonth(year, month);
