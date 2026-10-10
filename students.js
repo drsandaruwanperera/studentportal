@@ -2063,84 +2063,16 @@ alSeriesButtons.forEach(
 // VALIDATE A/L SERIES
 // =====================================================
 
-function validateALSeries(
-    studentId,
-    selectedSeries
-) {
-
-    const id =
-        String(
-            studentId ||
-            ""
-        )
-            .trim()
-            .toUpperCase();
-
-
-    if (
-        selectedSeries === "27C"
-    ) {
-
-        return /^27C\d{5}$/.test(id);
-
-    }
-
-
-    if (
-        !/^A\d{5}$/.test(id)
-    ) {
-
-        return false;
-
-    }
-
-
-    const number =
-        Number(
-            id.substring(
-                1
-            )
-        );
-
-
-    if (
-        selectedSeries === "27000"
-    ) {
-
-        return (
-            number >= 27000 &&
-            number <= 27999
-        );
-
-    }
-
-
-    if (
-        selectedSeries === "28000"
-    ) {
-
-        return (
-            number >= 28000 &&
-            number <= 28999
-        );
-
-    }
-
-
-    if (
-        selectedSeries === "29000"
-    ) {
-
-        return (
-            number >= 29000 &&
-            number <= 29999
-        );
-
-    }
-
-
+function validateALSeries(studentId, selectedSeries) {
+    const id = String(studentId || "").trim().toUpperCase();
+    if (selectedSeries === "27C") return /^27C\d{5}$/.test(id);
+    // 28C and 28N admission IDs are members of the A28000 / A/L 2028 group.
+    if (selectedSeries === "28000") return /^A28\d{3}$/.test(id) || /^28[CN]\d{5}$/.test(id);
+    if (!/^A\d{5}$/.test(id)) return false;
+    const number = Number(id.substring(1));
+    if (selectedSeries === "27000") return number >= 27000 && number <= 27999;
+    if (selectedSeries === "29000") return number >= 29000 && number <= 29999;
     return false;
-
 }
 
 
@@ -2283,7 +2215,7 @@ if (
                 ) {
 
                     alert(
-                        "Please select A27000, A28000, A29000 or 27C series."
+                        "Please select A27000, A28000 (including 28C/28N), or A29000."
                     );
 
 
