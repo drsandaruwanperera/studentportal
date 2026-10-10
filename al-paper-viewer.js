@@ -1,3 +1,5 @@
+import { db, doc, getDoc } from "./firebase.js";
+
 if (sessionStorage.getItem("loggedIn") !== "true") {
     window.location.replace("index.html");
 }
@@ -84,7 +86,23 @@ function loadImage(src) {
     });
 }
 
+async function verifyMonthlyAccess() {
+  const year = Number(params.get('year') || new Date().getFullYear());
+  const month = monthName;
+  try {
+    const snap = await getDoc(doc(db, 'monthlyTopRankingAccess', `${year}-${month}`));
+    if (snap.exists() && typeof snap.data().override === 'boolean') return snap.data().override;
+    const now = new Date();
+    return year === now.getFullYear() && month === Object.keys(monthNames)[now.getMonth()];
+  } catch (error) { console.error('Monthly access check failed:', error); return false; }
+}
 async function initializeViewer() {
+    if (!(await verifyMonthlyAccess())) {
+        if (empty) { empty.hidden = false; empty.textContent = "This monthly paper is locked. It is available only during its month unless the administrator unlocks it."; }
+        if (pages) pages.replaceChildren();
+        return;
+    }
+
     const folderType = paperType === "2nd" ? "2nd-paper" : "1st-paper";
     const basePath = `papers/al-top-ranking/${monthName}/paper-${paperNumber}-${folderType}`;
 
