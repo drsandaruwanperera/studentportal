@@ -43,7 +43,7 @@
 <div class="actions"><button class="btn primary" id="saveBtn" type="submit">Publish Announcement</button><button class="btn secondary" id="cancelBtn" type="button" style="display:none">Cancel Edit</button></div>
 </form>
 </section>
-<section class="card"><h2>Live Announcements</h2><div id="list" class="list"><div class="empty">Loading announcements…</div></div></section>
+<section class="card"><h2>Live Announcements</h2><button class="btn secondary" id="moveALTo2027" type="button" style="width:100%;margin-bottom:12px">Move existing A/L announcements to A/L 2027</button><div id="list" class="list"><div class="empty">Loading announcements…</div></div></section>
 </div>
 </main>
 </div>
@@ -102,7 +102,20 @@ form.addEventListener("submit",async e=>{
   }finally{saveBtn.disabled=false; if(!editingId) saveBtn.textContent="Publish Announcement";}
 });
 
+document.getElementById("moveALTo2027").addEventListener("click",async()=>{
+  const currentAL=latestAnnouncements.filter(x=>["al","alevel","advancedlevel"].includes(String(x.grade||x.targetGrade||x.targetAudience||"").toLowerCase().replace(/[^a-z0-9]/g,"")));
+  if(!currentAL.length){alert("No existing general A/L announcements found to move.");return;}
+  if(!confirm("Move "+currentAL.length+" existing general A/L announcement(s) to the A/L 2027 dashboard? This changes their audience to A/L 2027 only."))return;
+  const button=document.getElementById("moveALTo2027");button.disabled=true;button.textContent="Moving announcements...";
+  try{
+    for(const item of currentAL){await setDoc(doc(db,"announcements",item.id),{grade:"al2027",targetGrade:"al2027",updatedAt:new Date().toISOString()},{merge:true});}
+    alert("Moved "+currentAL.length+" announcement(s) to A/L 2027.");
+  }catch(err){console.error(err);alert("Some announcements could not be moved. Check Firestore permissions and try again.");}
+  finally{button.disabled=false;button.textContent="Move existing A/L announcements to A/L 2027";}
+});
+let latestAnnouncements=[];
 function render(items){
+  latestAnnouncements=items;
   if(!items.length){list.innerHTML='<div class="empty">No announcements yet.</div>';return;}
   list.innerHTML=items.map(x=>{
     const on=x.enabled!==false && x.active!==false;
