@@ -481,38 +481,30 @@ function getStudentType(
 // =====================================================
 
 function getStudentTypeLabel(
-    type
+    type,
+    data = {},
+    studentId = ""
 ) {
 
-    if (
-        type === "grade10"
-    ) {
+    if (type === "grade10") return "Grade 10";
+    if (type === "grade11") return "Grade 11";
 
-        return "Grade 10";
+    if (type === "al") {
+        const id = String(studentId || "").trim().toUpperCase();
+        const savedYear = Number(data?.alYear);
+        if ([2027, 2028, 2029].includes(savedYear)) return "A/L " + savedYear;
 
-    }
+        if (/^(?:A27\\d{3}|27C\\d{5})$/.test(id)) return "A/L 2027";
+        if (/^(?:A28\\d{3}|28[CN]\\d{5})$/.test(id)) return "A/L 2028";
+        if (/^A29\\d{3}$/.test(id)) return "A/L 2029";
 
-
-    if (
-        type === "grade11"
-    ) {
-
-        return "Grade 11";
-
-    }
-
-
-    if (
-        type === "al"
-    ) {
+        const al2028NumericIds = new Set("11074 11094 12705 13959 14069 14319 14334 14368 14369 14421 14723 14800 15189 15483 15508 15585 15690 15854 15960 16365 16889 16890 16891 16892 16895 16896 16898 16899 16900 16902 16903 16906 16907 16908 16909 16910 16913 16914 16915 16920 16923 16924 16941 16947 16966 16967 16975 16978 16979 16980 16986 16987 16988 16991 16995 17038 17039 17052 17054 17064 17071 17080 17093 17125 17172 17187 17188 17190 17191 17197 17205 17206 17207 17208 17209 17210 17212 17213 17218 17220 17225 17226 17240 17241 17242 17243 17244 17246 17247 17249 17254 17256 17269 17279 17280 17287 17288 17296 17306 17307 17317 17326 17327 17364 17366 17368 17386 17387 17427 17450".split(/\\s+/));
+        if (al2028NumericIds.has(id)) return "A/L 2028";
 
         return "A/L";
-
     }
 
-
     return "Student";
-
 }
 
 
@@ -1071,7 +1063,9 @@ function renderStudentRow(
 
     const typeLabel =
         getStudentTypeLabel(
-            type
+            type,
+            data,
+            student.id
         );
 
 
