@@ -16,6 +16,7 @@ const monthNames = {
 };
 
 const monthLabel = monthNames[monthName] || "September";
+const paperYear = Number(params.get("year") || 2026);
 
 const pages = document.getElementById("pages");
 const empty = document.getElementById("empty");
@@ -28,7 +29,7 @@ if (title) {
 }
 
 if (kicker) {
-    kicker.textContent = `${monthLabel.toUpperCase()} 2026 • A/L TOP RANKING MODEL • ${paperType.toUpperCase()} PAPER`;
+    kicker.textContent = `${monthLabel.toUpperCase()} ${paperYear} • A/L TOP RANKING MODEL • ${paperType.toUpperCase()} PAPER`;
 }
 
 if (printPaperBtn) {
