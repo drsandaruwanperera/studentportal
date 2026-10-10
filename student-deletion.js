@@ -934,6 +934,10 @@ function getCategory(student) {
     if (["grade11", "11", "g11"].includes(storedType)) return "Grade 11";
     if (["grade10", "10", "g10"].includes(storedType)) return "Grade 10";
 
+    // A/L admission IDs include A27000/A28000/A29000 and 27C/28C/29C or 27N/28N/29N.
+    const cleanId = String(student.id || "").trim().toUpperCase();
+    if (/^A2[789]\d{3}$/.test(cleanId) || /^(?:27|28|29)[CN]/.test(cleanId)) return "A/L";
+
     // Fall back to the existing admission-number rules for older records.
     if (["A27000", "A28000", "A29000"].includes(series)) return "A/L";
     if (series === "26000") return "Grade 11";
