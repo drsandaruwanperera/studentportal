@@ -2597,6 +2597,7 @@ const closeBulkAL = document.getElementById("closeBulkAL");
 const cancelBulkAL = document.getElementById("cancelBulkAL");
 const saveBulkAL = document.getElementById("saveBulkAL");
 const bulkALCredentials = document.getElementById("bulkALCredentials");
+const bulkStudentDashboard = document.getElementById("bulkStudentDashboard");
 const bulkALStatus = document.getElementById("bulkALStatus");
 const bulkALMustChange = document.getElementById("bulkALMustChange");
 
@@ -2612,12 +2613,14 @@ closeBulkAL?.addEventListener("click", closeBulkALModal);
 cancelBulkAL?.addEventListener("click", closeBulkALModal);
 
 saveBulkAL?.addEventListener("click", async () => {
+  const target = bulkStudentDashboard?.value || "al2028";
   const lines = String(bulkALCredentials?.value || "").split(/\r?\n/).map(x => x.trim()).filter(Boolean);
   if (!lines.length) {
     bulkALStatus.textContent = "Paste the student IDs and passwords first.";
     return;
   }
 
+  const al2028NumericIds = new Set("11074 11094 12705 13959 14069 14319 14334 14368 14369 14421 14723 14800 15189 15483 15508 15585 15690 15854 15960 16365 16889 16890 16891 16892 16895 16896 16898 16899 16900 16902 16903 16906 16907 16908 16909 16910 16913 16914 16915 16920 16923 16924 16941 16947 16966 16967 16975 16978 16979 16980 16986 16987 16988 16991 16995 17038 17039 17052 17054 17064 17071 17080 17093 17125 17172 17187 17188 17190 17191 17197 17205 17206 17207 17208 17209 17210 17212 17213 17218 17220 17225 17226 17240 17241 17242 17243 17244 17246 17247 17249 17254 17256 17269 17279 17280 17287 17288 17296 17306 17307 17317 17326 17327 17364 17366 17368 17386 17387 17427 17450".split(/\s+/));
   const records = [];
   const errors = [];
   const seen = new Set();
@@ -2625,8 +2628,13 @@ saveBulkAL?.addEventListener("click", async () => {
     const parts = line.includes("\t") ? line.split("\t") : line.split(",");
     const id = String(parts.shift() || "").trim().toUpperCase().replace(/\s+/g, "");
     const password = parts.join(line.includes("\t") ? "\t" : ",").trim();
-    if (!/^28[CN]\d{5}$/.test(id)) {
-      errors.push("Line " + (index + 1) + ": invalid A/L ID " + (id || "(blank)") + " (expected 28C/28N + 5 digits).");
+    let valid = false;
+    if (target === "grade10") valid = /^\d+$/.test(id) && Number(id) >= 27000 && Number(id) <= 27999;
+    if (target === "grade11") valid = /^\d+$/.test(id) && Number(id) >= 26000 && Number(id) <= 26999;
+    if (target === "al2027") valid = /^A27\d{3}$/.test(id) || /^27C\d{5}$/.test(id);
+    if (target === "al2028") valid = /^A28\d{3}$/.test(id) || /^28[CN]\d{5}$/.test(id) || al2028NumericIds.has(id);
+    if (!valid) {
+      errors.push("Line " + (index + 1) + ": ID " + (id || "(blank)") + " does not match the selected dashboard.");
     } else if (!password || password.length < 4) {
       errors.push("Line " + (index + 1) + ": password missing or shorter than 4 characters for " + id + ".");
     } else if (seen.has(id)) {
@@ -2642,9 +2650,11 @@ saveBulkAL?.addEventListener("click", async () => {
     return;
   }
 
+  const studentType = target === "grade10" ? "grade10" : target === "grade11" ? "grade11" : "al";
+  const alYear = target === "al2027" ? 2027 : target === "al2028" ? 2028 : null;
   saveBulkAL.disabled = true;
   saveBulkAL.textContent = "Adding...";
-  bulkALStatus.textContent = "Checking existing accounts and adding " + records.length + " A/L students...";
+  bulkALStatus.textContent = "Checking existing accounts and adding " + records.length + " students to the selected dashboard...";
   let added = 0, skipped = 0, failed = [];
   try {
     for (const record of records) {
@@ -2660,9 +2670,9 @@ saveBulkAL?.addEventListener("click", async () => {
           password: record.password,
           mustChangePassword: true,
           profileCompleted: false,
-          registrationCompleted: false,
-          studentType: "al",
-          grade: null,
+          registrationCompleted: studentType === "al",
+          studentType,
+          grade: studentType === "al" ? "AL" : Number(target === "grade10" ? 10 : 11),
           fullName: "",
           name: "",
           studentName: "",
@@ -2670,6 +2680,7 @@ saveBulkAL?.addEventListener("click", async () => {
           createdAt: Date.now(),
           lastActiveAt: 0
         };
+        if (alYear) studentData.alYear = alYear;
         for (let n = 1; n <= TOTAL_PAPERS; n++) {
           studentData[getPaperField(n)] = false;
           studentData[getPaperViewedField(n)] = false;
@@ -2678,22 +2689,21 @@ saveBulkAL?.addEventListener("click", async () => {
         await setDoc(ref, studentData);
         added++;
       } catch (err) {
-        console.error("Bulk A/L student create failed:", record.id, err);
+        console.error("Bulk student create failed:", record.id, err);
         failed.push(record.id + ": " + (err?.message || "write failed"));
       }
     }
     await loadStudents();
     bulkALStatus.textContent =
-      "Import complete.\nAdded: " + added +
+      "Import complete.\nDashboard: " + (target === "grade10" ? "Grade 10" : target === "grade11" ? "Grade 11" : "A/L " + alYear) +
+      "\nAdded: " + added +
       "\nSkipped (already existed): " + skipped +
       "\nFailed: " + failed.length +
       (failed.length ? "\n" + failed.join("\n") : "");
-    if (!failed.length) {
-      bulkALCredentials.value = "";
-    }
+    if (!failed.length) bulkALCredentials.value = "";
   } finally {
     saveBulkAL.disabled = false;
-    saveBulkAL.textContent = "Add A/L Students";
+    saveBulkAL.textContent = "Add Students";
   }
 });
 
