@@ -274,8 +274,10 @@ function setupPastCard(type) {
 
     let pastUrl = null;
 
+    // Grade 10 does not use a Past Papers resource card.
     if (type === "grade10") {
-        pastUrl = "grade10-past-papers.html";
+        pastPapersCard.style.display = "none";
+        return;
     } else if (type === "grade11") {
         pastUrl = "grade11-past-paper.html";
     } else if (type === "al") {
