@@ -140,7 +140,7 @@ function detectStudentType(studentId) {
 
 function isValidALAdmissionNumber(admissionNumber) {
     const value = normalizeStudentId(admissionNumber);
-    return AL_NUMERIC_STUDENT_IDS.has(value) || /^27C\d{5}$/.test(value) || /^28[CN]\d{5}$/.test(value) || /^A2[7-9]\d{3}$/.test(value);
+    return AL_NUMERIC_STUDENT_IDS.has(value) || AL_2028_NUMERIC_STUDENT_IDS.has(value) || /^27C\d{5}$/.test(value) || /^28[CN]\d{5}$/.test(value) || /^A2[7-9]\d{3}$/.test(value);
 }
 
 function validatePassword(password) {
