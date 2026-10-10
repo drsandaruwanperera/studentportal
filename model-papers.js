@@ -142,6 +142,14 @@ function hasViewedPaper(studentData, paperNumber) {
 // OPEN PAPER
 // ============================================================
 
+function monthKey(year, month) { return `${year}-${String(month).toLowerCase()}`; }
+function isCurrentMonth(year, month) { const now = new Date(); return Number(year) === now.getFullYear() && String(month).toLowerCase() === Object.keys(monthNames)[now.getMonth()]; }
+async function canOpenMonth(year, month) {
+  const key = monthKey(year, month);
+  try { const snap = await getDoc(doc(db, 'monthlyTopRankingAccess', key)); if (snap.exists() && typeof snap.data().override === 'boolean') return snap.data().override; }
+  catch (error) { console.error('Monthly access check failed:', error); alert('Could not verify paper access. Please try again.'); return false; }
+  return isCurrentMonth(year, month);
+}
 async function openPaper(paperNumber, paperButton, paperCard) {
 
     if (!paperButton) {
@@ -172,8 +180,8 @@ async function openPaper(paperNumber, paperButton, paperCard) {
         return;
     }
 
-    window.location.href =
-        `al-top-ranking-paper.html?paper=${paperNumber}&month=september`;
+    if (!(await canOpenMonth(new Date().getFullYear(), 'september'))) { alert('This monthly paper is locked. Contact the administrator if access is needed.'); return; }
+    window.location.href = `al-top-ranking-paper.html?paper=${paperNumber}&month=september&year=${new Date().getFullYear()}`;
 }
 
 
@@ -240,7 +248,7 @@ function renderMonthlyPaperSections(items) {
     document.querySelectorAll("[data-monthly-paper-section]").forEach(el => el.remove());
 
     const groups = {};
-    items.filter(x => x.published !== false && String(x.month).toLowerCase() !== "september").forEach(x => {
+    items.filter(x => x.published !== false).forEach(x => {
         const key = `${x.year}-${x.month}`;
         (groups[key] ||= []).push(x);
     });
@@ -285,8 +293,11 @@ function renderMonthlyPaperSections(items) {
     });
 
     main.querySelectorAll("[data-month][data-paper]").forEach(btn => {
-        btn.addEventListener("click", () => {
-            window.location.href = `al-top-ranking-paper.html?paper=${btn.dataset.paper}&month=${btn.dataset.month}`;
+        btn.addEventListener("click", async () => {
+            const sectionKey = btn.closest("[data-monthly-paper-section]")?.dataset.monthlyPaperSection || "";
+            const year = sectionKey.split("-")[0];
+            if (!(await canOpenMonth(year, btn.dataset.month))) { alert("This monthly paper is locked. It is available during its month unless the administrator unlocks it."); return; }
+            window.location.href = `al-top-ranking-paper.html?paper=${btn.dataset.paper}&month=${btn.dataset.month}&year=${year}`;
         });
     });
 }
