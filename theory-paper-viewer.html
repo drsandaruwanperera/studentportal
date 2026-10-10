@@ -6,17 +6,41 @@
 <title>Theory Paper | A/L 2028</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#080d1b;color:#f5f7ff;font-family:Inter,"Segoe UI",Arial,sans-serif;min-height:100vh}.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 24px;border-bottom:1px solid rgba(148,163,184,.16);background:#0b1120}.eyebrow{font-size:9px;font-weight:900;letter-spacing:1px;color:#a6ff2e}.bar h1{font-size:19px;margin:6px 0 0}.back{background:#182238;color:#fff;text-decoration:none;border:1px solid #33415b;border-radius:9px;padding:10px 14px;font-size:11px;font-weight:800}.state{width:min(600px,calc(100% - 28px));margin:70px auto;padding:28px 24px;text-align:center;background:#111a2d;border:1px solid #29344b;border-radius:17px}.icon{font-size:34px}.state h2{font-size:19px;margin:12px 0 8px}.state p{font-size:12px;line-height:1.7;color:#aab6cb;margin:0}.state strong{color:#c8ff70}
+
+.viewer-wrap{width:min(1100px,calc(100% - 24px));margin:22px auto 40px}
+.viewer{height:calc(100vh - 130px);min-height:520px;width:100%;border:1px solid #29344b;border-radius:14px;background:#111827}
+.state{margin:35px auto}
 </style>
 </head>
 <body>
 <header class="bar"><div><div class="eyebrow">A/L 2028 • THEORY EXAMINATION</div><h1 id="title">Paper Viewer</h1></div><a class="back" href="theory-examination.html">← Back to Papers</a></header>
-<main class="state"><div class="icon">📄</div><h2 id="heading">Paper PDF pending</h2><p id="message">This paper's PDF has not been added yet. Once the PDF and answer scheme are supplied, they can be displayed here for online study.</p></main>
+<main class="viewer-wrap" id="viewerWrap">
+  <section class="state" id="pendingState"><div class="icon">📄</div><h2 id="heading">Answer PDF not uploaded yet</h2><p id="message">The selected answer PDF will appear here after it is added to the LMS.</p></section>
+  <iframe class="viewer" id="answerFrame" title="Theory examination answer PDF" hidden></iframe>
+</main>
 <script>
 const params=new URLSearchParams(location.search);
-const paper=String(params.get("paper")==="02"?"02":"01");
-document.title="Paper "+paper+" | A/L 2028 Theory Examination";
-document.getElementById("title").textContent="Paper "+paper;
-document.getElementById("heading").textContent="Paper "+paper+" PDF pending";
+const paper=params.get("paper")==="02"?"02":"01";
+document.title="Paper "+paper+" Answer | A/L 2028";
+document.getElementById("title").textContent="Paper "+paper+" Answer";
+const pdfPath=paper==="01"?"answers/theory-exam-01-answer.pdf":"answers/theory-exam-02-answer.pdf";
+const frame=document.getElementById("answerFrame");
+frame.src=pdfPath+"#toolbar=0&navpanes=0&scrollbar=0";
+frame.hidden=false;
+frame.addEventListener("load",()=>{
+  try{
+    const doc=frame.contentDocument;
+    if(doc && doc.body && doc.body.innerText.trim().length===0){
+      document.getElementById("pendingState").hidden=false;
+    }
+  }catch(e){}
+});
+document.addEventListener("contextmenu",e=>e.preventDefault());
+document.addEventListener("keydown",e=>{
+  const k=e.key.toLowerCase();
+  if((e.ctrlKey||e.metaKey)&&["s","p","u"].includes(k)){e.preventDefault();e.stopPropagation();}
+});
+document.getElementById("pendingState").hidden=true;
 </script>
 </body>
 </html>
