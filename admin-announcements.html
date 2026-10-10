@@ -125,7 +125,7 @@ function render(items){
   list.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>editItem(items.find(x=>x.id===b.dataset.edit)));
   list.querySelectorAll("[data-toggle]").forEach(b=>b.onclick=async()=>{
     const x=items.find(x=>x.id===b.dataset.toggle); if(!x)return;
-    await setDoc(doc(db,"announcements",x.id),{enabled:!(x.enabled!==false),active:!(x.enabled!==false),updatedAt:new Date().toISOString()},{merge:true});
+    const publish = !(x.enabled!==false && x.active!==false); b.disabled=true; try { await setDoc(doc(db,"announcements",x.id),{enabled:publish,active:publish,updatedAt:new Date().toISOString()},{merge:true}); } catch(err) { console.error(err); alert("Could not update announcement visibility. Check Firestore permissions."); } finally { b.disabled=false; }
   });
   list.querySelectorAll("[data-delete]").forEach(b=>b.onclick=async()=>{
     if(!confirm("Delete this announcement?"))return;
