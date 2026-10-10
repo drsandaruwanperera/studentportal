@@ -79,47 +79,32 @@ document.body.classList.add("dark-mode");localStorage.setItem("lmsTheme","dark")
 </script><script>const t=(sessionStorage.getItem("studentGrade")||sessionStorage.getItem("studentType")||"").toLowerCase();
 const modelCardTitle=document.getElementById("modelCardTitle");
 const modelCardDescription=document.getElementById("modelCardDescription");
+const modelCard=document.getElementById("modelLink")?.closest(".card");
+const examCard=document.querySelector('[data-content-id="examPreparation"]');
 if(t.includes("10")){
-  modelLink.href="grade10-model-papers.html";
-  pastLink.href="grade10-past-papers.html";
-  programTitle.textContent="Grade 10 Commerce";
-  modelCardTitle.textContent="Term Test Model Papers";
+  modelLink.href="grade10-model-papers.html"; pastLink.href="grade10-past-papers.html";
+  programTitle.textContent="Grade 10 Commerce"; modelCardTitle.textContent="Term Test Model Papers";
   modelCardDescription.textContent="Grade 10 term test model papers for practice.";
 }else if(t.includes("11")){
-  modelLink.href="grade11-model-papers.html";
-  pastLink.href="grade11-past-paper.html";
-  programTitle.textContent="Grade 11 Commerce";
-  modelCardTitle.textContent="TOP Ranking Papers";
+  modelLink.href="grade11-model-papers.html"; pastLink.href="grade11-past-paper.html";
+  programTitle.textContent="Grade 11 Commerce"; modelCardTitle.textContent="TOP Ranking Papers";
   modelCardDescription.textContent="Grade 11 TOP Ranking papers for exam preparation.";
 }else if(t.includes("advanced")||t==="al"||t.includes("a/l")){
   const studentId=String(sessionStorage.getItem("studentId")||"").trim().toUpperCase();
-  const isAL2028=/^(?:A28\d{3}|28[CN])/.test(studentId) ||
-    /2028/.test(String(sessionStorage.getItem("studentGrade")||"")+" "+String(sessionStorage.getItem("studentType")||""));
-  programTitle.textContent=isAL2028?"A/L 2028 Theory Examination":"Advanced Level Accounting";
+  const isAL2028=/^(?:A28\d{3}|28[CN])/.test(studentId) || /2028/.test(String(sessionStorage.getItem("studentGrade")||"")+" "+String(sessionStorage.getItem("studentType")||""));
   if(isAL2028){
-    modelCardTitle.textContent="Theory Examination";
-    modelCardDescription.textContent="A/L 2028 Theory Examination — Paper 01 and Paper 02.";
-    modelLink.href="al-top-ranking-paper.html?paper=01&month=october&year=2026";
-    modelLink.textContent="Open Paper 01 →";
-    const card=modelLink.closest(".card");
-    if(card){
-      let second=document.getElementById("al2028Paper02Card");
-      if(!second){
-        second=card.cloneNode(true);
-        second.id="al2028Paper02Card";
-        second.dataset.contentId="al2028Paper02";
-        const title=second.querySelector("h3");
-        const description=second.querySelector("p");
-        const link=second.querySelector("a");
-        if(title)title.textContent="Theory Examination — Paper 02";
-        if(description)description.textContent="A/L 2028 Theory Examination Paper 02 and answer review.";
-        if(link){link.href="al-top-ranking-paper.html?paper=02&month=october&year=2026";link.textContent="Open Paper 02 →";}
-        card.after(second);
-      }
+    programTitle.textContent="A/L 2028";
+    const tab=document.querySelector(".tabs .tab"); if(tab)tab.textContent="A/L 2028";
+    if(modelCard){
+      modelCard.style.display="flex"; modelCard.querySelector(".ico").textContent="📘";
+      modelCardTitle.textContent="Theory Examination";
+      modelCardDescription.textContent="Paper 01 and Paper 02 with answers for online study.";
+      modelLink.href="theory-examination.html"; modelLink.textContent="Open Papers →";
     }
-    const tabs=document.querySelector(".tabs .tab");
-    if(tabs)tabs.textContent="A/L 2028";
+    document.querySelectorAll(".grid > .card").forEach(card=>{if(card!==modelCard&&card!==examCard)card.style.display="none";});
+    if(examCard)examCard.style.display="flex";
   }else{
+    programTitle.textContent="Advanced Level Accounting";
     modelCardTitle.textContent="TOP Ranking Papers";
     modelCardDescription.textContent="A/L TOP Ranking papers for exam preparation.";
   }
