@@ -1,6 +1,6 @@
 import { db, doc, setDoc, deleteDoc, onSnapshot, collection } from './firebase.js';
 const role=(sessionStorage.getItem('adminRole')||'').toLowerCase();
-if(sessionStorage.getItem('adminLoggedIn')!=='true'||!['full','superadmin'].includes(role)){ location.replace('admin-login.html'); }
+if(sessionStorage.getItem('adminLoggedIn')!=='true'||!['full','superadmin'].includes(role)){ location.replace('admin-login.html'); throw new Error('Super Admin access required'); }
 const main=document.querySelector('.main-content');
 if(!main) throw new Error('Admin content container not found');
 let list=document.getElementById('monthlyAccessList');
