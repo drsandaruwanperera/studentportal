@@ -2638,7 +2638,8 @@ saveBulkAL?.addEventListener("click", async () => {
     } else if (!password || password.length < 4) {
       errors.push("Line " + (index + 1) + ": password missing or shorter than 4 characters for " + id + ".");
     } else if (seen.has(id)) {
-      errors.push("Line " + (index + 1) + ": duplicate ID " + id + " in pasted list.");
+      // Keep the first valid occurrence and ignore later duplicate rows.
+      return;
     } else {
       seen.add(id);
       records.push({ id, password });
