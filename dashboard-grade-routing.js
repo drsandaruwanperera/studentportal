@@ -58,6 +58,7 @@ import {db,doc,getDoc} from "./firebase.js";
 
   function applyGrade(type, data = {}) {
     const config = routes[type];
+    document.documentElement.dataset.studentType = type || "unknown";
     if (!config) {
       const title = document.querySelector(".learning-banner-copy h2");
       if (title) title.innerHTML = "Your Learning Journey<br><b>Starts Here</b>";
