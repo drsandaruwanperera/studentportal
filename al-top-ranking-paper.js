@@ -18,7 +18,8 @@ const monthNames = {
     september: "September", october: "October", november: "November", december: "December"
 };
 const monthLabel = monthNames[monthName] || "September";
-const yearLabel = monthName === "september" ? "2026" : "2026";
+const yearLabel = String(Number(params.get("year") || 2026));
+document.title = `${monthLabel} ${yearLabel} • Top Ranking Paper`;
 
 async function getStudentData() {
     if (!studentId) return null;
@@ -52,7 +53,7 @@ async function checkPaperResource(linkId, statusId, type) {
     const status = document.getElementById(statusId);
     if (!link || !status) return;
 
-    const viewerUrl = `al-paper-viewer.html?paper=${paperNumber}&type=${type}&month=${monthName}`;
+    const viewerUrl = `al-paper-viewer.html?paper=${paperNumber}&type=${type}&month=${monthName}&year=${yearLabel}`;
     const monthTitle = monthLabel;
     const imageUrl = `papers/al-top-ranking/${monthName}/paper-${paperNumber}-${type === "second" ? "2nd-paper" : "1st-paper"}/page-01.jpg`;
 
