@@ -2037,7 +2037,7 @@ alSeriesButtons.forEach(
 
                     const seriesName =
                         series === "27000"
-                            ? "A27000"
+                            ? "A/L 2027 (A27000 / 27C)"
                             : series === "28000"
                                 ? "A28000"
                                 : series === "29000"
@@ -2065,7 +2065,7 @@ alSeriesButtons.forEach(
 
 function validateALSeries(studentId, selectedSeries) {
     const id = String(studentId || "").trim().toUpperCase();
-    if (selectedSeries === "27C") return /^27C\d{5}$/.test(id);
+    if (selectedSeries === "27000") return /^A27\d{3}$/.test(id) || /^27C\d{5}$/.test(id);
     // 28C and 28N admission IDs are members of the A28000 / A/L 2028 group.
     if (selectedSeries === "28000") return /^A28\d{3}$/.test(id) || /^28[CN]\d{5}$/.test(id);
     if (!/^A\d{5}$/.test(id)) return false;
