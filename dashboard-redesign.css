@@ -157,3 +157,84 @@ html[data-student-type="al"] .sidebar-link.active{
 @media(prefers-reduced-motion:reduce){
   .lms-stat-card,.summary-card,.dashboard-card,.quick-access-card{transition:none!important}
 }
+
+
+/* Integrated dashboard concept: deep navy panels with emerald learning accents.
+   Keep the existing live LMS components and data bindings intact. */
+:root{
+  --lms-bg:#061329;--lms-panel:#081a34;--lms-panel-2:#0b2041;
+  --lms-line:#18365f;--lms-text:#f4f7ff;--lms-muted:#b3c4e6;
+  --lms-purple:#00db79;--lms-cyan:#00db79;
+}
+html,body{
+  background:radial-gradient(ellipse at 70% 0%,#112b55 0,transparent 48%),#061329!important;
+  color:#f4f7ff!important;
+}
+.sidebar{
+  background:linear-gradient(180deg,#07142b,#091b39 65%,#0a1530)!important;
+  border-right:1px solid #19345a!important;
+}
+.sidebar-link.active{
+  background:linear-gradient(100deg,#00c969,#008e5b)!important;
+  color:#001e17!important;
+  box-shadow:0 8px 22px #00c96a30!important;
+}
+.dashboard-learning-banner,.dashboard-analytics-hero,.hero-card{
+  border:1px solid #14664c!important;border-radius:16px!important;
+  background:radial-gradient(circle at 83% 35%,#00c96a38,transparent 27%),linear-gradient(110deg,#062b2c 0,#042331 54%,#031a2a)!important;
+  box-shadow:0 18px 38px #0004!important;
+}
+.dashboard-learning-banner:after{
+  border-color:#13f09b35!important;box-shadow:0 0 0 35px #ffffff08,0 0 0 75px #ffffff05!important;
+}
+.learning-banner-copy>span{color:#7fffc1!important;letter-spacing:1.7px!important}
+.learning-banner-copy h2 b{color:#00db79!important}
+.learning-banner-copy p{color:#d2e7e6!important}
+.hero-continue-btn{
+  background:linear-gradient(110deg,#00c969,#00a85e)!important;
+  color:#001e17!important;border:1px solid #18f39a!important;border-radius:9px!important;
+  box-shadow:0 6px 18px #00ce7040!important;
+}
+.lms-stat-card,.summary-card,.dashboard-card,.quick-access-card,.lms-widget,.lms-side-column>section{
+  background:linear-gradient(135deg,#0b2344,#07162e)!important;
+  border:1px solid #18365f!important;border-radius:12px!important;
+  box-shadow:none!important;
+}
+.lms-stat-card:hover,.summary-card:hover,.dashboard-card:hover,.quick-access-card:hover{
+  border-color:#00db7966!important;box-shadow:0 12px 28px #0003!important;
+}
+.lms-stat-icon,.quick-nav-icon{
+  background:#00dc791b!important;color:#00ee8a!important;
+  border:1px solid #00db7928!important;
+}
+.lms-stat-card strong{color:#f4f7ff!important}
+.lms-stat-card span,.lms-stat-card small,.summary-info span,.summary-info small{color:#c0d1ef!important}
+.lms-section-heading h2,.widget-heading h2{color:#f5f7ff!important}
+.lms-section-heading p,.announcement-summary-sub,.widget-subtitle{color:#b3c4e6!important}
+.lms-section-heading>a,.quick-nav-card>b{color:#00db79!important}
+.dashboard-announcement-tabs{background:#081a34!important;border-color:#18365f!important}
+.dashboard-announcement-tab{color:#b3c4e6!important}
+.dashboard-announcement-tab.active{background:#034b3a!important;color:#7fffc1!important}
+.dashboard-summary-card{
+  background:linear-gradient(90deg,#03372f,#06213a)!important;
+  border:1px solid #087d65!important;border-radius:11px!important;
+}
+.dashboard-summary-card:hover{background:linear-gradient(90deg,#064638,#092b40)!important;border-color:#00db79!important}
+.dashboard-summary-number,.dashboard-summary-meta span{color:#00ed8b!important}
+.dashboard-summary-icon{background:#00dc791b!important;color:#00ed8b!important}
+.dashboard-summary-top strong{color:#f4f7ff!important}
+.dashboard-summary-top span,.dashboard-summary-copy p{color:#c2dfec!important}
+.dashboard-summary-meta{border-top:1px solid #087d65!important}
+.dashboard-summary-meta b{color:#7fffc1!important}
+.dashboard-summary-empty,.dashboard-summary-loading{background:#081a34!important;border-color:#18365f!important;color:#b3c4e6!important}
+.progress-ring{border-color:#00e889!important;background-color:#173453!important}
+.progress-ring>div{background:#081a34!important}
+.progress-ring strong{color:#fff!important}
+.progress-ring span,.progress-legend span{color:#b3c4e6!important}
+.quick-nav-card{background:linear-gradient(135deg,#0b2344,#07162e)!important;border:1px solid #18365f!important;border-radius:12px!important}
+.quick-nav-card strong{color:#f4f7ff!important}.quick-nav-card small{color:#b3c4e6!important}
+.dashboard-mobile-nav{background:rgba(6,19,41,.97)!important;border-color:#18365f!important}
+.dashboard-mobile-nav a.active{background:#034b3a!important;color:#7fffc1!important}
+html[data-student-type="grade10"]{--grade-accent:#00db79;--grade-accent-2:#008e5b;--grade-glow:rgba(0,219,121,.18);--grade-banner:#003d32}
+html[data-student-type="grade11"]{--grade-accent:#ffb454;--grade-accent-2:#e87824;--grade-glow:rgba(255,180,84,.17);--grade-banner:#43240f}
+html[data-student-type="al"]{--grade-accent:#00db79;--grade-accent-2:#008e5b;--grade-glow:rgba(0,219,121,.18);--grade-banner:#003d32}
