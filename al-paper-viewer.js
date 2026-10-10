@@ -90,6 +90,9 @@ function loadImage(src) {
 async function verifyMonthlyAccess() {
   const year = Number(params.get('year') || new Date().getFullYear());
   const month = monthName;
+  const now = new Date();
+  // The current month's papers stay open even if Firestore contains a stale lock override.
+  if (year === now.getFullYear() && month === Object.keys(monthNames)[now.getMonth()]) return true;
   try {
     const snap = await getDoc(doc(db, 'monthlyTopRankingAccess', `${year}-${month}`));
     if (snap.exists() && typeof snap.data().override === 'boolean') return snap.data().override;
