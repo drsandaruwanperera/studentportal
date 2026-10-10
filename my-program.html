@@ -93,7 +93,7 @@ if(t.includes("10")){
   modelCardDescription.textContent="Grade 11 TOP Ranking papers for exam preparation.";
 }else if(t.includes("advanced")||t==="al"||t.includes("a/l")){
   const studentId=String(sessionStorage.getItem("studentId")||"").trim().toUpperCase();
-  const isAL2028=/^(?:A28\\d{3}|28[CN])/.test(studentId) ||
+  const isAL2028=/^(?:A28\d{3}|28[CN])/.test(studentId) ||
     /2028/.test(String(sessionStorage.getItem("studentGrade")||"")+" "+String(sessionStorage.getItem("studentType")||""));
   programTitle.textContent=isAL2028?"A/L 2028 Theory Examination":"Advanced Level Accounting";
   if(isAL2028){
