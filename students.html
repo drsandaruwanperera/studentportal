@@ -2279,21 +2279,30 @@
 <div id="bulkALModal" class="modal-overlay">
   <div class="modal" style="max-width:760px;width:min(760px,94vw)">
     <div class="modal-header">
-      <div><h2>Bulk Add A/L Students</h2><p>Add the supplied usernames with their passwords. Passwords stay in this admin form.</p></div>
+      <div><h2>Bulk Add Students</h2><p>Add the supplied usernames with their passwords. Passwords stay in this admin form.</p></div>
       <button type="button" id="closeBulkAL" class="modal-close">×</button>
     </div>
     <div class="modal-body">
       <div class="form-group">
+        <label for="bulkStudentDashboard">Select dashboard for these students</label>
+        <select id="bulkStudentDashboard" style="width:100%;background:#0b1427;color:#f3f6ff;border:1px solid #2b3d60;border-radius:10px;padding:12px">
+          <option value="grade10">Grade 10 Dashboard</option>
+          <option value="grade11">Grade 11 Dashboard</option>
+          <option value="al2027">A/L Student — 2027 Dashboard</option>
+          <option value="al2028" selected>A/L Student — 2028 Dashboard</option>
+        </select>
+      </div>
+      <div class="form-group">
         <label for="bulkALCredentials">Student ID and password (one student per line)</label>
         <textarea id="bulkALCredentials" rows="10" placeholder="28C35471,student-password&#10;28C35064,student-password&#10;28N00280,student-password" style="width:100%;min-height:220px;resize:vertical;background:#0b1427;color:#f3f6ff;border:1px solid #2b3d60;border-radius:12px;padding:14px;font:13px/1.7 monospace"></textarea>
-        <small class="field-help">Format: StudentID,Password (tab-separated also works). Only A/L accounts with IDs starting 28C or 28N are accepted. Existing accounts are skipped, not overwritten.</small>
+        <small class="field-help">Format: StudentID,Password (tab-separated also works). The selected dashboard determines the account category/year. A/L 2027 accepts A27xxx / 27C + 5 digits; A/L 2028 accepts A28xxx, 28C/28N + 5 digits and the registered numeric usernames. Existing accounts are skipped, not overwritten.</small>
       </div>
       <p style="margin:10px 0 0;color:#aebbd3;font-size:12px">All new accounts will be required to complete registration and change their password on first login.</p>
       <div id="bulkALStatus" style="margin-top:12px;font-size:12px;white-space:pre-wrap;color:#aebbd3"></div>
     </div>
     <div class="modal-footer">
       <button type="button" id="cancelBulkAL" class="cancel-btn">Cancel</button>
-      <button type="button" id="saveBulkAL" class="save-btn">Add A/L Students</button>
+      <button type="button" id="saveBulkAL" class="save-btn">Add Students</button>
     </div>
   </div>
 </div>
