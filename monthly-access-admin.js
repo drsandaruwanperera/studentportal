@@ -3,9 +3,8 @@ const role=(sessionStorage.getItem('adminRole')||'').toLowerCase();
 if(sessionStorage.getItem('adminLoggedIn')!=='true'||!['full','superadmin'].includes(role)){ location.replace('admin-login.html'); }
 const main=document.querySelector('.main-content');
 if(!main) throw new Error('Admin content container not found');
-const panel=document.createElement('section');panel.className='monthly-paper-admin';panel.innerHTML='<div class="monthly-paper-hero"><div><div class="eyebrow">ADMIN OVERRIDE</div><h2>Monthly Access Lock / Unlock</h2><p>Only the current month is open automatically. Previous months lock on the 1st. Super Admin can unlock any month or restore automatic locking.</p></div><span class="realtime-pill"><i></i> REALTIME</span></div><div id="monthlyAccessList" class="monthly-paper-list"><div class="monthly-empty">Loading monthly access…</div></div>';
-main.appendChild(panel);
-const list=panel.querySelector('#monthlyAccessList');
+let list=document.getElementById('monthlyAccessList');
+if(!list){const panel=document.createElement('section');panel.className='monthly-paper-admin';panel.innerHTML='<div class="monthly-paper-hero"><div><div class="eyebrow">ADMIN OVERRIDE</div><h2>Monthly Access Lock / Unlock</h2><p>Only the current month is open automatically. Previous months lock on the 1st. Super Admin can unlock any month or restore automatic locking.</p></div><span class="realtime-pill"><i></i> REALTIME</span></div><div id="monthlyAccessList" class="monthly-paper-list"><div class="monthly-empty">Loading monthly access…</div></div>';main.appendChild(panel);list=panel.querySelector('#monthlyAccessList');}
 const months=['january','february','march','april','may','june','july','august','september','october','november','december'];
 const full={january:'January',february:'February',march:'March',april:'April',may:'May',june:'June',july:'July',august:'August',september:'September',october:'October',november:'November',december:'December'};
 let papers=[],overrides={};
