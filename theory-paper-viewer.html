@@ -27,13 +27,10 @@ const pdfPath=paper==="01"?"answers/theory-exam-01-answer.pdf":"answers/theory-e
 const frame=document.getElementById("answerFrame");
 frame.src=pdfPath+"#toolbar=0&navpanes=0&scrollbar=0";
 frame.hidden=false;
+// Do not infer a missing PDF from an empty iframe document: native PDF viewers
+// commonly expose an empty document body even while the PDF is rendered correctly.
 frame.addEventListener("load",()=>{
-  try{
-    const doc=frame.contentDocument;
-    if(doc && doc.body && doc.body.innerText.trim().length===0){
-      document.getElementById("pendingState").hidden=false;
-    }
-  }catch(e){}
+  document.getElementById("pendingState").hidden=true;
 });
 document.addEventListener("contextmenu",e=>e.preventDefault());
 document.addEventListener("keydown",e=>{
