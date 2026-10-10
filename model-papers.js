@@ -180,8 +180,8 @@ async function openPaper(paperNumber, paperButton, paperCard) {
         return;
     }
 
-    if (!(await canOpenMonth(new Date().getFullYear(), 'september'))) { alert('This monthly paper is locked. Contact the administrator if access is needed.'); return; }
-    window.location.href = `al-top-ranking-paper.html?paper=${paperNumber}&month=september&year=${new Date().getFullYear()}`;
+    if (!(await canOpenMonth(2026, 'september'))) { alert('This monthly paper is locked. Contact the administrator if access is needed.'); return; }
+    window.location.href = `al-top-ranking-paper.html?paper=${paperNumber}&month=september&year=2026`;
 }
 
 
@@ -248,7 +248,7 @@ function renderMonthlyPaperSections(items) {
     document.querySelectorAll("[data-monthly-paper-section]").forEach(el => el.remove());
 
     const groups = {};
-    items.filter(x => x.published !== false).forEach(x => {
+    items.filter(x => x.published !== false && !(String(x.month).toLowerCase() === "september" && Number(x.year) === 2026)).forEach(x => {
         const key = `${x.year}-${x.month}`;
         (groups[key] ||= []).push(x);
     });
