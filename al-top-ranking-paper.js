@@ -63,7 +63,7 @@ async function checkPaperResource(linkId, statusId, type) {
             link.target = "_self";
             link.rel = "";
             link.classList.remove("pending");
-            link.textContent = "View & Print →";
+            link.textContent = "View Paper →";
             status.textContent = "Pages available";
         } else {
             status.textContent = "Paper is not uploaded yet.";
