@@ -32,5 +32,18 @@ a{color:inherit;text-decoration:none}button,input{font:inherit}.wrap{max-width:1
 <script>
 (function(){const input=document.getElementById('password');const toggle=document.getElementById('pwToggle');toggle.addEventListener('click',function(){const show=input.type==='password';input.type=show?'text':'password';toggle.textContent=show?'Hide':'Show';toggle.setAttribute('aria-label',show?'Hide password':'Show password');toggle.setAttribute('aria-pressed',String(show));});})();
 </script>
-<script type="module" src="../app.js"></script>
+<script>
+/* Safety guard: never send preview credentials to the production Firebase app. */
+const loginBtn = document.getElementById("loginBtn");
+const msg = document.getElementById("msg");
+loginBtn.addEventListener("click", () => {
+  msg.textContent = "Preview only: staging Firebase is not connected yet. Do not enter real student credentials.";
+  msg.style.color = "#ffbf69";
+});
+document.getElementById("portalLogin").addEventListener("submit", (event) => {
+  event.preventDefault();
+  msg.textContent = "Preview only: staging Firebase is not connected yet. Do not enter real student credentials.";
+  msg.style.color = "#ffbf69";
+});
+</script>
 </body></html>
