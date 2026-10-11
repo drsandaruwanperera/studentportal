@@ -4,7 +4,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebas
 import { getAuth } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "REPLACE_WITH_STAGING_WEB_API_KEY",
+  apiKey: "AIzaSyBYWxZM-c9pN6iemIYcRXQcDaD8NKf5SUM",
   authDomain: "drsandaruwan-lms-staging.firebaseapp.com",
   projectId: "drsandaruwan-lms-staging",
   storageBucket: "drsandaruwan-lms-staging.firebasestorage.app",
