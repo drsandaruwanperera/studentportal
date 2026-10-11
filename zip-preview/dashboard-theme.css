@@ -1,0 +1,22 @@
+/* ZIP-inspired dashboard theme layer. Keeps all existing dashboard markup and data hooks intact. */
+:root{--primary:#6ff636;--primary-dark:#4dc51c;--navy:#070d1f;--navy-2:#0f1a33;--background:#070d1f;--card:#0f1a33;--text:#e6ebf7;--muted:#9ba8c7;--border:#243353;--purple-light:#17233f;--blue-light:#14254b;--green-light:#142b20;--orange-light:#30251b;--success:#6ff636;--shadow:0 14px 36px rgba(0,0,0,.22);--radius:18px}
+body{background:#070d1f!important;color:#e6ebf7}
+.sidebar{background:linear-gradient(180deg,#080f23 0%,#0d1830 100%);border-right:1px solid #1d2a4a;box-shadow:8px 0 30px rgba(0,0,0,.18)}
+.brand-logo{background:linear-gradient(135deg,#6ff636,#3caa19);color:#07111f;box-shadow:0 8px 18px rgba(111,246,54,.15)}
+.sidebar-link.active{background:linear-gradient(90deg,#6ff636,#83ff53);color:#07111f;box-shadow:0 7px 18px rgba(111,246,54,.16)}
+.sidebar-link:hover{background:#17233f;color:#fff}
+.main-content{background:#070d1f}
+.top-header,.mobile-lms-header{background:#0b1530!important;color:#e6ebf7;border-color:#1d2a4a!important}
+.hero-card,.summary-card,.material-card,.announcement-card,.support-card,.quick-access-card,.quick-theme-card,.lms-stat-card,.dashboard-announcement-card,.dashboard-card{background:#0f1a33!important;color:#e6ebf7;border-color:#243353!important;box-shadow:0 14px 36px rgba(0,0,0,.2)}
+.hero-card{background:radial-gradient(ellipse at 90% 15%,#1b3552 0,transparent 48%),linear-gradient(135deg,#101d39,#0b1530)!important}
+.hero-card h1,.hero-card h2,.summary-card h2,.summary-card strong,.material-card h3,.announcement-card h3,.support-card h3,.quick-access-card h3,.dashboard-card h2{color:#f1f5ff}
+.welcome-small,.section-label,.sidebar-section-title,.muted,.summary-card p,.material-card p,.announcement-card p,.support-card p{color:#9ba8c7}
+.section-header,.activity-header,.quick-access-header{color:#e6ebf7}
+button,.btn,.theme-card-btn,.icon-button{transition:background .2s,border-color .2s,transform .2s}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #6ff636;outline-offset:3px}
+input,select,textarea{background:#0b1530!important;color:#e6ebf7!important;border-color:#2a3a60!important}
+a{color:inherit}
+a:hover{color:#6ff636}
+.quick-card-icon,.material-card-top,.live-status{border-color:#2a3a60}
+@media(max-width:800px){body{background:#070d1f!important}.mobile-sidebar-backdrop{background:rgba(0,0,0,.65)}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
