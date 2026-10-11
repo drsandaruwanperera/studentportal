@@ -31,3 +31,26 @@ This preview is isolated from the live site and is deployed from this feature br
 - GitHub Actions secret: `FIREBASE_SERVICE_ACCOUNT_STAGING`
 - Workflow: `.github/workflows/deploy-staging-hosting.yml` (manual dispatch only)
 - Never commit a service-account JSON key or add public Firestore read/write rules.
+
+
+## Dashboard integration QA checklist
+
+Run this checklist against the real dashboard only in an isolated staging environment with synthetic test data.
+
+### Visual regression
+- [ ] Desktop: sidebar, header, dashboard cards and text remain readable.
+- [ ] Mobile (320px, 375px, 768px): navigation, cards and tables do not overflow horizontally.
+- [ ] Keyboard focus indicators are visible; reduced-motion preference is respected.
+- [ ] Browser console has no CSS/JavaScript errors or missing assets.
+
+### Functional regression (staging synthetic account only)
+- [ ] Login/logout and refresh/session expiry.
+- [ ] Student grade routing, including A/L route and registration-required route.
+- [ ] First-login password-change route.
+- [ ] Papers list/open/download and marks/results display.
+- [ ] Empty states, loading states and network errors.
+- [ ] Unauthorized student cannot read another student's records.
+- [ ] Firestore rules deny unauthenticated reads and writes.
+
+### Gate before real dashboard connection
+The current preview login proves Firebase Authentication only. It does not issue a student session, provision a student-to-Auth UID mapping, or authorize dashboard Firestore queries. Do not link this login to the production dashboard. Do not copy production student records into staging. End-to-end tests are blocked until a staging-only identity mapping, synthetic records, and restrictive Firestore rules exist.
