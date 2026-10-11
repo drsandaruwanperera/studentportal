@@ -23,7 +23,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 const firebaseConfig = {
-    apiKey: "YOUR_REAL_FIREBASE_API_KEY",
+    apiKey: "AIzaSyAKbrx_tt4SXi1obmDIvqUVi2VmcXCs0_8",
     authDomain: "answersheet2026.firebaseapp.com",
     projectId: "answersheet2026",
     storageBucket: "answersheet2026.firebasestorage.app",
