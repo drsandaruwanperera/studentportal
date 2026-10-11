@@ -13,7 +13,7 @@ This preview is intentionally isolated from the live site.
 ## Safety decisions
 
 - The ZIP's sample-data dashboard is not used for real student accounts.
-- The login preview is currently a visual-only safe stub; it does not import `app.js` or send credentials to production Firebase. Do not enter real student credentials.
+- The preview login now imports `staging-login.js` and `firebase-staging.js` only; it does not import production `app.js` or route to the production dashboard. The staging API-key placeholder must be replaced before use. Use staging-only test credentials, never real student credentials.
 - The real dashboard's HTML, Firestore loading, dashboard scripts and grade-routing script are preserved; the preview branch adds a theme CSS layer.
 - The supplied teacher photo is referenced from the existing `assets/sir-photo.png` asset.
 - Production `main` branches have not been modified by these preview changes.
@@ -21,7 +21,7 @@ This preview is intentionally isolated from the live site.
 ## Required before publishing
 
 1. Review homepage content against the current live homepage to ensure no important information, contact links, photos or results are lost.
-2. Add the real `drsandaruwan-lms-staging` Firebase web-app config in a dedicated staging module, wire a staging-only login flow to it, and confirm Firestore rules permit only the intended test operations. Never point the preview at production `firebase.js`.
+2. Replace `REPLACE_WITH_STAGING_WEB_API_KEY` in `zip-preview/firebase-staging.js` with the staging web API key. Keep staging Firestore rules closed by default; do not add public read/write rules. The legacy Firestore-password login cannot be securely enabled with unauthenticated public reads, so authentication needs a secure staging-only design before end-to-end login testing.
 3. After staging config and rules are confirmed, check desktop/mobile layout, console errors, asset loading and navigation; then use authorized staging test accounts to verify correct/incorrect credentials, grade routing, first-login flow, refresh, logout and dashboard data.
 4. Confirm real marks, papers and result links; do not treat CSS/static checks as a successful Firebase test.
 5. Review the diffs for both repositories and get explicit final production approval before merging.
