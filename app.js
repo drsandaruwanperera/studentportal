@@ -6,7 +6,8 @@ import {
     db,
     doc,
     getDoc,
-    updateDoc
+    updateDoc,
+    loginWithStudentId
 } from "./firebase.js";
 
 
@@ -518,64 +519,35 @@ async function loginStudent() {
     try {
 
         // =============================================
-        // FIRESTORE STUDENT DOCUMENT
+        // SERVER-SIDE STUDENT ID + PASSWORD LOGIN
         // =============================================
 
-        const studentRef =
-            doc(
-                db,
-                "students",
-                studentId
-            );
+        const loginResult = await loginWithStudentId(
+            studentId,
+            password
+        );
 
+        const studentRef = doc(
+            db,
+            "students",
+            studentId
+        );
 
-        const studentSnap =
-            await getDoc(
-                studentRef
-            );
+        // Read the student profile after Firebase Auth sign-in.
+        // The existing registration and grade routing below is preserved.
+        const studentSnap = await getDoc(studentRef);
 
-
-        // =============================================
-        // STUDENT NOT FOUND
-        // =============================================
-
-        if (
-            !studentSnap.exists()
-        ) {
-
-            showMessage(
-                "Invalid Student ID or password."
-            );
-
+        if (!studentSnap.exists()) {
+            showMessage("Student profile could not be loaded. Please contact the administrator.");
             return;
-
         }
 
+        const data = studentSnap.data();
 
-        const data =
-            studentSnap.data();
-
-
-        // =============================================
-        // PASSWORD CHECK
-        // =============================================
-
-        const storedPassword =
-            String(
-                data?.password ?? ""
-            );
-
-
-        if (
-            storedPassword !== password
-        ) {
-
-            showMessage(
-                "Invalid Student ID or password."
-            );
-
+        // Ensure the server-authenticated identity matches the entered ID.
+        if (loginResult.studentId !== studentId) {
+            showMessage("Unable to verify student account. Please try again.");
             return;
-
         }
 
 
