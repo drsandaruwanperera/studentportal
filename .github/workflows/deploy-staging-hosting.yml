@@ -1,0 +1,57 @@
+name: Deploy LMS staging preview
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lms-staging-hosting
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - name: Checkout isolated preview branch
+        uses: actions/checkout@v4
+        with:
+          ref: feat/zip-design-integration
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Configure Firebase Hosting for preview only
+        run: |
+          cat > firebase.json <<'EOF'
+          {
+            "hosting": {
+              "public": "zip-preview",
+              "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+              "headers": [
+                {
+                  "source": "**/*.@(js|html)",
+                  "headers": [
+                    { "key": "Cache-Control", "value": "no-store" }
+                  ]
+                }
+              ]
+            }
+          }
+          EOF
+
+      - name: Install Firebase CLI
+        run: npm install --global firebase-tools
+
+      - name: Deploy to staging Firebase Hosting only
+        env:
+          FIREBASE_TOKEN_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_STAGING }}
+        run: |
+          test -n "$FIREBASE_TOKEN_JSON" || (echo "Missing FIREBASE_SERVICE_ACCOUNT_STAGING repository/environment secret" && exit 1)
+          printf '%s' "$FIREBASE_TOKEN_JSON" > "$RUNNER_TEMP/firebase-service-account.json"
+          export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/firebase-service-account.json"
+          firebase deploy --only hosting --project drsandaruwan-lms-staging --non-interactive
