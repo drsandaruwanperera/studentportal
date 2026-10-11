@@ -1,7 +1,7 @@
 // STAGING ONLY — never import this file from production pages.
 // Replace the API key placeholder with the web API key from the staging Firebase console.
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "REPLACE_WITH_STAGING_WEB_API_KEY",
@@ -13,4 +13,4 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig, "lms-staging-preview");
-export const db = getFirestore(app);
+export const auth = getAuth(app);
