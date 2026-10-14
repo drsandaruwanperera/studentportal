@@ -292,6 +292,61 @@ body{background:radial-gradient(circle at 76% 10%,rgba(103,60,255,.10),transpare
 @media(max-width:800px){.lms-notification.premium-notification-card{display:none!important}}
 </style>
     <link rel="stylesheet" href="dashboard-redesign.css?v=3">
+
+<style id="mobile-dashboard-professional-fix">
+@media(max-width:800px){
+  html,body{width:100%;max-width:100%;overflow-x:hidden}
+  .mobile-lms-header{min-height:72px;padding:12px 15px;gap:10px}
+  .mobile-lms-title{min-width:0;margin-left:10px}
+  .mobile-lms-title span{font-size:8px;letter-spacing:1px}
+  .mobile-lms-title strong{font-size:11px}
+  .mobile-lms-title b{font-size:19px;line-height:1.1}
+  .mobile-lms-actions{gap:6px}
+  .mobile-notification{width:34px;height:36px}
+  .mobile-avatar{width:40px;height:40px;flex:none}
+  /* The mobile header already contains the page title; avoid a duplicate header. */
+  .lms-header{display:none!important}
+  .main-content{width:100%!important;max-width:100%!important;margin:0!important;min-width:0}
+  .lms-dashboard{padding:16px 14px calc(116px + env(safe-area-inset-bottom))!important}
+  .dashboard-learning-banner{min-height:0!important;height:auto!important;margin:0 0 16px!important;padding:24px 19px!important;border-radius:24px!important;display:block!important;overflow:hidden}
+  .learning-banner-copy{max-width:100%;width:100%}
+  .learning-banner-copy>span{font-size:9px;letter-spacing:1.5px;margin-bottom:10px}
+  .learning-banner-copy h2{font-size:clamp(24px,6.5vw,31px)!important;line-height:1.13!important;letter-spacing:-.7px!important;overflow-wrap:anywhere}
+  .learning-banner-copy h2 b{display:inline-block;padding:2px 0 0!important}
+  .learning-banner-copy p{font-size:12px!important;line-height:1.6!important;margin-top:12px!important;max-width:100%!important}
+  .hero-continue-btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:46px;margin-top:15px;padding:0 17px;border-radius:13px;font-size:12px}
+  .learning-orbit.dashboard-journey-chart{position:relative!important;inset:auto!important;width:100%!important;height:auto!important;min-height:94px;margin:22px 0 0!important;padding:14px 13px!important;border-radius:17px!important;box-sizing:border-box}
+  .journey-grid,.journey-bars,.journey-line{display:none!important}
+  .journey-label{position:static!important;display:inline!important;margin-right:5px;font-size:10px!important;white-space:nowrap}
+  .lms-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;padding:8px 0 16px!important}
+  .lms-stat-card,.lms-stat-card:last-child{grid-column:auto!important;min-width:0;height:auto!important;min-height:104px!important;padding:15px 13px!important;border-radius:17px!important}
+  .lms-stat-card strong{font-size:27px!important}
+  .lms-stat-card span{font-size:10px!important;line-height:1.35}
+  .lms-stat-icon{width:36px!important;height:36px!important;flex:none}
+  .lms-dashboard-grid{display:block!important;min-width:0}
+  .lms-main-column,.lms-side-column{width:100%;min-width:0}
+  .lms-side-column{display:block!important;margin-top:14px!important}
+  .lms-widget{margin-bottom:12px!important;padding:16px!important}
+  .lms-section-heading h2,.widget-heading h2{font-size:16px!important}
+  .lms-section-heading p,.announcement-summary-sub{font-size:10px!important;line-height:1.5}
+  .dashboard-announcement-summary{min-width:0}
+  .dashboard-announcement-card{min-width:0}
+  .lms-quick-row{grid-template-columns:minmax(0,1fr)!important;gap:10px!important}
+  .dashboard-mobile-nav{left:12px!important;right:12px!important;bottom:calc(10px + env(safe-area-inset-bottom))!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;padding:6px!important;border-radius:19px!important}
+  .dashboard-mobile-nav a{min-width:0;padding:9px 2px!important;font-size:9px!important}
+  .dashboard-mobile-nav a span{white-space:nowrap;font-size:9px}
+}
+@media(max-width:380px){
+  .mobile-lms-header{padding-left:11px;padding-right:11px}
+  .mobile-lms-title b{font-size:17px}
+  .mobile-avatar{width:36px;height:36px}
+  .lms-dashboard{padding-left:11px!important;padding-right:11px!important}
+  .dashboard-learning-banner{padding:21px 16px!important}
+  .lms-stat-card,.lms-stat-card:last-child{padding:13px 10px!important}
+  .dashboard-mobile-nav{left:8px!important;right:8px!important}
+}
+</style>
+
 </head>
 
 
