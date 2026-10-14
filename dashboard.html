@@ -483,7 +483,22 @@ body{background:radial-gradient(circle at 76% 10%,rgba(103,60,255,.10),transpare
 }
 </style>
 
-</head>
+<style id="smart-mobile-nav-scroll">
+@media(max-width:800px){
+ .dashboard-mobile-nav{transform:translateY(0) scale(1);transform-origin:bottom center;transition:transform .22s ease,padding .22s ease,background .22s ease;will-change:transform}
+ .dashboard-mobile-nav a{transition:padding .22s ease,background .22s ease,color .22s ease,transform .22s ease}
+ .dashboard-mobile-nav.nav-compact{padding:4px!important;bottom:calc(7px + env(safe-area-inset-bottom))!important;border-radius:16px!important}
+ .dashboard-mobile-nav.nav-compact a{min-height:42px!important;padding:5px 1px!important;gap:0!important;border-radius:12px!important}
+ .dashboard-mobile-nav.nav-compact a svg{width:18px!important;height:18px!important}
+ .dashboard-mobile-nav.nav-compact a span{display:none!important}
+ .dashboard-mobile-nav.nav-compact a.active{background:linear-gradient(135deg,rgba(91,75,255,.30),rgba(124,58,237,.22))!important;box-shadow:inset 0 0 0 1px rgba(139,92,246,.22)!important}
+ .dashboard-mobile-nav.nav-compact a.active svg{width:23px!important;height:23px!important}
+ .dashboard-mobile-nav.nav-expanded-by-tap{padding:6px!important}
+ .dashboard-mobile-nav.nav-expanded-by-tap a{min-height:65px!important;padding:9px 2px!important;gap:7px!important}
+ .dashboard-mobile-nav.nav-expanded-by-tap a svg{width:21px!important;height:21px!important}
+ .dashboard-mobile-nav.nav-expanded-by-tap a span{display:block!important;font-size:9px!important}
+}
+</style></head>
 
 
 <body>
@@ -1369,6 +1384,43 @@ import {db,collection,onSnapshot} from "./firebase.js";
   setTimeout(syncDashboardProfile,1000);
 })();
 </script>    <script type="module" src="dashboard-grade-routing.js?v=2"></script>
-</body>
+<script id="smart-mobile-nav-scroll-behavior">
+(()=> {
+ const nav=document.querySelector('.dashboard-mobile-nav');
+ if(!nav)return;
+ let lastY=window.scrollY||0;
+ let compact=false;
+ let touchExpanded=false;
+ const setCompact=value=>{
+   compact=value;
+   nav.classList.toggle('nav-compact',compact&&!touchExpanded);
+   nav.classList.toggle('nav-expanded-by-tap',touchExpanded);
+ };
+ const sync=()=>{
+   if(window.innerWidth>800){setCompact(false);return}
+   const y=window.scrollY||0;
+   const delta=y-lastY;
+   if(Math.abs(delta)>7){
+     if(delta>0&&y>100){touchExpanded=false;setCompact(true)}
+     else if(delta<0){touchExpanded=false;setCompact(false)}
+   }
+   if(y<45){touchExpanded=false;setCompact(false)}
+   lastY=y;
+ };
+ window.addEventListener('scroll',sync,{passive:true});
+ window.addEventListener('resize',sync,{passive:true});
+ nav.querySelectorAll('a').forEach(link=>{
+   link.addEventListener('click',()=>{
+     touchExpanded=true;
+     setCompact(false);
+     nav.classList.add('nav-expanded-by-tap');
+   });
+ });
+ nav.addEventListener('touchstart',()=>{
+   if(compact){touchExpanded=true;setCompact(false)}
+ },{passive:true});
+ sync();
+})();
+</script></body>
 
 </html>
