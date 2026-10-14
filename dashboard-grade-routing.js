@@ -116,7 +116,7 @@ import {db,doc,getDoc} from "./firebase.js";
     }
     document.querySelectorAll('a[href="model-papers.html"]').forEach(a => a.href = config.model);
     const answersCard = document.getElementById("modelPaperAnswersCard");
-    if (answersCard) answersCard.style.display = type === "al" && alYear === "2027" ? "" : "none";
+    if (answersCard) answersCard.style.display = type === "al" && alYear === "2027" ? "none" : "";
     const quickPapers = [...document.querySelectorAll(".quick-nav-card")].find(a => /past papers/i.test(a.textContent));
     if (quickPapers) {
       if (!config.past) {
