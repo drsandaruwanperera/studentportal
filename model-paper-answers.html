@@ -22,6 +22,9 @@
     .page{display:block;width:100%;height:auto;max-width:100%;background:white;box-shadow:0 3px 15px #0003}
     .fallback{padding:12px;background:var(--panel);color:var(--muted);font-size:13px}
     .fallback a{color:#c9c2ff}
+    body.protected{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+    .print-notice{display:none}
+    @media print{body>*{display:none!important}.print-notice{display:block!important;padding:40px;color:#111;background:#fff;font:18px/1.5 system-ui,sans-serif}}
     @media(max-width:600px){
       .wrap{padding:12px 8px 20px}
       .top{align-items:flex-start}
@@ -38,6 +41,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body>
+  <div class="print-notice">Printing and copying are disabled for this answer viewer.</div>
   <main class="wrap">
     <div class="top">
       <div><p style="color:#a6ff2e;font-weight:800;letter-spacing:1px;margin:0">A/L STUDENT PORTAL</p><h1>2027 MCQ Model Paper — Answers</h1></div>
@@ -51,7 +55,7 @@
     <section class="viewer" aria-label="PDF answer viewer">
       <div class="status" id="status" role="status">Loading full paper…</div>
       <div class="pages" id="pages"></div>
-      <div class="fallback">Having trouble loading? <a id="openPdf" href="answers/1st-Paper.pdf" target="_blank" rel="noopener">Open PDF directly</a>.</div>
+      <div class="fallback" id="fallback">If the answer pages do not load, refresh this page or contact the administrator.</div>
     </section>
   </main>
   <script>
@@ -59,7 +63,16 @@
       const PDFJS_VERSION = '3.11.174';
       const status = document.getElementById('status');
       const pages = document.getElementById('pages');
-      const openPdf = document.getElementById('openPdf');
+      document.body.classList.add('protected');
+      const fallback = document.getElementById('fallback');
+      document.addEventListener('contextmenu', event => event.preventDefault());
+      document.addEventListener('selectstart', event => event.preventDefault());
+      document.addEventListener('dragstart', event => event.preventDefault());
+      document.addEventListener('keydown', event => {
+        const key = event.key.toLowerCase();
+        if ((event.ctrlKey || event.metaKey) && ['p','s','u','c'].includes(key)) event.preventDefault();
+        if (event.key === 'F12' || (event.ctrlKey && event.shiftKey && ['i','j','c'].includes(key))) event.preventDefault();
+      });
       const buttons = [...document.querySelectorAll('[data-file]')];
       let currentTask = null;
       let requestId = 0;
@@ -73,10 +86,9 @@
         }
         pages.replaceChildren();
         status.textContent = 'Loading full paper…';
-        openPdf.href = 'answers/' + file;
         buttons.forEach(button => button.setAttribute('aria-pressed', String(button === clickedButton)));
         if (!window.pdfjsLib) {
-          status.textContent = 'PDF viewer could not load. Open the PDF directly below.';
+          status.textContent = 'PDF viewer could not load. Please refresh or contact the administrator.';
           return;
         }
         try {
@@ -108,7 +120,7 @@
         } catch (error) {
           if (id !== requestId) return;
           console.error('Unable to render answer PDF:', error);
-          status.textContent = 'Could not load the paper here. Use “Open PDF directly” below.';
+          status.textContent = 'Could not load the paper. Please refresh or contact the administrator.';
         }
       }
       buttons.forEach(button => button.addEventListener('click', () => loadPaper(button.dataset.file, button)));
