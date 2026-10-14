@@ -498,6 +498,12 @@ body{background:radial-gradient(circle at 76% 10%,rgba(103,60,255,.10),transpare
  .dashboard-mobile-nav.nav-expanded-by-tap a svg{width:21px!important;height:21px!important}
  .dashboard-mobile-nav.nav-expanded-by-tap a span{display:block!important;font-size:9px!important}
 }
+</style><style id="dashboard-logout-icon-label-fix">
+@media(max-width:800px){
+ #studentSidebar #logoutBtn.sidebar-logout{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:center!important;gap:10px!important;color:#fff!important;font-size:13px!important;line-height:1.2!important;letter-spacing:.1px!important}
+ #studentSidebar #logoutBtn .sidebar-logout-icon{display:block!important;width:20px!important;height:20px!important;flex:0 0 20px!important;fill:none!important;stroke:currentColor!important;stroke-width:2!important;stroke-linecap:round!important;stroke-linejoin:round!important;visibility:visible!important;opacity:1!important}
+ #studentSidebar #logoutBtn>span{display:inline!important;visibility:visible!important;opacity:1!important;position:static!important;width:auto!important;height:auto!important;margin:0!important;padding:0!important;overflow:visible!important;clip:auto!important;color:#fff!important;font-size:13px!important;font-weight:800!important;line-height:1.2!important;white-space:nowrap!important}
+}
 </style></head>
 
 
@@ -632,10 +638,13 @@ body{background:radial-gradient(circle at 76% 10%,rgba(103,60,255,.10),transpare
             type="button"
             class="sidebar-logout"
             id="logoutBtn"
+            aria-label="Log out of student portal"
         >
-
+            <svg class="sidebar-logout-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M10 17l5-5-5-5M15 12H3"/>
+                <path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/>
+            </svg>
             <span>Logout</span>
-
         </button>
 
 
