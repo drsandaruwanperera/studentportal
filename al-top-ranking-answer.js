@@ -15,7 +15,7 @@ const monthNames = {
     september: "September", october: "October", november: "November", december: "December"
 };
 const monthLabel = monthNames[monthName] || "September";
-const yearLabel = "2026";
+const yearLabel = String(Number(params.get("year") || 2026));
 const pdfName = type === "second"
     ? `paper-${paper}-2nd-answer.pdf`
     : `paper-${paper}-1st-answer.pdf`;
@@ -123,4 +123,5 @@ async function renderPDF() {
     }
 }
 
+document.title = `${monthLabel} ${yearLabel} • Top Ranking Answers`;
 document.addEventListener("DOMContentLoaded", renderPDF);
