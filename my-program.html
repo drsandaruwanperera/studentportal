@@ -100,7 +100,15 @@ if(t.includes("10")){
   modelCardDescription.textContent="Grade 11 TOP Ranking papers for exam preparation.";
 }else if(t.includes("advanced")||t==="al"||t.includes("a/l")){
   const studentId=String(sessionStorage.getItem("studentId")||"").trim().toUpperCase();
-  const isAL2028=/^(?:A28\d{3}|28[CN])/.test(studentId) || /2028/.test(String(sessionStorage.getItem("studentGrade")||"")+" "+String(sessionStorage.getItem("studentType")||""));
+  const yearMatch=studentId.match(/^(?:A)?(27|28|29)\d{3}$/)||studentId.match(/^(27|28|29)[CN]/);
+  const studentContext=String(sessionStorage.getItem("studentGrade")||"")+" "+String(sessionStorage.getItem("studentType")||"");
+  const explicitYear=studentContext.match(/20(27|28|29)/);
+  const isALStudent=/advanced|a\/l|alevel/i.test(studentContext)||/^(?:A2[789]\d{3}|(?:27|28|29)[CN])/.test(studentId);
+  const alYear=yearMatch?"20"+yearMatch[1]:(explicitYear?"20"+explicitYear[1]:"2027");
+  const showModelAnswers=isALStudent&&alYear==="2027";
+  const answersCard=document.querySelector('[data-content-id="modelPaperAnswers"]');
+  if(answersCard)answersCard.style.display=showModelAnswers?"flex":"none";
+  const isAL2028=isALStudent&&alYear==="2028";
   if(isAL2028){
     programTitle.textContent="A/L 2028";
     const tab=document.querySelector(".tabs .tab"); if(tab)tab.textContent="A/L 2028";
@@ -124,7 +132,18 @@ const defaults=Object.fromEntries(cards.map(c=>[c.dataset.contentId,true]));
 function apply(snapshot){
   const state={...defaults};
   snapshot.forEach(d=>{if(Object.prototype.hasOwnProperty.call(state,d.id))state[d.id]=d.data().published!==false});
-  cards.forEach(c=>c.style.display=state[c.dataset.contentId]?"flex":"none");
+  const studentId=String(sessionStorage.getItem("studentId")||"").trim().toUpperCase();
+  const yearMatch=studentId.match(/^(?:A)?(27|28|29)\d{3}$/)||studentId.match(/^(27|28|29)[CN]/);
+  const context=String(sessionStorage.getItem("studentGrade")||"")+" "+String(sessionStorage.getItem("studentType")||"");
+  const explicitYear=context.match(/20(27|28|29)/);
+  const isAL=/advanced|a\/l|alevel/i.test(context)||/^(?:A2[789]\d{3}|(?:27|28|29)[CN])/.test(studentId);
+  const year=yearMatch?"20"+yearMatch[1]:(explicitYear?"20"+explicitYear[1]:"2027");
+  const showModelAnswers=isAL&&year==="2027";
+  cards.forEach(c=>{
+    const published=state[c.dataset.contentId];
+    const yearAllowed=c.dataset.contentId!=="modelPaperAnswers"||showModelAnswers;
+    c.style.display=published&&yearAllowed?"flex":"none";
+  });
 }
 onSnapshot(collection(db,"lmsProgramContent"),apply,()=>apply({forEach(){}}));
 </script><nav class="mobile-nav" aria-label="Primary navigation">
