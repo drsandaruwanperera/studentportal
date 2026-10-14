@@ -60,6 +60,17 @@
   </main>
   <script>
     (() => {
+      const id=String(sessionStorage.getItem("studentId")||"").trim().toUpperCase();
+      const context=String(sessionStorage.getItem("studentGrade")||"")+" "+String(sessionStorage.getItem("studentType")||"");
+      const is2027=/^A?27\d{3}$/.test(id)||/^27[CN]/.test(id)||/2027/.test(context);
+      const isAL=/^(?:A2[789]\d{3}|(?:27|28|29)[CN])/.test(id)||/advanced|a\/l|alevel|\bal\b/i.test(context);
+      if(sessionStorage.getItem("loggedIn")!=="true"||!isAL||!is2027){
+        location.replace(sessionStorage.getItem("loggedIn")==="true"?"my-program.html":"index.html");
+      }
+    })();
+  </script>
+  <script>
+    (() => {
       const PDFJS_VERSION = '3.11.174';
       const status = document.getElementById('status');
       const pages = document.getElementById('pages');
