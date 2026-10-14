@@ -56,7 +56,43 @@ html,body{background:#080d1b!important;color:#f5f7ff!important}
  .mobile-nav a.active{background:linear-gradient(135deg,rgba(91,75,255,.24),rgba(124,58,237,.17))!important;color:#b9adff!important;box-shadow:inset 0 0 0 1px rgba(139,92,246,.16)!important}
 }
 @media(max-width:380px){@media(max-width:800px){.mobile-nav{left:8px!important;right:8px!important}.mobile-nav a span{font-size:9px!important}.mobile-nav a svg{width:23px;height:23px}}}
-</style></head><body><aside class="side"><div class="brand"><div class="logo">🎓</div><div><b>Dr. Sandaruwan</b><span>LMS • Student Portal</span></div></div><div class="sidebar-section-title">STUDENT PORTAL</div><nav>
+</style><style id="section-mobile-header-system">
+.section-mobile-header,.section-sidebar-backdrop{display:none}
+@media(max-width:800px){
+ body{padding-top:0!important}
+ .section-mobile-header{position:sticky!important;top:0!important;z-index:2500!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;width:100%!important;min-height:76px!important;padding:10px 15px!important;background:rgba(9,15,30,.96)!important;border-bottom:1px solid rgba(148,163,184,.16)!important;backdrop-filter:blur(18px)!important}
+ .section-mobile-brand{display:flex!important;align-items:center!important;gap:10px!important;min-width:0!important;text-decoration:none!important;color:#f4f7ff!important}
+ .section-brand-mark{display:grid!important;place-items:center!important;width:43px!important;height:43px!important;flex:none!important;border-radius:14px!important;background:linear-gradient(135deg,#5547ed,#7c3aed)!important;font-size:22px!important;box-shadow:0 8px 22px rgba(91,75,255,.22)!important}
+ .section-mobile-brand strong{display:block!important;color:#f4f7ff!important;font-size:13px!important;font-weight:800!important;line-height:1.3!important;white-space:nowrap!important}
+ .section-mobile-brand small{display:block!important;margin-top:3px!important;color:#8f9bb2!important;font-size:9px!important;line-height:1.2!important}
+ .section-menu-toggle{display:grid!important;place-items:center!important;flex:none!important;width:46px!important;height:46px!important;padding:0!important;border-radius:14px!important;border:1px solid rgba(148,163,184,.2)!important;background:linear-gradient(145deg,#151f35,#10182b)!important;color:#f4f7ff!important;box-shadow:0 8px 22px rgba(0,0,0,.22)!important;cursor:pointer!important;-webkit-tap-highlight-color:transparent}
+ .section-menu-toggle svg{width:25px!important;height:25px!important;fill:none!important;stroke:currentColor!important;stroke-width:2.2!important;stroke-linecap:round!important}
+ .side#sectionSidebar{display:flex!important;position:fixed!important;inset:0 auto 0 0!important;width:min(320px,calc(100vw - 56px))!important;max-width:calc(100vw - 56px)!important;height:100vh!important;height:100dvh!important;box-sizing:border-box!important;padding:16px 14px max(12px,env(safe-area-inset-bottom))!important;overflow-x:hidden!important;overflow-y:auto!important;z-index:3001!important;transform:translateX(-105%)!important;transition:transform .25s ease!important;background:linear-gradient(180deg,#0b1222,#0a1020)!important;border-right:1px solid rgba(148,163,184,.18)!important;box-shadow:20px 0 50px rgba(0,0,0,.38)!important;overscroll-behavior:contain!important}
+ .side#sectionSidebar.section-sidebar-open{transform:translateX(0)!important}
+ #sectionSidebar .brand{padding:5px 6px 18px!important;border-bottom:1px solid rgba(148,163,184,.14)!important}
+ #sectionSidebar .brand b{font-size:14px!important;color:#f4f7ff!important}
+ #sectionSidebar .brand span{font-size:9px!important;color:#91a0b8!important}
+ #sectionSidebar .sidebar-section-title{padding:18px 10px 9px!important;color:#7786a1!important;font-size:9px!important;letter-spacing:1.2px!important}
+ #sectionSidebar nav{gap:5px!important}
+ #sectionSidebar nav a{min-height:47px!important;display:flex!important;align-items:center!important;gap:12px!important;padding:0 12px!important;border-radius:13px!important;background:transparent!important;color:#aab6cc!important;font-size:12px!important}
+ #sectionSidebar nav a .nav-icon{width:24px!important;height:24px!important;display:grid!important;place-items:center!important;flex:0 0 24px!important}
+ #sectionSidebar nav a .nav-icon svg{width:21px!important;height:21px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.8!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+ #sectionSidebar nav a.active{background:linear-gradient(135deg,rgba(91,75,255,.28),rgba(124,58,237,.20))!important;color:#c1b5ff!important;box-shadow:inset 0 0 0 1px rgba(139,92,246,.28)!important}
+ #sectionSidebar .side-bottom{margin-top:auto!important;padding:14px 0 0!important;border-top:1px solid rgba(148,163,184,.14)!important}
+ #sectionSidebar .side-profile{padding:0 7px 12px!important}
+ #sectionSidebar .logout{display:flex!important;align-items:center!important;justify-content:center!important;gap:9px!important;width:100%!important;height:44px!important;margin:0!important;padding:0 14px!important;border:1px solid rgba(255,107,122,.2)!important;border-radius:12px!important;background:linear-gradient(135deg,#e34c5b,#c93646)!important;color:#fff!important;font-size:12px!important;font-weight:800!important;text-decoration:none!important}
+ .section-sidebar-backdrop{position:fixed!important;inset:0!important;z-index:3000!important;background:rgba(2,6,18,.68)!important;backdrop-filter:blur(5px)!important}
+ .section-sidebar-backdrop.section-backdrop-open{display:block!important}
+ body.section-menu-open{overflow:hidden!important}
+ .main{padding-top:20px!important}
+}
+@media(max-width:380px){@media(max-width:800px){.section-mobile-header{min-height:68px!important;padding:9px 11px!important}.section-brand-mark{width:39px!important;height:39px!important}.section-mobile-brand strong{font-size:12px!important}.section-menu-toggle{width:42px!important;height:42px!important}}}
+</style></head><body>
+<header class="section-mobile-header" role="banner">
+  <a class="section-mobile-brand" href="dashboard.html" aria-label="Dr. Sandaruwan LMS home"><span class="section-brand-mark">🎓</span><span><strong>Dr. Sandaruwan</strong><small>LMS · Student Portal</small></span></a>
+  <button class="section-menu-toggle" id="sectionMenuToggle" type="button" aria-label="Open navigation menu" aria-controls="sectionSidebar" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5h16M4 12h16M4 17.5h16"/></svg></button>
+</header>
+<div class="section-sidebar-backdrop" id="sectionSidebarBackdrop" aria-hidden="true"></div><aside class="side"><div class="brand"><div class="logo">🎓</div><div><b>Dr. Sandaruwan</b><span>LMS • Student Portal</span></div></div><div class="sidebar-section-title">STUDENT PORTAL</div><nav>
 <a href="dashboard.html" data-nav="dashboard"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg></span><span>Dashboard</span></a>
 <a href="my-program.html" data-nav="program"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h6v6H5zM13 5h6v6h-6zM5 13h6v6H5zM13 13h6v6h-6z"/></svg></span><span>My Program</span></a>
 <a href="progress.html" data-nav="results"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18.5 9 13l3 3 7-8"/><path d="M16 8h3v3"/></svg></span><span>Results</span></a>
@@ -151,4 +187,18 @@ onSnapshot(collection(db,"lmsProgramContent"),apply,()=>apply({forEach(){}}));
 <a href="my-program.html" data-nav="program"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3.5" width="16" height="17" rx="2.5"/><path d="M8 7.5h8M8 11.5h8M8 15.5h5"/></svg><span>My Program</span></a>
 <a href="progress.html" data-nav="results"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5V12M10 19.5V5M16 19.5V9M22 19.5V3.5" transform="translate(-1 0)"/><path d="M3 20.5h18"/></svg><span>Progress</span></a>
 <a href="support.html" data-nav="support"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 16 0v4a2 2 0 0 1-2 2h-2"/><path d="M4 12v3a2 2 0 0 0 2 2h2v-5H6a2 2 0 0 0-2 2ZM16 12h2a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-2z"/><path d="M9 20h4"/></svg><span>Support</span></a>
-</nav><script>document.querySelectorAll('.mobile-nav a[data-nav]').forEach(a=>{const active=a.dataset.nav==="program";a.classList.toggle("active",active);if(active)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});</script></body></html>
+</nav><script>document.querySelectorAll('.mobile-nav a[data-nav]').forEach(a=>{const active=a.dataset.nav==="program";a.classList.toggle("active",active);if(active)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});</script><script id="section-mobile-menu-behavior">
+(()=> {
+ const sidebar=document.querySelector('.side');
+ const toggle=document.getElementById('sectionMenuToggle');
+ const backdrop=document.getElementById('sectionSidebarBackdrop');
+ if(!sidebar||!toggle||!backdrop)return;
+ sidebar.id='sectionSidebar';
+ const open=()=>{sidebar.classList.add('section-sidebar-open');backdrop.classList.add('section-backdrop-open');document.body.classList.add('section-menu-open');toggle.setAttribute('aria-expanded','true');toggle.setAttribute('aria-label','Close navigation menu');backdrop.setAttribute('aria-hidden','false')};
+ const close=()=>{sidebar.classList.remove('section-sidebar-open');backdrop.classList.remove('section-backdrop-open');document.body.classList.remove('section-menu-open');toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Open navigation menu');backdrop.setAttribute('aria-hidden','true')};
+ toggle.addEventListener('click',()=>sidebar.classList.contains('section-sidebar-open')?close():open());
+ backdrop.addEventListener('click',close);
+ sidebar.querySelectorAll('nav a,.logout').forEach(link=>link.addEventListener('click',close));
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+})();
+</script></body></html>
