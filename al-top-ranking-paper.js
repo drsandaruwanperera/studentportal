@@ -90,7 +90,7 @@ function addAnswerSection() {
                 <div class="pdf-icon">📘</div>
                 <h3>1st Paper Answer</h3>
                 <p>Complete ${monthLabel} ${yearLabel} answer scheme for the 1st Paper.</p>
-                <a class="pdf-link" href="al-top-ranking-answer.html?paper=${paperNumber}&type=first&month=${monthName}">View Answer →</a>
+                <a class="pdf-link" href="al-top-ranking-answer.html?paper=${paperNumber}&type=first&month=${monthName}&year=${yearLabel}">View Answer →</a>
                 <div class="status">Protected online viewer</div>
             </article>
             <article class="pdf-card answer-card">
@@ -156,7 +156,7 @@ async function initialize() {
         checkPaperResource("secondPaper", "secondStatus", "second")
     ]);
 
-    if (isALStudent(studentData) && monthName === "september") addAnswerSection();
+    if (isALStudent(studentData)) addAnswerSection();
 }
 
 document.addEventListener("DOMContentLoaded", initialize);
