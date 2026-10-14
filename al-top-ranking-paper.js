@@ -97,7 +97,7 @@ function addAnswerSection() {
                 <div class="pdf-icon">📗</div>
                 <h3>2nd Paper Answer</h3>
                 <p>Complete ${monthLabel} ${yearLabel} answer scheme for the 2nd Paper.</p>
-                <a class="pdf-link" href="al-top-ranking-answer.html?paper=${paperNumber}&type=second&month=${monthName}">View Answer →</a>
+                <a class="pdf-link" href="al-top-ranking-answer.html?paper=${paperNumber}&type=second&month=${monthName}&year=${yearLabel}">View Answer →</a>
                 <div class="status">Protected online viewer</div>
             </article>
         </div>
@@ -156,7 +156,7 @@ async function initialize() {
         checkPaperResource("secondPaper", "secondStatus", "second")
     ]);
 
-    if (isALStudent(studentData)) addAnswerSection();
+    addAnswerSection();
 }
 
 document.addEventListener("DOMContentLoaded", initialize);
