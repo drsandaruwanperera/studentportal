@@ -293,6 +293,47 @@ body{background:radial-gradient(circle at 76% 10%,rgba(103,60,255,.10),transpare
 </style>
     <link rel="stylesheet" href="dashboard-redesign.css?v=3">
 
+<style id="mobile-sidebar-visible-logout-fix">
+@media(max-width:800px){
+ #studentSidebar.sidebar{
+   display:flex!important;
+   flex-direction:column!important;
+   height:100vh!important;
+   height:100dvh!important;
+   padding-bottom:max(10px,env(safe-area-inset-bottom))!important;
+   overflow-y:auto!important;
+ }
+ #studentSidebar .sidebar-spacer{
+   flex:1 1 0!important;
+   min-height:0!important;
+   height:0!important;
+ }
+ #studentSidebar .student-account{
+   flex:0 0 auto!important;
+   margin-top:12px!important;
+   margin-bottom:0!important;
+   padding:10px!important;
+ }
+ #studentSidebar .student-avatar{
+   width:40px!important;
+   height:40px!important;
+   flex-basis:40px!important;
+ }
+ #studentSidebar .sidebar-logout{
+   position:relative!important;
+   inset:auto!important;
+   flex:0 0 42px!important;
+   width:100%!important;
+   min-height:42px!important;
+   height:42px!important;
+   margin:9px 0 0!important;
+   display:flex!important;
+   visibility:visible!important;
+   opacity:1!important;
+   order:99!important;
+ }
+}
+</style>
 <style id="mobile-sidebar-bottom-account-layout">
 @media(max-width:800px){
  #studentSidebar.sidebar{
