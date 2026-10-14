@@ -293,6 +293,31 @@ body{background:radial-gradient(circle at 76% 10%,rgba(103,60,255,.10),transpare
 </style>
     <link rel="stylesheet" href="dashboard-redesign.css?v=3">
 
+<style id="mobile-sidebar-bottom-account-layout">
+@media(max-width:800px){
+ #studentSidebar.sidebar{
+   display:flex!important;
+   flex-direction:column!important;
+   align-items:stretch!important;
+ }
+ #studentSidebar .sidebar-spacer{
+   display:block!important;
+   flex:1 1 auto!important;
+   min-height:24px!important;
+   height:auto!important;
+ }
+ #studentSidebar .student-account{
+   flex:0 0 auto!important;
+   margin-top:0!important;
+   margin-bottom:0!important;
+ }
+ #studentSidebar .sidebar-logout{
+   flex:0 0 44px!important;
+   margin-top:10px!important;
+   margin-bottom:max(6px,env(safe-area-inset-bottom))!important;
+ }
+}
+</style>
 <style id="professional-mobile-sidebar-fix">
 @media(max-width:800px){
  #studentSidebar.sidebar{
