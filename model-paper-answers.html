@@ -2,47 +2,118 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>A/L 2027 MCQ Model Paper — Answers</title>
   <style>
-    :root{color-scheme:dark;--bg:#0b1020;--panel:#11182b;--line:#26334b;--text:#f4f7ff;--muted:#aeb8ce;--accent:#5b4bff}
-    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
-    .wrap{max-width:1100px;margin:auto;padding:22px 16px 32px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-    h1{font-size:clamp(22px,4vw,32px);margin:8px 0}.sub{color:var(--muted);margin:0 0 20px}
-    .tabs{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.tab,.back{border:1px solid var(--line);border-radius:10px;padding:11px 15px;color:var(--text);background:var(--panel);text-decoration:none;cursor:pointer;font-weight:700}
-    .tab[aria-pressed=true]{background:var(--accent);border-color:var(--accent)}.viewer{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}
-    iframe{display:block;width:100%;height:calc(100vh - 245px);min-height:480px;border:0;background:#fff}
-    .fallback{padding:10px 14px;background:var(--panel);color:var(--muted);font-size:13px}.fallback a{color:#c9c2ff}
-    @media(max-width:600px){.wrap{padding:16px 10px}iframe{height:calc(100vh - 280px);min-height:400px}}
+    :root{color-scheme:dark;--bg:#080d1b;--panel:#11182b;--line:#26334b;--text:#f4f7ff;--muted:#aeb8ce;--accent:#5b4bff}
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+    .wrap{width:100%;max-width:1100px;margin:0 auto;padding:18px 16px 30px}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    h1{font-size:clamp(21px,4vw,32px);line-height:1.2;margin:8px 0}
+    .sub{color:var(--muted);margin:0 0 16px}
+    .tabs{display:flex;gap:9px;flex-wrap:wrap;margin:16px 0}
+    .tab,.back{border:1px solid var(--line);border-radius:10px;padding:10px 14px;color:var(--text);background:var(--panel);text-decoration:none;cursor:pointer;font-weight:750;font-size:14px}
+    .tab[aria-pressed=true]{background:var(--accent);border-color:var(--accent)}
+    .viewer{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#dfe3ec;min-height:55vh}
+    .status{position:sticky;top:0;z-index:2;padding:9px 12px;background:#11182bf2;color:#e7eaff;font-size:13px;text-align:center;border-bottom:1px solid var(--line)}
+    .pages{padding:12px;display:flex;flex-direction:column;align-items:center;gap:12px}
+    .page{display:block;width:100%;height:auto;max-width:100%;background:white;box-shadow:0 3px 15px #0003}
+    .fallback{padding:12px;background:var(--panel);color:var(--muted);font-size:13px}
+    .fallback a{color:#c9c2ff}
+    @media(max-width:600px){
+      .wrap{padding:12px 8px 20px}
+      .top{align-items:flex-start}
+      .back{padding:9px 10px;font-size:12px}
+      h1{font-size:22px}
+      .sub{font-size:13px;margin-bottom:12px}
+      .tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:12px 0}
+      .tab{padding:10px 6px;font-size:12px;min-width:0}
+      .viewer{border-radius:8px}
+      .pages{padding:5px;gap:7px}
+      .status{font-size:12px;padding:8px}
+    }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body>
   <main class="wrap">
     <div class="top">
       <div><p style="color:#a6ff2e;font-weight:800;letter-spacing:1px;margin:0">A/L STUDENT PORTAL</p><h1>2027 MCQ Model Paper — Answers</h1></div>
-      <a class="back" href="model-papers.html">← Back to Model Papers</a>
+      <a class="back" href="my-program.html">← Back to My Program</a>
     </div>
-    <p class="sub">Choose a paper to view its answers in your browser.</p>
+    <p class="sub">Full paper view — pages fit the screen width on mobile. Scroll down to read every page.</p>
     <div class="tabs" role="group" aria-label="Choose answer paper">
       <button class="tab" type="button" data-file="1st-Paper.pdf" aria-pressed="true">1st Paper Answers</button>
       <button class="tab" type="button" data-file="2nd-Paper.pdf" aria-pressed="false">2nd Paper Answers</button>
     </div>
     <section class="viewer" aria-label="PDF answer viewer">
-      <iframe id="answerViewer" title="Model paper answers PDF" src="answers/1st-Paper.pdf#toolbar=0&navpanes=0"></iframe>
-      <div class="fallback">If the PDF does not display in this browser, <a id="openPdf" href="answers/1st-Paper.pdf" target="_blank" rel="noopener">open the answer PDF in a new tab</a>.</div>
+      <div class="status" id="status" role="status">Loading full paper…</div>
+      <div class="pages" id="pages"></div>
+      <div class="fallback">Having trouble loading? <a id="openPdf" href="answers/1st-Paper.pdf" target="_blank" rel="noopener">Open PDF directly</a>.</div>
     </section>
   </main>
   <script>
-    const viewer=document.getElementById('answerViewer');
-    const openPdf=document.getElementById('openPdf');
-    document.querySelectorAll('[data-file]').forEach(button=>button.addEventListener('click',()=>{
-      const file=button.dataset.file;
-      const url='answers/'+file;
-      viewer.src=url+'#toolbar=0&navpanes=0';
-      openPdf.href=url;
-      document.querySelectorAll('[data-file]').forEach(other=>other.setAttribute('aria-pressed',String(other===button)));
-    }));
+    (() => {
+      const PDFJS_VERSION = '3.11.174';
+      const status = document.getElementById('status');
+      const pages = document.getElementById('pages');
+      const openPdf = document.getElementById('openPdf');
+      const buttons = [...document.querySelectorAll('[data-file]')];
+      let currentTask = null;
+      let requestId = 0;
+      if (window.pdfjsLib) {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/' + PDFJS_VERSION + '/pdf.worker.min.js';
+      }
+      async function loadPaper(file, clickedButton) {
+        const id = ++requestId;
+        if (currentTask && currentTask.destroy) {
+          try { await currentTask.destroy(); } catch (_) {}
+        }
+        pages.replaceChildren();
+        status.textContent = 'Loading full paper…';
+        openPdf.href = 'answers/' + file;
+        buttons.forEach(button => button.setAttribute('aria-pressed', String(button === clickedButton)));
+        if (!window.pdfjsLib) {
+          status.textContent = 'PDF viewer could not load. Open the PDF directly below.';
+          return;
+        }
+        try {
+          currentTask = pdfjsLib.getDocument({url: 'answers/' + file});
+          const pdf = await currentTask.promise;
+          if (id !== requestId) return;
+          status.textContent = 'Rendering ' + pdf.numPages + ' pages…';
+          for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+            if (id !== requestId) return;
+            const page = await pdf.getPage(pageNumber);
+            const baseViewport = page.getViewport({scale: 1});
+            const availableWidth = Math.max(240, pages.clientWidth || window.innerWidth - 26);
+            const scale = availableWidth / baseViewport.width;
+            const viewport = page.getViewport({scale});
+            const canvas = document.createElement('canvas');
+            canvas.className = 'page';
+            canvas.setAttribute('aria-label', 'Page ' + pageNumber + ' of ' + pdf.numPages);
+            const context = canvas.getContext('2d', {alpha: false});
+            const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+            canvas.width = Math.floor(viewport.width * pixelRatio);
+            canvas.height = Math.floor(viewport.height * pixelRatio);
+            canvas.style.width = Math.floor(viewport.width) + 'px';
+            canvas.style.maxWidth = '100%';
+            canvas.style.height = 'auto';
+            pages.appendChild(canvas);
+            await page.render({canvasContext: context, viewport, transform: pixelRatio === 1 ? null : [pixelRatio,0,0,pixelRatio,0,0]}).promise;
+          }
+          if (id === requestId) status.textContent = 'Full paper loaded • ' + pdf.numPages + ' pages • scroll to view all';
+        } catch (error) {
+          if (id !== requestId) return;
+          console.error('Unable to render answer PDF:', error);
+          status.textContent = 'Could not load the paper here. Use “Open PDF directly” below.';
+        }
+      }
+      buttons.forEach(button => button.addEventListener('click', () => loadPaper(button.dataset.file, button)));
+      loadPaper('1st-Paper.pdf', buttons[0]);
+    })();
   </script>
 </body>
 </html>
