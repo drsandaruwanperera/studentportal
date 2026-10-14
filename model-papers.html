@@ -63,7 +63,19 @@
 </div>
 
 
-<script type="module" src="model-papers.js?v=monthly3"></script>
+<script type="module" src="model-papers.js?v=monthly4"></script>
 
+<script id="remove-model-answers-link">
+(() => {
+  const removeAnswersLink = () => {
+    document.querySelectorAll('#modelAnswersLink, a.paper-open[href*="model-paper-answers.html"]').forEach(el => el.remove());
+    document.querySelectorAll('.paper-card a, .paper-card button').forEach(el => {
+      if (/^view answers/i.test((el.textContent || '').trim())) el.remove();
+    });
+  };
+  removeAnswersLink();
+  document.addEventListener('DOMContentLoaded', removeAnswersLink, { once: true });
+})();
+</script>
 </body>
 </html>
