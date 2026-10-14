@@ -1311,8 +1311,13 @@ import {db,collection,onSnapshot} from "./firebase.js";
         return Array.isArray(target)?target.some(matches):matches(target);
       };
 
+      const studentIdForYear=String(sessionStorage.getItem("studentId")||"").trim().toUpperCase();
+      const studentContextForYear=normalizeGrade((sessionStorage.getItem("studentType")||"")+" "+(sessionStorage.getItem("studentGrade")||"")+" "+(sessionStorage.getItem("alYear")||""));
+      const isALStudentForYear=studentContextForYear.includes("al")||studentContextForYear.includes("advancedlevel")||/^A\d{4,}$/.test(studentIdForYear)||/^[A-Z]?2[789]\d{3}$/.test(studentIdForYear)||/^(?:27|28|29)[CN]/.test(studentIdForYear);
+      const isAL2028Dashboard=isALStudentForYear&&(studentContextForYear.includes("2028")||/^(?:A)?28\d{3}$/.test(studentIdForYear)||/^28[CN]/.test(studentIdForYear)||Number(sessionStorage.getItem("alYear"))===2028);
       const items=snap.docs.map(d=>({id:d.id,...d.data()}))
         .filter(x=>!["legacy-grade11-top-ranking-results","legacy-al-answer-release-paper01-september2026"].includes(x.id))
+        .filter(x=>!isAL2028Dashboard || /student portal system upgrade/i.test(String(x.title||"")))
         .filter(x=>x.enabled!==false && x.active!==false)
         .filter(x=>x.showOnDashboard!==false)
         .filter(x=>!x.expiresAt || timeValue(x.expiresAt)>=now)
