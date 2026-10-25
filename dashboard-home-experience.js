@@ -45,6 +45,118 @@
 
   const byId = id => document.getElementById(id);
   let examInterval;
+  let activeCohortKey = "al2028";
+  let studyBuddyReady = false;
+
+  const studyPrompts = {
+    grade10: ["Make a weekly study plan", "Find my Grade 10 papers", "Help with Accounting"],
+    grade11: ["Plan my O/L revision", "Find Grade 11 past papers", "Explain an Accounting topic"],
+    al2027: ["Plan my A/L revision", "Find Province Papers", "Explain an Accounting topic"],
+    al2028: ["Build my A/L foundation", "Find my study resources", "Explain a topic"]
+  };
+
+  function setStudyBuddyOpen(open) {
+    const panel = byId("studyBuddyPanel"), launcher = byId("studyBuddyLauncher");
+    if (!panel || !launcher) return;
+    panel.classList.toggle("is-open", open);
+    panel.setAttribute("aria-hidden", String(!open));
+    launcher.setAttribute("aria-expanded", String(open));
+    if (open) byId("studyBuddyInput")?.focus();
+    else launcher.focus();
+  }
+
+  function addStudyBuddyMessage(message, kind) {
+    const thread = byId("studyBuddyThread");
+    if (!thread) return;
+    const item = document.createElement("div");
+    item.className = "study-buddy-message " + kind;
+    item.textContent = message;
+    if (kind === "bot") {
+      const label = document.createElement("small");
+      label.textContent = "STUDY GUIDANCE · " + (cohorts[activeCohortKey]?.label || "STUDENT").toUpperCase();
+      item.appendChild(label);
+    }
+    thread.appendChild(item);
+    byId("studyBuddyBody").scrollTop = byId("studyBuddyBody").scrollHeight;
+  }
+
+  function studyBuddyReply(question) {
+    const cohort = cohorts[activeCohortKey] || cohorts.al2028;
+    const q = question.toLowerCase();
+    if (/exam|date|countdown|when/.test(q)) {
+      return cohort.exam
+        ? cohort.exam.copy + " Check the Department of Examinations calendar for the latest timetable."
+        : "An official A/L 2028 exam date has not been announced yet. Check the Department of Examinations calendar for updates.";
+    }
+    if (/paper|resource|note|model|past|province|find/.test(q)) {
+      const resources = activeCohortKey === "grade10" ? "Grade 10 Model Papers and Learning Resources"
+        : activeCohortKey === "grade11" ? "TOP Ranking Papers, Grade 11 Past Papers, and Results & Progress"
+        : activeCohortKey === "al2027" ? "A/L Model Papers and Province Papers"
+        : "A/L 2028 Theory Examination, Smart Book Answers, and School Paper Answers";
+      return "For " + cohort.label + ", start with: " + resources + ". You can open each one from the Learning Program cards on this dashboard.";
+    }
+    if (/plan|routine|revision|revise|week|study|prepare/.test(q)) {
+      if (activeCohortKey === "grade11") return "Try a focused O/L routine: revise one topic, complete a timed past-paper section, then note the mistakes to revisit. Repeat with a different topic next session.";
+      if (activeCohortKey === "al2027") return "Try one A/L topic review, then alternate between a model paper and a Province Paper. Keep a short mistake list and revisit it at the end of each week.";
+      if (activeCohortKey === "grade10") return "Build a steady Grade 10 routine: learn one concept, answer five practice questions, then write down one thing to review next time.";
+      return "Build your A/L foundation with two topics this week. Use short recall practice, try a few questions, and keep a list of anything you want to ask your teacher.";
+    }
+    if (/explain|topic|accounting|concept|understand/.test(q)) {
+      return "Pick one Accounting idea. First write its key rule in your own words, then follow a worked example and try one question without looking at the answer. Tell me the topic you are studying and I can suggest a way to practise it.";
+    }
+    return "I can suggest a study routine, help you find the " + cohort.label + " learning resources, or give you a way to practise an Accounting topic. Choose one of the prompts above to get started.";
+  }
+
+  function sendStudyBuddyMessage(value) {
+    const input = byId("studyBuddyInput");
+    const question = String(value || input?.value || "").trim();
+    if (!question) return;
+    addStudyBuddyMessage(question, "user");
+    if (input) input.value = "";
+    addStudyBuddyMessage(studyBuddyReply(question), "bot");
+  }
+
+  function initStudyBuddy() {
+    if (studyBuddyReady || !byId("studyBuddyLauncher")) return;
+    studyBuddyReady = true;
+    byId("studyBuddyLauncher").addEventListener("click", () => {
+      setStudyBuddyOpen(byId("studyBuddyPanel").getAttribute("aria-hidden") === "true");
+    });
+    byId("studyBuddyClose").addEventListener("click", () => setStudyBuddyOpen(false));
+    byId("studyBuddyForm").addEventListener("submit", event => {
+      event.preventDefault();
+      sendStudyBuddyMessage();
+    });
+    byId("studyBuddyPrompts").addEventListener("click", event => {
+      const button = event.target.closest("[data-study-prompt]");
+      if (button) sendStudyBuddyMessage(button.dataset.studyPrompt);
+    });
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && byId("studyBuddyPanel").getAttribute("aria-hidden") === "false") setStudyBuddyOpen(false);
+    });
+  }
+
+  function renderStudyBuddy(key, label) {
+    initStudyBuddy();
+    activeCohortKey = key;
+    const fullLabel = label || cohorts[key]?.label || "Student";
+    const context = byId("studyBuddyContext"), launcher = byId("studyBuddyLauncherCohort");
+    const title = byId("studyBuddyWelcomeTitle"), text = byId("studyBuddyWelcomeText"), prompts = byId("studyBuddyPrompts");
+    if (context) context.textContent = fullLabel + " study mode";
+    if (launcher) launcher.textContent = fullLabel;
+    if (title) title.textContent = "What are we working on today, " + fullLabel + "?";
+    if (text) text.textContent = "Choose a prompt or ask for a quick tip for your current learning program.";
+    if (prompts) {
+      prompts.replaceChildren(...(studyPrompts[key] || studyPrompts.al2028).map(prompt => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "study-buddy-prompt";
+        button.dataset.studyPrompt = prompt;
+        button.textContent = prompt;
+        return button;
+      }));
+    }
+  }
 
   function renderExam(exam) {
     const panel = byId("examFocus");
@@ -82,6 +194,7 @@
     const cohort = cohorts[key];
     if (!cohort) return;
     const label = key === "al2027" || key === "al2028" ? "A/L " + (year || key.slice(-4)) : cohort.label;
+    renderStudyBuddy(key, label);
     const title = document.querySelector(".learning-banner-copy h2");
     const eyebrow = document.querySelector(".learning-banner-copy>span");
     const description = document.querySelector(".learning-banner-copy p");
