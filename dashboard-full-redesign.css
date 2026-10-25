@@ -130,3 +130,36 @@ body{background:radial-gradient(ellipse at 78% 0%,rgba(59,82,157,.19),transparen
 @media(max-width:800px){.study-buddy{right:13px;bottom:calc(82px + env(safe-area-inset-bottom));}.study-buddy-panel{bottom:62px;max-height:min(500px,calc(100dvh - 170px));}}
 @media(max-width:560px){.study-buddy{right:11px;bottom:calc(80px + env(safe-area-inset-bottom))}.study-buddy-launcher{min-width:162px;padding:8px 12px 8px 8px}.study-buddy-launch-icon{width:36px;height:36px;flex-basis:36px}.study-buddy-panel{right:0;bottom:59px;width:min(360px,calc(100vw - 22px));border-radius:19px}.study-buddy-body{padding:14px 13px 10px}.study-buddy-welcome h2{font-size:16px}}
 @media(prefers-reduced-motion:reduce){.study-buddy-launcher,.study-buddy-panel,.study-buddy-message{animation:none!important;transition:none!important}}
+
+
+/* Reviewed dashboard visual system: deep navy surfaces, lime actions, quieter blues. */
+:root{--home-bg:#080e1d;--home-panel:#101a2e;--home-panel-2:#131f36;--home-line:#26344e;--home-ink:#f3f6ff;--home-muted:#91a0ba;--home-lime:#a7f04d;--home-blue:#7892ff;--home-violet:#a38cff}
+body{background:radial-gradient(ellipse at 78% 0%,rgba(72,96,160,.16),transparent 36%),var(--home-bg)!important}
+#studentSidebar{background:linear-gradient(180deg,#0b1426 0%,#09111f 100%)!important;border-right:1px solid rgba(255,255,255,.08)!important}
+#studentSidebar .sidebar-brand{border-bottom-color:rgba(255,255,255,.1)!important}
+#studentSidebar .brand-logo{background:linear-gradient(145deg,#b9f76c,#91df3f)!important;color:#101b33!important;box-shadow:0 9px 24px rgba(167,240,77,.18)!important}
+#studentSidebar .sidebar-section-title{color:#71809b!important}
+#studentSidebar .sidebar-link{color:#aab6cd!important}
+#studentSidebar .sidebar-link:not(.active):hover{background:rgba(255,255,255,.06)!important;color:#f3f6ff!important}
+#studentSidebar .sidebar-link.active{background:linear-gradient(100deg,#a7f04d,#baf574)!important;color:#111a2b!important;box-shadow:0 8px 20px rgba(167,240,77,.16)!important}
+#studentSidebar .sidebar-link.active .nav-icon{color:#111a2b!important}
+#studentSidebar .sidebar-nav .sidebar-link:not(.active) .nav-icon{color:#8fa4c5!important}
+#studentSidebar .student-account{background:rgba(255,255,255,.045)!important;border-top-color:rgba(255,255,255,.1)!important}
+.lms-header{background:rgba(8,14,29,.92)!important;border-bottom-color:rgba(255,255,255,.08)!important;backdrop-filter:blur(16px)}
+.lms-header-title p{color:#8d9bb4!important}.lms-header-title h1{color:#f3f6ff!important}
+.dashboard-learning-banner{min-height:250px!important;border:1px solid rgba(167,240,77,.18)!important;border-radius:23px!important;background:radial-gradient(circle at 86% 12%,rgba(120,146,255,.18),transparent 29%),radial-gradient(circle at 4% 100%,rgba(163,140,255,.12),transparent 34%),linear-gradient(118deg,#182448 0%,#172a4b 57%,#103846 100%)!important;box-shadow:0 22px 55px rgba(0,0,0,.24),inset 0 1px rgba(255,255,255,.05)!important}
+.learning-banner-copy h2{letter-spacing:-1.5px!important}
+.learning-orbit.dashboard-journey-chart{border-color:rgba(255,255,255,.14)!important;background:rgba(8,19,38,.48)!important}
+.lms-stat-card{min-height:86px!important;border-color:rgba(255,255,255,.09)!important;border-radius:15px!important;background:linear-gradient(145deg,#101a2e,#111d32)!important}
+.lms-stat-card:hover{border-color:rgba(167,240,77,.35)!important}
+.portal-program-card,.portal-support-card,.lms-widget{border-color:rgba(255,255,255,.09)!important;background:linear-gradient(145deg,#101a2e,#111d32)!important}
+.portal-program-primary{background:linear-gradient(145deg,rgba(167,240,77,.09),#101a2e 64%)!important}
+.portal-program-card:hover,.portal-support-card:hover{border-color:rgba(167,240,77,.34)!important}
+.portal-section-link,.portal-program-copy .material-link,.portal-card-arrow,.lms-section-heading a{color:#b9f276!important}
+.dashboard-summary-card{border-color:rgba(255,255,255,.09)!important;background:linear-gradient(145deg,#101a2e,#111d32)!important}
+.progress-ring{box-shadow:0 0 28px rgba(167,240,77,.08)!important}
+.dashboard-mobile-nav{background:rgba(10,18,34,.94)!important;border-color:rgba(255,255,255,.14)!important}
+.dashboard-mobile-nav a.active{background:linear-gradient(100deg,#a7f04d,#baf574)!important;color:#111a2b!important;box-shadow:0 8px 18px rgba(167,240,77,.14)!important}
+.dashboard-scroll-reveal{opacity:.01;transform:translateY(16px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.2,1)}
+.dashboard-scroll-reveal.is-visible{opacity:1;transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){.dashboard-scroll-reveal{opacity:1!important;transform:none!important;transition:none!important}}

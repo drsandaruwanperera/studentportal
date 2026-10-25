@@ -50,6 +50,20 @@
   let examInterval;
   let activeCohortKey = "al2028";
   let studyBuddyReady = false;
+  let scrollRevealStarted = false;
+
+  function initDashboardSectionMotion() {
+    if (scrollRevealStarted || window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
+    scrollRevealStarted = true;
+    const sections = document.querySelectorAll(".lms-stat-grid, #learningProgram, .lms-dashboard-grid, .portal-support-section");
+    const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      }
+    }), { threshold: 0.08, rootMargin: "0px 0px -4% 0px" });
+    sections.forEach(section => { section.classList.add("dashboard-scroll-reveal"); observer.observe(section); });
+  }
 
   const studyPrompts = {
     grade10: ["Make a weekly study plan", "Find my Grade 10 papers", "Help with Accounting"],
@@ -197,6 +211,7 @@
     const cohort = cohorts[key];
     if (!cohort) return;
     document.body.classList.toggle("al2028-dashboard", key === "al2028");
+    initDashboardSectionMotion();
     const label = key === "al2027" || key === "al2028" ? "A/L " + (year || key.slice(-4)) : cohort.label;
     renderStudyBuddy(key, label);
     const title = document.querySelector(".learning-banner-copy h2");
