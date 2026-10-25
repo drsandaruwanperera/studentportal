@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>Paper No. 1 Answers | Student Portal</title>
+<style>
+:root{color-scheme:dark;font-family:Inter,"Segoe UI",Arial,sans-serif;background:#080d1b;color:#f5f7ff}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 80% 0,rgba(103,60,255,.14),transparent 32%),#080d1b}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px clamp(16px,4vw,44px);border-bottom:1px solid rgba(148,163,184,.16)}
+h1{font-size:clamp(20px,3vw,28px);margin:0}header p{margin:6px 0 0;color:#9aa7bf;font-size:13px}
+.links{display:flex;gap:8px;flex-wrap:wrap}a.back{color:#dbe4ff;text-decoration:none;border:1px solid #33415e;border-radius:10px;padding:10px 13px;font-size:13px;white-space:nowrap}
+main{max-width:1200px;margin:auto;padding:26px clamp(12px,3vw,32px) 40px}
+.paper{background:#111a30;border:1px solid rgba(148,163,184,.18);border-radius:18px;overflow:hidden;box-shadow:0 18px 45px rgba(0,0,0,.24)}
+.paper-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:17px 20px;border-bottom:1px solid rgba(148,163,184,.15)}
+.paper-head h2{font-size:16px;margin:0}.paper-head span{font-size:11px;color:#a5b4fc;background:#28224f;border-radius:20px;padding:6px 10px}
+.viewer-wrap{height:min(78vh,1000px);min-height:520px;background:#20283a}
+iframe{width:100%;height:100%;border:0;background:#20283a}
+.notice{font-size:12px;line-height:1.6;color:#94a3b8;margin:14px 3px 0}
+.missing{display:none;padding:45px 22px;text-align:center;color:#cbd5e1}.missing p{color:#94a3b8;line-height:1.6}
+@media(max-width:600px){header{align-items:flex-start}.paper-head{padding:14px}.viewer-wrap{height:72vh;min-height:420px}}
+@media print{body{display:none!important}}
+</style>
+</head>
+<body>
+<header><div><h1>Paper No. 1 — Answers</h1><p>A/L 2028 · Smart Book</p></div><div class="links"><a class="back" href="smart-book.html">← Paper List</a><a class="back" href="my-program.html">My Program</a></div></header>
+<main>
+<section class="paper">
+<div class="paper-head"><h2>Paper No. 1 — Answer PDF</h2><span>SMART BOOK</span></div>
+<div class="viewer-wrap" id="viewerWrap"><iframe id="paperViewer" title="Paper No. 1 answers PDF" src="Smart%20Book/Paper%20No.%201.pdf#toolbar=0&navpanes=0&scrollbar=1" referrerpolicy="no-referrer"></iframe></div>
+<div class="missing" id="missing"><h2>Paper No. 1 PDF is not available yet</h2><p>Upload the answer PDF into the repository folder <b>Smart Book</b> and name it exactly <b>Paper No. 1.pdf</b>.</p></div>
+</section>
+<p class="notice">The viewer hides standard PDF toolbar controls where supported. Because this PDF is hosted as a public website asset, downloading, screenshots, or direct access cannot be completely prevented.</p>
+</main>
+<script>
+(()=> {
+ const frame=document.getElementById('paperViewer');
+ const wrap=document.getElementById('viewerWrap');
+ const missing=document.getElementById('missing');
+ fetch('Smart%20Book/Paper%20No.%201.pdf',{method:'HEAD',cache:'no-store'}).then(r=>{
+   if(!r.ok){wrap.style.display='none';missing.style.display='block';}
+ }).catch(()=>{});
+ document.addEventListener('contextmenu',e=>e.preventDefault());
+ document.addEventListener('keydown',e=>{
+   if((e.ctrlKey||e.metaKey)&&['p','s','u'].includes(e.key.toLowerCase()))e.preventDefault();
+ });
+})();
+</script>
+</body>
+</html>
