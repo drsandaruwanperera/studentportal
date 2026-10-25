@@ -156,7 +156,7 @@ if(t.includes("10")){
       modelCardDescription.textContent="";
       modelLink.href="theory-examination.html"; modelLink.textContent="Open Papers →";
     }
-    document.querySelectorAll(".grid > .card").forEach(card=>{if(card!==modelCard&&card!==examCard)card.style.display="none";});
+    document.querySelectorAll(".grid > .card").forEach(card=>{if(card!==modelCard&&card!==examCard&&card!==smartBookCard)card.style.display="none";});
     if(examCard)examCard.style.display="flex";
   }else{
     programTitle.textContent="Advanced Level Accounting";
