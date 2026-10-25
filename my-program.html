@@ -141,7 +141,7 @@ if(t.includes("10")){
   const explicitYear=studentContext.match(/20(27|28|29)/);
   const isALStudent=/advanced|a\/l|alevel/i.test(studentContext)||/^(?:A2[789]\d{3}|(?:27|28|29)[CN])/.test(studentId);
   const alYear=yearMatch?"20"+yearMatch[1]:(explicitYear?"20"+explicitYear[1]:"2027");
-  const showModelAnswers=!(isALStudent&&alYear!=="2028"&&alYear==="2027");
+  const showModelAnswers=!(isALStudent&&(alYear==="2027"||alYear==="2028"));
   const answersCard=document.querySelector('[data-content-id="modelPaperAnswers"]');
   if(answersCard)answersCard.style.display=showModelAnswers?"flex":"none";
   const isAL2028=isALStudent&&alYear==="2028";
@@ -178,7 +178,7 @@ function apply(snapshot){
   const explicitYear=context.match(/20(27|28|29)/);
   const isAL=/advanced|a\/l|alevel/i.test(context)||/^(?:A2[789]\d{3}|(?:27|28|29)[CN])/.test(studentId);
   const year=yearMatch?"20"+yearMatch[1]:(explicitYear?"20"+explicitYear[1]:"2027");
-  const showModelAnswers=!(isAL&&year==="2027");
+  const showModelAnswers=!(isAL&&(year==="2027"||year==="2028"));
   const isAL2028=isAL&&year==="2028";
   cards.forEach(c=>{
     const published=state[c.dataset.contentId];
