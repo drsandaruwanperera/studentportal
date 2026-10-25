@@ -133,10 +133,29 @@ function getDashboardData(type) {
     }
 
     if (type === "al") {
+        const admissionId = String(studentId || "").trim().toUpperCase();
+        const yearMatch = admissionId.match(/^(?:A)?(27|28|29)\d{3}$/) || admissionId.match(/^(27|28|29)[CN]/);
+        const contextMatch = String(sessionStorage.getItem("studentGrade") || "")
+            .concat(" ", String(sessionStorage.getItem("studentType") || ""))
+            .match(/20(27|28|29)/);
+        const alYear = yearMatch ? "20" + yearMatch[1] : (contextMatch ? "20" + contextMatch[1] : "2027");
+        if (alYear === "2028") {
+            return {
+                grade: "Advanced Level",
+                model: "theory-examination.html",
+                past: null,
+                modelTitle: "Theory Examination",
+                modelDescription: "A/L 2028 theory and examination preparation"
+            };
+        }
         return {
             grade: "Advanced Level",
             model: "model-papers.html",
-            past: "province-paper1.html"
+            past: "province-paper1.html",
+            modelTitle: "A/L Model Papers",
+            modelDescription: "Advanced Level model papers",
+            pastTitle: "Province Papers",
+            pastDescription: "Provincial examination papers"
         };
     }
 
@@ -179,7 +198,7 @@ function updateMaterialText(type) {
 
         const modelLink = document.querySelector("#modelPapersCard .material-link");
         if (modelLink) {
-            modelLink.innerHTML = `Explore Model Papers <span>→</span>`;
+            modelLink.innerHTML = `Explore Model Papers <b aria-hidden="true">→</b>`;
         }
 
         if (pastPapersTitle) pastPapersTitle.textContent = "Past Papers";
@@ -190,22 +209,25 @@ function updateMaterialText(type) {
 
         const modelLink = document.querySelector("#modelPapersCard .material-link");
         if (modelLink) {
-            modelLink.innerHTML = `Explore TOP Ranking <span>→</span>`;
+            modelLink.innerHTML = `Explore TOP Ranking <b aria-hidden="true">→</b>`;
         }
 
         if (pastPapersTitle) pastPapersTitle.textContent = "Past Papers";
         if (pastPapersDescription) pastPapersDescription.textContent = "Past Papers • 2016 – 2025";
     } else if (type === "al") {
-        if (modelPapersTitle) modelPapersTitle.textContent = "Model Papers";
-        if (modelPapersDescription) modelPapersDescription.textContent = "Advanced Level Model Papers";
+        const alProgram = getDashboardData(type);
+        if (modelPapersTitle) modelPapersTitle.textContent = alProgram.modelTitle || "Model Papers";
+        if (modelPapersDescription) modelPapersDescription.textContent = alProgram.modelDescription || "Advanced Level Model Papers";
 
         const modelLink = document.querySelector("#modelPapersCard .material-link");
         if (modelLink) {
-            modelLink.innerHTML = `Explore Model Papers <span>→</span>`;
+            modelLink.innerHTML = alProgram.model === "theory-examination.html"
+                ? `Open Theory Examination <b aria-hidden="true">→</b>`
+                : `Explore Model Papers <b aria-hidden="true">→</b>`;
         }
 
-        if (pastPapersTitle) pastPapersTitle.textContent = "Province Papers";
-        if (pastPapersDescription) pastPapersDescription.textContent = "Provincial Examination Papers";
+        if (pastPapersTitle) pastPapersTitle.textContent = alProgram.pastTitle || "Province Papers";
+        if (pastPapersDescription) pastPapersDescription.textContent = alProgram.pastDescription || "Provincial Examination Papers";
 
         const pastLink = document.querySelector("#pastPapersCard .material-link");
         if (pastLink) {
@@ -225,15 +247,7 @@ function setupModelCard(type) {
         return;
     }
 
-    let modelUrl = null;
-
-    if (type === "grade10") {
-        modelUrl = "grade10-model-papers.html";
-    } else if (type === "grade11") {
-        modelUrl = "grade11-model-papers.html";
-    } else if (type === "al") {
-        modelUrl = "model-papers.html";
-    }
+    const modelUrl = getDashboardData(type).model;
 
     modelPapersCard.onclick = null;
     modelPapersCard.onkeydown = null;
@@ -275,7 +289,9 @@ function setupPastCard(type) {
     let pastUrl = null;
 
     // Grade 10 does not use a Past Papers resource card.
-    if (type === "grade10") {
+    const alYearMatch = String(studentId || "").trim().toUpperCase().match(/^(?:A)?(27|28|29)\d{3}$/);
+    const isAl2028 = type === "al" && alYearMatch && alYearMatch[1] === "28";
+    if (type === "grade10" || isAl2028) {
         pastPapersCard.style.display = "none";
         return;
     } else if (type === "grade11") {
@@ -354,6 +370,13 @@ function applyPaperVisibility(type, settings) {
     }
 
     if (type === "al") {
+        const admissionId = String(studentId || "").trim().toUpperCase();
+        const yearMatch = admissionId.match(/^(?:A)?(27|28|29)\d{3}$/) || admissionId.match(/^(27|28|29)[CN]/);
+        if (yearMatch && yearMatch[1] === "28") {
+            if (modelPapersCard) modelPapersCard.style.display = settings.modelPapersEnabled === true ? "" : "none";
+            if (pastPapersCard) pastPapersCard.style.display = "none";
+            return;
+        }
         if (modelPapersCard) modelPapersCard.style.display = settings.modelPapersEnabled === true ? "" : "none";
         if (pastPapersCard) pastPapersCard.style.display = settings.pastPapersEnabled === true ? "" : "none";
     }

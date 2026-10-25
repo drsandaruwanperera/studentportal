@@ -23,6 +23,9 @@ import {db,doc,getDoc} from "./firebase.js";
 
   const getAlYear = data => {
     if ([2027, 2028, 2029].includes(Number(data?.alYear))) return String(data.alYear);
+    const contextYear = (String(sessionStorage.getItem("studentGrade") || "") + " " + String(sessionStorage.getItem("studentType") || ""))
+      .match(/20(27|28|29)/);
+    if (contextYear) return "20" + contextYear[1];
     const match = id.match(/^(?:A)?(27|28|29)/) || id.match(/^(27|28|29)[CN]/);
     if (!match) return "2027";
     return "20" + match[1];
@@ -58,7 +61,18 @@ import {db,doc,getDoc} from "./firebase.js";
   };
 
   function applyGrade(type, data = {}) {
-    const config = routes[type];
+    const alYear = type === "al" ? getAlYear(data) : "";
+    const config = type === "al" && alYear === "2028"
+      ? {
+          ...routes.al,
+          model: "theory-examination.html",
+          past: null,
+          modelTitle: "Theory Examination",
+          pastTitle: "Past Papers",
+          modelDescription: "A/L 2028 theory and examination preparation",
+          pastDescription: ""
+        }
+      : routes[type];
     document.documentElement.dataset.studentType = type || "unknown";
     if (!config) {
       const title = document.querySelector(".learning-banner-copy h2");
@@ -71,7 +85,6 @@ import {db,doc,getDoc} from "./firebase.js";
     const title = document.querySelector(".learning-banner-copy h2");
     const eyebrow = document.querySelector(".learning-banner-copy>span");
     const description = document.querySelector(".learning-banner-copy p");
-    const alYear = type === "al" ? getAlYear(data) : "";
     const topType = document.getElementById("topStudentType");
     const sideGrade = document.getElementById("sidebarStudentGrade");
     const topGrade = document.getElementById("studentGrade");
@@ -135,6 +148,7 @@ import {db,doc,getDoc} from "./firebase.js";
       const sub = quickProgram.querySelector("small");
       if (sub) sub.textContent = config.label + " learning resources";
     }
+    window.renderDashboardHome?.(type === "al" ? "al" + alYear : type, alYear);
   }
 
   async function init() {
