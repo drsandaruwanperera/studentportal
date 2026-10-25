@@ -5,7 +5,10 @@
       title: "Build confidence.<br><b>Make every lesson count.</b>",
       description: "Your Grade 10 papers, learning resources and progress — organized in one place to help you keep moving forward.",
       badge: "GRADE 10 PATHWAY", model: "grade10-model-papers.html", modelTitle: "Model Papers",
-      modelDescription: "Structured practice for Grade 10.", past: null, exam: null,
+      modelDescription: "Structured practice for Grade 10.", past: null,
+      exam: { kicker: "YOUR NEXT BIG MILESTONE", title: "Your O/L exams are getting closer.",
+        copy: "Official examination window: 08–17 December 2026 · Countdown to the first exam day.",
+        startsAt: "2026-12-08T00:00:00+05:30", endsAt: "2026-12-18T00:00:00+05:30" },
       hub: true, hubTitle: "Learning Resources", hubDescription: "Study notes and materials selected for Grade 10.",
       progress: true, smartBook: false, schoolPapers: false
     },
