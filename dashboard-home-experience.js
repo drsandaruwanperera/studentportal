@@ -196,6 +196,7 @@
   window.renderDashboardHome = function (key, year) {
     const cohort = cohorts[key];
     if (!cohort) return;
+    document.body.classList.toggle("al2028-dashboard", key === "al2028");
     const label = key === "al2027" || key === "al2028" ? "A/L " + (year || key.slice(-4)) : cohort.label;
     renderStudyBuddy(key, label);
     const title = document.querySelector(".learning-banner-copy h2");
