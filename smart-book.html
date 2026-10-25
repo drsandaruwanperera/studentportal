@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#171b35">
+  <title>Smart Book | Student Assessment Portal</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <style>
+    body{background:#f4f5fa;color:#111a36;margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    .smartbook-wrap{max-width:1120px;margin:0 auto;padding:32px 22px 48px}
+    .smartbook-back{display:inline-flex;align-items:center;gap:8px;color:#5b4cf6;text-decoration:none;font-weight:750;margin-bottom:22px}
+    .smartbook-hero{padding:30px;border-radius:24px;background:linear-gradient(135deg,#27234f,#5145c7);color:#fff;box-shadow:0 18px 40px rgba(45,39,120,.16)}
+    .smartbook-kicker{font-size:11px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;opacity:.78}
+    .smartbook-hero h1{font-size:clamp(28px,4vw,42px);line-height:1.1;margin:10px 0}
+    .smartbook-hero p{margin:0;color:#e6e5ff;max-width:650px;line-height:1.65}
+    .paper-card{margin-top:24px;background:#fff;border:1px solid #e4e7ef;border-radius:20px;overflow:hidden;box-shadow:0 8px 26px rgba(25,35,65,.05)}
+    .paper-head{padding:20px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid #edf0f5}
+    .paper-head h2{margin:0;font-size:19px}.paper-head p{margin:5px 0 0;color:#7a8298;font-size:13px}
+    .paper-open{background:#5b4cf6;color:#fff;text-decoration:none;border-radius:11px;padding:11px 15px;font-weight:750;font-size:13px;white-space:nowrap}
+    .pdf-frame{display:block;width:100%;height:min(78vh,900px);min-height:520px;border:0;background:#f6f7fb}
+    .pdf-fallback{padding:18px 22px;color:#6b7280;font-size:13px;line-height:1.6}
+    @media(max-width:600px){.smartbook-wrap{padding:20px 12px 32px}.smartbook-hero{padding:23px 20px}.paper-head{align-items:flex-start;flex-direction:column}.paper-open{width:100%;box-sizing:border-box;text-align:center}.pdf-frame{height:68vh;min-height:420px}}
+  </style>
+</head>
+<body>
+  <main class="smartbook-wrap">
+    <a class="smartbook-back" href="dashboard.html">← Back to Dashboard</a>
+    <section class="smartbook-hero">
+      <div class="smartbook-kicker">Learning resources</div>
+      <h1>Smart Book</h1>
+      <p>Study model answers inside the LMS. Choose a paper below to read it in the built-in document viewer.</p>
+    </section>
+    <section class="paper-card" aria-labelledby="paper-title">
+      <div class="paper-head">
+        <div><h2 id="paper-title">Paper No. 1 — Model Answers</h2><p>PDF document · 27 pages</p></div>
+        <a class="paper-open" href="assets/smart-book-no-01.pdf" target="_blank" rel="noopener">Open PDF ↗</a>
+      </div>
+      <iframe class="pdf-frame" src="assets/smart-book-no-01.pdf#toolbar=1&navpanes=0" title="Smart Book Paper No. 1 model answers"></iframe>
+      <p class="pdf-fallback">If the document does not appear, use “Open PDF”. The PDF must be available at <code>assets/smart-book-no-01.pdf</code> on the deployed site.</p>
+    </section>
+  </main>
+</body>
+</html>
