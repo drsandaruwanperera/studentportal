@@ -28,7 +28,7 @@ iframe{width:100%;height:100%;border:0;background:#20283a}
 <main>
 <section class="paper">
 <div class="paper-head"><h2>Paper No. 1 — Answer PDF</h2><span>SMART BOOK</span></div>
-<div class="viewer-wrap" id="viewerWrap"><iframe id="paperViewer" title="Paper No. 1 answers PDF" src="Smart%20Book/Paper%20No.%201.pdf#toolbar=0&navpanes=0&scrollbar=1" referrerpolicy="no-referrer"></iframe></div>
+<div class="viewer-wrap" id="viewerWrap"><iframe id="paperViewer" title="Paper No. 1 answers PDF" src="Smart%20Book/Paper%20No.%201.pdf.pdf#toolbar=0&navpanes=0&scrollbar=1" referrerpolicy="no-referrer"></iframe></div>
 <div class="missing" id="missing"><h2>Paper No. 1 PDF is not available yet</h2><p>Upload the answer PDF into the repository folder <b>Smart Book</b> and name it exactly <b>Paper No. 1.pdf</b>.</p></div>
 </section>
 <p class="notice">The viewer hides standard PDF toolbar controls where supported. Because this PDF is hosted as a public website asset, downloading, screenshots, or direct access cannot be completely prevented.</p>
@@ -38,7 +38,7 @@ iframe{width:100%;height:100%;border:0;background:#20283a}
  const frame=document.getElementById('paperViewer');
  const wrap=document.getElementById('viewerWrap');
  const missing=document.getElementById('missing');
- fetch('Smart%20Book/Paper%20No.%201.pdf',{method:'HEAD',cache:'no-store'}).then(r=>{
+ fetch('Smart%20Book/Paper%20No.%201.pdf.pdf',{method:'HEAD',cache:'no-store'}).then(r=>{
    if(!r.ok){wrap.style.display='none';missing.style.display='block';}
  }).catch(()=>{});
  document.addEventListener('contextmenu',e=>e.preventDefault());
