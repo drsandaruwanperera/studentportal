@@ -420,7 +420,7 @@ function saveStudentSession(
     // the correct A/L cohort, including numeric admission IDs.
     const normalizedSessionId = normalizeStudentId(studentId);
     const explicitAlYear = Number(data?.alYear);
-    const idAlYearMatch = String(studentId || "").trim().toUpperCase().match(/^(?:A)?(27|28|29)\\d{3}$/)
+    const idAlYearMatch = String(studentId || "").trim().toUpperCase().match(/^(?:A)?(27|28|29)\d{3}$/)
         || String(studentId || "").trim().toUpperCase().match(/^(27|28|29)[CN]/);
     let sessionAlYear = "";
     if (AL_2028_NUMERIC_STUDENT_IDS.has(normalizedSessionId)) {
