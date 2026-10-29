@@ -3,6 +3,7 @@ import {db,doc,getDoc} from "./firebase.js";
 (() => {
   const normalize = value => String(value || "").trim().toLowerCase().replace(/[\s_-]+/g, "");
   const id = String(sessionStorage.getItem("studentId") || "").trim().toUpperCase();
+  const al2028NumericIds = new Set("11074 11094 12705 13959 14069 14319 14334 14368 14369 14421 14723 14800 15189 15483 15508 15585 15690 15854 15960 16365 16889 16890 16891 16892 16895 16896 16898 16899 16900 16902 16903 16906 16907 16908 16909 16910 16913 16914 16915 16920 16923 16924 16941 16947 16966 16967 16975 16978 16979 16980 16986 16987 16988 16991 16995 17038 17039 17052 17054 17064 17071 17080 17093 17125 17172 17187 17188 17190 17191 17197 17205 17206 17207 17208 17209 17210 17212 17213 17218 17220 17225 17226 17240 17241 17242 17243 17244 17246 17247 17249 17254 17256 17269 17279 17280 17287 17288 17296 17306 17307 17317 17326 17327 17364 17366 17368 17386 17387 17427 17450".split(/\\s+/));
   const typeFromValue = value => {
     const v = normalize(value);
     if (["grade10","10","g10"].includes(v) || v.includes("grade10")) return "grade10";
@@ -11,6 +12,7 @@ import {db,doc,getDoc} from "./firebase.js";
     return "";
   };
   const inferFromId = () => {
+    if (al2028NumericIds.has(id)) return "al";
     // A/L admission IDs: A27000/A28000/A29000 and 27C/28C/29C or 27N/28N/29N series.
     if (/^A2[789]\d{3}$/.test(id) || /^(?:27|28|29)[CN]/.test(id)) return "al";
     if (/^\d{5}$/.test(id)) {
@@ -22,7 +24,10 @@ import {db,doc,getDoc} from "./firebase.js";
   };
 
   const getAlYear = data => {
+    if (al2028NumericIds.has(id)) return "2028";
     if ([2027, 2028, 2029].includes(Number(data?.alYear))) return String(data.alYear);
+    const savedYear = String(sessionStorage.getItem("alYear") || "").match(/^20(27|28|29)$/);
+    if (savedYear) return savedYear[0];
     const contextYear = (String(sessionStorage.getItem("studentGrade") || "") + " " + String(sessionStorage.getItem("studentType") || ""))
       .match(/20(27|28|29)/);
     if (contextYear) return "20" + contextYear[1];
@@ -62,6 +67,8 @@ import {db,doc,getDoc} from "./firebase.js";
 
   function applyGrade(type, data = {}) {
     const alYear = type === "al" ? getAlYear(data) : "";
+    if (type === "al") sessionStorage.setItem("alYear", alYear);
+    else sessionStorage.removeItem("alYear");
     const config = type === "al" && alYear === "2028"
       ? {
           ...routes.al,
@@ -153,14 +160,16 @@ import {db,doc,getDoc} from "./firebase.js";
 
   async function init() {
     if (sessionStorage.getItem("loggedIn") !== "true") return;
-    let type = "";
+    let type = al2028NumericIds.has(id) ? "al" : "";
     let studentData = {};
     if (id) {
       try {
         const snap = await getDoc(doc(db, "students", id));
         if (snap.exists()) {
           studentData = snap.data() || {};
-          type = typeFromValue(studentData.studentType) || typeFromValue(studentData.grade);
+          if (!al2028NumericIds.has(id)) {
+            type = typeFromValue(studentData.studentType) || typeFromValue(studentData.grade);
+          }
         }
       } catch (error) {
         console.warn("Could not refresh student grade from profile; using saved login grade.", error);
