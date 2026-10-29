@@ -86,8 +86,13 @@ function isALStudentId(studentId) {
 
 
 // =====================================================
-// NUMERIC A/L STUDENT IDs
-// These IDs belong to the current A/L student group.
+// Explicit numeric cohort for students following the A/L 2028 programme.
+const AL_2028_NUMERIC_STUDENT_IDS = new Set(
+    "11074 11094 12705 13959 14069 14319 14334 14368 14369 14421 14723 14800 15189 15483 15508 15585 15690 15854 15960 16365 16889 16890 16891 16892 16895 16896 16898 16899 16900 16902 16903 16906 16907 16908 16909 16910 16913 16914 16915 16920 16923 16924 16941 16947 16966 16967 16975 16978 16979 16980 16986 16987 16988 16991 16995 17038 17039 17052 17054 17064 17071 17080 17093 17125 17172 17187 17188 17190 17191 17197 17205 17206 17207 17208 17209 17210 17212 17213 17218 17220 17225 17226 17240 17241 17242 17243 17244 17246 17247 17249 17254 17256 17269 17279 17280 17287 17288 17296 17306 17307 17317 17326 17327 17364 17366 17368 17386 17387 17427 17450".split(/\s+/)
+);
+
+// =====================================================
+// Existing numeric A/L IDs from the earlier cohort.
 // =====================================================
 const AL_NUMERIC_STUDENT_IDS = new Set([
     "5118",
@@ -182,6 +187,12 @@ function detectStudentType(
     const cleanId =
         normalizeStudentId(studentId);
 
+
+    // =================================================
+    // A/L 2028 numeric cohort takes precedence over older numeric cohorts.
+    if (AL_2028_NUMERIC_STUDENT_IDS.has(cleanId)) {
+        return "al";
+    }
 
     // =================================================
     // NUMERIC A/L STUDENT OVERRIDE
@@ -405,6 +416,27 @@ function saveStudentSession(
         gradeName
     );
 
+    // Keep the programme year with the login session so every LMS page uses
+    // the correct A/L cohort, including numeric admission IDs.
+    const normalizedSessionId = normalizeStudentId(studentId);
+    const explicitAlYear = Number(data?.alYear);
+    const idAlYearMatch = String(studentId || "").trim().toUpperCase().match(/^(?:A)?(27|28|29)\\d{3}$/)
+        || String(studentId || "").trim().toUpperCase().match(/^(27|28|29)[CN]/);
+    let sessionAlYear = "";
+    if (AL_2028_NUMERIC_STUDENT_IDS.has(normalizedSessionId)) {
+        sessionAlYear = "2028";
+    } else if (studentType === "al") {
+        if ([2027, 2028, 2029].includes(explicitAlYear)) {
+            sessionAlYear = String(explicitAlYear);
+        } else if (idAlYearMatch) {
+            sessionAlYear = "20" + idAlYearMatch[1];
+        }
+    }
+    if (sessionAlYear) {
+        sessionStorage.setItem("alYear", sessionAlYear);
+    } else {
+        sessionStorage.removeItem("alYear");
+    }
 
     const studentName =
         data?.fullName ||
