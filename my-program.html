@@ -139,8 +139,9 @@ if(t.includes("10")){
   const yearMatch=studentId.match(/^(?:A)?(27|28|29)\d{3}$/)||studentId.match(/^(27|28|29)[CN]/);
   const studentContext=String(sessionStorage.getItem("studentGrade")||"")+" "+String(sessionStorage.getItem("studentType")||"");
   const explicitYear=studentContext.match(/20(27|28|29)/);
-  const isALStudent=/advanced|a\/l|alevel/i.test(studentContext)||/^(?:A2[789]\d{3}|(?:27|28|29)[CN])/.test(studentId);
-  const alYear=yearMatch?"20"+yearMatch[1]:(explicitYear?"20"+explicitYear[1]:"2027");
+  const sessionYear=String(sessionStorage.getItem("alYear")||"").match(/^20(27|28|29)$/);
+  const isALStudent=/advanced|a\/l|alevel/i.test(studentContext)||/^(?:A2[789]\d{3}|(?:27|28|29)[CN])/.test(studentId)||!!sessionYear;
+  const alYear=yearMatch?"20"+yearMatch[1]:(sessionYear?sessionYear[0]:(explicitYear?"20"+explicitYear[1]:"2027"));
   const showModelAnswers=!(isALStudent&&(alYear==="2027"||alYear==="2028"));
   const answersCard=document.querySelector('[data-content-id="modelPaperAnswers"]');
   if(answersCard)answersCard.style.display=showModelAnswers?"flex":"none";
@@ -176,8 +177,9 @@ function apply(snapshot){
   const yearMatch=studentId.match(/^(?:A)?(27|28|29)\d{3}$/)||studentId.match(/^(27|28|29)[CN]/);
   const context=String(sessionStorage.getItem("studentGrade")||"")+" "+String(sessionStorage.getItem("studentType")||"");
   const explicitYear=context.match(/20(27|28|29)/);
-  const isAL=/advanced|a\/l|alevel/i.test(context)||/^(?:A2[789]\d{3}|(?:27|28|29)[CN])/.test(studentId);
-  const year=yearMatch?"20"+yearMatch[1]:(explicitYear?"20"+explicitYear[1]:"2027");
+  const sessionYear=String(sessionStorage.getItem("alYear")||"").match(/^20(27|28|29)$/);
+  const isAL=/advanced|a\/l|alevel/i.test(context)||/^(?:A2[789]\d{3}|(?:27|28|29)[CN])/.test(studentId)||!!sessionYear;
+  const year=yearMatch?"20"+yearMatch[1]:(sessionYear?sessionYear[0]:(explicitYear?"20"+explicitYear[1]:"2027"));
   const showModelAnswers=!(isAL&&(year==="2027"||year==="2028"));
   const isAL2028=isAL&&year==="2028";
   cards.forEach(c=>{
