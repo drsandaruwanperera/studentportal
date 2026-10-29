@@ -331,7 +331,8 @@
             outline: 2px solid #a6ff2e;
             outline-offset: 3px;
         }
-        #halloween-effects-layer.he-effects-paused * {
+        #halloween-effects-layer.he-effects-paused *,
+        #portal-halloween-layer.he-effects-paused * {
             animation-play-state: paused !important;
         }
         @keyframes he-widget-pulse {
