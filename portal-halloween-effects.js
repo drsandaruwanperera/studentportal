@@ -335,6 +335,53 @@
         #portal-halloween-layer.he-effects-paused * {
             animation-play-state: paused !important;
         }
+        #he-halloween-widget .he-widget-surprise {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            width: 100%;
+            min-height: 42px;
+            margin-top: 10px;
+            padding: 10px 12px;
+            border: 1px solid rgba(255, 166, 75, .45);
+            border-radius: 12px;
+            background: linear-gradient(100deg, #f97316, #c2410c);
+            color: #fff;
+            font: 800 11px/1.2 Inter, "Segoe UI", Arial, sans-serif;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(234,88,12,.20);
+            transition: filter .2s ease, transform .2s ease;
+        }
+        #he-halloween-widget .he-widget-surprise:hover {
+            filter: brightness(1.09);
+            transform: translateY(-1px);
+        }
+        #he-halloween-widget .he-widget-surprise-result {
+            margin: 10px 0 0;
+            padding: 10px 11px;
+            border: 1px solid rgba(167,139,250,.25);
+            border-radius: 11px;
+            background: rgba(124,58,237,.12);
+            color: #e9ddff;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+        #he-halloween-widget .he-widget-surprise-result[hidden] { display: none; }
+        #portal-halloween-layer .phe-candy-pop {
+            position: absolute;
+            z-index: 4;
+            pointer-events: none;
+            font-size: 22px;
+            line-height: 1;
+            will-change: transform, opacity;
+            animation: phe-candy-pop 1.15s cubic-bezier(.16,.7,.3,1) both;
+        }
+        @keyframes phe-candy-pop {
+            0% { transform: translate(-50%, -50%) scale(.35) rotate(0deg); opacity: 0; }
+            14% { opacity: 1; }
+            100% { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.08) rotate(var(--rot)); opacity: 0; }
+        }
         @keyframes he-widget-pulse {
             0% { transform: scale(.93); opacity: .8; }
             100% { transform: scale(1.35); opacity: 0; }
@@ -381,6 +428,8 @@
             '</div>' +
             '<p class="he-widget-copy">A little Halloween magic, while keeping the website design just as it is.</p>' +
             '<div class="he-widget-expiry"><span aria-hidden="true">◷</span><span>Auto-removes Nov 15, 2026</span></div>' +
+            '<button type="button" class="he-widget-surprise"><span aria-hidden="true">🍬</span><span>Trick or treat</span><span aria-hidden="true">→</span></button>' +
+            '<p class="he-widget-surprise-result" role="status" aria-live="polite" hidden></p>' +
             '<button type="button" class="he-widget-pause" aria-pressed="false"><span class="he-widget-action-icon" aria-hidden="true">Ⅱ</span><span>Pause animations</span></button>' +
         '</section>';
     document.body.appendChild(halloweenWidget);
@@ -426,7 +475,45 @@
     const widgetPause = halloweenWidget.querySelector(".he-widget-pause");
     const widgetPauseIcon = halloweenWidget.querySelector(".he-widget-action-icon");
     const widgetPauseLabel = widgetPause.querySelector("span:last-child");
+    const widgetSurprise = halloweenWidget.querySelector(".he-widget-surprise");
+    const widgetSurpriseResult = halloweenWidget.querySelector(".he-widget-surprise-result");
     let animationsPaused = false;
+
+    const surpriseMessages = [
+        "🎃 Treat unlocked! Keep your learning streak glowing.",
+        "👻 A friendly ghost says: you are doing boo-tifully!",
+        "🍬 Sweet success! One small step at a time.",
+        "🦇 Spooky focus activated. You’ve got this!",
+        "✨ A little Halloween magic for your study session."
+    ];
+    const candyEmojis = ["🍬", "🍭", "✨", "🎃", "👻", "🦇", "🍬", "⭐", "🍭", "✨", "🎃", "💜"];
+
+    function runTrickOrTreat() {
+        widgetSurpriseResult.textContent = surpriseMessages[Math.floor(Math.random() * surpriseMessages.length)];
+        widgetSurpriseResult.hidden = false;
+
+        const rect = widgetTrigger.getBoundingClientRect();
+        candyEmojis.forEach((emoji, index) => {
+            const particle = document.createElement("span");
+            particle.className = "phe-candy-pop";
+            particle.textContent = emoji;
+            particle.style.left = Math.round(rect.left + rect.width / 2) + "px";
+            particle.style.top = Math.round(rect.top + rect.height / 2) + "px";
+            particle.style.setProperty("--dx", Math.round((Math.random() - .5) * 190) + "px");
+            particle.style.setProperty("--dy", Math.round(-35 - Math.random() * 115) + "px");
+            particle.style.setProperty("--rot", Math.round((Math.random() - .5) * 150) + "deg");
+            particle.style.animationDelay = Math.round(index * 22) + "ms";
+            layer.appendChild(particle);
+
+            const timer = window.setTimeout(() => {
+                particle.remove();
+                timers.delete(timer);
+            }, 1400 + index * 22);
+            timers.add(timer);
+        });
+
+        widgetSurprise.innerHTML = '<span aria-hidden="true">✨</span><span>Surprise again</span><span aria-hidden="true">↻</span>';
+    }
 
     function setWidgetOpen(open) {
         widgetPanel.classList.toggle("is-open", open);
@@ -447,6 +534,7 @@
     }, { signal: aborter.signal });
     widgetClose.addEventListener("click", () => setWidgetOpen(false), { signal: aborter.signal });
     widgetPause.addEventListener("click", () => setAnimationsPaused(!animationsPaused), { signal: aborter.signal });
+    widgetSurprise.addEventListener("click", runTrickOrTreat, { signal: aborter.signal });
     document.addEventListener("pointerdown", event => {
         if (event.target instanceof Node && !halloweenWidget.contains(event.target)) {
             setWidgetOpen(false);
