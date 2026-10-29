@@ -138,7 +138,8 @@ function getDashboardData(type) {
         const contextMatch = String(sessionStorage.getItem("studentGrade") || "")
             .concat(" ", String(sessionStorage.getItem("studentType") || ""))
             .match(/20(27|28|29)/);
-        const alYear = yearMatch ? "20" + yearMatch[1] : (contextMatch ? "20" + contextMatch[1] : "2027");
+        const sessionYear = String(sessionStorage.getItem("alYear") || "").match(/^20(27|28|29)$/);
+        const alYear = yearMatch ? "20" + yearMatch[1] : (sessionYear ? sessionYear[0] : (contextMatch ? "20" + contextMatch[1] : "2027"));
         if (alYear === "2028") {
             return {
                 grade: "Advanced Level",
@@ -290,7 +291,7 @@ function setupPastCard(type) {
 
     // Grade 10 does not use a Past Papers resource card.
     const alYearMatch = String(studentId || "").trim().toUpperCase().match(/^(?:A)?(27|28|29)\d{3}$/);
-    const isAl2028 = type === "al" && alYearMatch && alYearMatch[1] === "28";
+    const isAl2028 = type === "al" && ((alYearMatch && alYearMatch[1] === "28") || String(sessionStorage.getItem("alYear") || "").trim() === "2028");
     if (type === "grade10" || isAl2028) {
         pastPapersCard.style.display = "none";
         return;
@@ -372,7 +373,7 @@ function applyPaperVisibility(type, settings) {
     if (type === "al") {
         const admissionId = String(studentId || "").trim().toUpperCase();
         const yearMatch = admissionId.match(/^(?:A)?(27|28|29)\d{3}$/) || admissionId.match(/^(27|28|29)[CN]/);
-        if (yearMatch && yearMatch[1] === "28") {
+        if ((yearMatch && yearMatch[1] === "28") || String(sessionStorage.getItem("alYear") || "").trim() === "2028") {
             if (modelPapersCard) modelPapersCard.style.display = settings.modelPapersEnabled === true ? "" : "none";
             if (pastPapersCard) pastPapersCard.style.display = "none";
             return;
