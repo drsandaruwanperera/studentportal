@@ -119,3 +119,6 @@
 .scheduler-message.error{background:rgba(255,107,122,.08);color:#ff9aa5}
 .scheduler-actions .scheduler-btn.secondary{flex:0 0 auto}
 @media(max-width:600px){.scheduler-actions .scheduler-btn{width:100%}}
+
+#saveScheduleBtn{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#saveScheduleBtn:disabled,#testConnectionBtn:disabled{opacity:.7;cursor:wait}
