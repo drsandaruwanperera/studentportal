@@ -1,0 +1,55 @@
+/* Theme & Season Scheduler — Admin */
+.scheduler-shell{max-width:1500px;margin:0 auto;padding:27px 32px 60px}
+.scheduler-hero{position:relative;overflow:hidden;padding:27px 29px;border:1px solid rgba(255,255,255,.1);border-radius:22px;background:radial-gradient(circle at 88% 5%,rgba(166,255,46,.12),transparent 26%),linear-gradient(120deg,#25205f,#4037c9 58%,#6d28d9);box-shadow:0 20px 55px rgba(0,0,0,.22);margin-bottom:20px}
+.scheduler-hero .eyebrow{color:#a6ff2e;font-size:10px;font-weight:850;letter-spacing:1.3px}
+.scheduler-hero h1{margin:7px 0;color:#fff;font-size:30px;letter-spacing:-.7px}
+.scheduler-hero p{max-width:850px;color:rgba(255,255,255,.76);font-size:12px;line-height:1.65}
+.timezone-chip{display:inline-flex;align-items:center;gap:8px;margin-top:15px;padding:8px 11px;border:1px solid rgba(255,255,255,.2);border-radius:999px;background:rgba(10,14,34,.24);color:#fff;font-size:10px;font-weight:800}
+.timezone-chip i{width:7px;height:7px;border-radius:50%;background:#a6ff2e;box-shadow:0 0 10px #a6ff2e}
+.scheduler-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:18px}
+.scheduler-stat{padding:15px 17px;border:1px solid rgba(255,255,255,.09);border-radius:15px;background:#11182b}
+.scheduler-stat span{display:block;color:#8f9bb2;font-size:9px;font-weight:800;letter-spacing:.7px;text-transform:uppercase}
+.scheduler-stat strong{display:block;margin-top:6px;color:#f4f7ff;font-size:23px}
+.scheduler-layout{display:grid;grid-template-columns:minmax(320px,.9fr) minmax(430px,1.3fr);gap:17px;align-items:start}
+.scheduler-card{min-width:0;padding:21px;border:1px solid rgba(255,255,255,.1);border-radius:18px;background:rgba(17,24,43,.96);box-shadow:0 12px 32px rgba(0,0,0,.16)}
+.scheduler-card h2{margin:0 0 5px;color:#f4f7ff;font-size:17px}
+.scheduler-card .subcopy{margin:0 0 17px;color:#8f9bb2;font-size:10px;line-height:1.6}
+.scheduler-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.scheduler-field{min-width:0;display:flex;flex-direction:column;gap:6px}
+.scheduler-field.full{grid-column:1/-1}
+.scheduler-field label{color:#aeb8ce;font-size:9px;font-weight:850;letter-spacing:.5px}
+.scheduler-field input,.scheduler-field select{width:100%;min-width:0;height:42px;padding:0 11px;border:1px solid rgba(255,255,255,.12);border-radius:10px;background:#0c1323;color:#f4f7ff;font:inherit;font-size:11px;outline:none;color-scheme:dark}
+.scheduler-field input:focus,.scheduler-field select:focus{border-color:#7668ff;box-shadow:0 0 0 3px rgba(91,75,255,.13)}
+.scheduler-hint{color:#6f7f9c;font-size:9px;line-height:1.5}
+.scheduler-toggle-row{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:14px;padding:12px;border:1px solid rgba(255,255,255,.07);border-radius:11px;background:rgba(255,255,255,.025)}
+.scheduler-toggle{display:flex;align-items:center;gap:8px;color:#c4cde0;font-size:10px;font-weight:700}
+.scheduler-toggle input{width:16px;height:16px;accent-color:#a6ff2e}
+.scheduler-actions{display:flex;gap:8px;grid-column:1/-1;margin-top:2px}
+.scheduler-btn{min-height:42px;padding:0 15px;border:0;border-radius:10px;color:#fff;font-size:10px;font-weight:850;cursor:pointer}
+.scheduler-btn.primary{flex:1;background:linear-gradient(120deg,#5b4bff,#7c3aed)}
+.scheduler-btn.secondary{background:#24324a;color:#cbd5e1}
+.scheduler-btn.danger{background:#512032;color:#ffb6c1}
+.scheduler-btn:disabled{opacity:.55;cursor:wait}
+.scheduler-message{min-height:18px;margin-top:10px;color:#a6ff2e;font-size:10px;line-height:1.5}
+.scheduler-message.error{color:#ff9aa5}
+.preview-box{display:flex;align-items:center;gap:12px;margin-top:15px;padding:13px;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:#0d1425}
+.preview-swatch{width:48px;height:48px;flex:0 0 48px;border:1px solid rgba(255,255,255,.14);border-radius:12px;background:linear-gradient(135deg,#4037c9,#a6ff2e)}
+.preview-box strong{display:block;color:#f4f7ff;font-size:11px}.preview-box small{display:block;margin-top:4px;color:#8f9bb2;font-size:9px;line-height:1.4}
+.schedule-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+.schedule-toolbar h2{margin:0;color:#f4f7ff;font-size:17px}.schedule-toolbar span{color:#71809a;font-size:9px}
+.schedule-list{display:grid;gap:9px;max-height:920px;overflow:auto}
+.schedule-empty{padding:28px 14px;border:1px dashed rgba(255,255,255,.12);border-radius:13px;text-align:center;color:#71809a;font-size:10px;line-height:1.6}
+.schedule-item{padding:14px;border:1px solid rgba(255,255,255,.08);border-radius:13px;background:#101a2d}
+.schedule-item-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.schedule-item h3{margin:0;color:#f4f7ff;font-size:12px}.schedule-item p{margin:5px 0 0;color:#8492aa;font-size:9px;line-height:1.55}
+.schedule-badge{display:inline-flex;padding:5px 8px;border-radius:999px;font-size:8px;font-weight:850;white-space:nowrap}
+.schedule-badge.active{background:rgba(74,222,128,.1);color:#4ade80}.schedule-badge.upcoming{background:rgba(91,75,255,.14);color:#b9b0ff}.schedule-badge.expired{background:rgba(148,163,184,.1);color:#94a3b8}.schedule-badge.paused{background:rgba(255,107,122,.1);color:#ff9aa5}
+.schedule-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.schedule-meta span{padding:5px 7px;border-radius:7px;background:rgba(255,255,255,.04);color:#aeb8ce;font-size:8px}
+.schedule-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+.schedule-action{min-height:30px;padding:0 9px;border:1px solid rgba(255,255,255,.1);border-radius:8px;background:#202d45;color:#cbd5e1;font-size:8px;font-weight:800;cursor:pointer}
+.schedule-action.delete{background:#432033;color:#ffb4bf}
+.scheduler-footer-note{margin-top:14px;padding:12px;border:1px solid rgba(255,255,255,.07);border-radius:11px;color:#8492aa;font-size:9px;line-height:1.6}
+@media(max-width:1100px){.scheduler-layout{grid-template-columns:1fr}}
+@media(max-width:850px){.scheduler-shell{padding:18px 18px 45px}.scheduler-hero h1{font-size:25px}}
+@media(max-width:600px){.scheduler-shell{padding:12px 11px 35px}.scheduler-hero{padding:20px 18px;border-radius:17px}.scheduler-hero h1{font-size:22px}.scheduler-summary{grid-template-columns:1fr 1fr}.scheduler-stat:last-child{grid-column:1/-1}.scheduler-card{padding:16px}.scheduler-form{grid-template-columns:1fr}.scheduler-field.full,.scheduler-toggle-row,.scheduler-actions{grid-column:1}.scheduler-actions{flex-direction:column}.schedule-item-top{flex-direction:column}}
