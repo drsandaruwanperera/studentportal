@@ -22,6 +22,7 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
   const schedules = new Map();
   let editingId = null;
   let saveInProgress = false;
+  const ZONE = "Asia/Colombo";
   const SETTINGS_DOC_ID = "__themeSeasonSchedule";
   const scheduleDocumentRef = doc(db, "websiteSettings", SETTINGS_DOC_ID);
 
@@ -283,6 +284,7 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
       }
     }
 
+    showMessage("Preparing your " + (themeLabels[themeKey] || "seasonal") + " session…");
     const id = editingId || (window.crypto?.randomUUID
       ? window.crypto.randomUUID()
       : "theme-" + Date.now() + "-" + Math.random().toString(36).slice(2, 9));
@@ -383,8 +385,9 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
   form.noValidate = true;
   // Support direct taps/clicks on mobile and desktop independently of form submit.
   saveBtn.type = "button";
-  saveBtn.addEventListener("click", event => { void saveSchedule(event); });
+  saveBtn.onclick = event => { void saveSchedule(event); };
   form.addEventListener("submit", event => { void saveSchedule(event); });
+  window.saveThemeSchedule = event => saveSchedule(event);
   $("testConnectionBtn").addEventListener("click", testFirestoreConnection);
   $("cancelEditBtn").addEventListener("click", resetForm);
   $("themeKey").addEventListener("change", () => updatePreview(true));
