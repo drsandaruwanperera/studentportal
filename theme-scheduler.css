@@ -53,3 +53,46 @@
 @media(max-width:1100px){.scheduler-layout{grid-template-columns:1fr}}
 @media(max-width:850px){.scheduler-shell{padding:18px 18px 45px}.scheduler-hero h1{font-size:25px}}
 @media(max-width:600px){.scheduler-shell{padding:12px 11px 35px}.scheduler-hero{padding:20px 18px;border-radius:17px}.scheduler-hero h1{font-size:22px}.scheduler-summary{grid-template-columns:1fr 1fr}.scheduler-stat:last-child{grid-column:1/-1}.scheduler-card{padding:16px}.scheduler-form{grid-template-columns:1fr}.scheduler-field.full,.scheduler-toggle-row,.scheduler-actions{grid-column:1}.scheduler-actions{flex-direction:column}.schedule-item-top{flex-direction:column}}
+
+/* ============================================================
+   Scheduler layout correction for fixed 360px admin sidebar.
+   The shared .main-content rule is more specific than margin:auto.
+============================================================ */
+.main-content.scheduler-shell{
+  display:block;
+  box-sizing:border-box;
+  width:calc(100% - var(--admin-pro-sidebar,360px))!important;
+  min-width:0!important;
+  max-width:none!important;
+  margin:0 0 0 var(--admin-pro-sidebar,360px)!important;
+  padding:27px 32px 60px;
+  overflow-x:hidden;
+}
+.scheduler-layout{
+  width:100%;
+  min-width:0;
+  grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr);
+}
+.scheduler-card{min-width:0;overflow:hidden}
+.scheduler-field,.scheduler-form,.scheduler-card input,.scheduler-card select{min-width:0}
+.schedule-list{min-width:0}
+.schedule-item{min-width:0;overflow-wrap:anywhere}
+.schedule-item.active-session{
+  border-color:rgba(74,222,128,.34);
+  background:linear-gradient(145deg,rgba(20,54,48,.9),#101a2d);
+  box-shadow:inset 3px 0 #4ade80;
+}
+@media(max-width:1450px){
+  .main-content.scheduler-shell{padding:24px}
+  .scheduler-layout{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:900px){
+  .main-content.scheduler-shell{
+    width:100%!important;
+    margin:0!important;
+    padding:18px!important;
+  }
+}
+@media(max-width:600px){
+  .main-content.scheduler-shell{padding:12px!important}
+}
