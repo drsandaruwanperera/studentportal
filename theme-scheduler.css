@@ -122,3 +122,15 @@
 
 #saveScheduleBtn{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 #saveScheduleBtn:disabled,#testConnectionBtn:disabled{opacity:.7;cursor:wait}
+
+.scheduler-colour-save-row{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:10px;
+}
+#saveColoursBtn{
+  min-height:36px;padding:0 17px;border:1px solid rgba(166,255,46,.28);
+  background:rgba(166,255,46,.09);color:#c7ff85;
+}
+#saveColoursBtn:hover{background:rgba(166,255,46,.15)}
+#saveColoursBtn:disabled{opacity:.6;cursor:wait}
+.scheduler-colour-save-state{color:#8291ad;font-size:9px;line-height:1.5;flex:1;min-width:180px}
+@media(max-width:600px){.scheduler-colour-save-row{align-items:stretch;flex-direction:column}.scheduler-colour-save-row .scheduler-btn{width:100%}}
