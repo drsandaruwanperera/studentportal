@@ -126,7 +126,9 @@ import { db, collection, doc, setDoc, deleteDoc, onSnapshot } from "./firebase.j
   }
 
   function renderList() {
-    const all = [...schedules.values()].sort((a, b) => Number(a.startsAt) - Number(b.startsAt));
+    const all = [...schedules.values()]
+      .filter(item => item.meta !== true && item.id !== "_scheduler-migration-v1")
+      .sort((a, b) => Number(a.startsAt) - Number(b.startsAt));
     const now = Date.now();
     $("statTotal").textContent = String(all.length);
     $("statActive").textContent = String(all.filter(item => statusFor(item, now) === "active").length);
@@ -272,9 +274,6 @@ import { db, collection, doc, setDoc, deleteDoc, onSnapshot } from "./firebase.j
   $("themeKey").addEventListener("change", updatePreview);
   $("customAccent").addEventListener("input", updatePreview);
   $("customBackground").addEventListener("input", updatePreview);
-  $("refreshClockBtn").addEventListener("click", () => {
-    $("colomboClock").textContent = formatColombo(Date.now());
-  });
   list.addEventListener("click", event => {
     const button = event.target.closest("[data-action]");
     if (!button) return;
@@ -289,13 +288,59 @@ import { db, collection, doc, setDoc, deleteDoc, onSnapshot } from "./firebase.j
   window.setInterval(() => { $("colomboClock").textContent = formatColombo(Date.now()); renderList(); }, 30000);
   resetForm();
 
+  let legacyImportStarted = false;
   onSnapshot(collection(db, COLLECTION), snapshot => {
     schedules.clear();
     snapshot.forEach(item => schedules.set(item.id, { id: item.id, ...item.data() }));
+
+    const visibleSessions = [...schedules.values()].filter(item =>
+      item.meta !== true && item.id !== "_scheduler-migration-v1"
+    );
+    const migration = schedules.get("_scheduler-migration-v1");
+
+    // Bring the already-running Halloween season into the new manager once.
+    // This preserves the current live theme as a manageable schedule.
+    if (!visibleSessions.length && !migration && !legacyImportStarted) {
+      legacyImportStarted = true;
+      const legacySession = {
+        title: "Halloween 2026 · Existing live session",
+        themeKey: "halloween",
+        startsAt: 1790793000000, // 2026-10-01 00:00 Asia/Colombo
+        endsAt: 1794681000000,   // 2026-11-15 00:00 Asia/Colombo
+        timeZone: ZONE,
+        enabled: true,
+        decorations: true,
+        customAccent: "",
+        customBackground: "",
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+        createdBy: "Existing seasonal theme",
+        updatedBy: "Theme Scheduler",
+        migratedFromExistingSeason: true
+      };
+      list.innerHTML = '<div class="schedule-empty">Importing the currently active Halloween session…</div>';
+      Promise.all([
+        setDoc(doc(db, COLLECTION, "halloween-2026-active"), legacySession),
+        setDoc(doc(db, COLLECTION, "_scheduler-migration-v1"), {
+          meta: true,
+          legacyHalloweenImported: true,
+          completedAt: Date.now(),
+          timeZone: ZONE
+        })
+      ]).then(() => {
+        showMessage("The existing Halloween session is now listed and can be managed here.");
+      }).catch(error => {
+        console.error("Could not migrate the existing Halloween session:", error);
+        renderList();
+        showMessage("The current session could not be imported. Check Firestore write permissions.", true);
+      });
+      return;
+    }
+
     renderList();
   }, error => {
     console.error("Could not load theme schedules:", error);
-    list.innerHTML = '<div class="schedule-empty">Could not load schedules. Check Firestore collection read permissions.</div>';
-    showMessage("Unable to read theme schedules from Firestore.", true);
+    list.innerHTML = '<div class="schedule-empty">Theme sessions could not load. Firestore returned: ' + escapeHTML(error?.code || error?.message || "unknown error") + '.</div>';
+    showMessage("Unable to read theme schedules. Check Firestore read permissions for siteThemeSchedules.", true);
   });
 })();
