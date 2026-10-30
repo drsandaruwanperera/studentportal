@@ -1,4 +1,4 @@
-import { db, doc, setDoc, onSnapshot } from "./firebase.js";
+import { db, doc, getDoc, setDoc, onSnapshot } from "./firebase.js";
 
 (() => {
   "use strict";
@@ -49,6 +49,36 @@ import { db, doc, setDoc, onSnapshot } from "./firebase.js";
   function showMessage(text, isError = false) {
     msg.textContent = text || "";
     msg.classList.toggle("error", isError);
+    msg.setAttribute("role", isError ? "alert" : "status");
+    msg.setAttribute("aria-live", "polite");
+  }
+
+  async function testFirestoreConnection() {
+    const testBtn = $("testConnectionBtn");
+    if (testBtn) {
+      testBtn.disabled = true;
+      testBtn.textContent = "Checking…";
+    }
+    showMessage("Checking Firestore access to answersheet2026 / websiteSettings / " + SETTINGS_DOC_ID + "…");
+    try {
+      const snapshot = await getDoc(scheduleDocumentRef);
+      const data = snapshot.exists() ? snapshot.data() : {};
+      const count = Array.isArray(data.sessions) ? data.sessions.length : 0;
+      showMessage("Firestore connection OK. Read access confirmed. Saved sessions: " + count + ".");
+      if (!snapshot.exists()) {
+        showMessage("Firestore read access is OK, but the schedule document does not exist yet. Save a schedule to create it.");
+      }
+    } catch (error) {
+      console.error("Theme scheduler Firestore connection test failed:", error);
+      const code = error?.code || "unknown";
+      const detail = error?.message || "No additional error details.";
+      showMessage("Firestore check failed (" + code + "): " + detail + " Confirm that the websiteSettings rule was published in Firebase project answersheet2026.", true);
+    } finally {
+      if (testBtn) {
+        testBtn.disabled = false;
+        testBtn.textContent = "Test connection";
+      }
+    }
   }
 
   function colomboNow() {
@@ -216,9 +246,19 @@ import { db, doc, setDoc, onSnapshot } from "./firebase.js";
     const themeKey = $("themeKey").value;
     const startsAt = colomboInputToMs($("startsAt").value);
     const endsAt = colomboInputToMs($("endsAt").value);
-    if (!title) return showMessage("Please enter a session name.", true);
-    if (!Number.isFinite(startsAt) || !Number.isFinite(endsAt) || endsAt <= startsAt) {
-      return showMessage("The end date and time must be later than the start date and time.", true);
+    if (!title) {
+      showMessage("Please enter a session name before saving.", true);
+      $("sessionTitle").focus();
+      return;
+    }
+    if (!Number.isFinite(startsAt) || !Number.isFinite(endsAt)) {
+      showMessage("Please select both a valid start date/time and end date/time.", true);
+      return;
+    }
+    if (endsAt <= startsAt) {
+      showMessage("The end date and time must be later than the start date and time.", true);
+      $("endsAt").focus();
+      return;
     }
     if (themeKey === "custom") {
       for (const id of ["customAccent", "customBackground"]) {
@@ -307,12 +347,21 @@ import { db, doc, setDoc, onSnapshot } from "./firebase.js";
       updatedBy: sessionStorage.getItem("adminUsername") || "Super Admin",
       ...extra
     }, { merge: true });
+    const verification = await getDoc(scheduleDocumentRef);
+    if (!verification.exists()) {
+      throw new Error("The save request completed, but the schedule document could not be verified.");
+    }
+    const savedSessions = Array.isArray(verification.data().sessions) ? verification.data().sessions : [];
     schedules.clear();
-    sessions.forEach(item => schedules.set(item.id, item));
+    savedSessions.forEach(item => {
+      if (item && item.id) schedules.set(item.id, item);
+    });
     renderList();
   }
 
+  form.noValidate = true;
   form.addEventListener("submit", saveSchedule);
+  $("testConnectionBtn").addEventListener("click", testFirestoreConnection);
   $("cancelEditBtn").addEventListener("click", resetForm);
   $("themeKey").addEventListener("change", () => updatePreview(true));
   $("customAccent").addEventListener("input", updatePreview);
