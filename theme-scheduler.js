@@ -1,4 +1,4 @@
-import { db, doc, getDoc, setDoc, onSnapshot } from "./firebase.js";
+import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
 
 (() => {
   "use strict";
@@ -21,6 +21,7 @@ import { db, doc, getDoc, setDoc, onSnapshot } from "./firebase.js";
   const saveBtn = $("saveScheduleBtn");
   const schedules = new Map();
   let editingId = null;
+  let saveInProgress = false;
   const SETTINGS_DOC_ID = "__themeSeasonSchedule";
   const scheduleDocumentRef = doc(db, "websiteSettings", SETTINGS_DOC_ID);
 
@@ -57,22 +58,29 @@ import { db, doc, getDoc, setDoc, onSnapshot } from "./firebase.js";
     const testBtn = $("testConnectionBtn");
     if (testBtn) {
       testBtn.disabled = true;
-      testBtn.textContent = "Checking…";
+      testBtn.textContent = "Testing read/write…";
     }
-    showMessage("Checking Firestore access to answersheet2026 / websiteSettings / " + SETTINGS_DOC_ID + "…");
+    showMessage("Testing Firestore read and write permissions…");
+    const testRef = doc(db, "websiteSettings", "__themeSeasonWriteTest");
     try {
-      const snapshot = await getDoc(scheduleDocumentRef);
-      const data = snapshot.exists() ? snapshot.data() : {};
-      const count = Array.isArray(data.sessions) ? data.sessions.length : 0;
-      showMessage("Firestore connection OK. Read access confirmed. Saved sessions: " + count + ".");
-      if (!snapshot.exists()) {
-        showMessage("Firestore read access is OK, but the schedule document does not exist yet. Save a schedule to create it.");
+      const before = await getDoc(scheduleDocumentRef);
+      await setDoc(testRef, {
+        test: true,
+        checkedAt: Date.now(),
+        checkedBy: sessionStorage.getItem("adminUsername") || "Admin"
+      });
+      const after = await getDoc(testRef);
+      if (!after.exists() || after.data().test !== true) {
+        throw new Error("The temporary write could not be read back.");
       }
+      await deleteDoc(testRef);
+      const count = before.exists() && Array.isArray(before.data().sessions)
+        ? before.data().sessions.length
+        : 0;
+      showMessage("Firestore READ + WRITE + DELETE access OK. Saved sessions: " + count + ". You can now save a schedule.");
     } catch (error) {
-      console.error("Theme scheduler Firestore connection test failed:", error);
-      const code = error?.code || "unknown";
-      const detail = error?.message || "No additional error details.";
-      showMessage("Firestore check failed (" + code + "): " + detail + " Confirm that the websiteSettings rule was published in Firebase project answersheet2026.", true);
+      console.error("Theme scheduler read/write test failed:", error);
+      showMessage("Firestore write test failed (" + (error?.code || "unknown") + "): " + (error?.message || "Check websiteSettings rules and publish them to answersheet2026."), true);
     } finally {
       if (testBtn) {
         testBtn.disabled = false;
@@ -241,7 +249,8 @@ import { db, doc, getDoc, setDoc, onSnapshot } from "./firebase.js";
   }
 
   async function saveSchedule(event) {
-    event.preventDefault();
+    event?.preventDefault?.();
+    if (saveInProgress) return;
     const title = $("sessionTitle").value.trim();
     const themeKey = $("themeKey").value;
     const startsAt = colomboInputToMs($("startsAt").value);
@@ -288,19 +297,23 @@ import { db, doc, getDoc, setDoc, onSnapshot } from "./firebase.js";
       updatedBy: sessionStorage.getItem("adminUsername") || "Super Admin"
     };
 
+    saveInProgress = true;
     saveBtn.disabled = true;
-    showMessage("Saving schedule…");
+    saveBtn.textContent = "Saving…";
+    showMessage("Save button received. Writing the schedule to Firebase…");
     try {
       const nextSchedules = new Map(schedules);
       nextSchedules.set(id, { id, ...record });
       await persistScheduleDocument(nextSchedules);
-      showMessage("Schedule saved successfully. The public pages will update automatically.");
+      showMessage("Schedule saved and verified in Firebase. " + schedules.size + " session(s) are now stored. The public pages will update automatically.");
       resetForm();
     } catch (error) {
       console.error("Could not save theme schedule:", error);
-      showMessage("Save failed (" + (error?.code || "unknown") + "): " + (error?.message || "Check websiteSettings Firestore write access."), true);
+      showMessage("SAVE FAILED (" + (error?.code || "unknown") + "): " + (error?.message || "Check websiteSettings Firestore write access.") + " No success was reported; the schedule was not verified.", true);
     } finally {
+      saveInProgress = false;
       saveBtn.disabled = false;
+      saveBtn.textContent = editingId ? "Update schedule" : "Save schedule";
     }
   }
 
@@ -360,7 +373,10 @@ import { db, doc, getDoc, setDoc, onSnapshot } from "./firebase.js";
   }
 
   form.noValidate = true;
-  form.addEventListener("submit", saveSchedule);
+  // Support direct taps/clicks on mobile and desktop independently of form submit.
+  saveBtn.type = "button";
+  saveBtn.addEventListener("click", event => { void saveSchedule(event); });
+  form.addEventListener("submit", event => { void saveSchedule(event); });
   $("testConnectionBtn").addEventListener("click", testFirestoreConnection);
   $("cancelEditBtn").addEventListener("click", resetForm);
   $("themeKey").addEventListener("change", () => updatePreview(true));
