@@ -129,9 +129,34 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
       }, { merge: true });
 
       savedPalettes.set(themeKey, { accentColour, backgroundColour });
+
+      // Also update any already-created sessions using this preset, so a
+      // saved colour change is reflected by the live website immediately.
+      let appliedToSessions = 0;
+      const scheduleSnapshot = await getDoc(scheduleDocumentRef);
+      if (scheduleSnapshot.exists()) {
+        const data = scheduleSnapshot.data();
+        const nextSchedules = new Map();
+        (Array.isArray(data.sessions) ? data.sessions : []).forEach(item => {
+          if (!item || !item.id) return;
+          const updated = item.themeKey === themeKey
+            ? { ...item, accentColour, backgroundColour, updatedAt: Date.now(),
+                updatedBy: sessionStorage.getItem("adminUsername") || "Super Admin" }
+            : item;
+          if (item.themeKey === themeKey) appliedToSessions += 1;
+          nextSchedules.set(String(updated.id), updated);
+        });
+        if (appliedToSessions > 0) {
+          await persistScheduleDocument(nextSchedules);
+        }
+      }
+
       updatePreview(false);
-      $("colourSaveState").textContent = "Saved for " + (themeLabels[themeKey] || themeKey) + ". These colours will load next time you choose this preset.";
-      showMessage("Colours saved successfully for " + (themeLabels[themeKey] || themeKey) + ". Now use Save schedule to publish them during a session.");
+      $("colourSaveState").textContent = "Saved for " + (themeLabels[themeKey] || themeKey) +
+        ". Applied to " + appliedToSessions + " existing session(s).";
+      showMessage(appliedToSessions > 0
+        ? "Colours saved and applied to " + appliedToSessions + " " + (themeLabels[themeKey] || themeKey) + " session(s). The live pages will update automatically."
+        : "Colour pair saved for " + (themeLabels[themeKey] || themeKey) + ". No saved session uses this preset yet; create one with Save schedule to publish it.");
     } catch (error) {
       console.error("Could not save the theme colour pair:", error);
       showMessage("COLOUR SAVE FAILED (" + (error?.code || "unknown") + "): " + (error?.message || "Check websiteSettings write permission."), true);
