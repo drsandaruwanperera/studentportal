@@ -25,6 +25,8 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
   const ZONE = "Asia/Colombo";
   const SETTINGS_DOC_ID = "__themeSeasonSchedule";
   const scheduleDocumentRef = doc(db, "websiteSettings", SETTINGS_DOC_ID);
+  const paletteDocumentRef = doc(db, "websiteSettings", "__themeSeasonPalette");
+  const savedPalettes = new Map();
 
   const themeLabels = {
     default: "Default / Normal",
@@ -90,6 +92,56 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
     }
   }
 
+  async function saveColourChoices() {
+    const button = $("saveColoursBtn");
+    const themeKey = $("themeKey").value;
+    const accentColour = $("customAccent").value;
+    const backgroundColour = $("customBackground").value;
+
+    if (!/^#[0-9a-f]{6}$/i.test(accentColour) || !/^#[0-9a-f]{6}$/i.test(backgroundColour)) {
+      showMessage("Choose valid Accent and Background colours before saving.", true);
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = "Saving colours…";
+    showMessage("Saving the " + (themeLabels[themeKey] || "selected") + " colour pair…");
+    try {
+      const current = await getDoc(paletteDocumentRef);
+      const existing = current.exists() && current.data().palettes && typeof current.data().palettes === "object"
+        ? current.data().palettes
+        : {};
+      const palettes = {
+        ...existing,
+        [themeKey]: {
+          accentColour,
+          backgroundColour,
+          updatedAt: Date.now(),
+          updatedBy: sessionStorage.getItem("adminUsername") || "Super Admin"
+        }
+      };
+
+      await setDoc(paletteDocumentRef, {
+        palettes,
+        timeZone: ZONE,
+        updatedAt: Date.now(),
+        updatedBy: sessionStorage.getItem("adminUsername") || "Super Admin"
+      }, { merge: true });
+
+      savedPalettes.set(themeKey, { accentColour, backgroundColour });
+      updatePreview(false);
+      $("colourSaveState").textContent = "Saved for " + (themeLabels[themeKey] || themeKey) + ". These colours will load next time you choose this preset.";
+      showMessage("Colours saved successfully for " + (themeLabels[themeKey] || themeKey) + ". Now use Save schedule to publish them during a session.");
+    } catch (error) {
+      console.error("Could not save the theme colour pair:", error);
+      showMessage("COLOUR SAVE FAILED (" + (error?.code || "unknown") + "): " + (error?.message || "Check websiteSettings write permission."), true);
+    } finally {
+      button.disabled = false;
+      button.textContent = "Save colours";
+    }
+  }
+
+
   function colomboNow() {
     const parts = new Intl.DateTimeFormat("en-GB", {
       timeZone: "Asia/Colombo", year: "numeric", month: "2-digit",
@@ -132,10 +184,12 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
     const key = $("themeKey").value;
     const colors = themeColors[key] || themeColors.custom;
 
-    // Choosing a preset automatically fills both colour controls.
+    // Reuse a colour pair previously saved for this preset; otherwise load
+    // the preset's built-in defaults whenever the preset is selected.
     if (applyPresetColours) {
-      $("customAccent").value = colors[1];
-      $("customBackground").value = colors[0];
+      const saved = savedPalettes.get(key);
+      $("customAccent").value = saved?.accentColour || colors[1];
+      $("customBackground").value = saved?.backgroundColour || colors[0];
     }
 
     const accent = $("customAccent").value || colors[1];
@@ -144,11 +198,12 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
     $("previewName").textContent = themeLabels[key] || "Seasonal theme";
     $("previewDescription").textContent = key === "default"
       ? "Default appearance. The original site colours are shown outside this scheduled session."
-      : "Preset colours are filled automatically. You can adjust the accent and background before saving.";
+      : "Choose your colours, save this preset's palette, then save a session to publish it.";
     $("customThemeFields").hidden = false;
-    $("colourPresetHint").textContent = key === "custom"
-      ? "Custom theme: choose both colours manually."
-      : "Automatically filled from the selected preset. You can still fine-tune either colour.";
+    $("colourPresetHint").textContent = savedPalettes.has(key)
+      ? "Your saved colour pair for this preset is loaded. You can change and save it again."
+      : "Preset colours are filled automatically. Choose your own colours and use Save colours to remember them.";
+    $("previewSwatch").style.borderColor = accent;
   }
 
   function resetForm() {
@@ -389,8 +444,12 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
   form.addEventListener("submit", event => { void saveSchedule(event); });
   window.saveThemeSchedule = event => saveSchedule(event);
   $("testConnectionBtn").addEventListener("click", testFirestoreConnection);
+  $("saveColoursBtn").addEventListener("click", saveColourChoices);
   $("cancelEditBtn").addEventListener("click", resetForm);
-  $("themeKey").addEventListener("change", () => updatePreview(true));
+  $("themeKey").addEventListener("change", () => {
+    $("colourSaveState").textContent = "";
+    updatePreview(true);
+  });
   $("customAccent").addEventListener("input", updatePreview);
   $("customBackground").addEventListener("input", updatePreview);
   list.addEventListener("click", event => {
@@ -410,6 +469,30 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
   const HALLOWEEN_START = 1790793000000; // 2026-10-01 00:00 Asia/Colombo
   const HALLOWEEN_END = 1794681000000;   // 2026-11-15 00:00 Asia/Colombo
   let halloweenSeedInProgress = false;
+
+  onSnapshot(paletteDocumentRef, snapshot => {
+    const data = snapshot.exists() ? snapshot.data() : {};
+    savedPalettes.clear();
+    const palettes = data.palettes && typeof data.palettes === "object" ? data.palettes : {};
+    Object.entries(palettes).forEach(([key, value]) => {
+      if (value && /^#[0-9a-f]{6}$/i.test(value.accentColour || "") &&
+          /^#[0-9a-f]{6}$/i.test(value.backgroundColour || "")) {
+        savedPalettes.set(key, {
+          accentColour: value.accentColour,
+          backgroundColour: value.backgroundColour
+        });
+      }
+    });
+    const currentKey = $("themeKey").value;
+    const saved = savedPalettes.get(currentKey);
+    if (saved && !editingId) {
+      $("customAccent").value = saved.accentColour;
+      $("customBackground").value = saved.backgroundColour;
+      updatePreview(false);
+    }
+  }, error => {
+    console.warn("Saved theme colour presets could not be loaded:", error);
+  });
 
   onSnapshot(scheduleDocumentRef, snapshot => {
     const data = snapshot.exists() ? snapshot.data() : {};
