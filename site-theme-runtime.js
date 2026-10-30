@@ -58,6 +58,8 @@ import { db, collection, onSnapshot } from "./firebase.js";
     document.documentElement.removeAttribute("data-site-theme-name");
     document.documentElement.style.removeProperty("--site-custom-accent");
     document.documentElement.style.removeProperty("--site-custom-background");
+    document.documentElement.style.removeProperty("--season-accent");
+    document.documentElement.style.removeProperty("--season-bg");
   }
 
   function pageType() {
@@ -108,7 +110,9 @@ import { db, collection, onSnapshot } from "./firebase.js";
           schedule.title,
           schedule.decorations !== false,
           schedule.customAccent || "",
-          schedule.customBackground || ""
+          schedule.customBackground || "",
+          schedule.accentColour || "",
+          schedule.backgroundColour || ""
         ].join("|")
       : "default";
 
@@ -123,13 +127,15 @@ import { db, collection, onSnapshot } from "./firebase.js";
 
     document.documentElement.dataset.siteSeason = schedule.themeKey;
     document.documentElement.dataset.siteThemeName = schedule.title || schedule.themeKey;
-    if (schedule.themeKey === "custom") {
-      if (/^#[0-9a-f]{6}$/i.test(schedule.customAccent || "")) {
-        document.documentElement.style.setProperty("--site-custom-accent", schedule.customAccent);
-      }
-      if (/^#[0-9a-f]{6}$/i.test(schedule.customBackground || "")) {
-        document.documentElement.style.setProperty("--site-custom-background", schedule.customBackground);
-      }
+    const accentColour = schedule.accentColour || schedule.customAccent || "";
+    const backgroundColour = schedule.backgroundColour || schedule.customBackground || "";
+    if (/^#[0-9a-f]{6}$/i.test(accentColour)) {
+      document.documentElement.style.setProperty("--season-accent", accentColour);
+      document.documentElement.style.setProperty("--site-custom-accent", accentColour);
+    }
+    if (/^#[0-9a-f]{6}$/i.test(backgroundColour)) {
+      document.documentElement.style.setProperty("--season-bg", backgroundColour);
+      document.documentElement.style.setProperty("--site-custom-background", backgroundColour);
     }
 
     const link = document.createElement("link");
