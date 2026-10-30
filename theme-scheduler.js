@@ -286,7 +286,7 @@ import { db, collection, doc, setDoc, deleteDoc, onSnapshot } from "./firebase.j
 
   $("adminName").textContent = sessionStorage.getItem("adminUsername") || "Super Admin";
   $("colomboClock").textContent = formatColombo(Date.now());
-  window.setInterval(() => $("colomboClock").textContent = formatColombo(Date.now()), 30000);
+  window.setInterval(() => { $("colomboClock").textContent = formatColombo(Date.now()); renderList(); }, 30000);
   resetForm();
 
   onSnapshot(collection(db, COLLECTION), snapshot => {
