@@ -1060,3 +1060,38 @@ body {
     }
 
 }
+
+
+/* Mobile sign-in responsiveness and accessible loading feedback. */
+#loginBtn.login-btn {
+    position: relative;
+    z-index: 5;
+    pointer-events: auto;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    min-height: 52px;
+}
+#loginBtn.login-btn:disabled {
+    cursor: wait;
+    opacity: .88;
+}
+.login-button-spinner {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-right: 8px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    vertical-align: -3px;
+    animation: login-button-spin .7s linear infinite;
+}
+@keyframes login-button-spin {
+    to { transform: rotate(360deg); }
+}
+@media (hover: none) {
+    #loginBtn.login-btn:hover { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .login-button-spinner { animation: none; }
+}
