@@ -2336,7 +2336,8 @@ function protectCurrentPage() {
         "classes.html",
         "faq.html",
         "contact.html",
-        "settings.html"
+        "settings.html",
+        "theme-scheduler.html"
 
     ];
 
