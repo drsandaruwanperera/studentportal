@@ -1,4 +1,4 @@
-import { db, collection, doc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
+import { db, doc, setDoc, onSnapshot } from "./firebase.js";
 
 (() => {
   "use strict";
@@ -249,12 +249,14 @@ import { db, collection, doc, setDoc, deleteDoc, onSnapshot } from "./firebase.j
     saveBtn.disabled = true;
     showMessage("Saving schedule…");
     try {
-      await setDoc(doc(db, COLLECTION, id), record);
-      showMessage("Schedule saved. All public pages will update automatically.");
+      const nextSchedules = new Map(schedules);
+      nextSchedules.set(id, { id, ...record });
+      await persistScheduleDocument(nextSchedules);
+      showMessage("Schedule saved successfully. The public pages will update automatically.");
       resetForm();
     } catch (error) {
       console.error("Could not save theme schedule:", error);
-      showMessage("Could not save. Check Firestore permissions and try again.", true);
+      showMessage("Save failed (" + (error?.code || "unknown") + "): " + (error?.message || "Check websiteSettings Firestore write access."), true);
     } finally {
       saveBtn.disabled = false;
     }
@@ -264,11 +266,18 @@ import { db, collection, doc, setDoc, deleteDoc, onSnapshot } from "./firebase.j
     const item = schedules.get(id);
     if (!item) return;
     try {
-      await setDoc(doc(db, COLLECTION, id), { enabled: !item.enabled, updatedAt: Date.now(), updatedBy: sessionStorage.getItem("adminUsername") || "Super Admin" }, { merge: true });
-      showMessage(item.enabled ? "Schedule disabled. The public pages will return to the next active session or default theme." : "Schedule enabled.");
+      const nextSchedules = new Map(schedules);
+      nextSchedules.set(id, {
+        ...item,
+        enabled: !item.enabled,
+        updatedAt: Date.now(),
+        updatedBy: sessionStorage.getItem("adminUsername") || "Super Admin"
+      });
+      await persistScheduleDocument(nextSchedules);
+      showMessage(item.enabled ? "Schedule disabled. The public pages will return to the next active session or the default theme." : "Schedule enabled.");
     } catch (error) {
       console.error(error);
-      showMessage("Could not update this schedule. Check Firestore permissions.", true);
+      showMessage("Update failed (" + (error?.code || "unknown") + "): " + (error?.message || "Check websiteSettings Firestore write access."), true);
     }
   }
 
@@ -276,13 +285,29 @@ import { db, collection, doc, setDoc, deleteDoc, onSnapshot } from "./firebase.j
     const item = schedules.get(id);
     if (!item || !window.confirm(`Delete the "${item.title}" theme session?`)) return;
     try {
-      await deleteDoc(doc(db, COLLECTION, id));
+      const nextSchedules = new Map(schedules);
+      nextSchedules.delete(id);
+      await persistScheduleDocument(nextSchedules);
       showMessage("Theme session deleted.");
       if (editingId === id) resetForm();
     } catch (error) {
       console.error(error);
-      showMessage("Could not delete this schedule. Check Firestore permissions.", true);
+      showMessage("Delete failed (" + (error?.code || "unknown") + "): " + (error?.message || "Check websiteSettings Firestore write access."), true);
     }
+  }
+
+  async function persistScheduleDocument(nextSchedules, extra = {}) {
+    const sessions = [...nextSchedules.values()].map(item => ({ ...item }));
+    await setDoc(scheduleDocumentRef, {
+      sessions,
+      timeZone: ZONE,
+      updatedAt: Date.now(),
+      updatedBy: sessionStorage.getItem("adminUsername") || "Super Admin",
+      ...extra
+    }, { merge: true });
+    schedules.clear();
+    sessions.forEach(item => schedules.set(item.id, item));
+    renderList();
   }
 
   form.addEventListener("submit", saveSchedule);
@@ -304,21 +329,30 @@ import { db, collection, doc, setDoc, deleteDoc, onSnapshot } from "./firebase.j
   window.setInterval(() => { $("colomboClock").textContent = formatColombo(Date.now()); renderList(); }, 30000);
   resetForm();
 
-  let legacyImportStarted = false;
-  onSnapshot(collection(db, COLLECTION), snapshot => {
-    schedules.clear();
-    snapshot.forEach(item => schedules.set(item.id, { id: item.id, ...item.data() }));
+  const HALLOWEEN_START = 1790793000000; // 2026-10-01 00:00 Asia/Colombo
+  const HALLOWEEN_END = 1794681000000;   // 2026-11-15 00:00 Asia/Colombo
+  let halloweenSeedInProgress = false;
 
-    // Check for the actual Halloween session document. An older migration
-    // marker may exist even when its session write previously failed.
-    const halloweenId = "halloween-2026-active";
-    if (!schedules.has(halloweenId) && !legacyImportStarted) {
-      legacyImportStarted = true;
-      const legacySession = {
+  onSnapshot(scheduleDocumentRef, snapshot => {
+    const data = snapshot.exists() ? snapshot.data() : {};
+    schedules.clear();
+    (Array.isArray(data.sessions) ? data.sessions : []).forEach(item => {
+      if (item && item.id) schedules.set(String(item.id), item);
+    });
+
+    const withinHalloween = Date.now() >= HALLOWEEN_START && Date.now() < HALLOWEEN_END;
+    const handled = data.legacyHalloweenHandled === true;
+    const hasHalloween = schedules.has("halloween-2026-active");
+
+    if (withinHalloween && !handled && !hasHalloween && !halloweenSeedInProgress) {
+      halloweenSeedInProgress = true;
+      const nextSchedules = new Map(schedules);
+      nextSchedules.set("halloween-2026-active", {
+        id: "halloween-2026-active",
         title: "Halloween 2026 · Existing live session",
         themeKey: "halloween",
-        startsAt: 1790793000000, // 2026-10-01 00:00 Asia/Colombo
-        endsAt: 1794681000000,   // 2026-11-15 00:00 Asia/Colombo
+        startsAt: HALLOWEEN_START,
+        endsAt: HALLOWEEN_END,
         timeZone: ZONE,
         enabled: true,
         decorations: true,
@@ -331,26 +365,22 @@ import { db, collection, doc, setDoc, deleteDoc, onSnapshot } from "./firebase.j
         createdBy: "Existing seasonal theme",
         updatedBy: "Theme Scheduler",
         migratedFromExistingSeason: true
-      };
-      list.innerHTML = '<div class="schedule-empty">Adding the existing Halloween session to the schedule…</div>';
-      setDoc(doc(db, COLLECTION, halloweenId), legacySession)
-        .then(() => {
-          schedules.set(halloweenId, { id: halloweenId, ...legacySession });
-          renderList();
-          showMessage("The existing Halloween session is now listed as LIVE NOW.");
-        })
+      });
+      list.innerHTML = '<div class="schedule-empty">Restoring the existing Halloween session…</div>';
+      persistScheduleDocument(nextSchedules, { legacyHalloweenHandled: true })
+        .then(() => showMessage("Existing Halloween session added and marked LIVE NOW."))
         .catch(error => {
-          legacyImportStarted = false;
-          console.error("Could not add the existing Halloween session:", error);
+          console.error("Could not restore the existing Halloween schedule:", error);
           renderList();
-          showMessage("The Halloween session could not be added. Firestore: " + (error?.code || error?.message || "unknown error"), true);
-        });
+          showMessage("Halloween restore failed (" + (error?.code || "unknown") + "): " + (error?.message || "Check Firestore write permissions."), true);
+        })
+        .finally(() => { halloweenSeedInProgress = false; });
+      return;
     }
-
     renderList();
   }, error => {
     console.error("Could not load theme schedules:", error);
     list.innerHTML = '<div class="schedule-empty">Theme sessions could not load. Firestore returned: ' + escapeHTML(error?.code || error?.message || "unknown error") + '.</div>';
-    showMessage("Unable to read theme schedules. Check Firestore read permissions for siteThemeSchedules.", true);
+    showMessage("Unable to read theme schedule document: " + (error?.code || error?.message || "unknown error"), true);
   });
 })();
