@@ -251,12 +251,20 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
   async function saveSchedule(event) {
     event?.preventDefault?.();
     if (saveInProgress) return;
-    const title = $("sessionTitle").value.trim();
+    let title = $("sessionTitle").value.trim();
     const themeKey = $("themeKey").value;
     const startsAt = colomboInputToMs($("startsAt").value);
     const endsAt = colomboInputToMs($("endsAt").value);
+    // Generate a readable name when the admin leaves the optional title blank.
+    if (!title && Number.isFinite(startsAt)) {
+      const year = new Intl.DateTimeFormat("en-LK", {
+        timeZone: "Asia/Colombo", year: "numeric"
+      }).format(new Date(startsAt));
+      title = (themeLabels[themeKey] || "Seasonal") + " " + year + " Session";
+      $("sessionTitle").value = title;
+    }
     if (!title) {
-      showMessage("Please enter a session name before saving.", true);
+      showMessage("Enter a session name, or choose a theme so the scheduler can create a default name.", true);
       $("sessionTitle").focus();
       return;
     }
@@ -300,7 +308,7 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
     saveInProgress = true;
     saveBtn.disabled = true;
     saveBtn.textContent = "Saving…";
-    showMessage("Save button received. Writing the schedule to Firebase…");
+    showMessage("Saving “" + title + "” to Firebase…");
     try {
       const nextSchedules = new Map(schedules);
       nextSchedules.set(id, { id, ...record });
