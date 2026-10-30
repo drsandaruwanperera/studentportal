@@ -26,6 +26,8 @@ const loginBtn =
 const msg =
     document.getElementById("msg");
 
+let loginInProgress = false;
+
 
 // =====================================================
 // SHOW MESSAGE
@@ -39,10 +41,32 @@ function showMessage(message, type = "error") {
 
     msg.textContent = message;
 
-    msg.style.color =
-        type === "success"
-            ? "#16a34a"
-            : "#dc2626";
+    msg.style.color = type === "success"
+        ? "#16a34a"
+        : type === "info"
+            ? "#8b9cff"
+            : "#f87171";
+}
+
+
+// Limit stalled Firestore reads so the login button cannot appear frozen
+// indefinitely on a slow mobile connection.
+function getStudentDocumentWithTimeout(studentRef, timeoutMs = 15000) {
+    let timeoutId;
+    const timeoutPromise = new Promise((_, reject) => {
+        timeoutId = window.setTimeout(() => {
+            const error = new Error("Student lookup timed out.");
+            error.code = "login/timeout";
+            reject(error);
+        }, timeoutMs);
+    });
+
+    return Promise.race([
+        getDoc(studentRef),
+        timeoutPromise
+    ]).finally(() => {
+        if (timeoutId !== undefined) window.clearTimeout(timeoutId);
+    });
 }
 
 
@@ -489,6 +513,8 @@ function clearPasswordChangeSession() {
 
 async function loginStudent() {
 
+    if (loginInProgress) return;
+
     const studentId =
         normalizeStudentId(
             studentIdInput?.value
@@ -529,22 +555,32 @@ async function loginStudent() {
     }
 
 
+    if (navigator.onLine === false) {
+        showMessage("You appear to be offline. Check your mobile data or Wi-Fi and try again.");
+        return;
+    }
+
+    loginInProgress = true;
+
+    // Close the mobile keyboard before showing the in-progress state.
+    if (document.activeElement === studentIdInput || document.activeElement === passwordInput) {
+        document.activeElement.blur();
+    }
+
     // =================================================
     // BUTTON LOADING
     // =================================================
 
     if (loginBtn) {
-
         loginBtn.disabled = true;
-
+        loginBtn.setAttribute("aria-busy", "true");
         loginBtn.innerHTML = `
-            <span>Signing In...</span>
+            <span class="login-button-spinner" aria-hidden="true"></span>
+            <span>Checking details...</span>
         `;
-
     }
 
-
-    showMessage("");
+    showMessage("Checking your student details...", "info");
 
 
     try {
@@ -561,10 +597,7 @@ async function loginStudent() {
             );
 
 
-        const studentSnap =
-            await getDoc(
-                studentRef
-            );
+        const studentSnap = await getStudentDocumentWithTimeout(studentRef, 15000);
 
 
         // =============================================
@@ -657,29 +690,13 @@ async function loginStudent() {
         );
 
 
-        // =============================================
-        // UPDATE LAST ACTIVE
-        // =============================================
-
-        try {
-
-            await updateDoc(
-                studentRef,
-                {
-                    lastActiveAt:
-                        Date.now()
-                }
-            );
-
-        }
-        catch (activeError) {
-
-            console.warn(
-                "Last active update failed:",
-                activeError
-            );
-
-        }
+        // Do not make the student wait for this secondary presence write.
+        // The dashboard updates lastActiveAt as soon as it loads.
+        void updateDoc(studentRef, {
+            lastActiveAt: Date.now()
+        }).catch((activeError) => {
+            console.warn("Last active update failed:", activeError);
+        });
 
 
         // =================================================
@@ -927,17 +944,24 @@ async function loginStudent() {
         );
 
 
-        showMessage(
-            "Unable to sign in. Please try again."
-        );
+        const errorCode = String(error?.code || "");
+        if (errorCode === "login/timeout" || ["unavailable", "deadline-exceeded", "network-request-failed", "internal"].includes(errorCode)) {
+            showMessage("The connection is taking too long. Check your mobile data or Wi-Fi, then try again.");
+        } else if (navigator.onLine === false) {
+            showMessage("You appear to be offline. Check your mobile data or Wi-Fi and try again.");
+        } else {
+            showMessage("Unable to sign in. Please try again. If this keeps happening, contact the administrator.");
+        }
 
     }
     finally {
 
+        loginInProgress = false;
+
         if (loginBtn) {
 
-            loginBtn.disabled =
-                false;
+            loginBtn.disabled = false;
+            loginBtn.removeAttribute("aria-busy");
 
 
             loginBtn.innerHTML = `
