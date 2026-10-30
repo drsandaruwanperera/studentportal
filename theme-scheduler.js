@@ -121,7 +121,7 @@ import { db, collection, doc, setDoc, deleteDoc, onSnapshot } from "./firebase.j
     $("formHeading").textContent = "Create a theme session";
     saveBtn.textContent = "Save schedule";
     $("cancelEditBtn").hidden = true;
-    updatePreview();
+    updatePreview(true);
   }
 
   function colomboInputDefaultEnd() {
