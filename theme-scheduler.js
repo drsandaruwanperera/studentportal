@@ -21,6 +21,8 @@ import { db, doc, setDoc, onSnapshot } from "./firebase.js";
   const saveBtn = $("saveScheduleBtn");
   const schedules = new Map();
   let editingId = null;
+  const SETTINGS_DOC_ID = "__themeSeasonSchedule";
+  const scheduleDocumentRef = doc(db, "websiteSettings", SETTINGS_DOC_ID);
 
   const themeLabels = {
     default: "Default / Normal",
