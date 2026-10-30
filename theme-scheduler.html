@@ -102,7 +102,7 @@
             <label class="scheduler-toggle"><input id="decorationsEnabled" type="checkbox" checked> Include seasonal decorations &amp; animations</label>
           </div>
           <div class="scheduler-actions">
-            <button class="scheduler-btn primary" id="saveScheduleBtn" type="button">Save schedule</button>
+            <button class="scheduler-btn primary" id="saveScheduleBtn" type="button" onclick="window.saveThemeSchedule && window.saveThemeSchedule(event)">Save schedule</button>
             <button class="scheduler-btn secondary" id="testConnectionBtn" type="button">Test connection</button>
             <button class="scheduler-btn secondary" id="cancelEditBtn" type="button" hidden>Cancel edit</button>
           </div>
@@ -122,6 +122,6 @@
     </div>
   </main>
 </div>
-<script type="module" src="theme-scheduler.js?v=9"></script>
+<script type="module" src="theme-scheduler.js?v=10"></script>
 </body>
 </html>
