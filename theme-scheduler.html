@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <title>Theme &amp; Season Scheduler | Admin</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E🎓%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="admin.css?v=22">
+  <link rel="stylesheet" href="theme-scheduler.css?v=1">
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar" aria-label="Admin navigation">
+    <div class="sidebar-brand"><div class="brand-logo">🎓</div><div><h2>Student</h2><span>Assessment Portal</span></div></div>
+    <div class="sidebar-label">ADMINISTRATION</div>
+    <nav class="sidebar-nav">
+      <a href="admin.html" class="nav-item"><span class="nav-icon">🏠</span><span>Dashboard</span></a>
+      <a href="students.html" class="nav-item"><span class="nav-icon">👥</span><span>Students</span></a>
+      <a href="paper-management.html" class="nav-item"><span class="nav-icon">📚</span><span>Paper Management</span></a>
+      <a href="admin-program-control.html" class="nav-item"><span class="nav-icon">🎛️</span><span>Program Publishing</span></a>
+      <a href="monthly-access-admin.html" class="nav-item"><span class="nav-icon">🔐</span><span>Monthly Paper Access</span></a>
+      <a href="admin-results.html" class="nav-item"><span class="nav-icon">🏆</span><span>Results Management</span></a>
+      <a href="admin-announcements.html" class="nav-item"><span class="nav-icon">📢</span><span>Announcements</span></a>
+      <a href="import-students.html" class="nav-item"><span class="nav-icon">📥</span><span>Import Students</span></a>
+      <a href="onboarding-report.html" class="nav-item"><span class="nav-icon">📝</span><span>1st Onboarding Report</span></a>
+      <a href="student-deletion.html" class="nav-item"><span class="nav-icon">🗑️</span><span>Student Deletion</span></a>
+      <a href="reports.html" class="nav-item"><span class="nav-icon">📈</span><span>Reports</span></a>
+      <div class="sidebar-section-divider"></div>
+      <div class="sidebar-label sidebar-label-main-website">MAIN WEBSITE</div>
+      <a href="website/website-dashboard.html" class="nav-item"><span class="nav-icon">🌐</span><span>Website Dashboard</span></a>
+      <a href="website/gallery.html" class="nav-item"><span class="nav-icon">🖼️</span><span>Gallery</span></a>
+      <a href="website/programs.html" class="nav-item"><span class="nav-icon">📚</span><span>Programs</span></a>
+      <a href="website/about.html" class="nav-item"><span class="nav-icon">👨‍🏫</span><span>About</span></a>
+      <a href="website/results.html" class="nav-item"><span class="nav-icon">🏆</span><span>Results &amp; Achievements</span></a>
+      <a href="website/testimonials.html" class="nav-item"><span class="nav-icon">💬</span><span>Student Voices</span></a>
+      <a href="website/resources.html" class="nav-item"><span class="nav-icon">📖</span><span>Learning Resources</span></a>
+      <a href="website/classes.html" class="nav-item"><span class="nav-icon">📅</span><span>Upcoming Classes</span></a>
+      <a href="website/faq.html" class="nav-item"><span class="nav-icon">❓</span><span>FAQ</span></a>
+      <a href="website/contact.html" class="nav-item"><span class="nav-icon">📞</span><span>Contact &amp; Social</span></a>
+      <a href="website/settings.html" class="nav-item"><span class="nav-icon">⚙️</span><span>Website Settings</span></a>
+      <div class="sidebar-section-divider"></div>
+      <div class="sidebar-label">SITE EXPERIENCE</div>
+      <a href="theme-scheduler.html" class="nav-item active" aria-current="page"><span class="nav-icon">🎨</span><span>Theme &amp; Seasons</span></a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="admin-user-card"><div class="admin-user-icon">👨‍💼</div><div class="admin-user-info"><strong id="adminName">Super Admin</strong><span>Super Administrator</span></div></div>
+      <a class="logout-btn" href="admin.html">← Back to Admin</a>
+    </div>
+  </aside>
+
+  <main class="main-content scheduler-shell">
+    <section class="scheduler-hero">
+      <div class="eyebrow">SITE EXPERIENCE CONTROL</div>
+      <h1>Theme &amp; Season Scheduler</h1>
+      <p>Create seasonal design sessions for the complete public website. The chosen theme appears on the Main Page, Student Login and Student Dashboard only during its scheduled Sri Lankan time window. Outside every active session, the original default design is restored automatically.</p>
+      <div class="timezone-chip"><i></i><span>All times use Asia/Colombo · UTC +05:30</span></div>
+    </section>
+
+    <section class="scheduler-summary">
+      <article class="scheduler-stat"><span>Total sessions</span><strong id="statTotal">0</strong></article>
+      <article class="scheduler-stat"><span>Live now</span><strong id="statActive">0</strong></article>
+      <article class="scheduler-stat"><span>Upcoming</span><strong id="statUpcoming">0</strong></article>
+    </section>
+
+    <div class="scheduler-layout">
+      <section class="scheduler-card">
+        <h2 id="formHeading">Create a theme session</h2>
+        <p class="subcopy">Set the session name, select a theme and schedule its start and end. The system uses Sri Lanka local time even when the admin device is set to another timezone.</p>
+        <form id="themeScheduleForm" class="scheduler-form">
+          <input type="hidden" id="scheduleId">
+          <div class="scheduler-field full"><label for="sessionTitle">SESSION NAME</label><input id="sessionTitle" maxlength="80" required placeholder="e.g. Sinhala & Tamil New Year 2027"></div>
+          <div class="scheduler-field full"><label for="themeKey">THEME PRESET</label>
+            <select id="themeKey">
+              <option value="default">Default / Normal</option>
+              <option value="halloween">Halloween</option>
+              <option value="christmas">Christmas</option>
+              <option value="new-year">New Year</option>
+              <option value="avurudu">Sinhala &amp; Tamil New Year (Avurudu)</option>
+              <option value="vesak">Vesak</option>
+              <option value="deepavali">Deepavali</option>
+              <option value="custom">Custom Brand Theme</option>
+            </select>
+          </div>
+          <div id="customThemeFields" class="scheduler-field full" hidden>
+            <div class="grid">
+              <div class="scheduler-field"><label for="customAccent">ACCENT COLOUR</label><input id="customAccent" type="color" value="#a6ff2e"></div>
+              <div class="scheduler-field"><label for="customBackground">BACKGROUND COLOUR</label><input id="customBackground" type="color" value="#0b1020"></div>
+            </div>
+          </div>
+          <div class="scheduler-field"><label for="startsAt">START DATE &amp; TIME (SRI LANKA)</label><input id="startsAt" type="datetime-local" required><span class="scheduler-hint">The theme will switch on automatically at this time.</span></div>
+          <div class="scheduler-field"><label for="endsAt">END DATE &amp; TIME (SRI LANKA)</label><input id="endsAt" type="datetime-local" required><span class="scheduler-hint">The original default design returns at this time.</span></div>
+          <div class="scheduler-toggle-row">
+            <label class="scheduler-toggle"><input id="scheduleEnabled" type="checkbox" checked> Enable this session</label>
+            <label class="scheduler-toggle"><input id="decorationsEnabled" type="checkbox" checked> Include seasonal decorations &amp; animations</label>
+          </div>
+          <div class="scheduler-actions">
+            <button class="scheduler-btn primary" id="saveScheduleBtn" type="submit">Save schedule</button>
+            <button class="scheduler-btn secondary" id="cancelEditBtn" type="button" hidden>Cancel edit</button>
+          </div>
+        </form>
+        <div class="scheduler-message" id="schedulerMessage" aria-live="polite"></div>
+        <div class="preview-box">
+          <div class="preview-swatch" id="previewSwatch"></div>
+          <div><strong id="previewName">Halloween</strong><small id="previewDescription">Select a theme to preview its colour palette and schedule behaviour.</small></div>
+        </div>
+      </section>
+
+      <section class="scheduler-card">
+        <div class="schedule-toolbar"><h2>Scheduled sessions</h2><span id="colomboClock">Loading Sri Lanka time…</span></div>
+        <div class="schedule-list" id="scheduleList"><div class="schedule-empty">Loading saved theme schedules…</div></div>
+        <div class="scheduler-footer-note">When sessions overlap, the session with the most recent start time takes priority. Disabling or deleting a session removes it from the live pages immediately. A “Default / Normal” session can be scheduled to force the original appearance during a chosen period.</div>
+      </section>
+    </div>
+  </main>
+</div>
+<script type="module" src="theme-scheduler.js?v=1"></script>
+</body>
+</html>
