@@ -87,18 +87,27 @@ import { db, collection, doc, setDoc, deleteDoc, onSnapshot } from "./firebase.j
     })[ch]);
   }
 
-  function updatePreview() {
+  function updatePreview(applyPresetColours = false) {
     const key = $("themeKey").value;
     const colors = themeColors[key] || themeColors.custom;
-    const accent = key === "custom" ? $("customAccent").value : colors[1];
-    const background = key === "custom" ? $("customBackground").value : colors[0];
+
+    // Choosing a preset automatically fills both colour controls.
+    if (applyPresetColours) {
+      $("customAccent").value = colors[1];
+      $("customBackground").value = colors[0];
+    }
+
+    const accent = $("customAccent").value || colors[1];
+    const background = $("customBackground").value || colors[0];
     $("previewSwatch").style.background = `linear-gradient(135deg,${background},${accent})`;
     $("previewName").textContent = themeLabels[key] || "Seasonal theme";
     $("previewDescription").textContent = key === "default"
-      ? "The original website, login and dashboard styling will show during this session."
-      : "This theme will be applied to the main website, login and student dashboard during the scheduled dates.";
-    const isCustom = key === "custom";
-    $("customThemeFields").hidden = !isCustom;
+      ? "Default appearance. The original site colours are shown outside this scheduled session."
+      : "Preset colours are filled automatically. You can adjust the accent and background before saving.";
+    $("customThemeFields").hidden = false;
+    $("colourPresetHint").textContent = key === "custom"
+      ? "Custom theme: choose both colours manually."
+      : "Automatically filled from the selected preset. You can still fine-tune either colour.";
   }
 
   function resetForm() {
@@ -128,7 +137,11 @@ import { db, collection, doc, setDoc, deleteDoc, onSnapshot } from "./firebase.j
   function renderList() {
     const all = [...schedules.values()]
       .filter(item => item.meta !== true && item.id !== "_scheduler-migration-v1")
-      .sort((a, b) => Number(a.startsAt) - Number(b.startsAt));
+      .sort((a, b) => {
+        const rank = { active: 0, upcoming: 1, paused: 2, expired: 3 };
+        return rank[statusFor(a, Date.now())] - rank[statusFor(b, Date.now())] ||
+          Number(b.startsAt) - Number(a.startsAt);
+      });
     const now = Date.now();
     $("statTotal").textContent = String(all.length);
     $("statActive").textContent = String(all.filter(item => statusFor(item, now) === "active").length);
@@ -143,7 +156,7 @@ import { db, collection, doc, setDoc, deleteDoc, onSnapshot } from "./firebase.j
       const status = statusFor(item, now);
       const statusText = { active: "LIVE NOW", upcoming: "SCHEDULED", expired: "ENDED", paused: "DISABLED" }[status];
       return `
-        <article class="schedule-item" data-id="${escapeHTML(item.id)}">
+        <article class="schedule-item ${status === "active" ? "active-session" : ""}" data-id="${escapeHTML(item.id)}">
           <div class="schedule-item-top">
             <div>
               <h3>${escapeHTML(item.title)}</h3>
@@ -176,8 +189,9 @@ import { db, collection, doc, setDoc, deleteDoc, onSnapshot } from "./firebase.j
     $("endsAt").value = msToColomboInput(item.endsAt);
     $("scheduleEnabled").checked = item.enabled === true;
     $("decorationsEnabled").checked = item.decorations !== false;
-    $("customAccent").value = item.customAccent || "#a6ff2e";
-    $("customBackground").value = item.customBackground || "#0b1020";
+    const presetColours = themeColors[item.themeKey] || themeColors.custom;
+    $("customAccent").value = item.accentColour || item.customAccent || presetColours[1];
+    $("customBackground").value = item.backgroundColour || item.customBackground || presetColours[0];
     $("formHeading").textContent = "Edit theme session";
     saveBtn.textContent = "Update schedule";
     $("cancelEditBtn").hidden = false;
@@ -222,6 +236,8 @@ import { db, collection, doc, setDoc, deleteDoc, onSnapshot } from "./firebase.j
       timeZone: ZONE,
       enabled: $("scheduleEnabled").checked,
       decorations: $("decorationsEnabled").checked,
+      accentColour: $("customAccent").value,
+      backgroundColour: $("customBackground").value,
       customAccent: themeKey === "custom" ? $("customAccent").value : "",
       customBackground: themeKey === "custom" ? $("customBackground").value : "",
       createdAt: old?.createdAt || Date.now(),
@@ -271,7 +287,7 @@ import { db, collection, doc, setDoc, deleteDoc, onSnapshot } from "./firebase.j
 
   form.addEventListener("submit", saveSchedule);
   $("cancelEditBtn").addEventListener("click", resetForm);
-  $("themeKey").addEventListener("change", updatePreview);
+  $("themeKey").addEventListener("change", () => updatePreview(true));
   $("customAccent").addEventListener("input", updatePreview);
   $("customBackground").addEventListener("input", updatePreview);
   list.addEventListener("click", event => {
@@ -293,14 +309,10 @@ import { db, collection, doc, setDoc, deleteDoc, onSnapshot } from "./firebase.j
     schedules.clear();
     snapshot.forEach(item => schedules.set(item.id, { id: item.id, ...item.data() }));
 
-    const visibleSessions = [...schedules.values()].filter(item =>
-      item.meta !== true && item.id !== "_scheduler-migration-v1"
-    );
-    const migration = schedules.get("_scheduler-migration-v1");
-
-    // Bring the already-running Halloween season into the new manager once.
-    // This preserves the current live theme as a manageable schedule.
-    if (!visibleSessions.length && !migration && !legacyImportStarted) {
+    // Check for the actual Halloween session document. An older migration
+    // marker may exist even when its session write previously failed.
+    const halloweenId = "halloween-2026-active";
+    if (!schedules.has(halloweenId) && !legacyImportStarted) {
       legacyImportStarted = true;
       const legacySession = {
         title: "Halloween 2026 · Existing live session",
@@ -310,6 +322,8 @@ import { db, collection, doc, setDoc, deleteDoc, onSnapshot } from "./firebase.j
         timeZone: ZONE,
         enabled: true,
         decorations: true,
+        accentColour: "#ff8a2a",
+        backgroundColour: "#0b1020",
         customAccent: "",
         customBackground: "",
         createdAt: Date.now(),
@@ -318,23 +332,19 @@ import { db, collection, doc, setDoc, deleteDoc, onSnapshot } from "./firebase.j
         updatedBy: "Theme Scheduler",
         migratedFromExistingSeason: true
       };
-      list.innerHTML = '<div class="schedule-empty">Importing the currently active Halloween session…</div>';
-      Promise.all([
-        setDoc(doc(db, COLLECTION, "halloween-2026-active"), legacySession),
-        setDoc(doc(db, COLLECTION, "_scheduler-migration-v1"), {
-          meta: true,
-          legacyHalloweenImported: true,
-          completedAt: Date.now(),
-          timeZone: ZONE
+      list.innerHTML = '<div class="schedule-empty">Adding the existing Halloween session to the schedule…</div>';
+      setDoc(doc(db, COLLECTION, halloweenId), legacySession)
+        .then(() => {
+          schedules.set(halloweenId, { id: halloweenId, ...legacySession });
+          renderList();
+          showMessage("The existing Halloween session is now listed as LIVE NOW.");
         })
-      ]).then(() => {
-        showMessage("The existing Halloween session is now listed and can be managed here.");
-      }).catch(error => {
-        console.error("Could not migrate the existing Halloween session:", error);
-        renderList();
-        showMessage("The current session could not be imported. Check Firestore write permissions.", true);
-      });
-      return;
+        .catch(error => {
+          legacyImportStarted = false;
+          console.error("Could not add the existing Halloween session:", error);
+          renderList();
+          showMessage("The Halloween session could not be added. Firestore: " + (error?.code || error?.message || "unknown error"), true);
+        });
     }
 
     renderList();
