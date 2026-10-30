@@ -3,12 +3,12 @@
  * Reads published schedules from Firestore and applies the currently active theme
  * to the main website, student login and student dashboard.
  */
-import { db, collection, onSnapshot } from "./firebase.js";
+import { db, doc, onSnapshot } from "./firebase.js";
 
 (() => {
   "use strict";
 
-  const COLLECTION = "siteThemeSchedules";
+  const SETTINGS_DOC_ID = "__themeSeasonSchedule";
   const STYLE_ID = "site-season-theme-stylesheet";
   const LAYER_ID = "site-season-decorations";
   const ZONE = "Asia/Colombo";
@@ -168,14 +168,14 @@ import { db, collection, onSnapshot } from "./firebase.js";
 
   try {
     onSnapshot(
-      collection(db, COLLECTION),
+      doc(db, "websiteSettings", SETTINGS_DOC_ID),
       snapshot => {
-        schedules = snapshot.docs.map(item => ({ id: item.id, ...item.data() }));
+        const data = snapshot.exists() ? snapshot.data() : {};
+        schedules = Array.isArray(data.sessions) ? data.sessions : [];
         refresh();
       },
       error => {
         console.warn("Seasonal theme schedule could not be loaded:", error);
-        // If a schedule cannot be read, keep the site's original appearance.
         schedules = [];
         refresh();
       }
