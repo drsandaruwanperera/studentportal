@@ -7,7 +7,7 @@
   <title>Theme &amp; Season Scheduler | Admin</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E🎓%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="admin.css?v=22">
-  <link rel="stylesheet" href="theme-scheduler.css?v=2">
+  <link rel="stylesheet" href="theme-scheduler.css?v=3">
 </head>
 <body>
 <div class="admin-layout">
@@ -82,11 +82,18 @@
               <option value="custom">Custom Brand Theme</option>
             </select>
           </div>
-          <div id="customThemeFields" class="scheduler-field full" hidden>
-            <div class="grid">
-              <div class="scheduler-field"><label for="customAccent">ACCENT COLOUR</label><input id="customAccent" type="color" value="#a6ff2e"></div>
-              <div class="scheduler-field"><label for="customBackground">BACKGROUND COLOUR</label><input id="customBackground" type="color" value="#0b1020"></div>
+          <div id="customThemeFields" class="scheduler-field full">
+            <div class="scheduler-colour-grid">
+              <div class="scheduler-field">
+                <label for="customAccent">ACCENT COLOUR</label>
+                <input id="customAccent" type="color" value="#ff8a2a">
+              </div>
+              <div class="scheduler-field">
+                <label for="customBackground">BACKGROUND COLOUR</label>
+                <input id="customBackground" type="color" value="#0b1020">
+              </div>
             </div>
+            <span class="scheduler-hint" id="colourPresetHint">Theme preset colours are filled automatically. You can fine-tune either colour.</span>
           </div>
           <div class="scheduler-field"><label for="startsAt">START DATE &amp; TIME (SRI LANKA)</label><input id="startsAt" type="datetime-local" required><span class="scheduler-hint">The theme will switch on automatically at this time.</span></div>
           <div class="scheduler-field"><label for="endsAt">END DATE &amp; TIME (SRI LANKA)</label><input id="endsAt" type="datetime-local" required><span class="scheduler-hint">The original default design returns at this time.</span></div>
@@ -114,6 +121,6 @@
     </div>
   </main>
 </div>
-<script type="module" src="theme-scheduler.js?v=2"></script>
+<script type="module" src="theme-scheduler.js?v=3"></script>
 </body>
 </html>
