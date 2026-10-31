@@ -403,3 +403,39 @@ body {
 @media (prefers-reduced-motion: reduce) {
     .feature, .login-wrapper, .login-btn { transition: none !important; animation: none !important; }
 }
+
+/* Login input contrast fix: keep both fields dark and typed text clearly visible,
+   including Chrome/Android/iOS saved-value autofill rendering. */
+html body .login-wrapper .login-panel .input-wrapper input#studentId,
+html body .login-wrapper .login-panel .input-wrapper input#password {
+    background-color: #0b1020 !important;
+    color: #f8fafc !important;
+    -webkit-text-fill-color: #f8fafc !important;
+    caret-color: #a6ff2e !important;
+    color-scheme: dark;
+    opacity: 1 !important;
+}
+html body .login-wrapper .login-panel .input-wrapper input#studentId::placeholder,
+html body .login-wrapper .login-panel .input-wrapper input#password::placeholder {
+    color: #8997b1 !important;
+    -webkit-text-fill-color: #8997b1 !important;
+    opacity: 1 !important;
+}
+html body .login-wrapper .login-panel .input-wrapper input#studentId:-webkit-autofill,
+html body .login-wrapper .login-panel .input-wrapper input#password:-webkit-autofill,
+html body .login-wrapper .login-panel .input-wrapper input#studentId:-webkit-autofill:hover,
+html body .login-wrapper .login-panel .input-wrapper input#password:-webkit-autofill:hover,
+html body .login-wrapper .login-panel .input-wrapper input#studentId:-webkit-autofill:focus,
+html body .login-wrapper .login-panel .input-wrapper input#password:-webkit-autofill:focus {
+    -webkit-text-fill-color: #f8fafc !important;
+    caret-color: #a6ff2e !important;
+    -webkit-box-shadow: 0 0 0 1000px #0b1020 inset !important;
+    box-shadow: 0 0 0 1000px #0b1020 inset !important;
+    background-color: #0b1020 !important;
+    transition: background-color 99999s ease-out 0s;
+}
+html body .login-wrapper .login-panel .input-wrapper input#studentId::selection,
+html body .login-wrapper .login-panel .input-wrapper input#password::selection {
+    background: rgba(166, 255, 46, .35);
+    color: #ffffff;
+}
