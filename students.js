@@ -957,14 +957,9 @@ function getFilteredStudents() {
 
             const matchesStatus =
                 status === "all" ||
-                (
-                    status === "active" &&
-                    active
-                ) ||
-                (
-                    status === "offline" &&
-                    !active
-                );
+                (status === "active" && active) ||
+                (status === "offline" && !active) ||
+                (status === "locked" && data?.accountLocked === true);
 
 
             return (
@@ -1136,15 +1131,10 @@ const active =
 
             </td><td>
 
-                <span
-                    class="registration-badge ${statusClass}"
-                >
-
-                    ${escapeHTML(
-                        status
-                    )}
-
-                </span>
+                ${data?.accountLocked === true
+                    ? '<span class="account-locked-badge">🔒 LOCKED</span>'
+                    : '<span class="registration-badge ${statusClass}">' + escapeHTML(status) + '</span>'
+                }
 
 
                 <br>
@@ -1190,6 +1180,17 @@ const active =
                         ✏️ Edit
 
                     </button>
+
+                    ${data?.accountLocked === true ? `
+                    <button
+                        type="button"
+                        class="action-btn release-lock-btn"
+                        data-action="release-lock"
+                        data-id="${escapeHTML(student.id)}"
+                    >
+                        🔓 Release Lock
+                    </button>` : ""}
+
 
 
                     <button
@@ -1329,6 +1330,12 @@ if (
 
             const action =
                 actionButton.dataset.action;
+
+
+            if (action === "release-lock") {
+                releaseStudentAccountLock(id);
+                return;
+            }
 
 
             if (
@@ -2701,6 +2708,39 @@ saveBulkAL?.addEventListener("click", async () => {
     saveBulkAL.textContent = "Add Students";
   }
 });
+
+// =====================================================
+// RELEASE STUDENT ACCOUNT LOCK
+// =====================================================
+
+async function releaseStudentAccountLock(studentId) {
+    const student = allStudents.find(item => item.id === studentId);
+    if (!student || student.data?.accountLocked !== true) return;
+
+    const displayName = getStudentName(student.data);
+    const confirmed = window.confirm(
+        "Release the login lock for this student?\n\n" +
+        displayName + " (" + studentId + ")\n\n" +
+        "This will reset the failed password-attempt counter."
+    );
+    if (!confirmed) return;
+
+    try {
+        await updateDoc(doc(db, "students", studentId), {
+            failedLoginAttempts: 0,
+            accountLocked: false,
+            accountLockedAt: null,
+            accountUnlockedAt: Date.now(),
+            accountUnlockedBy: adminUsername
+        });
+        alert("Account lock released for " + studentId + ".");
+        await loadStudents();
+    } catch (error) {
+        console.error("Account lock release failed:", error);
+        alert("Could not release account lock.\n\n" + (error?.message || "Unknown error"));
+    }
+}
+
 
 // =====================================================
 // EDIT MODAL
