@@ -19,7 +19,8 @@ import {
     query,
     where,
     limit,
-    writeBatch
+    writeBatch,
+    runTransaction
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -49,6 +50,7 @@ export {
     where,
     limit,
     writeBatch,
+    runTransaction,
     auth,
     reauthenticateWithCredential,
     EmailAuthProvider
