@@ -28,3 +28,40 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 @media(max-width:850px){.login-wrapper{width:min(620px,calc(100% - 28px))!important;min-height:0!important;margin:22px auto!important;grid-template-columns:1fr!important}.brand-panel{border-right:0!important;border-bottom:1px solid var(--login-line)!important;padding:27px 28px!important}.brand-content h1{font-size:clamp(28px,5vw,38px)!important;margin:12px 0!important}.brand-description{max-width:500px!important}.features{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important}.feature{padding:12px!important;gap:8px!important}.feature-icon{width:34px!important;height:34px!important}.login-panel{padding:34px 30px!important}}
 @media(max-width:560px){body{padding:10px!important}.login-wrapper{width:100%!important;margin:8px auto!important;border-radius:20px!important}.brand-panel{padding:23px 21px!important}.brand-panel:after{inset:10px;border-radius:14px}.brand-content h1{font-size:29px!important}.brand-description{font-size:12px!important}.features{grid-template-columns:1fr!important;gap:8px!important}.feature{display:flex!important;align-items:center!important;padding:10px 12px!important}.feature strong{font-size:12px!important}.feature span{font-size:10px!important}.login-panel{padding:26px 20px!important}.login-header h2{font-size:25px!important}.login-header{margin-bottom:24px!important}.form-group{margin-bottom:16px!important}.login-btn{min-height:51px!important}.login-footer{justify-content:center!important;gap:8px!important;text-align:center}}
 @media(prefers-reduced-motion:reduce){.feature,.login-btn{transition:none!important}}
+
+
+/* Login input contrast fix: keep both fields dark and typed text clearly visible,
+   including Chrome/Android/iOS saved-value autofill rendering. */
+html body .login-wrapper .login-panel .input-wrapper input#studentId,
+html body .login-wrapper .login-panel .input-wrapper input#password {
+    background-color: #0b1020 !important;
+    color: #f8fafc !important;
+    -webkit-text-fill-color: #f8fafc !important;
+    caret-color: #a6ff2e !important;
+    color-scheme: dark;
+    opacity: 1 !important;
+}
+html body .login-wrapper .login-panel .input-wrapper input#studentId::placeholder,
+html body .login-wrapper .login-panel .input-wrapper input#password::placeholder {
+    color: #8997b1 !important;
+    -webkit-text-fill-color: #8997b1 !important;
+    opacity: 1 !important;
+}
+html body .login-wrapper .login-panel .input-wrapper input#studentId:-webkit-autofill,
+html body .login-wrapper .login-panel .input-wrapper input#password:-webkit-autofill,
+html body .login-wrapper .login-panel .input-wrapper input#studentId:-webkit-autofill:hover,
+html body .login-wrapper .login-panel .input-wrapper input#password:-webkit-autofill:hover,
+html body .login-wrapper .login-panel .input-wrapper input#studentId:-webkit-autofill:focus,
+html body .login-wrapper .login-panel .input-wrapper input#password:-webkit-autofill:focus {
+    -webkit-text-fill-color: #f8fafc !important;
+    caret-color: #a6ff2e !important;
+    -webkit-box-shadow: 0 0 0 1000px #0b1020 inset !important;
+    box-shadow: 0 0 0 1000px #0b1020 inset !important;
+    background-color: #0b1020 !important;
+    transition: background-color 99999s ease-out 0s;
+}
+html body .login-wrapper .login-panel .input-wrapper input#studentId::selection,
+html body .login-wrapper .login-panel .input-wrapper input#password::selection {
+    background: rgba(166, 255, 46, .35);
+    color: #ffffff;
+}
