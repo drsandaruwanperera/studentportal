@@ -6,7 +6,8 @@ import {
     db,
     doc,
     getDoc,
-    updateDoc
+    updateDoc,
+    runTransaction
 } from "./firebase.js";
 
 
@@ -69,6 +70,106 @@ function getStudentDocumentWithTimeout(studentRef, timeoutMs = 15000) {
     });
 }
 
+
+
+const MAX_FAILED_LOGIN_ATTEMPTS = 5;
+const ACCOUNT_SUPPORT_NUMBERS = ["94779011780", "94777771498"];
+
+function isStudentAccountLocked(data) {
+    return data?.accountLocked === true;
+}
+
+function showAccountLockedMessage(studentId) {
+    if (!msg) return;
+    msg.replaceChildren();
+    msg.style.display = "block";
+    msg.style.color = "#f87171";
+    msg.style.lineHeight = "1.55";
+
+    const heading = document.createElement("strong");
+    heading.textContent = "🔒 Your account is locked";
+    heading.style.display = "block";
+    heading.style.marginBottom = "6px";
+
+    const detail = document.createElement("span");
+    detail.textContent = "There were 5 incorrect password attempts. Please contact an administrator and request an account release.";
+    detail.style.display = "block";
+
+    const actions = document.createElement("div");
+    actions.style.display = "flex";
+    actions.style.flexWrap = "wrap";
+    actions.style.gap = "8px";
+    actions.style.marginTop = "12px";
+
+    const requestText = "Hello, my Student Assessment Portal account is locked after 5 incorrect password attempts. Student ID: " +
+        studentId + ". Please verify my identity and help release my account. I have not included my password.";
+
+    ACCOUNT_SUPPORT_NUMBERS.forEach((number, index) => {
+        const link = document.createElement("a");
+        link.href = "https://wa.me/" + number + "?text=" + encodeURIComponent(requestText);
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = "WhatsApp Admin " + (index + 1);
+        link.style.display = "inline-flex";
+        link.style.padding = "9px 12px";
+        link.style.borderRadius = "9px";
+        link.style.background = "#16a34a";
+        link.style.color = "#ffffff";
+        link.style.fontWeight = "800";
+        link.style.fontSize = "12px";
+        link.style.textDecoration = "none";
+        actions.appendChild(link);
+    });
+
+    msg.append(heading, detail, actions);
+}
+
+async function recordFailedLoginAttempt(studentRef, enteredPassword) {
+    return runTransaction(db, async transaction => {
+        const latestSnapshot = await transaction.get(studentRef);
+        if (!latestSnapshot.exists()) {
+            return { locked: false, attempts: 0, passwordChanged: false };
+        }
+        const latestData = latestSnapshot.data() || {};
+        if (isStudentAccountLocked(latestData)) {
+            return {
+                locked: true,
+                attempts: Number(latestData.failedLoginAttempts || MAX_FAILED_LOGIN_ATTEMPTS),
+                passwordChanged: false
+            };
+        }
+        if (String(latestData.password ?? "").trim() === enteredPassword) {
+            return { locked: false, attempts: 0, passwordChanged: true };
+        }
+        const attempts = Math.max(0, Number(latestData.failedLoginAttempts || 0)) + 1;
+        const locked = attempts >= MAX_FAILED_LOGIN_ATTEMPTS;
+        transaction.update(studentRef, {
+            failedLoginAttempts: attempts,
+            accountLocked: locked,
+            accountLockedAt: locked ? Date.now() : null
+        });
+        return { locked, attempts, passwordChanged: false };
+    });
+}
+
+async function verifySuccessfulLogin(studentRef, enteredPassword) {
+    return runTransaction(db, async transaction => {
+        const latestSnapshot = await transaction.get(studentRef);
+        if (!latestSnapshot.exists()) return { ok: false, locked: false };
+        const latestData = latestSnapshot.data() || {};
+        if (isStudentAccountLocked(latestData)) return { ok: false, locked: true };
+        if (String(latestData.password ?? "").trim() !== enteredPassword) {
+            return { ok: false, locked: false };
+        }
+        transaction.update(studentRef, {
+            failedLoginAttempts: 0,
+            accountLocked: false,
+            accountLockedAt: null,
+            lastSuccessfulLoginAt: Date.now()
+        });
+        return { ok: true, locked: false, data: latestData };
+    });
+}
 
 // =====================================================
 // NORMALIZE STUDENT ID
@@ -620,6 +721,11 @@ async function loginStudent() {
         const data =
             studentSnap.data();
 
+        if (isStudentAccountLocked(data)) {
+            showAccountLockedMessage(studentId);
+            return;
+        }
+
 
         // =============================================
         // PASSWORD CHECK
@@ -634,13 +740,22 @@ async function loginStudent() {
         if (
             storedPassword !== password
         ) {
-
+            const attemptResult = await recordFailedLoginAttempt(studentRef, password);
+            if (attemptResult.locked) {
+                showAccountLockedMessage(studentId);
+                return;
+            }
+            if (attemptResult.passwordChanged) {
+                showMessage("Your password has changed. Please enter the current password again.");
+                return;
+            }
+            const remaining = Math.max(0, MAX_FAILED_LOGIN_ATTEMPTS - attemptResult.attempts);
             showMessage(
-                "Invalid Student ID or password."
+                "Invalid Student ID or password. " +
+                attemptResult.attempts + " of " + MAX_FAILED_LOGIN_ATTEMPTS +
+                " attempts used. " + remaining + " remaining."
             );
-
             return;
-
         }
 
 
@@ -682,11 +797,21 @@ async function loginStudent() {
         // SAVE SESSION
         // =============================================
 
+        const verifiedLogin = await verifySuccessfulLogin(studentRef, password);
+        if (verifiedLogin.locked) {
+            showAccountLockedMessage(studentId);
+            return;
+        }
+        if (!verifiedLogin.ok) {
+            showMessage("Your password or account details changed. Please try again.");
+            return;
+        }
+
         saveStudentSession(
             studentId,
             studentType,
             gradeName,
-            data
+            verifiedLogin.data || data
         );
 
 
@@ -1055,6 +1180,7 @@ if (studentIdInput) {
 
             if (msg) {
                 msg.textContent = "";
+                msg.style.display = "";
             }
 
         }
@@ -1071,6 +1197,7 @@ if (passwordInput) {
 
             if (msg) {
                 msg.textContent = "";
+                msg.style.display = "";
             }
 
         }
