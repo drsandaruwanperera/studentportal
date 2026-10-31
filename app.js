@@ -72,7 +72,7 @@ function getStudentDocumentWithTimeout(studentRef, timeoutMs = 15000) {
 
 
 
-const MAX_FAILED_LOGIN_ATTEMPTS = 5;
+const MAX_FAILED_LOGIN_ATTEMPTS = 2;
 const ACCOUNT_SUPPORT_NUMBERS = ["94779011780", "94777771498"];
 
 function isStudentAccountLocked(data) {
@@ -92,7 +92,7 @@ function showAccountLockedMessage(studentId) {
     heading.style.marginBottom = "6px";
 
     const detail = document.createElement("span");
-    detail.textContent = "There were 5 incorrect password attempts. Please contact an administrator and request an account release.";
+    detail.textContent = "There were 2 incorrect password attempts. Please contact an administrator and request an account release.";
     detail.style.display = "block";
 
     const actions = document.createElement("div");
@@ -101,7 +101,7 @@ function showAccountLockedMessage(studentId) {
     actions.style.gap = "8px";
     actions.style.marginTop = "12px";
 
-    const requestText = "Hello, my Student Assessment Portal account is locked after 5 incorrect password attempts. Student ID: " +
+    const requestText = "Hello, my Student Assessment Portal account is locked after 2 incorrect password attempts. Student ID: " +
         studentId + ". Please verify my identity and help release my account. I have not included my password.";
 
     ACCOUNT_SUPPORT_NUMBERS.forEach((number, index) => {
