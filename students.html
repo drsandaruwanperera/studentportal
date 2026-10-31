@@ -1547,7 +1547,19 @@
 
         }
 
-    </style>
+    
+        .account-locked-badge{
+            display:inline-flex;align-items:center;gap:5px;
+            padding:5px 9px;border-radius:999px;
+            background:#fee2e2;color:#991b1b;font-size:11px;
+            font-weight:800;border:1px solid #fecaca;
+        }
+        .release-lock-btn{
+            border:1px solid #86efac!important;
+            background:#f0fdf4!important;color:#166534!important;
+        }
+        .release-lock-btn:hover{background:#dcfce7!important}
+</style>
 
 </head>
 
@@ -1912,6 +1924,10 @@
 
                 <option value="offline">
                     Offline
+                </option>
+
+                <option value="locked">
+                    Locked Accounts
                 </option>
 
             </select>
@@ -2623,7 +2639,7 @@
 
 <script
     type="module"
-    src="students.js"
+    src="students.js?v=account-lock-1"
 ></script>
 
 
