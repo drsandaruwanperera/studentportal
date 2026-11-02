@@ -98,6 +98,11 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
     const accentColour = $("customAccent").value;
     const backgroundColour = $("customBackground").value;
 
+    if (themeKey === "default") {
+      showMessage("Default / Normal restores the original website colours. Choose a seasonal preset to save custom colours.");
+      return;
+    }
+
     if (!/^#[0-9a-f]{6}$/i.test(accentColour) || !/^#[0-9a-f]{6}$/i.test(backgroundColour)) {
       showMessage("Choose valid Accent and Background colours before saving.", true);
       return;
@@ -208,11 +213,12 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
   function updatePreview(applyPresetColours = false) {
     const key = $("themeKey").value;
     const colors = themeColors[key] || themeColors.custom;
+    const isDefaultTheme = key === "default";
 
     // Reuse a colour pair previously saved for this preset; otherwise load
     // the preset's built-in defaults whenever the preset is selected.
     if (applyPresetColours) {
-      const saved = savedPalettes.get(key);
+      const saved = isDefaultTheme ? null : savedPalettes.get(key);
       $("customAccent").value = saved?.accentColour || colors[1];
       $("customBackground").value = saved?.backgroundColour || colors[0];
     }
@@ -225,9 +231,14 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
       ? "Default website design with your saved accent and background colours during this session."
       : "Choose your colours, save this preset's palette, then save a session to publish it.";
     $("customThemeFields").hidden = false;
-    $("colourPresetHint").textContent = savedPalettes.has(key)
-      ? "Your saved colour pair for this preset is loaded. You can change and save it again."
-      : "Preset colours are filled automatically. Choose your own colours and use Save colours to remember them.";
+    $("colourPresetHint").textContent = isDefaultTheme
+      ? "Default / Normal restores the original white and blue website design. Custom colours are available for seasonal presets."
+      : savedPalettes.has(key)
+        ? "Your saved colour pair for this preset is loaded. You can change and save it again."
+        : "Preset colours are filled automatically. Choose your own colours and use Save colours to remember them.";
+    $("customAccent").disabled = isDefaultTheme;
+    $("customBackground").disabled = isDefaultTheme;
+    $("saveColoursBtn").disabled = isDefaultTheme;
     $("previewSwatch").style.borderColor = accent;
   }
 
@@ -510,7 +521,7 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
     });
     const currentKey = $("themeKey").value;
     const saved = savedPalettes.get(currentKey);
-    if (saved && !editingId) {
+    if (currentKey !== "default" && saved && !editingId) {
       $("customAccent").value = saved.accentColour;
       $("customBackground").value = saved.backgroundColour;
       updatePreview(false);
