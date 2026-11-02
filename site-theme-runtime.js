@@ -60,6 +60,10 @@ import { db, doc, onSnapshot } from "./firebase.js";
     document.documentElement.style.removeProperty("--site-custom-background");
     document.documentElement.style.removeProperty("--season-accent");
     document.documentElement.style.removeProperty("--season-bg");
+    document.documentElement.style.removeProperty("--season-panel");
+    document.documentElement.style.removeProperty("--season-text");
+    document.documentElement.style.removeProperty("--season-muted");
+    document.documentElement.style.removeProperty("--season-accent-contrast");
   }
 
   function pageType() {
@@ -102,6 +106,37 @@ import { db, doc, onSnapshot } from "./firebase.js";
     currentLayer = layer;
   }
 
+  function hexToRgb(hex) {
+    const match = /^#([0-9a-f]{6})$/i.exec(String(hex || ""));
+    if (!match) return null;
+    const value = match[1];
+    return [
+      parseInt(value.slice(0, 2), 16),
+      parseInt(value.slice(2, 4), 16),
+      parseInt(value.slice(4, 6), 16)
+    ];
+  }
+
+  function relativeLuminance(hex) {
+    const rgb = hexToRgb(hex);
+    if (!rgb) return 0;
+    const channels = rgb.map(value => {
+      const channel = value / 255;
+      return channel <= 0.04045 ? channel / 12.92 : Math.pow((channel + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
+  }
+
+  function blendHex(first, second, weight) {
+    const a = hexToRgb(first);
+    const b = hexToRgb(second);
+    if (!a || !b) return first;
+    const amount = Math.max(0, Math.min(1, Number(weight) || 0));
+    return "#" + a.map((value, index) =>
+      Math.round(value * (1 - amount) + b[index] * amount).toString(16).padStart(2, "0")
+    ).join("");
+  }
+
   function applySchedule(schedule) {
     const signature = schedule
       ? [
@@ -123,19 +158,33 @@ import { db, doc, onSnapshot } from "./firebase.js";
     removeDecorations();
     removeThemeStyles();
 
-    if (!schedule || schedule.themeKey === "default") return;
+    if (!schedule) return;
 
-    document.documentElement.dataset.siteSeason = schedule.themeKey;
-    document.documentElement.dataset.siteThemeName = schedule.title || schedule.themeKey;
+    const root = document.documentElement;
+    root.dataset.siteSeason = schedule.themeKey;
+    root.dataset.siteThemeName = schedule.title || schedule.themeKey;
     const accentColour = schedule.accentColour || schedule.customAccent || "";
     const backgroundColour = schedule.backgroundColour || schedule.customBackground || "";
     if (/^#[0-9a-f]{6}$/i.test(accentColour)) {
-      document.documentElement.style.setProperty("--season-accent", accentColour);
-      document.documentElement.style.setProperty("--site-custom-accent", accentColour);
+      root.style.setProperty("--season-accent", accentColour);
+      root.style.setProperty("--site-custom-accent", accentColour);
     }
     if (/^#[0-9a-f]{6}$/i.test(backgroundColour)) {
-      document.documentElement.style.setProperty("--season-bg", backgroundColour);
-      document.documentElement.style.setProperty("--site-custom-background", backgroundColour);
+      root.style.setProperty("--season-bg", backgroundColour);
+      root.style.setProperty("--site-custom-background", backgroundColour);
+    }
+
+    // Default / Normal sessions can also carry a saved colour pair. Apply it
+    // without adding seasonal decorations, and adapt surface/text contrast to
+    // the selected background so the custom palette remains readable.
+    if (schedule.themeKey === "default") {
+      const safeBackground = /^#[0-9a-f]{6}$/i.test(backgroundColour) ? backgroundColour : "#0b1020";
+      const safeAccent = /^#[0-9a-f]{6}$/i.test(accentColour) ? accentColour : "#a6ff2e";
+      const lightBackground = relativeLuminance(safeBackground) > 0.42;
+      root.style.setProperty("--season-panel", blendHex(safeBackground, "#ffffff", lightBackground ? 0.88 : 0.10));
+      root.style.setProperty("--season-text", lightBackground ? "#11182b" : "#f4f7ff");
+      root.style.setProperty("--season-muted", lightBackground ? "#596579" : "#aeb8ce");
+      root.style.setProperty("--season-accent-contrast", relativeLuminance(safeAccent) > 0.48 ? "#11182b" : "#f4f7ff");
     }
 
     const link = document.createElement("link");
