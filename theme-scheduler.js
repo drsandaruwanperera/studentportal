@@ -222,7 +222,7 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
     $("previewSwatch").style.background = `linear-gradient(135deg,${background},${accent})`;
     $("previewName").textContent = themeLabels[key] || "Seasonal theme";
     $("previewDescription").textContent = key === "default"
-      ? "Default appearance. The original site colours are shown outside this scheduled session."
+      ? "Default website design with your saved accent and background colours during this session."
       : "Choose your colours, save this preset's palette, then save a session to publish it.";
     $("customThemeFields").hidden = false;
     $("colourPresetHint").textContent = savedPalettes.has(key)
