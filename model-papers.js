@@ -314,7 +314,17 @@ function renderMonthlyPaperSections(items) {
         (groups[key] ||= []).push(x);
     });
 
-    const sortedGroups = Object.entries(groups).sort((a,b) => b[0].localeCompare(a[0]));
+    // Sort by real calendar position, not month-name text:
+    // newest/current month first, followed by earlier months (e.g. Nov, Oct, Sep).
+    const sortedGroups = Object.entries(groups).sort((a, b) => {
+        const [yearA, monthA] = a[0].split("-");
+        const [yearB, monthB] = b[0].split("-");
+        const yearDiff = Number(yearB) - Number(yearA);
+        if (yearDiff !== 0) return yearDiff;
+        const monthIndexA = Object.keys(monthNames).indexOf(monthA);
+        const monthIndexB = Object.keys(monthNames).indexOf(monthB);
+        return monthIndexB - monthIndexA;
+    });
     sortedGroups.forEach(([key, papers]) => {
         const [year, month] = key.split("-");
         const section = document.createElement("section");
