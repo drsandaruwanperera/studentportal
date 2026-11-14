@@ -349,7 +349,10 @@ function renderMonthlyPaperSections(items) {
                 }).join("")}
             </div>`;
 
-        if (coming) main.insertBefore(section, coming);
+        // Keep the newest dynamic collection above the older static collection.
+        const staticMonthSection = main.querySelector(".month-section:not(.monthly-dynamic-section)");
+        if (staticMonthSection) main.insertBefore(section, staticMonthSection);
+        else if (coming) main.insertBefore(section, coming);
         else main.appendChild(section);
     });
 
