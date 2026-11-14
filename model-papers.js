@@ -284,8 +284,31 @@ function renderMonthlyPaperSections(items) {
     document.querySelectorAll("[data-monthly-paper-section]").forEach(el => el.remove());
 
     const groups = {};
-    items.filter(x => x.published !== false && !(String(x.month).toLowerCase() === "september" && Number(x.year) === 2026)).forEach(x => {
-        const key = `${x.year}-${x.month}`;
+    const visibleItems = items.filter(x =>
+        x.published !== false &&
+        !(String(x.month).toLowerCase() === "september" && Number(x.year) === 2026)
+    );
+
+    // November 2026 Paper 01 is hosted as two PDF resources in this repository.
+    // Add it locally so the collection does not depend on a Firestore document.
+    const hasNovemberPaper01 = visibleItems.some(x =>
+        Number(x.year) === 2026 &&
+        String(x.month).toLowerCase() === "november" &&
+        Number(x.paperNumber) === 1
+    );
+    if (!hasNovemberPaper01) {
+        visibleItems.push({
+            year: 2026,
+            month: "november",
+            paperNumber: "01",
+            title: "Paper 01",
+            published: true,
+            source: "repository"
+        });
+    }
+
+    visibleItems.forEach(x => {
+        const key = `${x.year}-${String(x.month).toLowerCase()}`;
         (groups[key] ||= []).push(x);
     });
 
