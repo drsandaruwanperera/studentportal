@@ -284,19 +284,21 @@ function renderMonthlyPaperSections(items) {
     document.querySelectorAll("[data-monthly-paper-section]").forEach(el => el.remove());
 
     const groups = {};
+    const isA27000Batch = sessionStorage.getItem("alYear") === "2027";
     const visibleItems = items.filter(x =>
         x.published !== false &&
-        !(String(x.month).toLowerCase() === "september" && Number(x.year) === 2026)
+        !(String(x.month).toLowerCase() === "september" && Number(x.year) === 2026) &&
+        (isA27000Batch || !(String(x.month).toLowerCase() === "november" && Number(x.year) === 2026))
     );
 
-    // November 2026 Paper 01 is hosted as two PDF resources in this repository.
-    // Add it locally so the collection does not depend on a Firestore document.
+    // November 2026 Paper 01 belongs to the A27000 / A/L 2027 batch.
+    // It is hosted as 1st- and 2nd-paper PDFs in this repository.
     const hasNovemberPaper01 = visibleItems.some(x =>
         Number(x.year) === 2026 &&
         String(x.month).toLowerCase() === "november" &&
         Number(x.paperNumber) === 1
     );
-    if (!hasNovemberPaper01) {
+    if (isA27000Batch && !hasNovemberPaper01) {
         visibleItems.push({
             year: 2026,
             month: "november",
