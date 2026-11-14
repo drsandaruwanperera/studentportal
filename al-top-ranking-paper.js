@@ -54,23 +54,27 @@ async function checkPaperResource(linkId, statusId, type) {
     if (!link || !status) return;
 
     const viewerUrl = `al-paper-viewer.html?paper=${paperNumber}&type=${type}&month=${monthName}&year=${yearLabel}`;
-    const monthTitle = monthLabel;
-    const imageUrl = `papers/al-top-ranking/${monthName}/paper-${paperNumber}-${type === "second" ? "2nd-paper" : "1st-paper"}/page-01.jpg`;
+    const folderName = type === "second" ? "2nd-paper" : "1st-paper";
+    const imageUrl = `papers/al-top-ranking/${monthName}/paper-${paperNumber}-${folderName}/page-01.jpg`;
+    const isNovemberPdf = monthName === "november" && yearLabel === "2026";
+    const resourceUrl = isNovemberPdf
+        ? `papers/al-top-ranking/november/paper-${paperNumber}-${folderName}.pdf`
+        : imageUrl;
 
     try {
-        const response = await fetch(imageUrl, { method: "HEAD", cache: "no-store" });
+        const response = await fetch(resourceUrl, { method: "HEAD", cache: "no-store" });
         if (response.ok) {
-            link.href = viewerUrl;
-            link.target = "_self";
-            link.rel = "";
+            link.href = isNovemberPdf ? resourceUrl : viewerUrl;
+            link.target = isNovemberPdf ? "_blank" : "_self";
+            link.rel = isNovemberPdf ? "noopener noreferrer" : "";
             link.classList.remove("pending");
-            link.textContent = "View Paper →";
-            status.textContent = "Pages available";
+            link.textContent = isNovemberPdf ? "Open PDF →" : "View Paper →";
+            status.textContent = isNovemberPdf ? "PDF available" : "Pages available";
         } else {
-            status.textContent = "Paper is not uploaded yet.";
+            status.textContent = isNovemberPdf ? "PDF is not uploaded yet." : "Paper is not uploaded yet.";
         }
     } catch (error) {
-        status.textContent = "Paper is not uploaded yet.";
+        status.textContent = isNovemberPdf ? "PDF is not uploaded yet." : "Paper is not uploaded yet.";
     }
 }
 
@@ -156,7 +160,10 @@ async function initialize() {
         checkPaperResource("secondPaper", "secondStatus", "second")
     ]);
 
-    addAnswerSection();
+    // No answer schemes were supplied with the November 2026 PDFs.
+    if (!(monthName === "november" && yearLabel === "2026")) {
+        addAnswerSection();
+    }
 }
 
 document.addEventListener("DOMContentLoaded", initialize);
