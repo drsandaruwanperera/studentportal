@@ -2,6 +2,8 @@
 // FIREBASE APP
 // =====================================================
 
+import "./christmas-theme.js?v=20261115";
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
 import { getAuth, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
