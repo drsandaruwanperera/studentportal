@@ -4,7 +4,7 @@
   if (window.__drSandaruwanChristmasMounted) return;
   window.__drSandaruwanChristmasMounted = true;
 
-  const stylesheetUrl = new URL("./christmas-theme.css?v=20261115", import.meta.url).href;
+  const stylesheetUrl = new URL("./christmas-theme.css?v=20261115-2", import.meta.url).href;
 
   function addStylesheet() {
     if (document.getElementById("christmas-theme-stylesheet")) return;

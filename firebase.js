@@ -2,7 +2,7 @@
 // FIREBASE APP
 // =====================================================
 
-import "./christmas-theme.js?v=20261115";
+import "./christmas-theme.js?v=20261115-2";
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
