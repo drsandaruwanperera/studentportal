@@ -1,0 +1,9 @@
+
+/* Embedded in the existing Progress & Results result grid. */
+#resultGrid .g11-progress-result-collection{grid-column:1/-1;width:100%;margin:0;min-width:0}
+#resultGrid .g11-collection-heading{background:linear-gradient(110deg,rgba(91,76,246,.26),rgba(16,67,67,.3));border-color:rgba(145,169,203,.2)}
+#resultGrid .g11-collection-kicker{color:#9eacff}
+#resultGrid .g11-result-stats>div{background:#101827}
+#resultGrid .g11-paper-result-row{grid-template-columns:38px minmax(0,1fr) auto}
+#resultGrid .g11-paper-result-row .g11-paper-num{background:linear-gradient(145deg,#4336b5,#145a48);color:#fff}
+@media(max-width:800px){#resultGrid .g11-progress-result-collection{padding:13px}#resultGrid .g11-paper-result-row{grid-template-columns:34px minmax(0,1fr) auto}}
