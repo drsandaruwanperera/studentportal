@@ -4,8 +4,8 @@
    access rules, navigation targets, or paper-management logic.
    ============================================================ */
 :root{
-  --xmas-night:#07162d;--xmas-navy:#0c2343;--xmas-navy-2:#132f52;
-  --xmas-red:#a91f31;--xmas-red-bright:#d83a48;--xmas-green:#126342;
+  --xmas-night:var(--season-bg,#07162d);--xmas-navy:#0c2343;--xmas-navy-2:#132f52;
+  --xmas-red:var(--season-accent,#a91f31);--xmas-red-bright:var(--season-accent,#d83a48);--xmas-green:#126342;
   --xmas-green-bright:#1d8659;--xmas-gold:#e7bd69;--xmas-snow:#f2f7ff;
   --xmas-ice:#e5effb;--xmas-line:rgba(190,213,244,.26);
   --xmas-shadow:0 18px 44px rgba(2,12,28,.24);
@@ -54,7 +54,7 @@ body.christmas-theme-active :is(a,button,input,select,textarea,[tabindex]):focus
 }
 #christmas-santa-badge .xmas-santa{
   position:relative;display:grid;place-items:center;width:40px;height:40px;flex:none;border-radius:50%;
-  background:linear-gradient(145deg,#a91f31,#741725);font-size:27px;transform-origin:50% 85%;
+  background:linear-gradient(145deg,var(--xmas-red),#741725);font-size:27px;transform-origin:50% 85%;
   animation:xmas-santa-wave 2.5s ease-in-out infinite;
 }
 #christmas-santa-badge .xmas-santa-copy{display:grid;gap:3px;white-space:nowrap}
@@ -75,10 +75,10 @@ body.christmas-theme-active .sub{color:#c4d5ec!important}
 body.christmas-theme-active .nav a{color:#edf4ff!important}
 body.christmas-theme-active .nav a:hover,body.christmas-theme-active .nav a[aria-current="page"]{color:#ffe1a0!important}
 body.christmas-theme-active .seal,body.christmas-theme-active .brandmark{
-  background:linear-gradient(145deg,#a91f31,#0d6745)!important;color:#ffe2a0!important;
+  background:linear-gradient(145deg,var(--xmas-red),#0d6745)!important;color:#ffe2a0!important;
   border:1px solid rgba(231,189,105,.82)!important;box-shadow:0 7px 22px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.25)!important;
 }
-body.christmas-theme-active .portal{background:linear-gradient(110deg,#a91f31 0%,#c52d3c 48%,#126342 100%)!important;border:1px solid #e7bd69!important;color:#fff!important;box-shadow:0 8px 23px rgba(169,31,49,.3)}
+body.christmas-theme-active .portal{background:linear-gradient(110deg,var(--xmas-red) 0%,#c52d3c 48%,#126342 100%)!important;border:1px solid #e7bd69!important;color:#fff!important;box-shadow:0 8px 23px rgba(169,31,49,.3)}
 body.christmas-theme-active .hero{
   background:radial-gradient(ellipse at 85% 30%,rgba(30,106,77,.28),transparent 38%),radial-gradient(ellipse at 9% 10%,rgba(169,31,49,.18),transparent 36%),linear-gradient(115deg,#07162d,#102d50 72%,#0d3c37)!important;color:#f8fbff!important;
 }
@@ -86,13 +86,13 @@ body.christmas-theme-active .hero :is(h1,.copy h1,.hero-copy h1){color:#fff!impo
 body.christmas-theme-active .hero :is(h1 span,.copy h1 span){color:#f1ca79!important}
 body.christmas-theme-active .hero :is(p,.eyebrow){color:#e2ecfb!important}
 body.christmas-theme-active .hero .eyebrow:before{background:#e7bd69!important}
-body.christmas-theme-active .hero .primary,body.christmas-theme-active .hero .btn-primary{color:#fff!important;background:linear-gradient(115deg,#a91f31,#d33a46)!important;border:1px solid #edc779!important}
+body.christmas-theme-active .hero .primary,body.christmas-theme-active .hero .btn-primary{color:#fff!important;background:linear-gradient(115deg,var(--xmas-red),#d33a46)!important;border:1px solid #edc779!important}
 body.christmas-theme-active .hero .outline,body.christmas-theme-active .hero .btn-ghost{color:#fff!important;background:rgba(255,255,255,.06)!important;border-color:rgba(231,189,105,.6)!important}
 body.christmas-theme-active .hero .stat b,body.christmas-theme-active .hero .stat strong{color:#ffe1a0!important}
 body.christmas-theme-active .hero .stat small{color:#d5e3f5!important}
 body.christmas-theme-active .arch{box-shadow:0 0 0 8px #0c2343,0 0 0 10px rgba(231,189,105,.75),0 22px 55px #0008!important}
 body.christmas-theme-active .ring,body.christmas-theme-active .ring:after{border-color:rgba(231,189,105,.55)!important}
-body.christmas-theme-active .experience{background:#a91f31!important;border:1px solid #e7bd69!important}
+body.christmas-theme-active .experience{background:var(--xmas-red)!important;border:1px solid #e7bd69!important}
 body.christmas-theme-active .experience :is(b,small){color:#fff!important}
 body.christmas-theme-active .signature{color:#ffe2a0!important}
 body.christmas-theme-active .caption{background:#0a203a!important;color:#fff!important;border:1px solid rgba(231,189,105,.5)}
@@ -102,7 +102,7 @@ body.christmas-theme-active .program{border-color:rgba(231,189,105,.2)!important
 body.christmas-theme-active .program:hover{background:rgba(255,255,255,.08)!important}
 body.christmas-theme-active .program :is(b,strong){color:#fff!important}
 body.christmas-theme-active .program small{color:#f1ca79!important}
-body.christmas-theme-active .program .icon,body.christmas-theme-active .prog-arrow{background:linear-gradient(145deg,#a91f31,#126342)!important;color:#fff!important;border:1px solid #e7bd69!important}
+body.christmas-theme-active .program .icon,body.christmas-theme-active .prog-arrow{background:linear-gradient(145deg,var(--xmas-red),#126342)!important;color:#fff!important;border:1px solid #e7bd69!important}
 body.christmas-theme-active .why{background:linear-gradient(135deg,#edf5ff,#fff 54%,#e8f2fc)!important;border-color:#cfdeef!important}
 body.christmas-theme-active .section:is(.about,.res,.feedback,.gallery,.courses),body.christmas-theme-active .wins,body.christmas-theme-active .grade-support{background:linear-gradient(145deg,#edf4fd,#fff 48%,#e8f1fb)!important;color:#102643!important}
 body.christmas-theme-active .section :is(h2,h3),body.christmas-theme-active .why :is(h2,h3),body.christmas-theme-active .programs .section-head :is(h2,h3){color:#102847!important}
@@ -114,7 +114,7 @@ body.christmas-theme-active :is(.qual,.win,.resource,.course,.review,.grade-supp
 body.christmas-theme-active :is(.qual,.win,.resource,.course,.review,.grade-support-card):hover{border-color:#d7ad5d!important;box-shadow:0 17px 34px rgba(15,42,73,.16)!important}
 body.christmas-theme-active :is(.qual,.win,.resource,.course,.review,.grade-support-card) :is(h3,h4,b,strong){color:#102847!important}
 body.christmas-theme-active :is(.qual,.win,.resource,.course,.review,.grade-support-card) p,body.christmas-theme-active :is(.qual,.win,.resource,.course,.review,.grade-support-card) span{color:#556c86!important}
-body.christmas-theme-active :is(.resource .symbol,.course-ico,.qual-ico,.win-medal,.path-icon,.why-icon){background:linear-gradient(145deg,#0d6547,#a91f31)!important;color:#fff!important;border-color:#e7bd69!important}
+body.christmas-theme-active :is(.resource .symbol,.course-ico,.qual-ico,.win-medal,.path-icon,.why-icon){background:linear-gradient(145deg,#0d6547,var(--xmas-red))!important;color:#fff!important;border-color:#e7bd69!important}
 body.christmas-theme-active .method,body.christmas-theme-active .method-card{background:linear-gradient(135deg,#0c563c,#0a2341 75%)!important;border:1px solid rgba(231,189,105,.65)!important}
 body.christmas-theme-active .method :is(h3,p){color:#f5f8ff!important}
 body.christmas-theme-active .results{background:radial-gradient(ellipse at 88% 0%,rgba(28,117,78,.28),transparent 36%),linear-gradient(120deg,#081a32,#0b3d35)!important;border-top:4px solid #b52537!important;color:#fff!important}
@@ -123,22 +123,22 @@ body.christmas-theme-active .results .kicker{color:#f1ca79!important}
 body.christmas-theme-active .rankbox,body.christmas-theme-active .rank{background:rgba(255,255,255,.07)!important;border:1px solid rgba(231,189,105,.38)!important}
 body.christmas-theme-active .rankbox b,body.christmas-theme-active .rank b{color:#f6d58c!important}
 body.christmas-theme-active .rankbox span,body.christmas-theme-active .rank span{color:#f0f5ff!important}
-body.christmas-theme-active .course:before,body.christmas-theme-active .resource:before{background:linear-gradient(90deg,#a91f31,#e7bd69,#126342)!important}
+body.christmas-theme-active .course:before,body.christmas-theme-active .resource:before{background:linear-gradient(90deg,var(--xmas-red),#e7bd69,#126342)!important}
 body.christmas-theme-active .contact,body.christmas-theme-active .cta{background:radial-gradient(ellipse at 80% 0%,rgba(28,117,78,.28),transparent 42%),linear-gradient(115deg,#07172f,#0b5039)!important;color:#fff!important;border-top:4px solid #b52537!important}
 body.christmas-theme-active .contact :is(h2,p),body.christmas-theme-active .cta :is(h2,p){color:#fff!important}
-body.christmas-theme-active .contact .button,body.christmas-theme-active .cta .button{background:linear-gradient(110deg,#a91f31,#c52d3c)!important;color:#fff!important;border:1px solid #e7bd69!important}
+body.christmas-theme-active .contact .button,body.christmas-theme-active .cta .button{background:linear-gradient(110deg,var(--xmas-red),#c52d3c)!important;color:#fff!important;border:1px solid #e7bd69!important}
 body.christmas-theme-active .site-footer,body.christmas-theme-active .foot{background:linear-gradient(180deg,#07152c,#061021)!important;border-top:1px solid rgba(231,189,105,.48)!important}
 body.christmas-theme-active .site-footer :is(b,strong,.footer-col>a),body.christmas-theme-active .site-footer-bottom{color:#f5e5c2!important}
 body.christmas-theme-active .footer-cap,body.christmas-theme-active .footer-socials a{border-color:rgba(231,189,105,.5)!important}
 
 /* Main site's results and editorial pages. */
 body.christmas-theme-active .top{background:rgba(5,18,39,.95)!important;border-color:rgba(231,189,105,.42)!important}
-body.christmas-theme-active .back{background:linear-gradient(110deg,#a91f31,#126342)!important;color:#fff!important;border:1px solid #e7bd69!important}
+body.christmas-theme-active .back{background:linear-gradient(110deg,var(--xmas-red),#126342)!important;color:#fff!important;border:1px solid #e7bd69!important}
 body.christmas-theme-active .hero:not(.frame .hero){color:#fff!important}
 body.christmas-theme-active .hero h1 span{color:#f1ca79!important}
 body.christmas-theme-active :is(.stat,.card,.proof-card,.cta){border-color:rgba(231,189,105,.38)!important}
-body.christmas-theme-active .stat i,body.christmas-theme-active .rank-head .icon{background:linear-gradient(145deg,#a91f31,#126342)!important;color:#fff!important}
-body.christmas-theme-active .btn{background:linear-gradient(110deg,#a91f31,#126342)!important;color:#fff!important;border:1px solid #e7bd69!important}
+body.christmas-theme-active .stat i,body.christmas-theme-active .rank-head .icon{background:linear-gradient(145deg,var(--xmas-red),#126342)!important;color:#fff!important}
+body.christmas-theme-active .btn{background:linear-gradient(110deg,var(--xmas-red),#126342)!important;color:#fff!important;border:1px solid #e7bd69!important}
 body.christmas-theme-active .footer{color:#e8effc!important;border-color:rgba(231,189,105,.35)!important}
 
 /* Student login and administration login. */
@@ -149,7 +149,7 @@ body.christmas-theme-active .brand-panel,body.christmas-theme-active .admin-bran
 body.christmas-theme-active :is(.brand-logo,.mobile-logo,.admin-logo){background:linear-gradient(145deg,#f1ca79,#ffe9b7)!important;color:#782032!important;border:1px solid #fff0c9!important;box-shadow:0 12px 28px rgba(0,0,0,.24)!important}
 body.christmas-theme-active :is(.brand-label,.welcome-label,.brand-content .brand-label){color:#ffe0a0!important}
 body.christmas-theme-active .brand-content h1 span{color:#ffe0a0!important}
-body.christmas-theme-active :is(.login-btn,#loginBtn,.admin-login-btn,#adminLoginBtn,.submit-btn){background:linear-gradient(110deg,#a91f31,#0e6947)!important;color:#fff!important;border:1px solid #e7bd69!important}
+body.christmas-theme-active :is(.login-btn,#loginBtn,.admin-login-btn,#adminLoginBtn,.submit-btn){background:linear-gradient(110deg,var(--xmas-red),#0e6947)!important;color:#fff!important;border:1px solid #e7bd69!important}
 body.christmas-theme-active :is(.login-panel,.admin-form-panel,.admin-login-panel){border-color:rgba(231,189,105,.34)!important}
 body.christmas-theme-active :is(.input-wrapper input,.login-panel input,.admin-form-panel input){border-color:rgba(171,192,221,.34)!important}
 body.christmas-theme-active :is(.input-wrapper input,.login-panel input,.admin-form-panel input):focus{border-color:#e7bd69!important;box-shadow:0 0 0 3px rgba(231,189,105,.14)!important}
@@ -157,7 +157,7 @@ body.christmas-theme-active :is(.input-wrapper input,.login-panel input,.admin-f
 /* Student dashboard and its navigation. */
 body.christmas-theme-active .sidebar{background:linear-gradient(180deg,#07162d 0%,#0a362e 62%,#101b32 100%)!important;border-color:rgba(231,189,105,.25)!important;box-shadow:12px 0 35px rgba(0,0,0,.22)!important}
 body.christmas-theme-active .sidebar-brand{border-color:rgba(231,189,105,.25)!important}
-body.christmas-theme-active .sidebar .brand-logo{background:linear-gradient(145deg,#a91f31,#126342)!important;color:#ffe2a0!important;border:1px solid #e7bd69!important}
+body.christmas-theme-active .sidebar .brand-logo{background:linear-gradient(145deg,var(--xmas-red),#126342)!important;color:#ffe2a0!important;border:1px solid #e7bd69!important}
 body.christmas-theme-active .sidebar-link.active{background:linear-gradient(105deg,#9e1e30 0%,#126342 100%)!important;color:#fff!important;border-color:rgba(231,189,105,.7)!important;box-shadow:0 10px 26px rgba(169,31,49,.2),inset 0 1px rgba(255,255,255,.16)!important}
 body.christmas-theme-active .sidebar-link:hover{background:rgba(231,189,105,.1)!important;border-color:rgba(231,189,105,.35)!important;color:#fff!important}
 body.christmas-theme-active :is(.lms-header,.mobile-lms-header,.dashboard-mobile-nav){background:rgba(7,22,45,.96)!important;border-color:rgba(231,189,105,.25)!important}
@@ -179,9 +179,9 @@ body.christmas-theme-active :is(.month-section,.paper-header,.section-heading){b
 body.christmas-theme-active :is(.section-heading,.paper-header){
   background:radial-gradient(circle at 82% 5%,rgba(231,189,105,.18),transparent 30%),linear-gradient(120deg,#8f1d2d 0%,#152f4f 58%,#0f6847 100%)!important;
 }
-body.christmas-theme-active :is(.month-badge,.paper-number){background:linear-gradient(145deg,#a91f31,#126342)!important;color:#fff!important;border:1px solid #e7bd69!important}
+body.christmas-theme-active :is(.month-badge,.paper-number){background:linear-gradient(145deg,var(--xmas-red),#126342)!important;color:#fff!important;border:1px solid #e7bd69!important}
 body.christmas-theme-active :is(.paper-card,.pdf-card,.coming-section,.resource-card,.admin-card,.setting-card,.report-card){border-color:rgba(231,189,105,.24)!important}
-body.christmas-theme-active :is(.paper-open,.pdf-link,.primary-btn,.action-btn,.save-btn){background:linear-gradient(110deg,#a91f31,#126342)!important;color:#fff!important;border:1px solid #e7bd69!important}
+body.christmas-theme-active :is(.paper-open,.pdf-link,.primary-btn,.action-btn,.save-btn){background:linear-gradient(110deg,var(--xmas-red),#126342)!important;color:#fff!important;border:1px solid #e7bd69!important}
 body.christmas-theme-active :is(.locked,.paper-card.locked,.pdf-link.pending) :is(button,a){background:#263850!important;color:#b9c6d8!important;border-color:#62738a!important}
 body.christmas-theme-active :is(input,select,textarea){accent-color:#c72e40}
 body.christmas-theme-active :is(input,select,textarea):focus{border-color:#e7bd69!important;box-shadow:0 0 0 3px rgba(231,189,105,.14)!important}
@@ -192,7 +192,7 @@ body.christmas-theme-active :is(.admin-page,.admin-container,.settings-page,.rep
 /* Reading and answer-viewer pages keep clear paper contrast and usable controls. */
 body.christmas-theme-active :is(.pages,.viewer-pages,.answer-pages){background:transparent!important}
 body.christmas-theme-active :is(.toolbar,.viewer-toolbar){background:rgba(7,22,45,.96)!important;border-color:rgba(231,189,105,.35)!important}
-body.christmas-theme-active :is(.toolbar button,.viewer-toolbar button){background:linear-gradient(110deg,#a91f31,#126342)!important;color:#fff!important;border:1px solid #e7bd69!important}
+body.christmas-theme-active :is(.toolbar button,.viewer-toolbar button){background:linear-gradient(110deg,var(--xmas-red),#126342)!important;color:#fff!important;border:1px solid #e7bd69!important}
 body.christmas-theme-active :is(.page-card img,.answer-page img){background:#fff!important}
 @media(max-width:760px){
   #christmas-santa-badge{right:12px;bottom:78px;padding:6px}
