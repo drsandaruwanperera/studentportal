@@ -26,7 +26,20 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
   const SETTINGS_DOC_ID = "__themeSeasonSchedule";
   const scheduleDocumentRef = doc(db, "websiteSettings", SETTINGS_DOC_ID);
   const paletteDocumentRef = doc(db, "websiteSettings", "__themeSeasonPalette");
+
   const savedPalettes = new Map();
+  let selectedEmojis = [];
+
+  const emojiPresets = {
+    default: ["⭐", "✨", "🎉", "🎁", "🌟"],
+    halloween: ["🎃", "👻", "🦇", "🕸️", "🧙‍♀️", "🌙", "🍬", "🕯️"],
+    christmas: ["❄️", "🎄", "🎅", "🎁", "🔔", "⭐", "🦌", "🕯️", "🧦", "🍪"],
+    "new-year": ["🎆", "🎇", "🎉", "🥂", "✨", "🕛", "🎊", "🌟"],
+    avurudu: ["🌞", "🌸", "🌾", "🪷", "🥁", "🏺", "🪔", "🐘"],
+    vesak: ["🪷", "🏮", "🌕", "🕯️", "🌼", "✨", "🙏", "🌸"],
+    deepavali: ["🪔", "✨", "🌟", "🌼", "🪷", "🎆", "🌺", "🔔"],
+    custom: ["✨", "⭐", "🎉", "🎁", "❤️", "🌟", "🎀", "🌈"]
+  };
 
   const themeLabels = {
     default: "Default / Normal",
@@ -210,6 +223,75 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
     })[ch]);
   }
 
+  function normalizeEmojiList(values) {
+    const result = [];
+    (Array.isArray(values) ? values : []).forEach(value => {
+      const emoji = String(value || "").trim();
+      if (!emoji || emoji.length > 16 || !/\p{Extended_Pictographic}/u.test(emoji)) return;
+      if (!result.includes(emoji) && result.length < 12) result.push(emoji);
+    });
+    return result;
+  }
+
+  function defaultEmojisForTheme(themeKey) {
+    return [...(emojiPresets[themeKey] || emojiPresets.custom)];
+  }
+
+  function renderEmojiPicker() {
+    const disabled = $("decorationsEnabled").checked !== true;
+    const themeKey = $("themeKey").value;
+    const suggestions = emojiPresets[themeKey] || emojiPresets.custom;
+    const options = [...new Set([...suggestions, ...selectedEmojis])];
+
+    $("emojiOptions").innerHTML = options.map(emoji => {
+      const selected = selectedEmojis.includes(emoji);
+      return '<button type="button" class="scheduler-emoji-chip' +
+        (selected ? ' selected' : '') + '" data-emoji="' + escapeHTML(emoji) +
+        '" aria-pressed="' + (selected ? 'true' : 'false') + '"' +
+        (disabled ? ' disabled' : '') + '>' + escapeHTML(emoji) + '</button>';
+    }).join("");
+
+    $("emojiSelectedPreview").innerHTML = selectedEmojis.length
+      ? selectedEmojis.map(emoji =>
+          '<button type="button" class="scheduler-emoji-selected-chip" data-remove-emoji="' +
+          escapeHTML(emoji) + '" aria-label="Remove ' + escapeHTML(emoji) + '"' +
+          (disabled ? ' disabled' : '') + '>' + escapeHTML(emoji) + '<span>×</span></button>'
+        ).join("")
+      : '<span class="scheduler-emoji-empty">No emojis selected. Choose suggestions above or add your own.</span>';
+
+    $("emojiSelectedCount").textContent = selectedEmojis.length + " / 12 selected";
+    $("emojiPickerSection").classList.toggle("is-disabled", disabled);
+    $("customEmojiInput").disabled = disabled;
+    $("addCustomEmojiBtn").disabled = disabled;
+    $("useThemeEmojisBtn").disabled = disabled;
+    $("clearThemeEmojisBtn").disabled = disabled;
+  }
+
+  function addCustomEmoji() {
+    const input = $("customEmojiInput");
+    const emoji = input.value.trim();
+    if (!emoji) return;
+    if (emoji.length > 16 || !/\p{Extended_Pictographic}/u.test(emoji)) {
+      showMessage("Please enter a valid emoji, such as 🎁 or 🧸.", true);
+      input.focus();
+      return;
+    }
+    if (selectedEmojis.includes(emoji)) {
+      showMessage("That emoji is already selected.");
+      input.select();
+      return;
+    }
+    if (selectedEmojis.length >= 12) {
+      showMessage("You can select up to 12 emojis. Remove one before adding another.", true);
+      return;
+    }
+    selectedEmojis.push(emoji);
+    input.value = "";
+    renderEmojiPicker();
+    showMessage("Emoji added. Save schedule to publish your selection.");
+    input.focus();
+  }
+
   function updatePreview(applyPresetColours = false) {
     const key = $("themeKey").value;
     const colors = themeColors[key] || themeColors.custom;
@@ -249,11 +331,13 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
     $("endsAt").value = colomboInputDefaultEnd();
     $("scheduleEnabled").checked = true;
     $("decorationsEnabled").checked = true;
+    selectedEmojis = defaultEmojisForTheme($("themeKey").value);
     editingId = null;
     $("formHeading").textContent = "Create a theme session";
     saveBtn.textContent = "Save schedule";
     $("cancelEditBtn").hidden = true;
     updatePreview(true);
+    renderEmojiPicker();
   }
 
   function colomboInputDefaultEnd() {
@@ -341,6 +425,9 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
     $("endsAt").value = msToColomboInput(item.endsAt);
     $("scheduleEnabled").checked = item.enabled === true;
     $("decorationsEnabled").checked = item.decorations !== false;
+    selectedEmojis = Array.isArray(item.decorationEmojis)
+      ? normalizeEmojiList(item.decorationEmojis)
+      : defaultEmojisForTheme(item.themeKey);
     const presetColours = themeColors[item.themeKey] || themeColors.custom;
     $("customAccent").value = item.accentColour || item.customAccent || presetColours[1];
     $("customBackground").value = item.backgroundColour || item.customBackground || presetColours[0];
@@ -348,6 +435,7 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
     saveBtn.textContent = "Update schedule";
     $("cancelEditBtn").hidden = false;
     updatePreview();
+    renderEmojiPicker();
     form.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
@@ -408,6 +496,7 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
       timeZone: ZONE,
       enabled: $("scheduleEnabled").checked,
       decorations: $("decorationsEnabled").checked,
+      decorationEmojis: normalizeEmojiList(selectedEmojis),
       accentColour: $("customAccent").value,
       backgroundColour: $("customBackground").value,
       customAccent: themeKey === "custom" ? $("customAccent").value : "",
@@ -504,7 +593,46 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
   $("cancelEditBtn").addEventListener("click", resetForm);
   $("themeKey").addEventListener("change", () => {
     $("colourSaveState").textContent = "";
+    if (!editingId) selectedEmojis = defaultEmojisForTheme($("themeKey").value);
     updatePreview(true);
+    renderEmojiPicker();
+  });
+  $("decorationsEnabled").addEventListener("change", renderEmojiPicker);
+  $("emojiOptions").addEventListener("click", event => {
+    const button = event.target.closest("[data-emoji]");
+    if (!button || $("decorationsEnabled").checked !== true) return;
+    const emoji = button.dataset.emoji;
+    if (selectedEmojis.includes(emoji)) {
+      selectedEmojis = selectedEmojis.filter(value => value !== emoji);
+    } else if (selectedEmojis.length < 12) {
+      selectedEmojis.push(emoji);
+    } else {
+      showMessage("You can select up to 12 emojis. Remove one before adding another.", true);
+    }
+    renderEmojiPicker();
+  });
+  $("emojiSelectedPreview").addEventListener("click", event => {
+    const button = event.target.closest("[data-remove-emoji]");
+    if (!button || $("decorationsEnabled").checked !== true) return;
+    selectedEmojis = selectedEmojis.filter(value => value !== button.dataset.removeEmoji);
+    renderEmojiPicker();
+  });
+  $("addCustomEmojiBtn").addEventListener("click", addCustomEmoji);
+  $("customEmojiInput").addEventListener("keydown", event => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      addCustomEmoji();
+    }
+  });
+  $("useThemeEmojisBtn").addEventListener("click", () => {
+    selectedEmojis = defaultEmojisForTheme($("themeKey").value);
+    renderEmojiPicker();
+    showMessage("Theme suggestions selected. Save schedule to publish them.");
+  });
+  $("clearThemeEmojisBtn").addEventListener("click", () => {
+    selectedEmojis = [];
+    renderEmojiPicker();
+    showMessage("All floating emojis cleared. Snowfall and Santa can remain enabled.");
   });
   $("customAccent").addEventListener("input", updatePreview);
   $("customBackground").addEventListener("input", updatePreview);
