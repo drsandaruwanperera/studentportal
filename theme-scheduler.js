@@ -31,7 +31,7 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
   let selectedEmojis = [];
 
   const emojiPresets = {
-    default: ["⭐", "✨", "🎉", "🎁", "🌟"],
+    default: [],
     halloween: ["🎃", "👻", "🦇", "🕸️", "🧙‍♀️", "🌙", "🍬", "🕯️"],
     christmas: ["❄️", "🎄", "🎅", "🎁", "🔔", "⭐", "🦌", "🕯️", "🧦", "🍪"],
     "new-year": ["🎆", "🎇", "🎉", "🥂", "✨", "🕛", "🎊", "🌟"],
