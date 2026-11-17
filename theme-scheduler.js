@@ -42,7 +42,7 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
   const themeColors = {
     default: ["#0b1020", "#a6ff2e"],
     halloween: ["#0b1020", "#ff8a2a"],
-    christmas: ["#071a17", "#4ade80"],
+    christmas: ["#07162d", "#a91f31"],
     "new-year": ["#0a1026", "#ffd166"],
     avurudu: ["#21130e", "#f8c34a"],
     vesak: ["#08152e", "#f6d76b"],
@@ -266,6 +266,25 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
     return `${value.year}-${value.month}-${value.day}T${value.hour}:${value.minute}`;
   }
 
+  function renderCurrentTheme(all = [...schedules.values()], now = Date.now()) {
+    const active = all.filter(item => statusFor(item, now) === "active")
+      .sort((a, b) => Number(b.startsAt) - Number(a.startsAt))[0] || null;
+    const title = $("currentThemeTitle"), details = $("currentThemeDetails");
+    const badge = $("currentThemeBadge"), editButton = $("editActiveThemeBtn");
+    if (!active) {
+      title.textContent = "Default / Normal";
+      details.textContent = "No seasonal session is live. The original site theme is currently selected.";
+      badge.textContent = "DEFAULT";
+      badge.className = "scheduler-current-theme-badge default";
+      editButton.hidden = true; editButton.dataset.id = "";
+      return;
+    }
+    title.textContent = (themeLabels[active.themeKey] || active.themeKey) + " · " + (active.title || "Active session");
+    details.textContent = "Live across the main website, student login, dashboard and portal pages. Ends " + formatColombo(active.endsAt) + ".";
+    badge.textContent = "LIVE NOW"; badge.className = "scheduler-current-theme-badge active";
+    editButton.hidden = false; editButton.dataset.id = String(active.id);
+  }
+
   function renderList() {
     const all = [...schedules.values()]
       .filter(item => item.meta !== true && item.id !== "_scheduler-migration-v1")
@@ -278,6 +297,7 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
     $("statTotal").textContent = String(all.length);
     $("statActive").textContent = String(all.filter(item => statusFor(item, now) === "active").length);
     $("statUpcoming").textContent = String(all.filter(item => statusFor(item, now) === "upcoming").length);
+    renderCurrentTheme(all, now);
 
     if (!all.length) {
       list.innerHTML = '<div class="schedule-empty">No theme sessions yet. Create a session to schedule a seasonal design across the website.</div>';
@@ -488,6 +508,11 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
   });
   $("customAccent").addEventListener("input", updatePreview);
   $("customBackground").addEventListener("input", updatePreview);
+  $("editActiveThemeBtn").addEventListener("click", () => {
+    const id = $("editActiveThemeBtn").dataset.id;
+    if (id) editSchedule(id);
+  });
+
   list.addEventListener("click", event => {
     const button = event.target.closest("[data-action]");
     if (!button) return;
@@ -505,6 +530,7 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
   const HALLOWEEN_START = 1790793000000; // 2026-10-01 00:00 Asia/Colombo
   const HALLOWEEN_END = 1794681000000;   // 2026-11-15 00:00 Asia/Colombo
   let halloweenSeedInProgress = false;
+  let christmasSeedInProgress = false;
 
   onSnapshot(paletteDocumentRef, snapshot => {
     const data = snapshot.exists() ? snapshot.data() : {};
@@ -536,6 +562,46 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
     (Array.isArray(data.sessions) ? data.sessions : []).forEach(item => {
       if (item && item.id) schedules.set(String(item.id), item);
     });
+
+    const christmasManaged = data.legacyChristmasThemeManaged === true;
+    const hasChristmasSession = [...schedules.values()].some(item => item.themeKey === "christmas");
+    if (!christmasManaged && !christmasSeedInProgress) {
+      christmasSeedInProgress = true;
+      const nextSchedules = new Map(schedules);
+      const addedChristmasSession = !hasChristmasSession;
+      if (addedChristmasSession) {
+        nextSchedules.set("christmas-sitewide-2026", {
+          id: "christmas-sitewide-2026",
+          title: "Christmas 2026 · Site-wide theme",
+          themeKey: "christmas",
+          startsAt: Date.now() - 5000,
+          endsAt: colomboInputToMs("2027-01-01T00:00"),
+          timeZone: ZONE,
+          enabled: true,
+          decorations: true,
+          accentColour: "#a91f31",
+          backgroundColour: "#07162d",
+          customAccent: "",
+          customBackground: "",
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
+          createdBy: "Existing site-wide Christmas theme",
+          updatedBy: sessionStorage.getItem("adminUsername") || "Theme Scheduler",
+          migratedFromSiteWideChristmasTheme: true
+        });
+      }
+      persistScheduleDocument(nextSchedules, { legacyChristmasThemeManaged: true })
+        .then(() => showMessage(addedChristmasSession
+          ? "The existing Christmas theme is now registered as the LIVE site theme. Use Edit active theme to change its dates, colours or decorations."
+          : "The existing Christmas theme schedule is now managed from this page."))
+        .catch(error => {
+          console.error("Could not register the active Christmas theme:", error);
+          renderList();
+          showMessage("Christmas theme registration failed (" + (error?.code || "unknown") + "): " + (error?.message || "Check Firestore write permissions."), true);
+        })
+        .finally(() => { christmasSeedInProgress = false; });
+      return;
+    }
 
     const withinHalloween = Date.now() >= HALLOWEEN_START && Date.now() < HALLOWEEN_END;
     const handled = data.legacyHalloweenHandled === true;
