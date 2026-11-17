@@ -72,8 +72,10 @@ import { db, doc, onSnapshot } from "./firebase.js";
   function createDecorations(schedule) {
     removeDecorations();
     if (!schedule || schedule.decorations === false) return;
-    const icons = themeDecor[schedule.themeKey];
-    if (!icons || !document.body) return;
+    const icons = Array.isArray(schedule.decorationEmojis)
+      ? schedule.decorationEmojis.map(value => String(value || "").trim()).filter(value => value && value.length <= 16).slice(0, 12)
+      : themeDecor[schedule.themeKey];
+    if (!icons || !icons.length || !document.body) return;
 
     const layer = document.createElement("div");
     layer.id = LAYER_ID;
@@ -112,7 +114,8 @@ import { db, doc, onSnapshot } from "./firebase.js";
           schedule.customAccent || "",
           schedule.customBackground || "",
           schedule.accentColour || "",
-          schedule.backgroundColour || ""
+          schedule.backgroundColour || "",
+          JSON.stringify(schedule.decorationEmojis ?? null)
         ].join("|")
       : "default";
 
@@ -121,6 +124,19 @@ import { db, doc, onSnapshot } from "./firebase.js";
     activeId = schedule ? schedule.id : "";
 
     removeDecorations();
+
+    // Christmas has its own richer snowfall/Santa renderer. Keep this shared
+    // runtime from creating a second, overlapping seasonal decoration layer.
+    if (schedule && schedule.themeKey === "christmas") {
+      if (currentStyleLink) {
+        currentStyleLink.remove();
+        currentStyleLink = null;
+      }
+      document.documentElement.removeAttribute("data-site-season");
+      document.documentElement.removeAttribute("data-site-theme-name");
+      return;
+    }
+
     removeThemeStyles();
 
     // Default / Normal is the repository's original design. Do not apply
@@ -206,6 +222,6 @@ import { db, doc, onSnapshot } from "./firebase.js";
   window.addEventListener("pageshow", refresh);
   window.addEventListener("resize", () => {
     const active = getActiveSchedule();
-    if (active && active.id === activeId) createDecorations(active);
+    if (active && active.themeKey !== "christmas" && active.id === activeId) createDecorations(active);
   });
 })();
