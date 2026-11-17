@@ -2,8 +2,6 @@
 // FIREBASE APP
 // =====================================================
 
-import "./christmas-theme.js?v=20261115-2";
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
 import { getAuth, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
@@ -37,6 +35,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
+
+import("./christmas-theme.js?v=20261115-3").catch(error => {
+    console.warn("Christmas theme module could not load:", error);
+});
 
 export {
     db,
