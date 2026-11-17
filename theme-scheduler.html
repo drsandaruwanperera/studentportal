@@ -7,7 +7,7 @@
   <title>Theme &amp; Season Scheduler | Admin</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E🎓%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="admin.css?v=22">
-  <link rel="stylesheet" href="theme-scheduler.css?v=5">
+  <link rel="stylesheet" href="theme-scheduler.css?v=6">
 </head>
 <body>
 <div class="admin-layout">
@@ -118,6 +118,25 @@
             <label class="scheduler-toggle"><input id="scheduleEnabled" type="checkbox" checked> Enable this session</label>
             <label class="scheduler-toggle"><input id="decorationsEnabled" type="checkbox" checked> Include seasonal decorations &amp; animations</label>
           </div>
+
+          <section class="scheduler-emoji-picker scheduler-field full" id="emojiPickerSection" aria-labelledby="emojiPickerHeading">
+            <div class="scheduler-emoji-heading">
+              <div>
+                <label id="emojiPickerHeading">CHOOSE DECORATION EMOJIS <span>OPTIONAL</span></label>
+                <p>Pick the emojis visitors will see floating on the live website. Select a few, add your own, or change them whenever you edit this theme.</p>
+              </div>
+              <strong id="emojiSelectedCount">0 selected</strong>
+            </div>
+            <div class="scheduler-emoji-options" id="emojiOptions" role="group" aria-label="Suggested seasonal emojis"></div>
+            <div class="scheduler-emoji-custom-row">
+              <input id="customEmojiInput" type="text" maxlength="16" autocomplete="off" placeholder="Paste your own emoji e.g. 🧸">
+              <button class="scheduler-btn secondary" id="addCustomEmojiBtn" type="button">+ Add emoji</button>
+              <button class="scheduler-btn secondary" id="useThemeEmojisBtn" type="button">Use theme suggestions</button>
+              <button class="scheduler-btn secondary" id="clearThemeEmojisBtn" type="button">Clear</button>
+            </div>
+            <div class="scheduler-emoji-selected" id="emojiSelectedPreview" aria-live="polite"></div>
+            <span class="scheduler-hint">Up to 12 emojis. This is optional; the main snowfall, Santa and theme effects can be controlled separately above.</span>
+          </section>
           <div class="scheduler-actions">
             <button class="scheduler-btn primary" id="saveScheduleBtn" type="button" onclick="window.saveThemeSchedule && window.saveThemeSchedule(event)">Save schedule</button>
             <button class="scheduler-btn secondary" id="testConnectionBtn" type="button">Test connection</button>
@@ -139,6 +158,6 @@
     </div>
   </main>
 </div>
-<script type="module" src="theme-scheduler.js?v=14"></script>
+<script type="module" src="theme-scheduler.js?v=15"></script>
 </body>
 </html>
