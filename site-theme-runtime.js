@@ -7,6 +7,8 @@ import { db, doc, onSnapshot } from "./firebase.js";
 
 (() => {
   "use strict";
+  if (window.__drSandaruwanSeasonThemeRuntimeLoaded) return;
+  window.__drSandaruwanSeasonThemeRuntimeLoaded = true;
 
   const SETTINGS_DOC_ID = "__themeSeasonSchedule";
   const STYLE_ID = "site-season-theme-stylesheet";
