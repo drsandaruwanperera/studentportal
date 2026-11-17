@@ -195,6 +195,75 @@ import { TOP_RANKING_2026_OL_RESULTS } from "./grade11-top-ranking-2026-ol-data.
     return getLegacyRows();
   }
 
+  function setProgressText(id, value) {
+    const element = document.getElementById(id);
+    if (element && element.textContent !== String(value)) element.textContent = String(value);
+  }
+
+  function updateGrade11Progress() {
+    const totalPapers = 6;
+    // A mark of zero is still a published result; only blank/null marks are pending.
+    const completedPapers = publishedMarks.length;
+    const remainingPapers = Math.max(0, totalPapers - completedPapers);
+    const percent = Math.round((completedPapers / totalPapers) * 100);
+
+    setProgressText("progressPct", `${percent}%`);
+    setProgressText("total", totalPapers);
+    setProgressText("viewed", completedPapers);
+    setProgressText("remaining", remainingPapers);
+    setProgressText("completedLabel", completedPapers);
+    setProgressText("totalLabel", totalPapers);
+    setProgressText("summaryCompletion", `${percent}%`);
+    setProgressText("summaryCompleted", completedPapers);
+    setProgressText("summaryRemaining", remainingPapers);
+
+    const fill = document.getElementById("progressFill");
+    if (fill) {
+      if (fill.style.width !== `${percent}%`) fill.style.width = `${percent}%`;
+      fill.style.background = "linear-gradient(90deg, #a3e635 0%, #65e6a7 100%)";
+      fill.style.boxShadow = "0 0 18px rgba(101, 230, 167, .28)";
+      fill.style.borderRadius = "999px";
+      const track = fill.parentElement;
+      if (track) {
+        track.setAttribute("role", "progressbar");
+        track.setAttribute("aria-valuemin", "0");
+        track.setAttribute("aria-valuemax", String(totalPapers));
+        track.setAttribute("aria-valuenow", String(completedPapers));
+        track.setAttribute("aria-label", "Published Grade 11 paper results");
+      }
+    }
+
+    const summaryFill = document.getElementById("summaryFill");
+    if (summaryFill && summaryFill.style.width !== `${percent}%`) summaryFill.style.width = `${percent}%`;
+
+    const heroKicker = document.querySelector(".hero-copy > small");
+    if (heroKicker && heroKicker.textContent !== "PAPER RESULTS PROGRESS") {
+      heroKicker.textContent = "PAPER RESULTS PROGRESS";
+    }
+    const heroStatus = document.querySelector(".hero-score > span");
+    if (heroStatus && heroStatus.textContent !== "Results published") {
+      heroStatus.textContent = "Results published";
+    }
+    const heroNote = document.querySelector(".hero-copy > p");
+    const noteText = `${completedPapers} published out of ${totalPapers} papers`;
+    if (heroNote && heroNote.textContent.replace(/\s+/g, " ").trim() !== noteText) {
+      heroNote.innerHTML = `<strong>${completedPapers}</strong> published out of <strong>${totalPapers}</strong> papers`;
+    }
+
+    const totalLabel = document.querySelector(".stat-blue small");
+    const totalDescription = document.querySelector(".stat-blue span");
+    const completedLabel = document.querySelector(".stat-green small");
+    const completedDescription = document.querySelector(".stat-green span");
+    const pendingLabel = document.querySelector(".stat-purple small");
+    const pendingDescription = document.querySelector(".stat-purple span");
+    if (totalLabel && totalLabel.textContent !== "TOTAL PAPERS") totalLabel.textContent = "TOTAL PAPERS";
+    if (totalDescription && totalDescription.textContent !== "In this result collection") totalDescription.textContent = "In this result collection";
+    if (completedLabel && completedLabel.textContent !== "RESULTS PUBLISHED") completedLabel.textContent = "RESULTS PUBLISHED";
+    if (completedDescription && completedDescription.textContent !== "Papers with published marks") completedDescription.textContent = "Papers with published marks";
+    if (pendingLabel && pendingLabel.textContent !== "PENDING RESULTS") pendingLabel.textContent = "PENDING RESULTS";
+    if (pendingDescription && pendingDescription.textContent !== "Papers awaiting a mark") pendingDescription.textContent = "Papers awaiting a mark";
+  }
+
   function apply(individualRows) {
     const collectionHTML = renderCollectionCard();
     const otherHTML = toIndividualRows(individualRows);
@@ -224,6 +293,7 @@ import { TOP_RANKING_2026_OL_RESULTS } from "./grade11-top-ranking-2026-ol-data.
     if (summaryResults) summaryResults.textContent = String(totalPublished);
 
     renderBars(individualRows);
+    updateGrade11Progress();
   }
 
   let individualRows = [];
@@ -243,6 +313,14 @@ import { TOP_RANKING_2026_OL_RESULTS } from "./grade11-top-ranking-2026-ol-data.
   const observer = new MutationObserver(scheduleApply);
   observer.observe(grid, { childList: true, subtree: true, characterData: true });
   observer.observe(scoreBars, { childList: true, subtree: true, characterData: true });
+
+  const progressObserver = new MutationObserver(() => {
+    if (ready) updateGrade11Progress();
+  });
+  const hero = document.querySelector(".performance-hero");
+  const statCards = document.querySelector(".stats");
+  if (hero) progressObserver.observe(hero, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ["style"] });
+  if (statCards) progressObserver.observe(statCards, { childList: true, subtree: true, characterData: true });
 
   getPublishedRows().then(rows => {
     individualRows = rows;
