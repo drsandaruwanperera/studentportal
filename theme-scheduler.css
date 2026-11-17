@@ -134,3 +134,16 @@
 #saveColoursBtn:disabled{opacity:.6;cursor:wait}
 .scheduler-colour-save-state{color:#8291ad;font-size:9px;line-height:1.5;flex:1;min-width:180px}
 @media(max-width:600px){.scheduler-colour-save-row{align-items:stretch;flex-direction:column}.scheduler-colour-save-row .scheduler-btn{width:100%}}
+
+/* Current live theme summary — visible at the top of Theme & Seasons. */
+.scheduler-current-theme{display:grid;grid-template-columns:54px minmax(0,1fr) auto;align-items:center;gap:15px;margin:0 0 18px;padding:17px 19px;border:1px solid rgba(231,189,105,.48);border-radius:17px;background:radial-gradient(circle at 85% 5%,rgba(231,189,105,.13),transparent 30%),linear-gradient(115deg,#751d2c 0%,#132d4b 56%,#0d553d 100%);box-shadow:0 14px 36px rgba(0,0,0,.2)}
+.scheduler-current-theme-mark{width:50px;height:50px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(145deg,#a91f31,#126342);border:1px solid #e7bd69;font-size:27px;box-shadow:0 8px 20px rgba(0,0,0,.2)}
+.scheduler-current-theme-copy{min-width:0}.scheduler-current-theme-kicker{color:#f1ca79;font-size:8px;font-weight:900;letter-spacing:1.2px}
+.scheduler-current-theme h2{margin:4px 0!important;color:#fff!important;font-size:17px!important}.scheduler-current-theme p{margin:0;color:#d7e4f4;font-size:9px;line-height:1.5}
+.scheduler-current-theme-actions{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:9px}
+.scheduler-current-theme-badge{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border-radius:99px;background:rgba(101,238,155,.12);border:1px solid rgba(101,238,155,.45);color:#8af0b4;font-size:8px;font-weight:900;white-space:nowrap}
+.scheduler-current-theme-badge:before{content:"";width:6px;height:6px;border-radius:50%;background:#65ee9b;box-shadow:0 0 9px #65ee9b}
+.scheduler-current-theme-badge.default{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#dce7f6}
+.scheduler-current-theme-badge.default:before{background:#9ba8bd;box-shadow:none}
+.scheduler-current-theme .current-theme-edit{min-height:38px;background:linear-gradient(110deg,#a91f31,#126342);border:1px solid #e7bd69;color:#fff}
+@media(max-width:700px){.scheduler-current-theme{grid-template-columns:42px minmax(0,1fr);gap:10px;padding:13px}.scheduler-current-theme-mark{width:40px;height:40px;font-size:22px}.scheduler-current-theme-actions{grid-column:1/-1;justify-content:flex-start;padding-left:51px}.scheduler-current-theme h2{font-size:14px!important}}
