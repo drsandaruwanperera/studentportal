@@ -564,11 +564,13 @@ import { db, doc, getDoc, setDoc, deleteDoc, onSnapshot } from "./firebase.js";
     });
 
     const christmasManaged = data.legacyChristmasThemeManaged === true;
-    const hasChristmasSession = [...schedules.values()].some(item => item.themeKey === "christmas");
+    const hasLiveChristmasSession = [...schedules.values()].some(item =>
+      item.themeKey === "christmas" && statusFor(item) === "active"
+    );
     if (!christmasManaged && !christmasSeedInProgress) {
       christmasSeedInProgress = true;
       const nextSchedules = new Map(schedules);
-      const addedChristmasSession = !hasChristmasSession;
+      const addedChristmasSession = !hasLiveChristmasSession;
       if (addedChristmasSession) {
         nextSchedules.set("christmas-sitewide-2026", {
           id: "christmas-sitewide-2026",
