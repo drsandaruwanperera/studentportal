@@ -36,7 +36,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-import("./christmas-theme.js?v=20261115-3").catch(error => {
+import("./christmas-theme.js?v=20261117-emoji").catch(error => {
     console.warn("Christmas theme module could not load:", error);
 });
 
