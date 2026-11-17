@@ -7,7 +7,7 @@
   <title>Theme &amp; Season Scheduler | Admin</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E🎓%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="admin.css?v=22">
-  <link rel="stylesheet" href="theme-scheduler.css?v=4">
+  <link rel="stylesheet" href="theme-scheduler.css?v=5">
 </head>
 <body>
 <div class="admin-layout">
@@ -55,6 +55,19 @@
       <h1>Theme &amp; Season Scheduler</h1>
       <p>Create seasonal design sessions for the complete public website. The chosen theme appears on the Main Page, Student Login and Student Dashboard only during its scheduled Sri Lankan time window. Outside every active session, the original default design is restored automatically.</p>
       <div class="timezone-chip"><i></i><span>All times use Asia/Colombo · UTC +05:30</span></div>
+    </section>
+
+    <section class="scheduler-current-theme" id="currentThemePanel" aria-live="polite">
+      <div class="scheduler-current-theme-mark" aria-hidden="true">🎄</div>
+      <div class="scheduler-current-theme-copy">
+        <span class="scheduler-current-theme-kicker">CURRENT LIVE SITE THEME</span>
+        <h2 id="currentThemeTitle">Checking active theme…</h2>
+        <p id="currentThemeDetails">Reading the live theme schedule from Firebase.</p>
+      </div>
+      <div class="scheduler-current-theme-actions">
+        <span class="scheduler-current-theme-badge" id="currentThemeBadge">CHECKING</span>
+        <button type="button" class="scheduler-btn current-theme-edit" id="editActiveThemeBtn" hidden>Edit active theme</button>
+      </div>
     </section>
 
     <section class="scheduler-summary">
@@ -126,6 +139,6 @@
     </div>
   </main>
 </div>
-<script type="module" src="theme-scheduler.js?v=13"></script>
+<script type="module" src="theme-scheduler.js?v=14"></script>
 </body>
 </html>
