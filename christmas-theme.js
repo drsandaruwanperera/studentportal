@@ -6,7 +6,8 @@ import { db, doc, onSnapshot } from "./firebase.js";
   window.__drSandaruwanChristmasMounted = true;
 
   const SETTINGS_DOC_ID = "__themeSeasonSchedule";
-  const stylesheetUrl = new URL("./christmas-theme.css?v=20261115-3", import.meta.url).href;
+  const stylesheetUrl = new URL("./christmas-theme.css?v=20261117-emoji", import.meta.url).href;
+  const DEFAULT_CHRISTMAS_EMOJIS = ["❄️", "🎄", "🎅", "🎁", "🔔", "⭐", "🦌", "🕯️"];
   let sessions = [];
   let currentSignature = "";
   let nextTimer = null;
@@ -18,6 +19,16 @@ import { db, doc, onSnapshot } from "./firebase.js";
     link.rel = "stylesheet";
     link.href = stylesheetUrl;
     document.head.appendChild(link);
+  }
+
+  function selectedEmojiSet(active) {
+    if (Array.isArray(active.decorationEmojis)) {
+      return active.decorationEmojis
+        .map(value => String(value || "").trim())
+        .filter(value => value && value.length <= 16)
+        .slice(0, 12);
+    }
+    return DEFAULT_CHRISTMAS_EMOJIS;
   }
 
   function addGarland() {
@@ -52,6 +63,28 @@ import { db, doc, onSnapshot } from "./firebase.js";
     document.body.appendChild(layer);
   }
 
+  function addEmojiDecorations(active) {
+    const emojis = selectedEmojiSet(active);
+    if (!emojis.length || document.getElementById("christmas-emoji-decorations")) return;
+    const layer = document.createElement("div");
+    layer.id = "christmas-emoji-decorations";
+    layer.setAttribute("aria-hidden", "true");
+    const count = Math.min(18, Math.max(6, emojis.length * 2));
+    for (let i = 0; i < count; i += 1) {
+      const item = document.createElement("span");
+      item.className = "xmas-floating-emoji";
+      item.textContent = emojis[i % emojis.length];
+      item.style.left = (4 + ((i * 37) % 92)) + "%";
+      item.style.top = (10 + ((i * 23) % 80)) + "%";
+      item.style.setProperty("--x-emoji-size", (17 + (i % 4) * 5) + "px");
+      item.style.setProperty("--x-emoji-opacity", (0.22 + (i % 3) * 0.07).toString());
+      item.style.setProperty("--x-emoji-duration", (9 + (i % 5) * 1.8) + "s");
+      item.style.setProperty("--x-emoji-delay", (-((i * 1.7) % 12)) + "s");
+      layer.appendChild(item);
+    }
+    document.body.appendChild(layer);
+  }
+
   function addSanta() {
     if (document.getElementById("christmas-santa-badge")) return;
     const badge = document.createElement("div");
@@ -66,17 +99,17 @@ import { db, doc, onSnapshot } from "./firebase.js";
   }
 
   function removeDecorations() {
-    ["christmas-garland","christmas-snowfall","christmas-santa-badge"].forEach(id => {
+    ["christmas-garland", "christmas-snowfall", "christmas-emoji-decorations", "christmas-santa-badge"].forEach(id => {
       const node = document.getElementById(id);
       if (node) node.remove();
     });
   }
 
-  function activeChristmasSession(now = Date.now()) {
+  function activeSiteSession(now = Date.now()) {
     return sessions
       .filter(item => item &&
         item.enabled === true &&
-        item.themeKey === "christmas" &&
+        item.themeKey &&
         Number.isFinite(Number(item.startsAt)) &&
         Number.isFinite(Number(item.endsAt)) &&
         Number(item.startsAt) <= now &&
@@ -85,23 +118,42 @@ import { db, doc, onSnapshot } from "./firebase.js";
   }
 
   function applyCurrentTheme() {
-    const active = activeChristmasSession();
+    const active = activeSiteSession();
+    const isChristmas = Boolean(active && active.themeKey === "christmas");
     const signature = active
-      ? [active.id, active.title, active.decorations !== false, active.accentColour || "", active.backgroundColour || ""].join("|")
+      ? [active.id, active.themeKey, active.title, active.decorations !== false,
+          active.accentColour || "", active.backgroundColour || "",
+          JSON.stringify(active.decorationEmojis ?? null)].join("|")
       : "default";
     if (signature === currentSignature) return;
     currentSignature = signature;
 
-    const enabled = Boolean(active);
-    document.documentElement.classList.toggle("christmas-theme-active", enabled);
-    if (document.body) document.body.classList.toggle("christmas-theme-active", enabled);
     removeDecorations();
-    if (!enabled) return;
+    const stylesheet = document.getElementById("christmas-theme-stylesheet");
+
+    if (!isChristmas) {
+      document.documentElement.classList.remove("christmas-theme-active");
+      if (document.body) document.body.classList.remove("christmas-theme-active");
+      if (stylesheet) stylesheet.remove();
+      if (!active) {
+        document.documentElement.style.removeProperty("--season-accent");
+        document.documentElement.style.removeProperty("--season-bg");
+      }
+      return;
+    }
+
+    const accent = /^#[0-9a-f]{6}$/i.test(active.accentColour || "") ? active.accentColour : "#a91f31";
+    const background = /^#[0-9a-f]{6}$/i.test(active.backgroundColour || "") ? active.backgroundColour : "#07162d";
+    document.documentElement.style.setProperty("--season-accent", accent);
+    document.documentElement.style.setProperty("--season-bg", background);
+    document.documentElement.classList.add("christmas-theme-active");
+    if (document.body) document.body.classList.add("christmas-theme-active");
 
     addStylesheet();
     if (active.decorations !== false) {
       addGarland();
       addSnowfall();
+      addEmojiDecorations(active);
       addSanta();
     }
   }
@@ -134,13 +186,13 @@ import { db, doc, onSnapshot } from "./firebase.js";
         refresh();
       },
       error => {
-        console.warn("Christmas theme status could not be loaded:", error);
+        console.warn("Seasonal theme status could not be loaded:", error);
         sessions = [];
         refresh();
       }
     );
   } catch (error) {
-    console.warn("Christmas theme schedule listener could not start:", error);
+    console.warn("Seasonal theme schedule listener could not start:", error);
   }
 
   document.addEventListener("visibilitychange", () => {
