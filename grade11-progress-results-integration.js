@@ -39,7 +39,7 @@ import { TOP_RANKING_2026_OL_RESULTS } from "./grade11-top-ranking-2026-ol-data.
     const link = document.createElement("link");
     link.id = stylesheetId;
     link.rel = "stylesheet";
-    link.href = new URL("./grade11-results-dashboard.css?v=grade11-2026-2", import.meta.url).href;
+    link.href = new URL("./grade11-results-dashboard.css?v=grade11-2026-3", import.meta.url).href;
     document.head.appendChild(link);
   }
 
@@ -146,7 +146,7 @@ import { TOP_RANKING_2026_OL_RESULTS } from "./grade11-top-ranking-2026-ol-data.
       })).filter(row => row.score !== null && Number.isFinite(row.score))
     ];
 
-    scoreBars.innerHTML = chartRows.length
+    const nextHTML = chartRows.length
       ? chartRows.map(row => {
           const pct = Math.max(0, Math.min(100, Math.round(row.score / row.maxScore * 100)));
           return `<div class="bar-item">
@@ -155,6 +155,10 @@ import { TOP_RANKING_2026_OL_RESULTS } from "./grade11-top-ranking-2026-ol-data.
           </div>`;
         }).join("")
       : '<div class="empty">No published marks yet.</div>';
+
+    // Idempotent rendering prevents the Results page MutationObserver from
+    // repeatedly re-rendering the same chart and causing an update loop.
+    if (scoreBars.innerHTML !== nextHTML) scoreBars.innerHTML = nextHTML;
   }
 
   function getLegacyRows() {
@@ -234,8 +238,8 @@ import { TOP_RANKING_2026_OL_RESULTS } from "./grade11-top-ranking-2026-ol-data.
     });
   };
 
-  // The existing progress page also loads Firestore results. Observe its result
-  // container so its asynchronous render cannot overwrite this grouped view.
+  // The page's original Firestore result renderer can update these containers.
+  // The idempotent apply/render functions only repaint when content has changed.
   const observer = new MutationObserver(scheduleApply);
   observer.observe(grid, { childList: true, subtree: true, characterData: true });
   observer.observe(scoreBars, { childList: true, subtree: true, characterData: true });

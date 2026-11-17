@@ -1,11 +1,22 @@
-MAIN WEBSITE ADMIN MODULE
+GRADE 11 RESULTS — PROFESSIONAL CARD LAYOUT PATCH
 
-Copy the entire website folder into the root of your answersheet GitHub repository.
-It expects ../firebase.js and the existing admin authentication/session system.
+Replace these two existing files in the ROOT of:
+drsandaruwanperera/studentportal
 
-All pages are superadmin management pages and use Firestore collections:
-websiteGallery, websitePrograms, websiteAbout, websiteResults, websiteTestimonials, websiteResources, websiteClasses, websiteFAQ, websiteContact, websiteSettings.
+1. grade11-results-dashboard.css
+2. grade11-progress-results-integration.js
 
-Images are NOT uploaded to Firebase Storage. Put image files in the GitHub repo assets/ folder and enter the relative path in the relevant admin field.
+Do NOT change progress.html. It already loads:
+grade11-progress-results-integration.js?v=1
 
-IMPORTANT: Firestore security rules must restrict these collections to authorized admins. Client-side UI protection alone is not security.
+The updated JS loads the replacement CSS using:
+grade11-results-dashboard.css?v=grade11-2026-3
+
+After replacing both files:
+- Commit the changes to main.
+- Wait for the GitHub Pages deployment to complete.
+- Open https://drsandaruwanperera.lk/studentportal/progress.html
+- Hard refresh (Ctrl+F5).
+
+This changes presentation and makes chart rendering idempotent. It does not change
+the student marks dataset or Firestore published results.
