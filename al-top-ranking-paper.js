@@ -160,10 +160,7 @@ async function initialize() {
         checkPaperResource("secondPaper", "secondStatus", "second")
     ]);
 
-    // No answer schemes were supplied with the November 2026 PDFs.
-    if (!(monthName === "november" && yearLabel === "2026")) {
-        addAnswerSection();
-    }
-}
+ // Display answer sheets for all published monthly papers.
+addAnswerSection();
 
 document.addEventListener("DOMContentLoaded", initialize);
