@@ -1,8 +1,4 @@
-import {
-    db,
-    doc,
-    getDoc
-} from "./firebase.js";
+import { db, doc, getDoc } from "./firebase.js";
 
 if (sessionStorage.getItem("loggedIn") !== "true") {
     window.location.replace("index.html");
@@ -27,25 +23,36 @@ async function getStudentData() {
         const snapshot = await getDoc(doc(db, "students", studentId));
         return snapshot.exists() ? snapshot.data() : null;
     } catch (error) {
-        console.error("Firestore error:", error);
+        console.error("Student access check failed:", error);
         return null;
     }
 }
 
 function isALStudent(studentData) {
-    const studentType = String(studentData?.studentType || "").trim().toLowerCase();
-    const grade = String(studentData?.grade || "").trim().toLowerCase();
-    return [studentType, grade].some(value =>
-        ["al", "a/l", "a level", "advanced", "advanced level"].includes(value)
+    const values = [studentData?.studentType, studentData?.grade, studentData?.stream, studentData?.studentLevel]
+        .map(value => String(value || "").trim().toLowerCase());
+    return values.some(value =>
+        ["al", "a/l", "a level", "advanced", "advanced level"].includes(value) ||
+        /(^|[^a-z])a\s*\/?\s*l([^a-z]|$)/i.test(value) ||
+        /advanced\s+level|a\s+level/i.test(value)
     );
 }
 
 function hasPaperAccess(studentData) {
-    if (isALStudent(studentData)) return true;
     if (!studentData) return false;
+    if (isALStudent(studentData)) return true;
     if (!Object.prototype.hasOwnProperty.call(studentData, "paper01")) return true;
     const value = studentData.paper01;
     return value === true || value === "true" || value === 1 || value === "1";
+}
+
+function setLinkUnavailable(link, status, message) {
+    link.removeAttribute("href");
+    link.removeAttribute("target");
+    link.classList.add("pending");
+    link.setAttribute("aria-disabled", "true");
+    link.textContent = "Not available yet";
+    status.textContent = message;
 }
 
 async function checkPaperResource(linkId, statusId, type) {
@@ -53,28 +60,37 @@ async function checkPaperResource(linkId, statusId, type) {
     const status = document.getElementById(statusId);
     if (!link || !status) return;
 
-    const viewerUrl = `al-paper-viewer.html?paper=${paperNumber}&type=${type}&month=${monthName}&year=${yearLabel}`;
     const folderName = type === "second" ? "2nd-paper" : "1st-paper";
-    const imageUrl = `papers/al-top-ranking/${monthName}/paper-${paperNumber}-${folderName}/page-01.jpg`;
     const isNovemberPdf = monthName === "november" && yearLabel === "2026";
-    const resourceUrl = isNovemberPdf
-        ? `papers/al-top-ranking/november/paper-${paperNumber}-${folderName}.pdf`
-        : imageUrl;
+    const resourcePath = isNovemberPdf
+        ? `papers/al-top-ranking/${monthName}/paper-${paperNumber}-${folderName}.pdf`
+        : `papers/al-top-ranking/${monthName}/paper-${paperNumber}-${folderName}/page-01.jpg`;
 
     try {
-        const response = await fetch(resourceUrl, { method: "HEAD", cache: "no-store" });
-        if (response.ok) {
-            link.href = isNovemberPdf ? resourceUrl : viewerUrl;
-            link.target = isNovemberPdf ? "_blank" : "_self";
-            link.rel = isNovemberPdf ? "noopener noreferrer" : "";
-            link.classList.remove("pending");
-            link.textContent = isNovemberPdf ? "Open PDF →" : "View Paper →";
-            status.textContent = isNovemberPdf ? "PDF available" : "Pages available";
-        } else {
-            status.textContent = isNovemberPdf ? "PDF is not uploaded yet." : "Paper is not uploaded yet.";
+        const response = await fetch(resourcePath, { method: "HEAD", cache: "no-store" });
+        if (!response.ok) {
+            setLinkUnavailable(link, status, isNovemberPdf ? "Paper PDF has not been uploaded." : "Paper pages have not been uploaded.");
+            return;
         }
+
+        if (isNovemberPdf) {
+            const viewerUrl = `al-top-ranking-answer.html?resource=paper&paper=${paperNumber}&type=${type}&month=${monthName}&year=${yearLabel}`;
+            link.href = viewerUrl;
+            link.target = "_self";
+            link.textContent = "View Paper →";
+            status.textContent = "Protected online viewer · PDF available";
+        } else {
+            link.href = `al-paper-viewer.html?paper=${paperNumber}&type=${type}&month=${monthName}&year=${yearLabel}`;
+            link.target = "_self";
+            link.textContent = "View Paper →";
+            status.textContent = "Online page viewer available";
+        }
+        link.rel = "";
+        link.classList.remove("pending");
+        link.removeAttribute("aria-disabled");
     } catch (error) {
-        status.textContent = isNovemberPdf ? "PDF is not uploaded yet." : "Paper is not uploaded yet.";
+        console.error(`Could not check ${type} paper resource:`, error);
+        setLinkUnavailable(link, status, "Could not check the paper file. Refresh and try again.");
     }
 }
 
@@ -87,80 +103,108 @@ function addAnswerSection() {
         <div class="paper-header answer-header">
             <div class="kicker">ANSWER SCHEMES</div>
             <h2>Paper ${paperNumber} Answers</h2>
-            <p>Official answer schemes for the ${monthLabel} ${yearLabel} Top Ranking Model.</p>
+            <p>Choose an answer sheet to view inside the student portal.</p>
         </div>
         <div class="papers answer-papers">
             <article class="pdf-card answer-card">
                 <div class="pdf-icon">📘</div>
                 <h3>1st Paper Answer</h3>
-                <p>Complete ${monthLabel} ${yearLabel} answer scheme for the 1st Paper.</p>
-                <a class="pdf-link" href="al-top-ranking-answer.html?paper=${paperNumber}&type=first&month=${monthName}&year=${yearLabel}">View Answer →</a>
-                <div class="status">Protected online viewer</div>
+                <p>${monthLabel} ${yearLabel} · First answer sheet</p>
+                <a class="pdf-link pending" id="firstAnswerLink" aria-disabled="true">Checking answer PDF…</a>
+                <div class="status" id="firstAnswerStatus">Checking uploaded answer sheet…</div>
             </article>
             <article class="pdf-card answer-card">
                 <div class="pdf-icon">📗</div>
                 <h3>2nd Paper Answer</h3>
-                <p>Complete ${monthLabel} ${yearLabel} answer scheme for the 2nd Paper.</p>
-                <a class="pdf-link" href="al-top-ranking-answer.html?paper=${paperNumber}&type=second&month=${monthName}&year=${yearLabel}">View Answer →</a>
-                <div class="status">Protected online viewer</div>
+                <p>${monthLabel} ${yearLabel} · Second answer sheet</p>
+                <a class="pdf-link pending" id="secondAnswerLink" aria-disabled="true">Checking answer PDF…</a>
+                <div class="status" id="secondAnswerStatus">Checking uploaded answer sheet…</div>
             </article>
         </div>
     `;
 
     const style = document.createElement("style");
     style.textContent = `
-        #answerSection { margin-top: 22px; }
-        #answerSection .answer-header { border-radius: 22px 22px 0 0; }
-        #answerSection .answer-papers { border-top: 0; border-radius: 0 0 22px 22px; }
+        #answerSection { margin-top: 24px; }
+        #answerSection .answer-header { border-radius: 20px 20px 0 0; }
+        #answerSection .answer-papers { border-top: 0; border-radius: 0 0 20px 20px; }
         #answerSection .answer-card { position: relative; }
         #answerSection .answer-card::after {
-            content: "OFFICIAL ANSWER";
-            position: absolute;
-            top: 18px;
-            right: 18px;
-            padding: 5px 8px;
-            border-radius: 999px;
-            background: rgba(166,255,46,.09);
-            border: 1px solid rgba(166,255,46,.18);
-            color: #a6ff2e;
-            font-size: 9px;
-            font-weight: 900;
-            letter-spacing: .7px;
+            content: "ANSWER SHEET"; position: absolute; top: 18px; right: 18px;
+            padding: 5px 8px; border-radius: 999px;
+            background: rgba(166,255,46,.09); border: 1px solid rgba(166,255,46,.18);
+            color: #a6ff2e; font-size: 9px; font-weight: 900; letter-spacing: .7px;
         }
+        #answerSection .pdf-link.pending { opacity: .58; pointer-events: none; }
         @media(max-width:650px){#answerSection .answer-papers{grid-template-columns:1fr;padding:15px}}
     `;
     document.head.appendChild(style);
     document.querySelector(".wrap")?.appendChild(section);
 }
 
-async function initialize() {
-    const studentData = await getStudentData();
-    if (!studentData || !hasPaperAccess(studentData)) {
-        alert(`Paper ${paperNumber} is not available for your account yet.`);
-        window.location.replace("model-papers.html");
-        return;
+async function checkAnswerResource(linkId, statusId, type) {
+    const link = document.getElementById(linkId);
+    const status = document.getElementById(statusId);
+    if (!link || !status) return;
+
+    const part = type === "second" ? "2nd" : "1st";
+    const pdfPath = `answers/al-top-ranking/${monthName}/paper-${paperNumber}-${part}-answer.pdf`;
+    try {
+        const response = await fetch(pdfPath, { method: "HEAD", cache: "no-store" });
+        if (!response.ok) {
+            setLinkUnavailable(link, status, "This answer sheet has not been uploaded for this month.");
+            return;
+        }
+        link.href = `al-top-ranking-answer.html?resource=answer&paper=${paperNumber}&type=${type}&month=${monthName}&year=${yearLabel}`;
+        link.target = "_self";
+        link.textContent = "View Answer →";
+        link.classList.remove("pending");
+        link.removeAttribute("aria-disabled");
+        status.textContent = "Protected in-system PDF viewer · Available";
+    } catch (error) {
+        console.error(`Could not check ${type} answer resource:`, error);
+        setLinkUnavailable(link, status, "Could not check the answer file. Refresh and try again.");
     }
+}
 
-    const pageTitle = document.getElementById("pageTitle");
-    const pageKicker = document.getElementById("pageKicker");
-    const paperKicker = document.getElementById("paperKicker");
-    const firstDescription = document.getElementById("firstDescription");
-    const secondDescription = document.getElementById("secondDescription");
+async function initialize() {
+    try {
+        const studentData = await getStudentData();
+        if (!studentData || !hasPaperAccess(studentData)) {
+            alert(`Paper ${paperNumber} is not available for your account yet.`);
+            window.location.replace("model-papers.html");
+            return;
+        }
 
-    if (pageTitle) pageTitle.textContent = `Paper ${paperNumber}`;
-    if (pageKicker) pageKicker.textContent = `${monthLabel.toUpperCase()} ${yearLabel} • A/L TOP RANKING MODEL`;
-    if (paperKicker) paperKicker.textContent = `PAPER ${paperNumber}`;
-    const paperHeaderTitle = document.getElementById("paperHeaderTitle");
-    if (paperHeaderTitle) paperHeaderTitle.textContent = `${monthLabel} Model Paper`;
-    if (firstDescription) firstDescription.textContent = `Open the ${monthLabel} ${yearLabel} Top Ranking Model — Paper ${paperNumber} 1st Paper.`;
-    if (secondDescription) secondDescription.textContent = `Open the ${monthLabel} ${yearLabel} Top Ranking Model — Paper ${paperNumber} 2nd Paper.`;
+        const pageTitle = document.getElementById("pageTitle");
+        const pageKicker = document.getElementById("pageKicker");
+        const paperKicker = document.getElementById("paperKicker");
+        const firstDescription = document.getElementById("firstDescription");
+        const secondDescription = document.getElementById("secondDescription");
 
-    await Promise.all([
-        checkPaperResource("firstPaper", "firstStatus", "first"),
-        checkPaperResource("secondPaper", "secondStatus", "second")
-    ]);
+        if (pageTitle) pageTitle.textContent = `Paper ${paperNumber}`;
+        if (pageKicker) pageKicker.textContent = `${monthLabel.toUpperCase()} ${yearLabel} • A/L TOP RANKING MODEL`;
+        if (paperKicker) paperKicker.textContent = `PAPER ${paperNumber}`;
+        const paperHeaderTitle = document.getElementById("paperHeaderTitle");
+        if (paperHeaderTitle) paperHeaderTitle.textContent = `${monthLabel} Model Paper`;
+        if (firstDescription) firstDescription.textContent = `Open the ${monthLabel} ${yearLabel} Top Ranking Model — Paper ${paperNumber} 1st Paper.`;
+        if (secondDescription) secondDescription.textContent = `Open the ${monthLabel} ${yearLabel} Top Ranking Model — Paper ${paperNumber} 2nd Paper.`;
 
- // Display answer sheets for all published monthly papers.
-addAnswerSection();
+        addAnswerSection();
+        await Promise.all([
+            checkPaperResource("firstPaper", "firstStatus", "first"),
+            checkPaperResource("secondPaper", "secondStatus", "second"),
+            checkAnswerResource("firstAnswerLink", "firstAnswerStatus", "first"),
+            checkAnswerResource("secondAnswerLink", "secondAnswerStatus", "second")
+        ]);
+    } catch (error) {
+        console.error("Top Ranking paper page initialization failed:", error);
+        const statuses = ["firstStatus", "secondStatus", "firstAnswerStatus", "secondAnswerStatus"];
+        statuses.forEach(id => {
+            const node = document.getElementById(id);
+            if (node) node.textContent = "Page could not load correctly. Refresh and try again.";
+        });
+    }
+}
 
-document.addEventListener("DOMContentLoaded", initialize);
+document.addEventListener("DOMContentLoaded", initialize, { once: true });

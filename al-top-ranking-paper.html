@@ -1,170 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E🎓%3C/text%3E%3C/svg%3E">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>September 2026 • Top Ranking Paper</title>
+    <title>Top Ranking Paper</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E🎓%3C/text%3E%3C/svg%3E">
     <style>
         * { box-sizing: border-box; }
-        :root {
-            --portal-bg: #0b1020;
-            --portal-surface: #11182b;
-            --portal-surface-2: #151f35;
-            --portal-purple: #4037c9;
-            --portal-purple-bright: #5b4bff;
-            --portal-violet: #7c3aed;
-            --portal-lime: #a6ff2e;
-            --portal-text: #f4f7ff;
-            --portal-muted: #aeb8ce;
-            --portal-border: rgba(255, 255, 255, 0.10);
-        }
-        body {
-            margin: 0;
-            min-height: 100vh;
-            padding: 28px 18px 50px;
-            font-family: "Segoe UI", sans-serif;
-            color: var(--portal-text);
-            background:
-                radial-gradient(circle at 8% 10%, rgba(64, 55, 201, 0.20), transparent 34%),
-                radial-gradient(circle at 92% 88%, rgba(124, 58, 237, 0.16), transparent 36%),
-                var(--portal-bg);
-        }
-        .wrap { width: min(900px, 100%); margin: auto; }
-        .top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 18px;
-            margin-bottom: 26px;
-        }
-        .kicker { color: var(--portal-lime); font-size: 12px; font-weight: 800; letter-spacing: 1.4px; }
-        h1 { margin: 7px 0 0; font-size: clamp(26px, 4vw, 38px); color: var(--portal-text); }
-        .subtitle { margin: 7px 0 0; color: var(--portal-muted); }
-        .back {
-            border: 1px solid rgba(255, 255, 255, 0.10);
-            border-radius: 11px;
-            padding: 11px 17px;
-            background: linear-gradient(135deg, var(--portal-purple), var(--portal-violet));
-            color: #fff;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 10px 24px rgba(64, 55, 201, 0.28);
-            transition: transform .2s ease, box-shadow .2s ease;
-        }
-        .back:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(64, 55, 201, 0.38); }
-        .paper-header {
-            padding: 25px 27px;
-            border-radius: 22px 22px 0 0;
-            background:
-                radial-gradient(circle at 85% 8%, rgba(166, 255, 46, 0.08), transparent 26%),
-                linear-gradient(145deg, #24205f 0%, #4037c9 48%, #6d28d9 100%);
-            color: #fff;
-        }
-        .paper-header .kicker { color: var(--portal-lime); }
-        .paper-header h2 { margin: 7px 0 0; font-size: 27px; }
-        .paper-header p { margin: 7px 0 0; color: #ddd9ff; }
-        .papers {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 18px;
-            padding: 22px;
-            background: var(--portal-surface);
-            border: 1px solid var(--portal-border);
-            border-top: 0;
-            border-radius: 0 0 22px 22px;
-            box-shadow: 0 35px 90px rgba(0, 0, 0, 0.28), 0 10px 30px rgba(0, 0, 0, 0.16);
-        }
-        .pdf-card {
-            padding: 22px;
-            border: 1px solid var(--portal-border);
-            border-radius: 17px;
-            background: var(--portal-surface-2);
-            transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
-        }
-        .pdf-card:hover {
-            transform: translateY(-3px);
-            border-color: rgba(166, 255, 46, 0.28);
-            background: #18233b;
-            box-shadow: 0 16px 34px rgba(0, 0, 0, 0.24);
-        }
-        .pdf-icon {
-            display: grid;
-            place-items: center;
-            width: 48px;
-            height: 48px;
-            border-radius: 14px;
-            background: rgba(91, 75, 255, 0.14);
-            border: 1px solid rgba(166, 255, 46, 0.12);
-            color: var(--portal-lime);
-            font-size: 23px;
-        }
-        .pdf-card h3 { margin: 16px 0 6px; font-size: 20px; color: var(--portal-text); }
-        .pdf-card p { margin: 0 0 17px; color: var(--portal-muted); font-size: 13px; line-height: 1.5; }
-        .pdf-link {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            width: 100%;
-            padding: 12px 15px;
-            border-radius: 11px;
-            background: linear-gradient(135deg, var(--portal-purple), var(--portal-violet));
-            color: #fff;
-            text-decoration: none;
-            font-weight: 800;
-            font-size: 14px;
-            box-shadow: 0 10px 24px rgba(64, 55, 201, 0.28);
-            transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
-        }
-        .pdf-link:hover { transform: translateY(-1px); filter: brightness(1.06); box-shadow: 0 14px 28px rgba(64, 55, 201, 0.36); }
-        .pdf-link.pending { background: #33405a; color: #aeb8ce; box-shadow: none; pointer-events: none; }
-        .status { margin-top: 9px; color: #7f8ba3; font-size: 11px; text-align: center; }
-        @media (max-width: 650px) {
-            .top { align-items: flex-start; flex-direction: column; }
-            .back { width: 100%; }
-            .papers { grid-template-columns: 1fr; padding: 15px; }
-        }
+        :root { --portal-bg:#0b1020;--portal-surface:#11182b;--portal-surface-2:#151f35;--portal-purple:#4037c9;--portal-violet:#7c3aed;--portal-lime:#a6ff2e;--portal-text:#f4f7ff;--portal-muted:#aeb8ce;--portal-border:rgba(255,255,255,.10); }
+        body{margin:0;min-height:100vh;padding:28px 18px 50px;font-family:"Segoe UI",sans-serif;color:var(--portal-text);background:radial-gradient(circle at 8% 10%,rgba(64,55,201,.2),transparent 34%),radial-gradient(circle at 92% 88%,rgba(124,58,237,.16),transparent 36%),var(--portal-bg)}
+        .wrap{width:min(900px,100%);margin:auto}.top{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:26px}.kicker{color:var(--portal-lime);font-size:12px;font-weight:800;letter-spacing:1.4px}h1{margin:7px 0 0;font-size:clamp(26px,4vw,38px)}.subtitle{margin:7px 0 0;color:var(--portal-muted)}
+        .back{border:1px solid var(--portal-border);border-radius:11px;padding:11px 17px;background:linear-gradient(135deg,var(--portal-purple),var(--portal-violet));color:#fff;font-weight:700;cursor:pointer;box-shadow:0 10px 24px rgba(64,55,201,.28)}
+        .paper-header{padding:25px 27px;border-radius:22px 22px 0 0;background:radial-gradient(circle at 85% 8%,rgba(166,255,46,.08),transparent 26%),linear-gradient(145deg,#24205f 0%,#4037c9 48%,#6d28d9 100%);color:#fff}.paper-header .kicker{color:var(--portal-lime)}.paper-header h2{margin:7px 0 0;font-size:27px}.paper-header p{margin:7px 0 0;color:#ddd9ff}
+        .papers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;padding:22px;background:var(--portal-surface);border:1px solid var(--portal-border);border-top:0;border-radius:0 0 22px 22px;box-shadow:0 35px 90px rgba(0,0,0,.28),0 10px 30px rgba(0,0,0,.16)}
+        .pdf-card{min-width:0;padding:22px;border:1px solid var(--portal-border);border-radius:17px;background:var(--portal-surface-2);transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}.pdf-card:hover{transform:translateY(-3px);border-color:rgba(166,255,46,.28);background:#18233b;box-shadow:0 16px 34px rgba(0,0,0,.24)}
+        .pdf-icon{display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:rgba(91,75,255,.14);border:1px solid rgba(166,255,46,.12);color:var(--portal-lime);font-size:23px}.pdf-card h3{margin:16px 0 6px;font-size:20px}.pdf-card p{margin:0 0 17px;color:var(--portal-muted);font-size:13px;line-height:1.5}
+        .pdf-link{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px 15px;border-radius:11px;background:linear-gradient(135deg,var(--portal-purple),var(--portal-violet));color:#fff;text-decoration:none;font-weight:800;font-size:14px;box-shadow:0 10px 24px rgba(64,55,201,.28)}.pdf-link.pending{background:#33405a;color:#aeb8ce;box-shadow:none;pointer-events:none}.status{margin-top:9px;color:#7f8ba3;font-size:11px;text-align:center}
+        #answerSection{margin-top:24px}#answerSection .answer-header{border-radius:22px 22px 0 0}#answerSection .answer-papers{border-top:0;border-radius:0 0 22px 22px}#answerSection .answer-card{position:relative}
+        @media(max-width:650px){.top{align-items:flex-start;flex-direction:column}.back{width:100%}.papers{grid-template-columns:1fr;padding:15px}.paper-header{padding:20px}.paper-header h2{font-size:23px}}
     </style>
 </head>
 <body>
 <div class="wrap">
-    <header class="top">
-        <div>
-            <div class="kicker" id="pageKicker">A/L • THEORY EXAMINATION</div>
-            <h1 id="pageTitle">Paper 01</h1>
-            <p class="subtitle">Choose the paper you want to study.</p>
-        </div>
-        <button class="back" type="button" onclick="history.back()">← Back</button>
-    </header>
-
+    <header class="top"><div><div class="kicker" id="pageKicker">A/L • THEORY EXAMINATION</div><h1 id="pageTitle">Paper 01</h1><p class="subtitle">Choose the paper you want to study.</p></div><button class="back" type="button" onclick="history.back()">← Back</button></header>
     <section>
-        <div class="paper-header">
-            <div class="kicker" id="paperKicker">PAPER 01</div>
-            <h2 id="paperHeaderTitle">Theory Examination Paper</h2>
-            <p>Pages are displayed for on-screen study. Download and print controls are not provided.</p>
-        </div>
-
+        <div class="paper-header"><div class="kicker" id="paperKicker">PAPER 01</div><h2 id="paperHeaderTitle">Theory Examination Paper</h2><p>View the paper and answer sheets safely inside the student portal.</p></div>
         <div class="papers">
-            <article class="pdf-card">
-                <div class="pdf-icon">🖨️</div>
-                <h3>1st Paper</h3>
-                <p id="firstDescription">View the first paper and answer pages online.</p>
-                <a id="firstPaper" class="pdf-link pending">View Paper →</a>
-                <div id="firstStatus" class="status">Checking page images…</div>
-            </article>
-
-            <article class="pdf-card">
-                <div class="pdf-icon">🖨️</div>
-                <h3>2nd Paper</h3>
-                <p id="secondDescription">View the second paper and answer pages online.</p>
-                <a id="secondPaper" class="pdf-link pending">View &amp; Print →</a>
-                <div id="secondStatus" class="status">Checking page images…</div>
-            </article>
+            <article class="pdf-card"><div class="pdf-icon">📘</div><h3>1st Paper</h3><p id="firstDescription">View the first paper online.</p><a id="firstPaper" class="pdf-link pending" aria-disabled="true">Checking paper PDF…</a><div id="firstStatus" class="status">Checking uploaded paper…</div></article>
+            <article class="pdf-card"><div class="pdf-icon">📗</div><h3>2nd Paper</h3><p id="secondDescription">View the second paper online.</p><a id="secondPaper" class="pdf-link pending" aria-disabled="true">Checking paper PDF…</a><div id="secondStatus" class="status">Checking uploaded paper…</div></article>
         </div>
     </section>
 </div>
-
-<script type="module" src="al-top-ranking-paper.js?v=november-answer-fix2"></script>
+<script type="module" src="al-top-ranking-paper.js?v=november-viewer-fix1"></script>
 </body>
 </html>
