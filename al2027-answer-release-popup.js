@@ -23,7 +23,7 @@ import { db, doc, getDoc } from "./firebase.js";
   const isAlValue = value => {
     const v = normalize(value);
     return ["al", "a/l", "alevel", "advanced", "advancedlevel"].includes(v) ||
-      v.includes("advancedlevel") || /^al20(?:27|28|29)$/.test(v);
+      v.includes("advancedlevel") || /^(?:al|a\/l)20(?:27|28|29)$/.test(v);
   };
 
   function getAlYear(profile, studentId) {
@@ -178,16 +178,15 @@ import { db, doc, getDoc } from "./firebase.js";
       if (!snapshot.exists()) return;
 
       const profile = snapshot.data() || {};
-      const profileType = [
+      const profileTypeValues = [
         profile.studentType,
         profile.grade,
         profile.stream,
         profile.studentLevel,
         sessionStorage.getItem("studentType"),
         sessionStorage.getItem("studentGrade")
-      ].find(value => value !== null && value !== undefined && String(value).trim() !== "");
-
-      if (!isAlValue(profileType)) return;
+      ];
+      if (!profileTypeValues.some(isAlValue)) return;
       if (getAlYear(profile, studentId) !== "2027") return;
       if (!(await verifyAnswerFiles())) return;
 
