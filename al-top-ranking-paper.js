@@ -197,6 +197,15 @@ async function initialize() {
             checkAnswerResource("firstAnswerLink", "firstAnswerStatus", "first"),
             checkAnswerResource("secondAnswerLink", "secondAnswerStatus", "second")
         ]);
+
+        if (params.get("focus") === "answers") {
+            requestAnimationFrame(() => {
+                document.getElementById("answerSection")?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            });
+        }
     } catch (error) {
         console.error("Top Ranking paper page initialization failed:", error);
         const statuses = ["firstStatus", "secondStatus", "firstAnswerStatus", "secondAnswerStatus"];
