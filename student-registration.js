@@ -1,4 +1,5 @@
 import { db, doc, getDoc, updateDoc } from "./firebase.js";
+import { getStudentOnboardingType, isStudentOnboardingComplete } from "./student-onboarding.js";
 
 const registrationStudentId = document.getElementById("registrationStudentId");
 const fullNameInput = document.getElementById("fullName");
@@ -15,32 +16,6 @@ const toggleConfirmPassword = document.getElementById("toggleConfirmPassword");
 
 const loggedIn = sessionStorage.getItem("loggedIn") === "true";
 const studentId = (sessionStorage.getItem("studentId") || "").trim().toUpperCase();
-
-function isALStudentData(data, id = studentId) {
-    const values = [
-        data?.studentType,
-        data?.category,
-        data?.studentCategory,
-        data?.grade
-    ]
-        .map(value => String(value ?? "").trim().toLowerCase())
-        .filter(Boolean);
-
-    if (values.some(value => [
-        "al",
-        "a/l",
-        "a level",
-        "advanced",
-        "advanced level"
-    ].includes(value))) {
-        return true;
-    }
-
-    // Legacy A/L accounts can still be recognised by their A-prefix.
-    return /^A2[789]\d{3}$/.test(
-        String(id || "").trim().toUpperCase()
-    );
-}
 
 function showMessage(message, type = "error") {
     if (!registrationMessage) return;
@@ -183,20 +158,13 @@ async function loadStudent() {
 
         const data = snap.data();
 
-        if (!isALStudentData(data, studentId)) {
-            alert(
-                "A/L Student Registration Only.\n\n" +
-                "This registration page is only available for A/L students."
-            );
-            window.location.replace("index.html");
+        const studentType = getStudentOnboardingType(data, studentId);
+        if (!studentType) {
+            showMessage("We could not identify your student category. Please contact the System Administrator.");
             return;
         }
 
-        if (
-            data?.profileCompleted === true &&
-            data?.registrationCompleted === true &&
-            data?.mustChangePassword !== true
-        ) {
+        if (isStudentOnboardingComplete(data)) {
             window.location.replace("dashboard.html");
             return;
         }
@@ -230,15 +198,14 @@ async function completeRegistration() {
         const snap = await getDoc(studentRef);
 
         if (!snap.exists()) {
-            return showMessage("A/L student account not found.");
+            return showMessage("Student account not found.");
         }
 
         const data = snap.data();
 
-        if (!isALStudentData(data, studentId)) {
-            return showMessage(
-                "Only A/L students can complete registration."
-            );
+        const studentType = getStudentOnboardingType(data, studentId);
+        if (!studentType) {
+            return showMessage("We could not identify your student category. Please contact the System Administrator.");
         }
 
         const name = validateName(fullNameInput?.value);
@@ -287,18 +254,23 @@ async function completeRegistration() {
             registrationCompleted: true,
             lastActiveAt: Date.now(),
             registrationCompletedAt: Date.now(),
-            studentType: "al",
-            category: "A/L",
-            studentCategory: "A/L"
+            studentType,
+            category: studentType === "al" ? "A/L" : studentType === "grade10" ? "Grade 10" : "Grade 11",
+            studentCategory: studentType === "al" ? "A/L" : studentType === "grade10" ? "Grade 10" : "Grade 11",
+            grade: studentType === "al" ? "AL" : studentType === "grade10" ? 10 : 11,
+            onboardingCompleted: true,
+            firstLoginCompleted: true
         });
 
         sessionStorage.setItem("studentName", name.value);
+        sessionStorage.setItem("studentType", studentType);
+        sessionStorage.setItem("studentGrade", studentType === "al" ? "Advanced Level" : studentType === "grade10" ? "Grade 10" : "Grade 11");
         sessionStorage.setItem("studentNIC", nic.value);
         sessionStorage.setItem("loggedIn", "true");
         sessionStorage.setItem("studentId", studentId);
 
         showMessage(
-            "A/L registration completed successfully. Redirecting...",
+            "Student onboarding completed successfully. Redirecting...",
             "success"
         );
 

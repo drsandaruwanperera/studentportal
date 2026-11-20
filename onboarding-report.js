@@ -8,6 +8,8 @@ import {
     getDocs
 } from "./firebase.js";
 
+import { isStudentOnboardingComplete } from "./student-onboarding.js";
+
 
 // =====================================================
 // ELEMENTS
@@ -632,49 +634,8 @@ function getCategoryName(
 // remains compatible with existing registration code.
 //
 
-function isOnboardingComplete(
-    data
-) {
-
-    if (
-        data?.registrationCompleted === true
-    ) {
-
-        return true;
-
-    }
-
-
-    if (
-        data?.profileCompleted === true &&
-        data?.mustChangePassword !== true
-    ) {
-
-        return true;
-
-    }
-
-
-    if (
-        data?.onboardingCompleted === true
-    ) {
-
-        return true;
-
-    }
-
-
-    if (
-        data?.firstLoginCompleted === true
-    ) {
-
-        return true;
-
-    }
-
-
-    return false;
-
+function isOnboardingComplete(data) {
+    return isStudentOnboardingComplete(data);
 }
 
 
