@@ -2337,7 +2337,8 @@ function protectCurrentPage() {
         "faq.html",
         "contact.html",
         "settings.html",
-        "theme-scheduler.html"
+        "theme-scheduler.html",
+        "pop-notices.html"
 
     ];
 
