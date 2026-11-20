@@ -10,6 +10,8 @@ import {
     runTransaction
 } from "./firebase.js";
 
+import { requireRecoveryCodeSetup } from "./student-recovery-setup.js";
+
 
 // =====================================================
 // ELEMENTS
@@ -806,6 +808,9 @@ async function loginStudent() {
             showMessage("Your password or account details changed. Please try again.");
             return;
         }
+
+        // Students must save their one-time recovery code before any dashboard route opens.
+        await requireRecoveryCodeSetup(studentRef, studentId, verifiedLogin.data || data);
 
         saveStudentSession(
             studentId,
