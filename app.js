@@ -11,6 +11,7 @@ import {
 } from "./firebase.js";
 
 import { requireRecoveryCodeSetup } from "./student-recovery-setup.js";
+import { initRecoveryPasswordReset } from "./student-recovery-reset.js";
 
 
 // =====================================================
@@ -1212,6 +1213,8 @@ if (passwordInput) {
 
 
 // =====================================================
+initRecoveryPasswordReset();
+
 // STARTUP LOG
 // =====================================================
 
