@@ -1,0 +1,37 @@
+#student-exam-pop-notice{position:fixed;inset:0;z-index:100500;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(36,65,99,.48);backdrop-filter:blur(9px);opacity:0;transition:opacity .22s ease}
+#student-exam-pop-notice.is-visible{opacity:1}
+body.spn-modal-open{overflow:hidden!important}
+#student-exam-pop-notice .spn-card{position:relative;display:grid;grid-template-columns:150px minmax(0,1fr);gap:22px;align-items:center;width:min(760px,100%);min-height:365px;overflow:hidden;padding:34px 38px;border-radius:26px;border:1px solid #c2daf2;background:radial-gradient(circle at 90% 0%,rgba(255,255,255,.95),transparent 28%),linear-gradient(145deg,#fafdff 0%,#eaf3fd 58%,#dbeafa 100%);box-shadow:0 32px 85px rgba(15,44,79,.30);color:#17213a;transform:translateY(12px) scale(.985);transition:transform .25s ease}
+#student-exam-pop-notice.is-visible .spn-card{transform:translateY(0) scale(1)}
+#student-exam-pop-notice .spn-close{position:absolute;right:16px;top:14px;width:31px;height:31px;border:0;border-radius:50%;background:rgba(255,255,255,.82);color:#536985;font-size:23px;line-height:1;cursor:pointer;z-index:3}
+#student-exam-pop-notice .spn-content{position:relative;z-index:2;min-width:0}
+#student-exam-pop-notice .spn-badge{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:99px;background:linear-gradient(105deg,#6b4dff,#2d80e9);color:#fff;font-size:10px;font-weight:900;box-shadow:0 7px 18px rgba(69,102,214,.2)}
+#student-exam-pop-notice .spn-audience{margin:12px 0 5px;color:#7192b8;font-size:8px;font-weight:950;letter-spacing:1.15px}
+#student-exam-pop-notice .spn-content h2{margin:0;color:#17264a;font-size:31px;letter-spacing:-.8px;line-height:1.1}
+#student-exam-pop-notice .spn-content h3{margin:4px 0 9px;color:#5d55d8;font-size:19px;letter-spacing:-.3px}
+#student-exam-pop-notice .spn-message{margin:0 0 13px;color:#526984;font-size:11px;line-height:1.6}
+#student-exam-pop-notice .spn-countdown-label{margin:0 0 7px;color:#6d83a0;font-size:8px;font-weight:900;letter-spacing:.8px;text-transform:uppercase}
+#student-exam-pop-notice .spn-countdown{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+#student-exam-pop-notice .spn-time-box{display:grid;justify-items:center;gap:2px;min-width:0;padding:10px 4px 8px;border:1px solid #d4e5f6;border-radius:12px;background:rgba(255,255,255,.84);box-shadow:0 5px 14px rgba(52,92,140,.06)}
+#student-exam-pop-notice .spn-time-box strong{font-size:24px;line-height:1.1;color:#19366f;font-weight:950;font-variant-numeric:tabular-nums}
+#student-exam-pop-notice .spn-time-box span{font-size:8px;color:#6d83a0;font-weight:800}
+#student-exam-pop-notice .spn-countdown-state{min-height:14px;margin:6px 0 0;text-align:right;color:#6b84a2;font-size:8px}
+#student-exam-pop-notice .spn-actions{display:flex;gap:9px;margin-top:13px}
+#student-exam-pop-notice .spn-actions button{min-height:42px;border:0;border-radius:99px;padding:0 17px;font-family:inherit;font-size:10px;font-weight:900;cursor:pointer}
+#student-exam-pop-notice .spn-view-btn{flex:1;background:linear-gradient(105deg,#286fce,#1760bd);color:#fff;box-shadow:0 8px 19px rgba(33,105,195,.2)}
+#student-exam-pop-notice .spn-view-btn span{margin-left:8px;font-size:15px}
+#student-exam-pop-notice .spn-later-btn{min-width:118px;background:#dbeafa;color:#315d94;border:1px solid #c8dcf1!important}
+#student-exam-pop-notice .spn-calendar-art{position:relative;width:130px;height:154px;justify-self:center;border:2px solid #a9c9ec;border-radius:17px;background:linear-gradient(155deg,#fff,#e3effd);box-shadow:0 17px 30px rgba(52,103,162,.15);transform:rotate(-5deg);padding:42px 12px 12px}
+#student-exam-pop-notice .spn-calendar-rings{position:absolute;display:flex;justify-content:space-around;left:22px;right:22px;top:-12px}
+#student-exam-pop-notice .spn-calendar-rings i{width:9px;height:22px;border:3px solid #3f83cf;border-radius:9px;background:#f9fcff}
+#student-exam-pop-notice .spn-calendar-head{position:absolute;left:0;right:0;top:0;height:31px;border-radius:13px 13px 0 0;background:linear-gradient(100deg,#4d89d5,#2166b7)}
+#student-exam-pop-notice .spn-calendar-month{text-align:center;color:#1f5fa9;font-size:17px;line-height:1.08;font-weight:950;letter-spacing:.2px}
+#student-exam-pop-notice .spn-calendar-dots{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:15px 7px 0}
+#student-exam-pop-notice .spn-calendar-dots i{height:9px;border-radius:4px;background:#c8def4}
+#student-exam-pop-notice .spn-calendar-dots i:nth-child(2),#student-exam-pop-notice .spn-calendar-dots i:nth-child(5){background:#78aee3}
+#student-exam-pop-notice .spn-snow{position:absolute;pointer-events:none;color:#7fb5e6;opacity:.43;text-shadow:0 0 12px #fff}
+#student-exam-pop-notice .spn-snow-one{left:18px;top:28px;font-size:31px}
+#student-exam-pop-notice .spn-snow-two{right:30px;bottom:22px;font-size:24px}
+@media(max-width:620px){#student-exam-pop-notice{padding:12px}#student-exam-pop-notice .spn-card{display:block;width:min(460px,100%);min-height:0;padding:27px 20px 21px;border-radius:21px}#student-exam-pop-notice .spn-calendar-art{display:none}#student-exam-pop-notice .spn-content h2{font-size:27px}#student-exam-pop-notice .spn-content h3{font-size:16px}#student-exam-pop-notice .spn-message{font-size:10px}#student-exam-pop-notice .spn-countdown{gap:5px}#student-exam-pop-notice .spn-time-box{padding:10px 2px 8px}#student-exam-pop-notice .spn-time-box strong{font-size:21px}#student-exam-pop-notice .spn-actions{flex-direction:column}#student-exam-pop-notice .spn-actions button{width:100%}#student-exam-pop-notice .spn-later-btn{min-height:38px}}
+@media(max-width:360px){#student-exam-pop-notice .spn-card{padding:26px 15px 17px}#student-exam-pop-notice .spn-time-box strong{font-size:18px}#student-exam-pop-notice .spn-content h2{font-size:24px}}
+@media(prefers-reduced-motion:reduce){#student-exam-pop-notice,#student-exam-pop-notice .spn-card{transition:none!important}}
