@@ -1,0 +1,409 @@
+/* ==========================================================
+   DR. SANDARUWAN LMS — WINTER ICE BLUE DASHBOARD SYSTEM
+   Shared by the home dashboard and every student portal tab.
+   Presentation only: no navigation, auth, data, or access logic.
+   ========================================================== */
+:root.christmas-theme-active{
+  color-scheme:light!important;
+  --winter-bg:#eff5fc;
+  --winter-surface:#ffffff;
+  --winter-surface-soft:#e8f2fc;
+  --winter-blue:#4d89d5;
+  --winter-blue-dark:#2868b8;
+  --winter-blue-light:#dceafa;
+  --winter-navy:#17213a;
+  --winter-muted:#52617c;
+  --winter-border:#cbdff2;
+  --winter-shadow:0 14px 34px rgba(48,91,145,.10);
+  --primary:#4d89d5!important;
+  --primary-dark:#2868b8!important;
+  --background:#eff5fc!important;
+  --card:#fff!important;
+  --text:#17213a!important;
+  --muted:#52617c!important;
+  --border:#cbdff2!important;
+}
+html.christmas-theme-active,
+html.christmas-theme-active body{
+  background:#eff5fc!important;
+  color:#17213a!important;
+  color-scheme:light!important;
+}
+body.christmas-theme-active{
+  background:
+    radial-gradient(ellipse at 8% 0%,rgba(133,185,233,.17),transparent 34%),
+    radial-gradient(ellipse at 96% 88%,rgba(182,216,246,.22),transparent 34%),
+    linear-gradient(180deg,#f6f9fe 0%,#edf4fc 100%)!important;
+  color:#17213a!important;
+}
+body.christmas-theme-active :is(h1,h2,h3,h4,h5,h6,label,strong,b,legend){
+  color:#17213a!important;
+}
+body.christmas-theme-active :is(p,small,.muted,.subtitle,.description,.hint,.meta,.eyebrow){
+  color:#52617c;
+}
+body.christmas-theme-active a{color:#2868b8}
+body.christmas-theme-active a:hover{color:#174e94}
+body.christmas-theme-active :is(button,.btn,[role="button"]){
+  accent-color:#4d89d5;
+}
+body.christmas-theme-active :is(input,select,textarea){
+  color:#17213a!important;
+  background:#fff!important;
+  border-color:#cbdff2!important;
+  color-scheme:light!important;
+}
+body.christmas-theme-active :is(input,select,textarea)::placeholder{color:#8192aa!important}
+body.christmas-theme-active :is(input,select,textarea):focus{
+  border-color:#4d89d5!important;
+  box-shadow:0 0 0 3px rgba(77,137,213,.14)!important;
+  outline:none!important;
+}
+body.christmas-theme-active :is(a,button,input,select,textarea,[tabindex]):focus-visible{
+  outline:2px solid #4d89d5!important;outline-offset:3px!important;
+}
+body.christmas-theme-active ::selection{background:#c5ddf7;color:#17213a}
+
+/* Main LMS shell and left navigation. */
+body.christmas-theme-active .app,
+body.christmas-theme-active .main-content,
+body.christmas-theme-active .main,
+body.christmas-theme-active #main,
+body.christmas-theme-active #final-dark-page,
+body.christmas-theme-active #final-dark-program{
+  background:transparent!important;
+  color:#17213a!important;
+}
+body.christmas-theme-active .sidebar,
+body.christmas-theme-active .side,
+body.christmas-theme-active #unified-student-sidebar,
+body.christmas-theme-active #sectionSidebar{
+  background:linear-gradient(180deg,#f8fbff 0%,#eaf3fc 100%)!important;
+  border-color:#d4e5f5!important;
+  border-right:1px solid #d4e5f5!important;
+  box-shadow:8px 0 28px rgba(39,81,130,.07)!important;
+  color:#17213a!important;
+}
+body.christmas-theme-active :is(.sidebar-brand,.brand,.side-profile,.student-account,.professional-profile){
+  border-color:#d4e5f5!important;
+}
+body.christmas-theme-active :is(.brand-logo,.logo,.section-brand-mark,.side-avatar,.student-avatar){
+  background:linear-gradient(145deg,#dceafa,#bcd8f4)!important;
+  border:1px solid #b8d2ed!important;
+  color:#2868b8!important;
+  box-shadow:0 7px 18px rgba(77,137,213,.11)!important;
+}
+body.christmas-theme-active :is(.brand-text,.brand-text strong,.brand-text span,.brand h1,.brand p,.student-account-info,.side-profile,.side-profile strong,.side-profile span){
+  color:#17213a!important;
+}
+body.christmas-theme-active :is(.sidebar-section-title,.sidebar .sidebar-section-title){
+  color:#6783a6!important;
+}
+body.christmas-theme-active :is(.sidebar-link,.sidebar a,.side nav a,.side a,.mobile-nav a){
+  color:#405776!important;
+  border-color:transparent!important;
+}
+body.christmas-theme-active :is(.sidebar-link:hover,.sidebar a:hover,.side nav a:hover,.side a:hover,.mobile-nav a:hover){
+  color:#245f9e!important;
+  background:#e1edf9!important;
+}
+body.christmas-theme-active .sidebar-link.active,
+body.christmas-theme-active .sidebar .active,
+body.christmas-theme-active .side nav a.active,
+body.christmas-theme-active .mobile-nav a.active{
+  color:#fff!important;
+  background:linear-gradient(105deg,#4d89d5,#3478c8)!important;
+  border:1px solid #8cb8e6!important;
+  box-shadow:0 9px 21px rgba(77,137,213,.18)!important;
+}
+body.christmas-theme-active :is(.nav-icon,.sidebar-link .nav-icon,.side .nav-icon){
+  color:inherit!important;
+}
+body.christmas-theme-active :is(.sidebar-logout,.logout,.sidebar-logout button){
+  color:#fff!important;
+  background:linear-gradient(105deg,#4d89d5,#2868b8)!important;
+  border:1px solid #b8d2ed!important;
+}
+body.christmas-theme-active .mobile-sidebar-backdrop,
+body.christmas-theme-active .section-sidebar-backdrop{
+  background:rgba(24,46,75,.34)!important;
+}
+body.christmas-theme-active :is(.mobile-lms-header,.lms-header,.top,.section-mobile-header){
+  background:rgba(249,252,255,.94)!important;
+  border-color:#d5e5f4!important;
+  color:#17213a!important;
+  box-shadow:0 8px 25px rgba(38,79,128,.07)!important;
+  backdrop-filter:blur(16px);
+}
+body.christmas-theme-active :is(.lms-header-title,.mobile-lms-title,.top h1,.top h2,.top .title){
+  color:#17213a!important;
+}
+body.christmas-theme-active :is(.mobile-menu-btn,.mobile-notification,.lms-notification,.section-menu-toggle){
+  background:#e3effb!important;
+  border:1px solid #cbdff2!important;
+  color:#315f95!important;
+}
+body.christmas-theme-active .mobile-menu-btn span{background:#315f95!important}
+body.christmas-theme-active :is(.lms-search,.lms-search input,.search-box,.search-input){
+  background:#fff!important;
+  border:1px solid #cbdff2!important;
+  color:#17213a!important;
+}
+body.christmas-theme-active .mobile-nav{
+  background:rgba(249,252,255,.97)!important;
+  border-top:1px solid #d4e5f5!important;
+}
+
+/* Main dashboard hero, journey panel, metrics and study cards. */
+body.christmas-theme-active :is(.dashboard-learning-banner,.dashboard-analytics-hero,.hero-card){
+  background:
+    radial-gradient(ellipse at 86% 12%,rgba(164,207,246,.40),transparent 34%),
+    linear-gradient(112deg,#f1f7fe 0%,#e2eefb 56%,#d8e9fa 100%)!important;
+  border:1px solid #bcd8f4!important;
+  border-radius:24px!important;
+  box-shadow:0 16px 38px rgba(59,111,168,.10)!important;
+  color:#17213a!important;
+}
+body.christmas-theme-active .learning-banner-copy :is(h1,h2,h3),
+body.christmas-theme-active .learning-banner-copy :is(h1,h2,h3) span{
+  color:#17213a!important;
+  text-shadow:none!important;
+}
+body.christmas-theme-active .learning-banner-copy :is(h1 span,h2 span,.highlight,.accent){
+  color:#286fc4!important;
+}
+body.christmas-theme-active .learning-banner-copy :is(p,.eyebrow,.banner-subtitle){
+  color:#526b8d!important;
+}
+body.christmas-theme-active .hero-continue-btn{
+  color:#fff!important;
+  background:linear-gradient(110deg,#4d89d5,#2868b8)!important;
+  border:1px solid #a9cbed!important;
+  box-shadow:0 9px 20px rgba(77,137,213,.16)!important;
+}
+body.christmas-theme-active .learning-orbit,
+body.christmas-theme-active .dashboard-journey-chart{
+  background:rgba(255,255,255,.84)!important;
+  border:1px solid #c6ddf4!important;
+  border-radius:20px!important;
+  color:#17213a!important;
+  box-shadow:0 9px 24px rgba(54,99,151,.07)!important;
+}
+body.christmas-theme-active .learning-orbit :is(h1,h2,h3,p,small,strong,b,span),
+body.christmas-theme-active .dashboard-journey-chart :is(h1,h2,h3,p,small,strong,b,span){
+  color:#405776!important;
+}
+body.christmas-theme-active :is(.lms-stat-card,.dashboard-summary-card,.lms-widget,.portal-program-card,.portal-support-card,.quick-nav-card,.dashboard-card,.summary-card){
+  background:linear-gradient(150deg,#fff 0%,#f5f9fe 100%)!important;
+  border:1px solid #cbdff2!important;
+  border-radius:18px!important;
+  color:#17213a!important;
+  box-shadow:0 11px 27px rgba(45,86,135,.075)!important;
+  backdrop-filter:blur(10px);
+}
+body.christmas-theme-active :is(.lms-stat-card,.dashboard-summary-card,.lms-widget,.portal-program-card,.portal-support-card,.quick-nav-card,.dashboard-card,.summary-card) :is(h1,h2,h3,h4,b,strong,.value,.number){
+  color:#17213a!important;
+  text-shadow:none!important;
+}
+body.christmas-theme-active :is(.lms-stat-card,.dashboard-summary-card,.lms-widget,.portal-program-card,.portal-support-card,.quick-nav-card,.dashboard-card,.summary-card) :is(p,small,span,.muted,.meta,.description){
+  color:#52617c!important;
+}
+body.christmas-theme-active :is(.lms-stat-icon,.portal-program-icon,.portal-support-icon,.quick-nav-icon){
+  background:#e1eefb!important;
+  color:#3479c8!important;
+  border:1px solid #c6def5!important;
+}
+body.christmas-theme-active :is(.portal-section-heading,.lms-section-heading,.widget-heading,.dashboard-announcements-heading,.portal-kicker){
+  color:#245f9e!important;
+}
+body.christmas-theme-active :is(.portal-section-link,.portal-program-copy .material-link,.portal-card-arrow,.lms-section-heading a){
+  color:#286fc4!important;
+}
+body.christmas-theme-active .dashboard-announcement-tab{
+  color:#526b8d!important;
+  border-color:#cbdff2!important;
+  background:transparent!important;
+}
+body.christmas-theme-active .dashboard-announcement-tab.active{
+  color:#fff!important;
+  background:#4d89d5!important;
+  border-color:#4d89d5!important;
+}
+body.christmas-theme-active .progress-ring{filter:drop-shadow(0 0 8px rgba(77,137,213,.16))!important}
+body.christmas-theme-active .progress-widget{color:#17213a!important}
+
+/* Shared pages: Progress & Results, My Program, Announcements, Support. */
+body.christmas-theme-active :is(.main,.main-content,#main){
+  background:transparent!important;
+  color:#17213a!important;
+}
+body.christmas-theme-active :is(.hero,.performance-hero,.results-head,.section-title,.header,.intro){
+  background:linear-gradient(115deg,#f0f7ff 0%,#e2eefb 64%,#d8e9fa 100%)!important;
+  border:1px solid #c5dcf3!important;
+  border-radius:20px!important;
+  color:#17213a!important;
+  box-shadow:0 12px 28px rgba(49,92,143,.08)!important;
+}
+body.christmas-theme-active :is(.hero,.performance-hero,.results-head,.section-title,.header,.intro) :is(h1,h2,h3,h4,strong,b){
+  color:#17213a!important;
+  text-shadow:none!important;
+}
+body.christmas-theme-active :is(.hero,.performance-hero,.results-head,.section-title,.header,.intro) :is(p,small,.subtitle,.hint){
+  color:#536b8b!important;
+}
+body.christmas-theme-active :is(.hero-score,.hero-score strong,.hero-copy strong){
+  color:#286fc4!important;
+}
+body.christmas-theme-active :is(.panel,.stat,.card,.result,.support-card,.notice,.announcement-card,.insight-panel,.trend-panel,.info-card,.material-card,.part-card,.paper-card,.pdf-card,.paper-list,.chat-list,.chat,.widget,.grid .card){
+  background:#fff!important;
+  border:1px solid #d0e1f2!important;
+  border-radius:17px!important;
+  color:#17213a!important;
+  box-shadow:0 10px 25px rgba(45,85,132,.07)!important;
+}
+body.christmas-theme-active :is(.panel,.stat,.card,.result,.support-card,.notice,.announcement-card,.insight-panel,.trend-panel,.info-card,.material-card,.part-card,.paper-card,.pdf-card,.chat,.widget) :is(h1,h2,h3,h4,b,strong,.title,.value,.score){
+  color:#17213a!important;
+  text-shadow:none!important;
+}
+body.christmas-theme-active :is(.panel,.stat,.card,.result,.support-card,.notice,.announcement-card,.insight-panel,.trend-panel,.info-card,.material-card,.part-card,.paper-card,.pdf-card,.chat,.widget) :is(p,small,span,.description,.meta,.hint,.muted){
+  color:#52617c!important;
+}
+body.christmas-theme-active :is(.stat-icon,.result-icon,.support-icon,.material-icon,.paper-icon,.ico){
+  background:#e2effc!important;
+  color:#367ac8!important;
+  border:1px solid #c8def3!important;
+}
+body.christmas-theme-active :is(.tabs,.tab-list,.paper-switch){
+  background:#e8f2fc!important;
+  border:1px solid #d1e2f3!important;
+  border-radius:14px!important;
+}
+body.christmas-theme-active :is(.tab,.paper-switch button){
+  color:#4b6383!important;
+}
+body.christmas-theme-active :is(.tab.active,.paper-switch button.active){
+  background:#4d89d5!important;
+  color:#fff!important;
+  border-color:#4d89d5!important;
+}
+body.christmas-theme-active :is(.track,.mini-track,.bar-track,.result-progress){
+  background:#e2ebf5!important;
+  border:1px solid #d0e0f0!important;
+}
+body.christmas-theme-active :is(.fill,.bar-track span,.result-progress span){
+  background:linear-gradient(90deg,#4d89d5,#8ab9e8)!important;
+}
+body.christmas-theme-active :is(.tag,.badge,.panel-badge,.results-count){
+  background:#e2effc!important;
+  color:#2868b8!important;
+  border:1px solid #c6def4!important;
+}
+body.christmas-theme-active :is(.notice-top,.notice-message,.announcement-summary,.announcement-list){
+  background:#f7fbff!important;
+  color:#405776!important;
+  border-color:#d5e5f4!important;
+}
+body.christmas-theme-active :is(.result-grid,.support-grid,.material-grid,.grid,.performance-grid){
+  color:#17213a!important;
+}
+body.christmas-theme-active :is(.result-top,.result-main,.result-body,.notice-top){
+  color:#17213a!important;
+}
+body.christmas-theme-active .score-bars .bar-item{color:#52617c!important}
+
+/* Model papers, resource catalogues and protected PDF viewers. */
+body.christmas-theme-active :is(.container,.wrap){
+  color:#17213a!important;
+}
+body.christmas-theme-active .container > :is(.header,.paper-header){
+  background:linear-gradient(115deg,#e5f0fc,#f7fbff)!important;
+  border:1px solid #cbdff2!important;
+  border-radius:20px!important;
+}
+body.christmas-theme-active :is(.eyebrow,.kicker,.paper-kicker,.section-kicker){
+  color:#3479c8!important;
+}
+body.christmas-theme-active :is(.section-heading,.month-section .section-heading){
+  background:linear-gradient(110deg,#dceafa,#f2f8fe)!important;
+  color:#17213a!important;
+  border:1px solid #cbdff2!important;
+  border-radius:15px!important;
+}
+body.christmas-theme-active :is(.month-badge,.paper-number){
+  background:#4d89d5!important;
+  color:#fff!important;
+  border:1px solid #b8d2ed!important;
+}
+body.christmas-theme-active :is(.paper-info h2,.paper-info h3,.paper-info p,.paper-info small){
+  color:#17213a!important;
+}
+body.christmas-theme-active :is(.paper-open,.pdf-link,.open,.back,.back-btn,.btn.primary,.actions .primary,.secondary){
+  background:linear-gradient(110deg,#4d89d5,#2868b8)!important;
+  color:#fff!important;
+  border:1px solid #b8d2ed!important;
+  box-shadow:0 8px 18px rgba(77,137,213,.13)!important;
+}
+body.christmas-theme-active :is(.paper-open:hover,.pdf-link:hover,.open:hover,.back:hover,.back-btn:hover){
+  filter:brightness(1.06);
+}
+body.christmas-theme-active :is(.pdf-link.pending,.locked,.paper-card.locked){
+  background:#e9eff6!important;
+  color:#63748a!important;
+  border-color:#d2dfec!important;
+}
+body.christmas-theme-active :is(.toolbar,.viewer-toolbar){
+  background:#f2f7fd!important;
+  border-color:#cbdff2!important;
+  color:#17213a!important;
+}
+body.christmas-theme-active :is(.toolbar-title,.toolbar .kicker,.toolbar h1,.toolbar h2){
+  color:#17213a!important;
+}
+body.christmas-theme-active :is(.pages,.paper-list,.paper-grid){
+  background:transparent!important;
+}
+body.christmas-theme-active :is(.page,.answer-page,.page-card){
+  background:#fff!important;
+  border:1px solid #d3e2f1!important;
+  box-shadow:0 8px 22px rgba(36,70,108,.06)!important;
+}
+body.christmas-theme-active :is(.empty,.fallback,.notice,.status){
+  background:#f5f9fe!important;
+  color:#52617c!important;
+  border-color:#d3e3f2!important;
+}
+body.christmas-theme-active :is(.print-notice,.hint){color:#61738d!important}
+
+/* Mobile navigation, panels and floating controls. */
+@media(max-width:800px){
+  body.christmas-theme-active :is(.mobile-lms-header,.section-mobile-header,.mobile-nav){
+    background:rgba(248,251,255,.97)!important;
+    border-color:#d5e5f4!important;
+  }
+  body.christmas-theme-active :is(.side,.sidebar,#sectionSidebar){
+    background:linear-gradient(180deg,#f8fbff,#e9f2fc)!important;
+    box-shadow:12px 0 32px rgba(44,83,128,.14)!important;
+  }
+  body.christmas-theme-active :is(.main,.main-content,#main){
+    background:transparent!important;
+  }
+  body.christmas-theme-active :is(.lms-stat-grid,.stats,.result-grid,.support-grid,.material-grid){
+    gap:12px!important;
+  }
+}
+@media(max-width:520px){
+  body.christmas-theme-active :is(.hero,.performance-hero,.results-head,.section-title,.header,.intro){
+    border-radius:16px!important;
+    padding:18px!important;
+  }
+  body.christmas-theme-active :is(.panel,.stat,.card,.result,.support-card,.material-card,.paper-card,.pdf-card){
+    border-radius:14px!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  body.christmas-theme-active *,
+  body.christmas-theme-active *::before,
+  body.christmas-theme-active *::after{
+    transition-duration:.01ms!important;
+  }
+}
