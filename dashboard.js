@@ -10,6 +10,8 @@ import {
     onSnapshot
 } from "./firebase.js";
 
+import { isStudentOnboardingComplete } from "./student-onboarding.js";
+
 
 // =====================================================
 // LOGIN CHECK
@@ -31,6 +33,40 @@ const studentId =
 
 const storedGrade =
     sessionStorage.getItem("studentGrade");
+
+// Re-check the profile when an existing session opens the dashboard directly.
+// This also returns students with incomplete onboarding to the required form.
+if (sessionStorage.getItem("loggedIn") === "true") {
+    document.documentElement.style.visibility = "hidden";
+
+    (async () => {
+        try {
+            if (!studentId) {
+                sessionStorage.removeItem("loggedIn");
+                window.location.replace("index.html");
+                return;
+            }
+
+            const onboardingSnapshot = await getDoc(doc(db, "students", studentId));
+            if (!onboardingSnapshot.exists()) {
+                sessionStorage.removeItem("loggedIn");
+                window.location.replace("index.html");
+                return;
+            }
+
+            if (!isStudentOnboardingComplete(onboardingSnapshot.data())) {
+                window.location.replace("student-registration.html");
+                return;
+            }
+
+            document.documentElement.style.visibility = "";
+        } catch (error) {
+            console.error("Student onboarding check failed:", error);
+            document.documentElement.style.visibility = "";
+            window.location.replace("index.html");
+        }
+    })();
+}
 
 
 // =====================================================
