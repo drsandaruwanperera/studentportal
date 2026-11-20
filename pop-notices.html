@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#eff5fc">
+  <title>Pop Notices | Dr. Sandaruwan LMS Admin</title>
+  <link rel="stylesheet" href="pop-notices.css?v=1">
+</head>
+<body>
+<div class="pop-admin-layout">
+  <aside class="pop-admin-sidebar">
+    <a class="pop-brand" href="admin.html">
+      <span class="pop-brand-mark">🎓</span>
+      <span><strong>Dr. Sandaruwan</strong><small>LMS · Admin Portal</small></span>
+    </a>
+    <div class="pop-nav-label">ADMINISTRATION</div>
+    <nav class="pop-nav" aria-label="Admin navigation">
+      <a href="admin.html"><span>⌂</span>Dashboard</a>
+      <a href="students.html"><span>♙</span>Students</a>
+      <a href="paper-management.html"><span>▤</span>Paper Management</a>
+      <a href="admin-program-control.html"><span>⚙</span>Program Publishing</a>
+      <a href="admin-results.html"><span>🏆</span>Results Management</a>
+      <a href="admin-announcements.html"><span>▣</span>Announcements</a>
+      <a href="pop-notices.html" class="active" aria-current="page"><span>◷</span>Pop Notices</a>
+      <a href="reports.html"><span>▥</span>Reports</a>
+      <div class="pop-nav-divider"></div>
+      <div class="pop-nav-label">SITE EXPERIENCE</div>
+      <a href="theme-scheduler.html"><span>❄</span>Theme &amp; Seasons</a>
+    </nav>
+    <div class="pop-sidebar-bottom">
+      <div class="pop-admin-user"><span class="pop-user-avatar">A</span><span><strong id="adminName">Admin</strong><small>Super Administrator</small></span></div>
+      <a class="pop-logout" href="admin-login.html">↪ Logout</a>
+    </div>
+  </aside>
+
+  <main class="pop-admin-main">
+    <header class="pop-page-header">
+      <div>
+        <div class="pop-eyebrow">STUDENT COMMUNICATION</div>
+        <h1>Pop Notices</h1>
+        <p>Create countdown popups for selected student batches and manage every active notice in one place.</p>
+      </div>
+      <a class="pop-back-link" href="admin.html">← Admin Dashboard</a>
+    </header>
+
+    <section class="pop-hero">
+      <div class="pop-hero-copy">
+        <span class="pop-hero-tag">LIVE NOTICE CONTROL</span>
+        <h2>Keep students ready for their next milestone.</h2>
+        <p>Publish an exam countdown to Grade 11, A/L 2027, or both. Students see the notice after login, with a live days, hours, minutes and seconds timer.</p>
+      </div>
+      <div class="pop-hero-calendar" aria-hidden="true">
+        <div class="pop-calendar-top"></div>
+        <div class="pop-calendar-month">EXAM<br>COUNTDOWN</div>
+        <div class="pop-calendar-grid"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <span>❄</span>
+      </div>
+    </section>
+
+    <section class="pop-stat-grid" aria-label="Notice summary">
+      <article class="pop-stat"><span class="pop-stat-icon blue">◷</span><span><small>ACTIVE NOTICES</small><strong id="activeCount">—</strong></span></article>
+      <article class="pop-stat"><span class="pop-stat-icon violet">◴</span><span><small>SCHEDULED</small><strong id="scheduledCount">—</strong></span></article>
+      <article class="pop-stat"><span class="pop-stat-icon grey">✓</span><span><small>EXPIRED / DISABLED</small><strong id="expiredCount">—</strong></span></article>
+    </section>
+
+    <section class="pop-workspace">
+      <form class="pop-form-card" id="popNoticeForm">
+        <div class="pop-card-heading">
+          <div><span class="pop-eyebrow">NOTICE EDITOR</span><h2 id="formTitle">Create New Notice</h2></div>
+          <span class="pop-step">01</span>
+        </div>
+        <div class="pop-field">
+          <label for="noticeTitle">Popup title</label>
+          <input id="noticeTitle" maxlength="70" placeholder="e.g. A/L 2027" required>
+        </div>
+        <div class="pop-field">
+          <label for="noticeSubtitle">Popup subtitle</label>
+          <input id="noticeSubtitle" maxlength="100" placeholder="e.g. Final Examination Countdown" required>
+        </div>
+        <div class="pop-field">
+          <label for="noticeMessage">Message</label>
+          <textarea id="noticeMessage" maxlength="260" rows="3" placeholder="Add the exam date or a short message for students." required></textarea>
+        </div>
+        <div class="pop-field">
+          <label>Target student batches</label>
+          <div class="pop-audience-grid">
+            <label class="pop-audience-option"><input id="audienceGrade11" type="checkbox" value="grade11"><span><strong>Grade 11</strong><small>O/L students</small></span></label>
+            <label class="pop-audience-option"><input id="audienceAL2027" type="checkbox" value="al2027"><span><strong>A/L 2027</strong><small>Advanced Level 2027</small></span></label>
+          </div>
+          <small class="pop-field-hint">Choose one or both audiences. Other batches will not receive this popup.</small>
+        </div>
+        <div class="pop-field">
+          <label for="countdownTargetAt">Countdown target (Sri Lanka time)</label>
+          <input id="countdownTargetAt" type="datetime-local" required>
+          <small class="pop-field-hint">The timer counts down to this date and time.</small>
+        </div>
+        <div class="pop-two-fields">
+          <div class="pop-field">
+            <label for="noticeStartsAt">Show from</label>
+            <input id="noticeStartsAt" type="datetime-local" required>
+          </div>
+          <div class="pop-field">
+            <label for="noticeEndsAt">Hide after</label>
+            <input id="noticeEndsAt" type="datetime-local" required>
+          </div>
+        </div>
+        <div class="pop-two-fields">
+          <div class="pop-field">
+            <label for="buttonLabel">Button label</label>
+            <input id="buttonLabel" maxlength="32" value="View Exam Details">
+          </div>
+          <div class="pop-field">
+            <label for="buttonUrl">Button destination</label>
+            <input id="buttonUrl" maxlength="140" value="my-program.html" placeholder="my-program.html">
+          </div>
+        </div>
+        <label class="pop-enable-row"><input id="noticeEnabled" type="checkbox" checked><span><strong>Enable this notice</strong><small>Active notices appear after a matching student logs in.</small></span></label>
+        <div class="pop-form-actions">
+          <button class="pop-primary-btn" id="saveNoticeBtn" type="submit">Save Notice</button>
+          <button class="pop-secondary-btn" id="cancelEditBtn" type="button" hidden>Cancel Edit</button>
+        </div>
+        <p class="pop-form-message" id="formMessage" role="status" aria-live="polite"></p>
+      </form>
+
+      <section class="pop-list-card">
+        <div class="pop-card-heading pop-list-heading">
+          <div><span class="pop-eyebrow">NOTICE OVERVIEW</span><h2>Active Pop Notices</h2><p>View, edit, pause or remove the countdown notices currently saved in the portal.</p></div>
+          <span class="pop-total-pill" id="totalNotices">0 notices</span>
+        </div>
+        <div class="pop-filter-tabs" role="tablist" aria-label="Filter pop notices">
+          <button type="button" class="active" data-filter="active">Active <span id="activeTabCount">0</span></button>
+          <button type="button" data-filter="scheduled">Scheduled <span id="scheduledTabCount">0</span></button>
+          <button type="button" data-filter="expired">Expired <span id="expiredTabCount">0</span></button>
+          <button type="button" data-filter="all">All <span id="allTabCount">0</span></button>
+        </div>
+        <div class="pop-notice-list" id="noticeList"><div class="pop-empty-state">Loading saved notices…</div></div>
+        <div class="pop-list-footnote"><span>🔒</span> These controls are available to the Super Administrator. Student popups respect the selected batch and schedule window.</div>
+      </section>
+    </section>
+
+    <footer class="pop-page-footer">Dr. Sandaruwan Student Assessment Portal · Pop Notice Management</footer>
+  </main>
+</div>
+<script type="module" src="pop-notices.js?v=1"></script>
+</body>
+</html>
