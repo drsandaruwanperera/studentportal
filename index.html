@@ -161,6 +161,205 @@
 
 </main>
 
+
+<style id="grade11-al2027-popup-styles">
+    #grade11Al2027Popup {
+        position: fixed;
+        inset: 0;
+        z-index: 3000;
+        display: grid;
+        place-items: center;
+        padding: 22px;
+        background: rgba(4, 8, 22, .78);
+        backdrop-filter: blur(11px);
+        -webkit-backdrop-filter: blur(11px);
+    }
+    #grade11Al2027Popup[hidden] { display: none !important; }
+    .grade11-al2027-popup-card {
+        position: relative;
+        width: min(520px, 100%);
+        overflow: hidden;
+        padding: 34px;
+        border: 1px solid rgba(255,255,255,.12);
+        border-radius: 26px;
+        background:
+            radial-gradient(circle at 92% 5%, rgba(124,58,237,.22), transparent 34%),
+            linear-gradient(145deg, #151f35 0%, #11182b 62%, #0b1020 100%);
+        color: #f4f7ff;
+        box-shadow: 0 30px 90px rgba(0,0,0,.48), 0 0 45px rgba(91,75,255,.14);
+        animation: gradePopupIn .28s ease-out both;
+    }
+    @keyframes gradePopupIn {
+        from { opacity: 0; transform: translateY(12px) scale(.985); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .grade11-al2027-popup-close {
+        position: absolute;
+        top: 15px;
+        right: 16px;
+        width: 36px;
+        height: 36px;
+        border: 1px solid rgba(255,255,255,.12);
+        border-radius: 11px;
+        background: rgba(255,255,255,.06);
+        color: #aeb8ce;
+        font-size: 23px;
+        line-height: 1;
+        cursor: pointer;
+    }
+    .grade11-al2027-popup-close:hover { color: #fff; background: rgba(255,255,255,.12); }
+    .grade11-al2027-popup-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 17px;
+        color: #a6ff2e;
+        font-size: 10px;
+        font-weight: 850;
+        letter-spacing: 1.8px;
+        text-transform: uppercase;
+    }
+    .grade11-al2027-popup-eyebrow::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #a6ff2e;
+        box-shadow: 0 0 0 5px rgba(166,255,46,.10);
+    }
+    .grade11-al2027-popup-card h2 {
+        max-width: 420px;
+        margin: 0;
+        color: #f4f7ff;
+        font-size: clamp(27px, 6vw, 36px);
+        line-height: 1.12;
+        letter-spacing: -.9px;
+    }
+    .grade11-al2027-popup-card h2 span { color: #a6ff2e; }
+    .grade11-al2027-popup-copy {
+        margin: 13px 0 22px;
+        color: #aeb8ce;
+        font-size: 13px;
+        line-height: 1.7;
+    }
+    .grade11-al2027-popup-programs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 11px;
+        margin-bottom: 22px;
+    }
+    .grade11-al2027-popup-program {
+        min-height: 100px;
+        padding: 15px;
+        border: 1px solid rgba(255,255,255,.10);
+        border-radius: 16px;
+        background: rgba(255,255,255,.045);
+    }
+    .grade11-al2027-popup-program span {
+        display: block;
+        margin-bottom: 9px;
+        font-size: 21px;
+    }
+    .grade11-al2027-popup-program strong {
+        display: block;
+        color: #f4f7ff;
+        font-size: 13px;
+    }
+    .grade11-al2027-popup-program small {
+        display: block;
+        margin-top: 4px;
+        color: #8795ad;
+        font-size: 10px;
+    }
+    .grade11-al2027-popup-action {
+        display: flex;
+        width: 100%;
+        min-height: 48px;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        border: 0;
+        border-radius: 13px;
+        background: linear-gradient(110deg, #4037c9, #7c3aed);
+        color: #fff;
+        font: inherit;
+        font-size: 13px;
+        font-weight: 800;
+        cursor: pointer;
+        box-shadow: 0 12px 26px rgba(64,55,201,.28);
+        transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .grade11-al2027-popup-action:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 16px 32px rgba(64,55,201,.38);
+    }
+    .grade11-al2027-popup-footnote {
+        margin: 13px 0 0;
+        color: #71809a;
+        font-size: 10px;
+        text-align: center;
+    }
+    @media (max-width: 520px) {
+        #grade11Al2027Popup { padding: 13px; }
+        .grade11-al2027-popup-card { padding: 29px 20px 21px; border-radius: 22px; }
+        .grade11-al2027-popup-programs { gap: 8px; }
+        .grade11-al2027-popup-program { padding: 12px 10px; min-height: 92px; }
+        .grade11-al2027-popup-program strong { font-size: 12px; }
+        .grade11-al2027-popup-program small { font-size: 9px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .grade11-al2027-popup-card { animation: none; }
+        .grade11-al2027-popup-action { transition: none; }
+    }
+</style>
+
+<div
+    id="grade11Al2027Popup"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="grade11Al2027PopupTitle"
+    aria-describedby="grade11Al2027PopupDescription"
+    hidden
+>
+    <section class="grade11-al2027-popup-card">
+        <button
+            type="button"
+            class="grade11-al2027-popup-close"
+            id="closeGrade11Al2027Popup"
+            aria-label="Close announcement"
+        >×</button>
+
+        <div class="grade11-al2027-popup-eyebrow">Student Portal Access</div>
+
+        <h2 id="grade11Al2027PopupTitle">
+            Grade 11 <span>&</span> A/L 2027
+        </h2>
+
+        <p class="grade11-al2027-popup-copy" id="grade11Al2027PopupDescription">
+            Your learning resources, model papers and assessments are organised in one place.
+            Sign in with your registered Student ID to continue to your student dashboard.
+        </p>
+
+        <div class="grade11-al2027-popup-programs">
+            <div class="grade11-al2027-popup-program">
+                <span aria-hidden="true">📘</span>
+                <strong>Grade 11</strong>
+                <small>TOP Ranking & Past Papers</small>
+            </div>
+            <div class="grade11-al2027-popup-program">
+                <span aria-hidden="true">🎓</span>
+                <strong>A/L 2027</strong>
+                <small>Model Papers & Assessments</small>
+            </div>
+        </div>
+
+        <button type="button" class="grade11-al2027-popup-action" id="continueGrade11Al2027Popup">
+            Continue to Student Login <span aria-hidden="true">→</span>
+        </button>
+        <p class="grade11-al2027-popup-footnote">Use your existing Student ID and password</p>
+    </section>
+</div>
+
 <!-- WhatsApp support widget -->
 <div class="whatsapp-widget" id="whatsappWidget" aria-live="polite">
     <div class="whatsapp-widget-header">
@@ -553,6 +752,86 @@ closeWhatsAppHelp?.addEventListener("click", closeWhatsAppWidget);
 whatsappFab?.addEventListener("click", openWhatsAppWidget);
 openWhatsAppHelp?.addEventListener("click", openWhatsAppWidget);
 
+</script>
+
+
+<script id="grade11-al2027-popup-behaviour">
+(() => {
+    const popup = document.getElementById("grade11Al2027Popup");
+    const closeButton = document.getElementById("closeGrade11Al2027Popup");
+    const continueButton = document.getElementById("continueGrade11Al2027Popup");
+    const studentIdInput = document.getElementById("studentId");
+    const storageKey = "grade11Al2027PopupDismissed";
+
+    if (!popup || !closeButton || !continueButton) return;
+
+    let previousFocus = null;
+
+    function closePopup(focusLogin = false) {
+        popup.hidden = true;
+        document.body.style.overflow = "";
+        try {
+            sessionStorage.setItem(storageKey, "1");
+        } catch (error) {
+            // The popup remains usable when browser storage is unavailable.
+        }
+
+        if (focusLogin && studentIdInput) {
+            studentIdInput.focus();
+        } else if (previousFocus && typeof previousFocus.focus === "function") {
+            previousFocus.focus();
+        }
+    }
+
+    function openPopup() {
+        previousFocus = document.activeElement;
+        popup.hidden = false;
+        document.body.style.overflow = "hidden";
+        closeButton.focus();
+    }
+
+    closeButton.addEventListener("click", () => closePopup());
+    continueButton.addEventListener("click", () => closePopup(true));
+
+    popup.addEventListener("click", event => {
+        if (event.target === popup) closePopup();
+    });
+
+    document.addEventListener("keydown", event => {
+        if (popup.hidden) return;
+
+        if (event.key === "Escape") {
+            event.preventDefault();
+            closePopup();
+            return;
+        }
+
+        if (event.key === "Tab") {
+            const focusable = [closeButton, continueButton];
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+
+            if (event.shiftKey && document.activeElement === first) {
+                event.preventDefault();
+                last.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+                event.preventDefault();
+                first.focus();
+            }
+        }
+    });
+
+    let dismissed = false;
+    try {
+        dismissed = sessionStorage.getItem(storageKey) === "1";
+    } catch (error) {
+        dismissed = false;
+    }
+
+    if (!dismissed) {
+        window.setTimeout(openPopup, 450);
+    }
+})();
 </script>
 
 <script type="module" src="app.js"></script>
