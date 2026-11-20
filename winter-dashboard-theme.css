@@ -407,3 +407,198 @@ body.christmas-theme-active :is(.print-notice,.hint){color:#61738d!important}
     transition-duration:.01ms!important;
   }
 }
+
+/* ==========================================================
+   WINTER ICE BLUE — FINAL PAGE-LEVEL CONTRAST OVERRIDES
+   This block intentionally follows all legacy inline themes.
+   ========================================================== */
+html.christmas-theme-active body.christmas-theme-active{
+  background:#eff5fc!important;color:#17213a!important;color-scheme:light!important;
+}
+html.christmas-theme-active body.christmas-theme-active :is(.app,.main-content,.lms-dashboard,.main,#main,#final-dark-page,#final-dark-program){
+  background:transparent!important;color:#17213a!important;
+}
+
+/* My Program — replace the legacy dark hero and dark resource tiles. */
+html.christmas-theme-active body.christmas-theme-active .main>.top{
+  background:rgba(255,255,255,.84)!important;
+  border:1px solid #d4e5f5!important;border-radius:17px!important;
+  padding:18px 20px!important;box-shadow:0 8px 25px rgba(42,86,137,.06)!important;
+}
+html.christmas-theme-active body.christmas-theme-active .main>.top :is(h1,h2){
+  color:#17213a!important;text-shadow:none!important;
+}
+html.christmas-theme-active body.christmas-theme-active .main>.top p{
+  color:#526b8d!important;
+}
+html.christmas-theme-active body.christmas-theme-active .main>.hero{
+  background:linear-gradient(112deg,#eaf3fd 0%,#dceafa 58%,#cfe4f8 100%)!important;
+  border:1px solid #bcd8f3!important;border-radius:22px!important;
+  color:#17213a!important;box-shadow:0 14px 34px rgba(48,91,145,.10)!important;
+}
+html.christmas-theme-active body.christmas-theme-active .main>.hero :is(h1,h2,h3,b,strong){
+  color:#17213a!important;text-shadow:none!important;
+}
+html.christmas-theme-active body.christmas-theme-active .main>.hero :is(small,p,span){
+  color:#526b8d!important;opacity:1!important;
+}
+html.christmas-theme-active body.christmas-theme-active .main>.tabs{
+  background:#e7f0fa!important;border:1px solid #d1e2f3!important;
+  border-radius:15px!important;padding:5px!important;
+}
+html.christmas-theme-active body.christmas-theme-active .main>.tabs .tab{
+  background:transparent!important;border:1px solid transparent!important;color:#526b8d!important;
+}
+html.christmas-theme-active body.christmas-theme-active .main>.tabs .tab.active{
+  background:#4d89d5!important;border-color:#4d89d5!important;color:#fff!important;
+  box-shadow:0 6px 16px rgba(77,137,213,.18)!important;
+}
+html.christmas-theme-active body.christmas-theme-active .main>.grid>.card{
+  background:#fff!important;border:1px solid #cbdff2!important;
+  border-radius:18px!important;color:#17213a!important;
+  box-shadow:0 10px 26px rgba(45,86,135,.075)!important;
+}
+html.christmas-theme-active body.christmas-theme-active .main>.grid>.card :is(h1,h2,h3,h4,b,strong){
+  color:#17213a!important;text-shadow:none!important;
+}
+html.christmas-theme-active body.christmas-theme-active .main>.grid>.card :is(p,small,span){
+  color:#52617c!important;opacity:1!important;
+}
+html.christmas-theme-active body.christmas-theme-active .main>.grid>.card a{
+  color:#286fc4!important;font-weight:800!important;
+}
+html.christmas-theme-active body.christmas-theme-active .main>.grid>.card .ico{
+  background:#e2effc!important;color:#3479c8!important;border:1px solid #c6def4!important;
+}
+html.christmas-theme-active body.christmas-theme-active .main>.back{
+  background:#4d89d5!important;color:#fff!important;border:1px solid #b8d2ed!important;
+}
+html.christmas-theme-active body.christmas-theme-active .main>.theme{
+  background:#fff!important;border:1px solid #cbdff2!important;box-shadow:0 8px 20px rgba(45,86,135,.08)!important;
+}
+html.christmas-theme-active body.christmas-theme-active .main>.theme button{color:#526b8d!important}
+html.christmas-theme-active body.christmas-theme-active .main>.theme button.active{
+  background:#4d89d5!important;color:#fff!important;
+}
+
+/* Main dashboard — restore clear text on white metric and resource cards. */
+html.christmas-theme-active body.christmas-theme-active .sidebar,
+html.christmas-theme-active body.christmas-theme-active #studentSidebar{
+  background:linear-gradient(180deg,#f8fbff 0%,#eaf3fc 100%)!important;
+  border-right:1px solid #d4e5f5!important;box-shadow:8px 0 28px rgba(39,81,130,.07)!important;
+}
+html.christmas-theme-active body.christmas-theme-active :is(.sidebar-brand,.student-account){
+  border-color:#d4e5f5!important;
+}
+html.christmas-theme-active body.christmas-theme-active .sidebar :is(.brand-text strong,.student-account-info strong){
+  color:#17213a!important;
+}
+html.christmas-theme-active body.christmas-theme-active .sidebar :is(.brand-text span,.student-account-info span,.sidebar-section-title){
+  color:#7186a2!important;
+}
+html.christmas-theme-active body.christmas-theme-active .sidebar .sidebar-link{
+  color:#405776!important;
+}
+html.christmas-theme-active body.christmas-theme-active .sidebar .sidebar-link.active{
+  background:linear-gradient(105deg,#4d89d5,#3478c8)!important;color:#fff!important;
+  border:1px solid #8cb8e6!important;box-shadow:0 9px 21px rgba(77,137,213,.18)!important;
+}
+html.christmas-theme-active body.christmas-theme-active .sidebar .sidebar-logout{
+  background:linear-gradient(105deg,#4d89d5,#2868b8)!important;color:#fff!important;border:1px solid #b8d2ed!important;
+}
+html.christmas-theme-active body.christmas-theme-active :is(.lms-header,.mobile-lms-header){
+  background:rgba(249,252,255,.97)!important;border-color:#d5e5f4!important;color:#17213a!important;
+}
+html.christmas-theme-active body.christmas-theme-active .lms-header :is(h1,h2,p,strong,span){
+  color:#17213a!important;
+}
+html.christmas-theme-active body.christmas-theme-active .lms-header .lms-search{
+  background:#fff!important;border-color:#cbdff2!important;
+}
+html.christmas-theme-active body.christmas-theme-active .lms-header .lms-search :is(input,span){
+  background:transparent!important;color:#405776!important;
+}
+html.christmas-theme-active body.christmas-theme-active .dashboard-learning-banner{
+  background:linear-gradient(112deg,#f1f7fe 0%,#e2eefb 56%,#d8e9fa 100%)!important;
+  border:1px solid #bcd8f4!important;box-shadow:0 16px 38px rgba(59,111,168,.10)!important;
+}
+html.christmas-theme-active body.christmas-theme-active .learning-banner-copy :is(h1,h2,h3){
+  color:#17213a!important;text-shadow:none!important;
+}
+html.christmas-theme-active body.christmas-theme-active .learning-banner-copy :is(h1,h2,h3) span{
+  color:#286fc4!important;
+}
+html.christmas-theme-active body.christmas-theme-active .learning-banner-copy :is(p,.eyebrow){
+  color:#526b8d!important;opacity:1!important;
+}
+html.christmas-theme-active body.christmas-theme-active .lms-stat-grid>.lms-stat-card{
+  background:linear-gradient(150deg,#fff 0%,#f5f9fe 100%)!important;
+  border:1px solid #cbdff2!important;border-radius:18px!important;
+  box-shadow:0 11px 27px rgba(45,86,135,.075)!important;color:#17213a!important;
+}
+html.christmas-theme-active body.christmas-theme-active .lms-stat-card :is(strong,b,.value,.number){
+  color:#17213a!important;text-shadow:none!important;
+}
+html.christmas-theme-active body.christmas-theme-active .lms-stat-card :is(span,p,small){
+  color:#52617c!important;opacity:1!important;
+}
+html.christmas-theme-active body.christmas-theme-active .lms-stat-card .lms-stat-icon{
+  background:#e1eefb!important;border:1px solid #c6def5!important;color:#3479c8!important;
+}
+html.christmas-theme-active body.christmas-theme-active :is(.lms-widget,.portal-program-card,.portal-support-card,.dashboard-summary-card,.quick-nav-card){
+  background:#fff!important;border:1px solid #cbdff2!important;color:#17213a!important;
+  box-shadow:0 10px 26px rgba(45,86,135,.07)!important;
+}
+html.christmas-theme-active body.christmas-theme-active :is(.lms-widget,.portal-program-card,.portal-support-card,.dashboard-summary-card,.quick-nav-card) :is(h2,h3,h4,strong,b){
+  color:#17213a!important;text-shadow:none!important;
+}
+html.christmas-theme-active body.christmas-theme-active :is(.lms-widget,.portal-program-card,.portal-support-card,.dashboard-summary-card,.quick-nav-card) :is(p,small,span){
+  color:#52617c!important;opacity:1!important;
+}
+html.christmas-theme-active body.christmas-theme-active .lms-section-heading :is(h2,h3){
+  color:#17213a!important;
+}
+html.christmas-theme-active body.christmas-theme-active .dashboard-mobile-nav{
+  background:rgba(249,252,255,.97)!important;border:1px solid #cbdff2!important;
+}
+html.christmas-theme-active body.christmas-theme-active .dashboard-mobile-nav a{
+  color:#526b8d!important;
+}
+html.christmas-theme-active body.christmas-theme-active .dashboard-mobile-nav a.active{
+  background:#4d89d5!important;color:#fff!important;
+}
+
+/* Progress & Results — keep the hero, but guarantee legible heading and figures. */
+html.christmas-theme-active body.christmas-theme-active .performance-hero{
+  background:linear-gradient(112deg,#eaf3fd 0%,#dceafa 58%,#cfe4f8 100%)!important;
+  border:1px solid #bcd8f3!important;color:#17213a!important;
+}
+html.christmas-theme-active body.christmas-theme-active .performance-hero :is(h1,h2,h3,.hero-copy,.hero-copy h1,.hero-copy h2){
+  color:#17213a!important;text-shadow:none!important;
+}
+html.christmas-theme-active body.christmas-theme-active .performance-hero :is(p,small,.hint){
+  color:#526b8d!important;
+}
+html.christmas-theme-active body.christmas-theme-active .performance-hero .hero-score{
+  color:#286fc4!important;
+}
+html.christmas-theme-active body.christmas-theme-active :is(.stats .stat,.performance-grid .panel,.results .result,.insight-panel,.trend-panel){
+  background:#fff!important;border:1px solid #cbdff2!important;color:#17213a!important;
+}
+html.christmas-theme-active body.christmas-theme-active :is(.stats .stat,.performance-grid .panel,.results .result,.insight-panel,.trend-panel) :is(h2,h3,h4,p,b,strong,span,small){
+  color:#17213a!important;text-shadow:none!important;
+}
+
+/* Mobile navigation and footer controls stay in the same winter palette. */
+@media(max-width:800px){
+  html.christmas-theme-active body.christmas-theme-active :is(.mobile-nav,.dashboard-mobile-nav){
+    background:rgba(249,252,255,.97)!important;border:1px solid #cbdff2!important;
+    box-shadow:0 12px 32px rgba(45,85,132,.12)!important;
+  }
+  html.christmas-theme-active body.christmas-theme-active :is(.mobile-nav,.dashboard-mobile-nav) a{
+    color:#526b8d!important;
+  }
+  html.christmas-theme-active body.christmas-theme-active :is(.mobile-nav,.dashboard-mobile-nav) a.active{
+    background:#4d89d5!important;color:#fff!important;
+  }
+}
