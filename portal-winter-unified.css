@@ -1,0 +1,426 @@
+/* ==========================================================
+   DR. SANDARUWAN LMS — ONE CONSISTENT WINTER STUDENT THEME
+   Final stylesheet, loaded after both seasonal theme layers.
+   Scoped to the five student portal pages only.
+   ========================================================== */
+
+:root.student-portal-winter-unified {
+  color-scheme: light !important;
+  --student-winter-bg: #eff5fc;
+  --student-winter-bg-2: #eaf2fb;
+  --student-winter-panel: #ffffff;
+  --student-winter-panel-soft: #e7f1fb;
+  --student-winter-ink: #17243b;
+  --student-winter-muted: #526985;
+  --student-winter-blue: #4d89d5;
+  --student-winter-blue-dark: #2868b8;
+  --student-winter-border: #cbdff2;
+  --student-winter-shadow: 0 12px 32px rgba(42, 83, 130, .09);
+}
+
+html.student-portal-winter-unified,
+html.student-portal-winter-unified body {
+  min-height: 100%;
+  color: var(--student-winter-ink) !important;
+  color-scheme: light !important;
+  background:
+    radial-gradient(ellipse at 8% 0%, rgba(133, 185, 233, .16), transparent 34%),
+    radial-gradient(ellipse at 96% 88%, rgba(182, 216, 246, .22), transparent 36%),
+    linear-gradient(180deg, #f6f9fe 0%, var(--student-winter-bg) 100%) !important;
+  background-attachment: fixed !important;
+}
+
+html.student-portal-winter-unified body :is(h1,h2,h3,h4,h5,h6,strong,b,label,legend) {
+  color: var(--student-winter-ink) !important;
+  text-shadow: none !important;
+}
+
+html.student-portal-winter-unified body :is(p,small,.hint,.muted,.subtitle,.description,.eyebrow,.meta) {
+  color: var(--student-winter-muted) !important;
+}
+
+html.student-portal-winter-unified body a {
+  color: var(--student-winter-blue-dark);
+}
+
+html.student-portal-winter-unified body a:hover {
+  color: #174f91;
+}
+
+/* The same frosted sidebar on all five pages. */
+html.student-portal-winter-unified body :is(.sidebar,.side,#studentSidebar,#sectionSidebar) {
+  box-sizing: border-box !important;
+  color: var(--student-winter-ink) !important;
+  background: linear-gradient(180deg, #fbfdff 0%, #eaf3fc 100%) !important;
+  border-color: #d3e4f4 !important;
+  border-right: 1px solid #d3e4f4 !important;
+  box-shadow: 8px 0 28px rgba(39, 81, 130, .07) !important;
+}
+
+html.student-portal-winter-unified body :is(.sidebar-brand,.brand,.student-account,.professional-profile,.side-profile) {
+  border-color: #d3e4f4 !important;
+  color: var(--student-winter-ink) !important;
+}
+
+html.student-portal-winter-unified body :is(.brand-logo,.logo,.section-brand-mark,.student-avatar,.side-avatar) {
+  color: #fff !important;
+  background: linear-gradient(145deg, #4d89d5, #8ab7e8) !important;
+  border: 1px solid #c4dbf2 !important;
+  box-shadow: 0 7px 18px rgba(77, 137, 213, .15) !important;
+}
+
+html.student-portal-winter-unified body :is(.brand-text,.brand-text strong,.brand-text span,.brand b,.brand span,.student-account-info,.student-account-info strong,.student-account-info span,.side-profile,.side-profile strong,.side-profile span) {
+  color: var(--student-winter-ink) !important;
+}
+
+html.student-portal-winter-unified body .sidebar-section-title {
+  color: #6a85a7 !important;
+}
+
+html.student-portal-winter-unified body :is(.sidebar-link,.side nav a,.sidebar-nav a) {
+  color: #48617f !important;
+  background: transparent !important;
+  border-color: transparent !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+html.student-portal-winter-unified body :is(.sidebar-link,.side nav a,.sidebar-nav a) > span {
+  color: inherit !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+html.student-portal-winter-unified body :is(.sidebar-link:hover,.side nav a:hover,.sidebar-nav a:hover) {
+  color: #245f9e !important;
+  background: #e3effb !important;
+  border-color: #d2e4f5 !important;
+}
+
+html.student-portal-winter-unified body :is(.sidebar-link.active,.side nav a.active,.sidebar-nav a.active) {
+  color: #fff !important;
+  background: linear-gradient(105deg, #4d89d5, #3478c8) !important;
+  border: 1px solid #8cb8e6 !important;
+  box-shadow: 0 9px 21px rgba(77, 137, 213, .18) !important;
+}
+
+html.student-portal-winter-unified body :is(.sidebar-link.active > span,.side nav a.active > span,.sidebar-nav a.active > span) {
+  color: #fff !important;
+}
+
+html.student-portal-winter-unified body :is(.nav-icon,.sidebar-link .nav-icon,.side .nav-icon) {
+  color: inherit !important;
+}
+
+html.student-portal-winter-unified body :is(.sidebar-logout,.logout) {
+  color: #fff !important;
+  background: linear-gradient(105deg, #4d89d5, #2868b8) !important;
+  border: 1px solid #b8d2ed !important;
+  box-shadow: 0 8px 20px rgba(77, 137, 213, .13) !important;
+}
+
+html.student-portal-winter-unified body :is(.sidebar-logout,.logout):hover {
+  color: #fff !important;
+  filter: brightness(1.05);
+}
+
+/* Headers, page canvas and mobile header. */
+html.student-portal-winter-unified body :is(.main-content,.main,#main,.lms-dashboard,.lms-main-column,.lms-side-column) {
+  color: var(--student-winter-ink) !important;
+  background: transparent !important;
+}
+
+html.student-portal-winter-unified body .main {
+  background: transparent !important;
+}
+
+html.student-portal-winter-unified body :is(.lms-header,.top,.mobile-lms-header,.section-mobile-header) {
+  color: var(--student-winter-ink) !important;
+  background: rgba(250, 253, 255, .94) !important;
+  border-color: #d3e4f4 !important;
+  box-shadow: 0 8px 25px rgba(38, 79, 128, .07) !important;
+  backdrop-filter: blur(16px);
+}
+
+html.student-portal-winter-unified body :is(.lms-header-title,.lms-header-title h1,.lms-header-title p,.top h1,.top h2,.top p,.mobile-lms-title,.mobile-lms-title b,.mobile-lms-title strong,.section-mobile-brand,.section-mobile-brand strong,.section-mobile-brand small) {
+  color: var(--student-winter-ink) !important;
+}
+
+html.student-portal-winter-unified body :is(.mobile-menu-btn,.mobile-notification,.lms-notification,.section-menu-toggle) {
+  color: #315f95 !important;
+  background: #e5f0fb !important;
+  border: 1px solid #cbdff2 !important;
+}
+
+html.student-portal-winter-unified body :is(.mobile-menu-btn,.section-menu-toggle) svg {
+  stroke: currentColor !important;
+  fill: none !important;
+}
+
+/* The same pale-blue hero treatment, including Dashboard. */
+html.student-portal-winter-unified body :is(.dashboard-learning-banner,.dashboard-analytics-hero,.hero,.performance-hero) {
+  color: var(--student-winter-ink) !important;
+  background:
+    radial-gradient(ellipse at 86% 12%, rgba(164, 207, 246, .35), transparent 34%),
+    linear-gradient(112deg, #f1f7fe 0%, #e2eefb 56%, #d8e9fa 100%) !important;
+  border: 1px solid #bcd8f4 !important;
+  border-radius: 22px !important;
+  box-shadow: 0 16px 38px rgba(59, 111, 168, .10) !important;
+}
+
+html.student-portal-winter-unified body :is(.dashboard-learning-banner,.dashboard-analytics-hero,.hero,.performance-hero) :is(h1,h2,h3,h4,strong,b) {
+  color: var(--student-winter-ink) !important;
+}
+
+html.student-portal-winter-unified body :is(.dashboard-learning-banner,.dashboard-analytics-hero,.hero,.performance-hero) :is(p,small,.eyebrow,.hint,.subtitle) {
+  color: #536d8d !important;
+}
+
+html.student-portal-winter-unified body .learning-banner-copy h2 b,
+html.student-portal-winter-unified body .learning-banner-copy h2 span {
+  color: #4d89d5 !important;
+}
+
+html.student-portal-winter-unified body :is(.hero-continue-btn,.back,.primary-btn,.action-btn,.save-btn,.button.primary) {
+  color: #fff !important;
+  background: linear-gradient(110deg, #4d89d5, #2868b8) !important;
+  border: 1px solid #b8d2ed !important;
+  box-shadow: 0 9px 20px rgba(77, 137, 213, .16) !important;
+}
+
+/* A single white/frosted card system on Dashboard and every section page. */
+html.student-portal-winter-unified body :is(
+  .lms-stat-card,
+  .dashboard-summary-card,
+  .lms-widget,
+  .portal-program-card,
+  .portal-support-card,
+  .card,
+  .panel,
+  .stat,
+  .result,
+  .notice,
+  .support-card,
+  .trend-panel,
+  .insight-panel,
+  .announcement-card,
+  .info-card,
+  .material-card,
+  .part-card,
+  .paper-card,
+  .pdf-card,
+  .chat,
+  .chat-list
+) {
+  color: var(--student-winter-ink) !important;
+  background: linear-gradient(150deg, #fff 0%, #f7fbff 100%) !important;
+  border: 1px solid #d0e1f2 !important;
+  border-radius: 17px !important;
+  box-shadow: 0 10px 27px rgba(45, 86, 135, .075) !important;
+}
+
+html.student-portal-winter-unified body :is(
+  .lms-stat-card,
+  .dashboard-summary-card,
+  .lms-widget,
+  .portal-program-card,
+  .portal-support-card,
+  .card,
+  .panel,
+  .stat,
+  .result,
+  .notice,
+  .support-card,
+  .trend-panel,
+  .insight-panel,
+  .announcement-card,
+  .info-card,
+  .material-card,
+  .part-card,
+  .paper-card,
+  .pdf-card,
+  .chat,
+  .chat-list
+) :is(h1,h2,h3,h4,h5,strong,b,.value,.number,.score,.title) {
+  color: var(--student-winter-ink) !important;
+  text-shadow: none !important;
+}
+
+html.student-portal-winter-unified body :is(
+  .lms-stat-card,
+  .dashboard-summary-card,
+  .lms-widget,
+  .portal-program-card,
+  .portal-support-card,
+  .card,
+  .panel,
+  .stat,
+  .result,
+  .notice,
+  .support-card,
+  .trend-panel,
+  .insight-panel,
+  .announcement-card,
+  .info-card,
+  .material-card,
+  .part-card,
+  .paper-card,
+  .pdf-card,
+  .chat,
+  .chat-list
+) :is(p,small,span,.description,.meta,.hint,.muted) {
+  color: var(--student-winter-muted) !important;
+}
+
+html.student-portal-winter-unified body :is(.lms-stat-icon,.portal-program-icon,.portal-support-icon,.stat-icon,.result-icon,.support-icon,.ico) {
+  color: var(--student-winter-blue-dark) !important;
+  background: #e2effc !important;
+  border: 1px solid #c8def3 !important;
+}
+
+html.student-portal-winter-unified body :is(.portal-section-heading,.lms-section-heading,.widget-heading,.results-head,.panel-head) {
+  color: var(--student-winter-ink) !important;
+}
+
+html.student-portal-winter-unified body :is(.portal-section-heading,.lms-section-heading,.widget-heading,.results-head,.panel-head) :is(h1,h2,h3,p,small) {
+  color: var(--student-winter-ink) !important;
+}
+
+html.student-portal-winter-unified body :is(.portal-section-link,.material-link,.portal-card-arrow,.lms-section-heading a,.exam-link) {
+  color: var(--student-winter-blue-dark) !important;
+}
+
+/* Dashboard's exam milestone remains the single intentional navy feature card. */
+html.student-portal-winter-unified body .exam-focus {
+  color: #f3f7ff !important;
+  background: linear-gradient(115deg, #162544, #1d3657) !important;
+  border: 1px solid #345276 !important;
+  border-left: 4px solid #4d89d5 !important;
+  border-radius: 18px !important;
+  box-shadow: 0 16px 34px rgba(32, 63, 101, .17) !important;
+}
+
+html.student-portal-winter-unified body .exam-focus :is(h1,h2,h3,strong,b) {
+  color: #f7faff !important;
+}
+
+html.student-portal-winter-unified body .exam-focus :is(p,small,.exam-kicker) {
+  color: #c6d8ed !important;
+}
+
+html.student-portal-winter-unified body .exam-focus .exam-link {
+  color: #b9dcff !important;
+}
+
+/* Program tabs, result tracks and status chips. */
+html.student-portal-winter-unified body :is(.tabs,.tab-list,.paper-switch) {
+  background: #e7f1fb !important;
+  border: 1px solid #cfdfef !important;
+  border-radius: 14px !important;
+  box-shadow: none !important;
+}
+
+html.student-portal-winter-unified body :is(.tab,.paper-switch button) {
+  color: #4b6383 !important;
+  background: transparent !important;
+  border-color: transparent !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+html.student-portal-winter-unified body :is(.tab.active,.tab[aria-selected="true"],.paper-switch button.active) {
+  color: #fff !important;
+  background: linear-gradient(105deg, #4d89d5, #3478c8) !important;
+  border-color: #8cb8e6 !important;
+  box-shadow: 0 7px 17px rgba(77, 137, 213, .14) !important;
+}
+
+html.student-portal-winter-unified body :is(.track,.mini-track,.bar-track,.result-progress) {
+  background: #e3edf7 !important;
+  border: 1px solid #d0e0f0 !important;
+}
+
+html.student-portal-winter-unified body :is(.fill,.bar-track span,.result-progress span) {
+  background: linear-gradient(90deg, #4d89d5, #8ab9e8) !important;
+}
+
+html.student-portal-winter-unified body :is(.tag,.badge,.panel-badge,.results-count) {
+  color: #2868b8 !important;
+  background: #e2effc !important;
+  border: 1px solid #c6def4 !important;
+}
+
+/* Form controls and text legibility. */
+html.student-portal-winter-unified body :is(input,select,textarea) {
+  color: var(--student-winter-ink) !important;
+  background: #fff !important;
+  border: 1px solid #cbdff2 !important;
+  color-scheme: light !important;
+}
+
+html.student-portal-winter-unified body :is(input,select,textarea)::placeholder {
+  color: #8192aa !important;
+}
+
+html.student-portal-winter-unified body :is(input,select,textarea):focus {
+  outline: none !important;
+  border-color: #4d89d5 !important;
+  box-shadow: 0 0 0 3px rgba(77, 137, 213, .14) !important;
+}
+
+/* Mobile tab labels and bottom navigation remain readable. */
+html.student-portal-winter-unified body :is(.mobile-nav,.dashboard-mobile-nav) {
+  background: rgba(249, 252, 255, .97) !important;
+  border: 1px solid #d0e1f2 !important;
+  box-shadow: 0 13px 30px rgba(39, 81, 130, .13) !important;
+}
+
+html.student-portal-winter-unified body :is(.mobile-nav,.dashboard-mobile-nav) a {
+  color: #526985 !important;
+  opacity: 1 !important;
+}
+
+html.student-portal-winter-unified body :is(.mobile-nav,.dashboard-mobile-nav) a span {
+  display: block !important;
+  color: inherit !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+html.student-portal-winter-unified body :is(.mobile-nav,.dashboard-mobile-nav) a.active {
+  color: #2868b8 !important;
+  background: #e2effc !important;
+}
+
+html.student-portal-winter-unified body :is(.mobile-sidebar-backdrop,.section-sidebar-backdrop) {
+  background: rgba(24, 46, 75, .34) !important;
+}
+
+/* Keep snowfall visible without obscuring page controls. */
+html.student-portal-winter-unified body #christmas-snowfall {
+  z-index: 48 !important;
+  opacity: .68 !important;
+}
+
+html.student-portal-winter-unified body #christmas-santa-badge {
+  z-index: 120 !important;
+}
+
+@media (max-width: 800px) {
+  html.student-portal-winter-unified body .main {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+
+  html.student-portal-winter-unified body :is(.mobile-nav,.dashboard-mobile-nav) {
+    left: 9px !important;
+    right: 9px !important;
+    bottom: 9px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.student-portal-winter-unified body #christmas-snowfall .xmas-snowflake {
+    animation: none !important;
+  }
+}

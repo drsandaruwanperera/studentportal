@@ -8,6 +8,7 @@ import { db, doc, onSnapshot } from "./firebase.js";
   const SETTINGS_DOC_ID = "__themeSeasonSchedule";
   const stylesheetUrl = new URL("./christmas-theme.css?v=20261120-dashboard-ice", import.meta.url).href;
   const dashboardStylesheetUrl = new URL("./winter-dashboard-theme.css?v=20261120-transition-stable", import.meta.url).href;
+  const unifiedPortalStylesheetUrl = new URL("./portal-winter-unified.css?v=20261120-unified2", import.meta.url).href;
   const DEFAULT_CHRISTMAS_EMOJIS = ["❄️", "🎄", "🎅", "🎁", "🔔", "⭐", "🦌", "🕯️"];
   let sessions = [];
   let currentSignature = "";
@@ -35,6 +36,21 @@ import { db, doc, onSnapshot } from "./firebase.js";
       document.head.appendChild(dashboardLink);
     }
     dashboardLink.href = dashboardStylesheetUrl;
+
+    const isStudentPortalPage = Boolean(
+      document.querySelector(".lms-dashboard, .section-mobile-header")
+    );
+    let unifiedPortalLink = document.getElementById("portal-winter-unified-stylesheet");
+    if (isStudentPortalPage) {
+      document.documentElement.classList.add("student-portal-winter-unified");
+      if (!unifiedPortalLink) {
+        unifiedPortalLink = document.createElement("link");
+        unifiedPortalLink.id = "portal-winter-unified-stylesheet";
+        unifiedPortalLink.rel = "stylesheet";
+        document.head.appendChild(unifiedPortalLink);
+      }
+      unifiedPortalLink.href = unifiedPortalStylesheetUrl;
+    }
   }
 
   function selectedEmojiSet(active) {
@@ -170,8 +186,11 @@ import { db, doc, onSnapshot } from "./firebase.js";
 
     if (!isChristmas) {
       document.documentElement.classList.remove("christmas-theme-active");
+      document.documentElement.classList.remove("student-portal-winter-unified");
       if (document.body) document.body.classList.remove("christmas-theme-active");
       if (stylesheet) stylesheet.remove();
+      const unifiedPortalLink = document.getElementById("portal-winter-unified-stylesheet");
+      if (unifiedPortalLink) unifiedPortalLink.remove();
       if (!active) {
         document.documentElement.style.removeProperty("--season-accent");
         document.documentElement.style.removeProperty("--season-bg");
