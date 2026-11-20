@@ -228,17 +228,26 @@ import { db, collection, doc, getDoc, getDocs } from "./firebase.js";
 
   function waitForExistingNotices(callback) {
     const isAnotherPopupOpen = () => BLOCKING_POPUPS.some(id => document.getElementById(id));
-    if (!isAnotherPopupOpen()) {
-      window.setTimeout(callback, 850);
-      return;
-    }
-    const observer = new MutationObserver(() => {
-      if (!isAnotherPopupOpen()) {
-        observer.disconnect();
-        window.setTimeout(callback, 500);
-      }
-    });
+    let finished = false;
+    const startedAt = Date.now();
+    const observer = new MutationObserver(tryShow);
     observer.observe(document.body, { childList: true, subtree: true });
+
+    function tryShow() {
+      if (finished || Date.now() - startedAt < 1800 || isAnotherPopupOpen()) return;
+      finished = true;
+      observer.disconnect();
+      window.setTimeout(() => {
+        if (isAnotherPopupOpen()) {
+          finished = false;
+          observer.observe(document.body, { childList: true, subtree: true });
+          return;
+        }
+        callback();
+      }, 300);
+    }
+
+    window.setTimeout(tryShow, 1800);
   }
 
   async function init() {
