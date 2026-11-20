@@ -5,7 +5,7 @@ import { db, collection, doc, getDoc, getDocs } from "./firebase.js";
 
   const POPUP_ID = "student-exam-pop-notice";
   const STYLE_ID = "student-exam-pop-notice-css";
-  const DISMISS_PREFIX = "drsp:student-pop-notice:dismissed:";
+  const DISMISS_PREFIX = "drsp:student-pop-notice:session-dismissed:v1:";
   const BLOCKING_POPUPS = ["grade11-results-release-popup", "al2027-answer-release-popup"];
 
   if (window.__studentPopNoticesLoaded) return;
@@ -71,7 +71,7 @@ import { db, collection, doc, getDoc, getDocs } from "./firebase.js";
 
   function wasDismissed(notice) {
     try {
-      return localStorage.getItem(dismissalKey(notice)) === "yes";
+      return sessionStorage.getItem(dismissalKey(notice)) === "yes";
     } catch (error) {
       console.warn("Could not read pop notice dismissal state.", error);
       return false;
@@ -80,7 +80,7 @@ import { db, collection, doc, getDoc, getDocs } from "./firebase.js";
 
   function rememberDismissal(notice) {
     try {
-      localStorage.setItem(dismissalKey(notice), "yes");
+      sessionStorage.setItem(dismissalKey(notice), "yes");
     } catch (error) {
       console.warn("Could not save pop notice dismissal state.", error);
     }
