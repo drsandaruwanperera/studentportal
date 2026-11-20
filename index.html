@@ -4,7 +4,7 @@
 <head>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E🎓%3C/text%3E%3C/svg%3E">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="Student Assessment Portal - Secure Student Login">
     <title>Student Assessment Portal</title>
     <link rel="stylesheet" href="style.css?v=mobile-login-fix-1">
@@ -14,6 +14,13 @@
     <script type="module" src="https://drsandaruwanperera.lk/studentportal/christmas-theme.js?v=20261120-winter-blue"></script>
 <link rel="stylesheet" href="student-recovery-setup.css?v=1">
 <link rel="stylesheet" href="student-recovery-reset.css?v=1">
+    <link rel="manifest" href="./manifest.webmanifest">
+    <meta name="theme-color" content="#0c223a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="./icons/icon-192.png">
+
 </head>
 
 <body>
@@ -568,5 +575,6 @@ openWhatsAppHelp?.addEventListener("click", openWhatsAppWidget);
 <script type="module" src="app.js?v=mandatory-onboarding-1"></script>
 
 <script type="module" src="site-theme-runtime.js?v=6"></script>
+<script defer src="./pwa-install.js?v=1"></script>
 </body>
 </html>
