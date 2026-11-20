@@ -12,6 +12,7 @@ import {
 
 import { requireRecoveryCodeSetup } from "./student-recovery-setup.js";
 import { initRecoveryPasswordReset } from "./student-recovery-reset.js";
+import { isStudentOnboardingComplete } from "./student-onboarding.js";
 
 
 // =====================================================
@@ -810,14 +811,16 @@ async function loginStudent() {
             return;
         }
 
-        // Students must save their one-time recovery code before any dashboard route opens.
-        await requireRecoveryCodeSetup(studentRef, studentId, verifiedLogin.data || data);
+        const loginStudentData = verifiedLogin.data || data;
+
+        // Recovery code setup remains mandatory before onboarding or dashboard access.
+        await requireRecoveryCodeSetup(studentRef, studentId, loginStudentData);
 
         saveStudentSession(
             studentId,
             studentType,
             gradeName,
-            verifiedLogin.data || data
+            loginStudentData
         );
 
 
@@ -878,6 +881,25 @@ async function loginStudent() {
 
 
         // =================================================
+        // MANDATORY STUDENT ONBOARDING
+        // =================================================
+
+        if (!isStudentOnboardingComplete(loginStudentData)) {
+            clearPasswordChangeSession();
+            showMessage(
+                "Please complete your student onboarding form before entering the dashboard.",
+                "info"
+            );
+
+            setTimeout(() => {
+                window.location.replace("student-registration.html");
+            }, 500);
+
+            return;
+        }
+
+
+        // =================================================
         // A/L STUDENT
         // =================================================
 
@@ -889,42 +911,6 @@ async function loginStudent() {
                 A/L students use the A/L registration page
                 when first registration is incomplete.
             */
-
-            const needsALRegistration =
-                data?.mustChangePassword === true ||
-                data?.registrationCompleted !== true ||
-                data?.profileCompleted !== true;
-
-
-            if (
-                needsALRegistration
-            ) {
-
-                clearPasswordChangeSession();
-
-
-                showMessage(
-                    "A/L registration required. Redirecting...",
-                    "success"
-                );
-
-
-                setTimeout(
-                    () => {
-
-                        window.location.replace(
-                            "student-registration.html"
-                        );
-
-                    },
-                    500
-                );
-
-
-                return;
-
-            }
-
 
             // =========================================
             // A/L COMPLETED
