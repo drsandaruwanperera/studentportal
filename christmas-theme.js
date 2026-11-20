@@ -6,7 +6,7 @@ import { db, doc, onSnapshot } from "./firebase.js";
   window.__drSandaruwanChristmasMounted = true;
 
   const SETTINGS_DOC_ID = "__themeSeasonSchedule";
-  const stylesheetUrl = new URL("./christmas-theme.css?v=20261117-emoji", import.meta.url).href;
+  const stylesheetUrl = new URL("./christmas-theme.css?v=20261120-winter-blue", import.meta.url).href;
   const DEFAULT_CHRISTMAS_EMOJIS = ["❄️", "🎄", "🎅", "🎁", "🔔", "⭐", "🦌", "🕯️"];
   let sessions = [];
   let currentSignature = "";
@@ -46,18 +46,18 @@ import { db, doc, onSnapshot } from "./firebase.js";
     const layer = document.createElement("div");
     layer.id = "christmas-snowfall";
     layer.setAttribute("aria-hidden", "true");
-    const flakes = ["❄", "✦", "❅", "·", "❆"];
-    const count = window.matchMedia("(max-width: 600px)").matches ? 20 : 34;
+    const flakes = ["❄", "❅", "❆", "❄", "❅"];
+    const count = window.matchMedia("(max-width: 600px)").matches ? 14 : 24;
     for (let i = 0; i < count; i += 1) {
       const flake = document.createElement("span");
       flake.className = "xmas-snowflake";
       flake.textContent = flakes[i % flakes.length];
       flake.style.setProperty("--x-left", (Math.random() * 100) + "%");
-      flake.style.setProperty("--x-size", (5 + Math.random() * 9) + "px");
-      flake.style.setProperty("--x-opacity", (0.22 + Math.random() * 0.48).toString());
-      flake.style.setProperty("--x-duration", (11 + Math.random() * 15) + "s");
+      flake.style.setProperty("--x-size", (12 + Math.random() * 15) + "px");
+      flake.style.setProperty("--x-opacity", (0.24 + Math.random() * 0.34).toString());
+      flake.style.setProperty("--x-duration", (14 + Math.random() * 13) + "s");
       flake.style.setProperty("--x-delay", (-Math.random() * 24) + "s");
-      flake.style.setProperty("--x-sway", (-45 + Math.random() * 90) + "px");
+      flake.style.setProperty("--x-sway", (-55 + Math.random() * 110) + "px");
       layer.appendChild(flake);
     }
     document.body.appendChild(layer);
