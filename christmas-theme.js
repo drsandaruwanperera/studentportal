@@ -7,7 +7,7 @@ import { db, doc, onSnapshot } from "./firebase.js";
 
   const SETTINGS_DOC_ID = "__themeSeasonSchedule";
   const stylesheetUrl = new URL("./christmas-theme.css?v=20261120-dashboard-ice", import.meta.url).href;
-  const dashboardStylesheetUrl = new URL("./winter-dashboard-theme.css?v=20261120-dashboard-ice", import.meta.url).href;
+  const dashboardStylesheetUrl = new URL("./winter-dashboard-theme.css?v=20261120-dashboard-ice-fix2", import.meta.url).href;
   const DEFAULT_CHRISTMAS_EMOJIS = ["❄️", "🎄", "🎅", "🎁", "🔔", "⭐", "🦌", "🕯️"];
   let sessions = [];
   let currentSignature = "";
