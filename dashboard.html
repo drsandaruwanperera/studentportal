@@ -11,7 +11,7 @@
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     >
 
     <title>Student Assessment Portal</title>
@@ -508,6 +508,13 @@ body{background:radial-gradient(circle at 76% 10%,rgba(103,60,255,.10),transpare
 <link id="christmas-theme-stylesheet" rel="stylesheet" href="./christmas-theme.css?v=20261120-winter-refresh1">
 <link id="winter-dashboard-theme-stylesheet" rel="stylesheet" href="./winter-dashboard-theme.css?v=20261120-winter-refresh1">
 <script src="./winter-theme-preload.js?v=2"></script>
+    <link rel="manifest" href="./manifest.webmanifest">
+    <meta name="theme-color" content="#0c223a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="./icons/icon-192.png">
+
 </head>
 
 
@@ -1507,6 +1514,7 @@ import {db,collection,onSnapshot} from "./firebase.js";
 <script type="module" src="al2027-answer-release-popup.js?v=1"></script>
 <script type="module" src="student-pop-notices.js?v=3"></script>
 <script type="module" src="./christmas-theme.js?v=20261120-winter-refresh2"></script>
+<script defer src="./pwa-install.js?v=1"></script>
 </body>
 </body>
 
