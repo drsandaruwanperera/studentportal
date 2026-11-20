@@ -7,7 +7,7 @@ import { db, doc, onSnapshot } from "./firebase.js";
 
   const SETTINGS_DOC_ID = "__themeSeasonSchedule";
   const stylesheetUrl = new URL("./christmas-theme.css?v=20261120-dashboard-ice", import.meta.url).href;
-  const dashboardStylesheetUrl = new URL("./winter-dashboard-theme.css?v=20261120-dashboard-ice-fix2", import.meta.url).href;
+  const dashboardStylesheetUrl = new URL("./winter-dashboard-theme.css?v=20261120-transition-stable", import.meta.url).href;
   const DEFAULT_CHRISTMAS_EMOJIS = ["❄️", "🎄", "🎅", "🎁", "🔔", "⭐", "🦌", "🕯️"];
   let sessions = [];
   let currentSignature = "";
@@ -133,6 +133,27 @@ import { db, doc, onSnapshot } from "./firebase.js";
       .sort((a, b) => Number(b.startsAt) - Number(a.startsAt))[0] || null;
   }
 
+
+  const THEME_CACHE_KEY = "drsp:active-season-theme:v1";
+
+  function syncThemeCache() {
+    try {
+      const active = activeSiteSession();
+      if (active && active.themeKey === "christmas") {
+        localStorage.setItem(THEME_CACHE_KEY, JSON.stringify({
+          id: String(active.id || ""),
+          themeKey: "christmas",
+          endsAt: Number(active.endsAt),
+          cachedAt: Date.now()
+        }));
+      } else {
+        localStorage.removeItem(THEME_CACHE_KEY);
+      }
+    } catch (error) {
+      console.warn("Could not synchronise seasonal theme cache:", error);
+    }
+  }
+
   function applyCurrentTheme() {
     const active = activeSiteSession();
     const isChristmas = Boolean(active && active.themeKey === "christmas");
@@ -199,6 +220,7 @@ import { db, doc, onSnapshot } from "./firebase.js";
       snapshot => {
         const data = snapshot.exists() ? snapshot.data() : {};
         sessions = Array.isArray(data.sessions) ? data.sessions : [];
+        syncThemeCache();
         refresh();
       },
       error => {
