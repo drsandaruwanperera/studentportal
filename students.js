@@ -1191,6 +1191,16 @@ const active =
                         🔓 Release Lock
                     </button>` : ""}
 
+                    ${Number(data?.recoveryPasswordResetCount || 0) >= 2 ? `
+                    <button
+                        type="button"
+                        class="action-btn release-lock-btn"
+                        data-action="release-recovery-limit"
+                        data-id="${escapeHTML(student.id)}"
+                    >
+                        🔑 Release Recovery Limit
+                    </button>` : ""}
+
 
 
                     <button
@@ -1334,6 +1344,11 @@ if (
 
             if (action === "release-lock") {
                 releaseStudentAccountLock(id);
+                return;
+            }
+
+            if (action === "release-recovery-limit") {
+                releaseStudentRecoveryResetLimit(id);
                 return;
             }
 
@@ -2738,6 +2753,38 @@ async function releaseStudentAccountLock(studentId) {
     } catch (error) {
         console.error("Account lock release failed:", error);
         alert("Could not release account lock.\n\n" + (error?.message || "Unknown error"));
+    }
+}
+
+
+// =====================================================
+// RELEASE STUDENT RECOVERY RESET LIMIT
+// =====================================================
+
+async function releaseStudentRecoveryResetLimit(studentId) {
+    const student = allStudents.find(item => item.id === studentId);
+    if (!student || Number(student.data?.recoveryPasswordResetCount || 0) < 2) return;
+
+    const displayName = getStudentName(student.data);
+    const confirmed = window.confirm(
+        "Release the monthly Recovery Code password-reset limit?\\n\\n" +
+        displayName + " (" + studentId + ")\\n\\n" +
+        "This will allow the student to use the Recovery Code reset flow again."
+    );
+    if (!confirmed) return;
+
+    try {
+        await updateDoc(doc(db, "students", studentId), {
+            recoveryPasswordResetCount: 0,
+            recoveryPasswordResetMonth: "",
+            recoveryPasswordResetLimitReleasedAt: Date.now(),
+            recoveryPasswordResetLimitReleasedBy: adminUsername
+        });
+        alert("Recovery password-reset limit released for " + studentId + ".");
+        await loadStudents();
+    } catch (error) {
+        console.error("Recovery reset limit release failed:", error);
+        alert("Could not release the Recovery Code reset limit.\\n\\n" + (error?.message || "Unknown error"));
     }
 }
 
