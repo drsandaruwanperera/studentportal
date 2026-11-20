@@ -2767,7 +2767,7 @@ async function releaseStudentRecoveryResetLimit(studentId) {
 
     const displayName = getStudentName(student.data);
     const confirmed = window.confirm(
-        "Release the monthly Recovery Code password-reset limit?\\n\\n" +
+        "Release the monthly Recovery Code password-reset limit?\n\n" +
         displayName + " (" + studentId + ")\\n\\n" +
         "This will allow the student to use the Recovery Code reset flow again."
     );
@@ -2784,7 +2784,7 @@ async function releaseStudentRecoveryResetLimit(studentId) {
         await loadStudents();
     } catch (error) {
         console.error("Recovery reset limit release failed:", error);
-        alert("Could not release the Recovery Code reset limit.\\n\\n" + (error?.message || "Unknown error"));
+        alert("Could not release the Recovery Code reset limit.\n\n" + (error?.message || "Unknown error"));
     }
 }
 
