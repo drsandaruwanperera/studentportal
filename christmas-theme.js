@@ -6,19 +6,35 @@ import { db, doc, onSnapshot } from "./firebase.js";
   window.__drSandaruwanChristmasMounted = true;
 
   const SETTINGS_DOC_ID = "__themeSeasonSchedule";
-  const stylesheetUrl = new URL("./christmas-theme.css?v=20261120-winter-blue", import.meta.url).href;
+  const stylesheetUrl = new URL("./christmas-theme.css?v=20261120-dashboard-ice", import.meta.url).href;
+  const dashboardStylesheetUrl = new URL("./winter-dashboard-theme.css?v=20261120-dashboard-ice", import.meta.url).href;
   const DEFAULT_CHRISTMAS_EMOJIS = ["❄️", "🎄", "🎅", "🎁", "🔔", "⭐", "🦌", "🕯️"];
   let sessions = [];
   let currentSignature = "";
   let nextTimer = null;
 
   function addStylesheet() {
-    if (document.getElementById("christmas-theme-stylesheet")) return;
-    const link = document.createElement("link");
-    link.id = "christmas-theme-stylesheet";
-    link.rel = "stylesheet";
-    link.href = stylesheetUrl;
-    document.head.appendChild(link);
+    let baseLink = document.getElementById("christmas-theme-stylesheet");
+    if (!baseLink) {
+      baseLink = [...document.querySelectorAll('link[rel="stylesheet"]')]
+        .find(item => /christmas-theme\\.css(?:\\?|$)/.test(item.href));
+    }
+    if (!baseLink) {
+      baseLink = document.createElement("link");
+      baseLink.rel = "stylesheet";
+      document.head.appendChild(baseLink);
+    }
+    baseLink.id = "christmas-theme-stylesheet";
+    baseLink.href = stylesheetUrl;
+
+    let dashboardLink = document.getElementById("winter-dashboard-theme-stylesheet");
+    if (!dashboardLink) {
+      dashboardLink = document.createElement("link");
+      dashboardLink.id = "winter-dashboard-theme-stylesheet";
+      dashboardLink.rel = "stylesheet";
+      document.head.appendChild(dashboardLink);
+    }
+    dashboardLink.href = dashboardStylesheetUrl;
   }
 
   function selectedEmojiSet(active) {
