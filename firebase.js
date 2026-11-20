@@ -36,14 +36,6 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-import("./christmas-theme.js?v=20261117-emoji").catch(error => {
-    console.warn("Christmas theme module could not load:", error);
-});
-
-import("./site-theme-runtime.js?v=6").catch(error => {
-    console.warn("Shared seasonal theme runtime could not load:", error);
-});
-
 export {
     db,
     collection,
