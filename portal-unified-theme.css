@@ -300,6 +300,10 @@ button, input, select, textarea {
   background: transparent !important;
 }
 
+.main-content {
+  width: calc(100% - 252px) !important;
+}
+
 .main {
   width: calc(100% - 252px);
   max-width: none !important;
