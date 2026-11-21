@@ -3158,3 +3158,368 @@ html.student-glass-ui body .study-buddy-launcher small {
     transition: none !important;
   }
 }
+
+
+/* Dashboard mobile refresh: cohesive blue-glass header and programme overview */
+@media (max-width: 800px) {
+  html.student-glass-ui body.dashboard-page .shared-mobile-header {
+    min-height: 66px !important;
+    padding: 8px 12px !important;
+    gap: 8px !important;
+    border: 1px solid rgba(255,255,255,.24) !important;
+    border-radius: 0 0 20px 20px !important;
+    background: linear-gradient(115deg, #205a70 0%, #347a8c 58%, #4a8794 100%) !important;
+    box-shadow: 0 11px 28px rgba(21,75,94,.22), inset 0 1px 0 rgba(255,255,255,.14) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(1.18) !important;
+    backdrop-filter: blur(18px) saturate(1.18) !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .shared-header-brand {
+    gap: 9px !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .shared-header-brand img {
+    width: 39px !important;
+    height: 39px !important;
+    flex-basis: 39px !important;
+    border: 1px solid rgba(255,255,255,.34) !important;
+    border-radius: 13px !important;
+    background: rgba(255,255,255,.16) !important;
+    box-shadow: 0 6px 16px rgba(5,35,51,.2) !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .shared-header-brand strong {
+    color: #ffffff !important;
+    font-size: clamp(11px, 3.1vw, 13px) !important;
+    font-weight: 900 !important;
+    letter-spacing: -.1px !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .shared-header-brand small {
+    color: rgba(235,248,252,.78) !important;
+    font-size: 8px !important;
+    font-weight: 800 !important;
+    letter-spacing: 1px !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .shared-header-action {
+    width: 35px !important;
+    height: 35px !important;
+    flex: 0 0 35px !important;
+    border: 1px solid rgba(255,255,255,.25) !important;
+    background: rgba(238,249,252,.14) !important;
+    color: #ffffff !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.12) !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .shared-header-action svg {
+    stroke: currentColor !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .shared-header-student {
+    width: 35px !important;
+    height: 35px !important;
+    flex: 0 0 35px !important;
+    border: 1px solid rgba(255,255,255,.36) !important;
+    background: linear-gradient(145deg, #d8f1f3, #a8d9e1) !important;
+    color: #14546a !important;
+    box-shadow: 0 6px 15px rgba(5,35,51,.15) !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .lms-dashboard {
+    padding-top: 12px !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .lms-stat-grid[hidden] {
+    display: none !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-learning-banner {
+    display: block !important;
+    min-height: 0 !important;
+    height: auto !important;
+    margin: 0 0 18px !important;
+    padding: 14px !important;
+    overflow: hidden !important;
+    border: 1px solid rgba(255,255,255,.22) !important;
+    border-radius: 22px !important;
+    background:
+      radial-gradient(circle at 92% 5%, rgba(194,239,245,.18), transparent 34%),
+      linear-gradient(145deg, #316d80 0%, #477f8e 58%, #5a8c98 100%) !important;
+    box-shadow: 0 16px 34px rgba(24,80,97,.2), inset 0 1px 0 rgba(255,255,255,.15) !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-learning-banner > .learning-glow,
+  html.student-glass-ui body.dashboard-page .dashboard-learning-banner > .learning-banner-copy,
+  html.student-glass-ui body.dashboard-page .dashboard-learning-banner > .dashboard-journey-chart {
+    display: none !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-overview {
+    display: grid !important;
+    grid-template-columns: minmax(0,1fr) !important;
+    gap: 12px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-overview-top {
+    display: grid !important;
+    grid-template-columns: 70px minmax(0,1fr) !important;
+    align-items: center !important;
+    gap: 12px !important;
+    min-width: 0 !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-date-tile {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 70px !important;
+    min-height: 82px !important;
+    padding: 7px 4px !important;
+    box-sizing: border-box !important;
+    border: 1px solid rgba(255,255,255,.82) !important;
+    border-radius: 15px !important;
+    background: linear-gradient(160deg, #ffffff 0%, #edf7fa 100%) !important;
+    box-shadow: 0 8px 19px rgba(14,52,68,.16) !important;
+    text-align: center !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-date-tile span {
+    color: #53788a !important;
+    font-size: 8px !important;
+    font-weight: 800 !important;
+    line-height: 1.2 !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-date-tile strong {
+    display: block !important;
+    margin: 2px 0 !important;
+    color: #194e66 !important;
+    font-size: 27px !important;
+    font-weight: 950 !important;
+    letter-spacing: -1px !important;
+    line-height: 1 !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-date-tile small {
+    color: #66879a !important;
+    font-size: 8px !important;
+    font-weight: 800 !important;
+    line-height: 1.2 !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-greeting {
+    min-width: 0 !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-eyebrow {
+    display: block !important;
+    margin-bottom: 6px !important;
+    color: rgba(232,248,251,.78) !important;
+    font-size: 8px !important;
+    font-weight: 850 !important;
+    letter-spacing: 1.15px !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-greeting h2 {
+    margin: 0 !important;
+    color: #ffffff !important;
+    font-size: clamp(18px, 5.2vw, 23px) !important;
+    font-weight: 900 !important;
+    letter-spacing: -.65px !important;
+    line-height: 1.12 !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-greeting p {
+    margin: 6px 0 0 !important;
+    color: rgba(240,249,251,.86) !important;
+    font-size: 9px !important;
+    font-weight: 650 !important;
+    line-height: 1.4 !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-next-step {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    min-width: 0 !important;
+    padding: 12px !important;
+    border: 1px solid rgba(255,255,255,.18) !important;
+    border-radius: 15px !important;
+    background: rgba(9,48,65,.2) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.06) !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-next-copy {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+    min-width: 0 !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-next-copy > span {
+    color: rgba(222,243,247,.74) !important;
+    font-size: 7px !important;
+    font-weight: 850 !important;
+    letter-spacing: 1px !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-next-copy strong {
+    color: #ffffff !important;
+    font-size: 11px !important;
+    font-weight: 850 !important;
+    line-height: 1.25 !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-next-copy small {
+    color: rgba(239,249,251,.78) !important;
+    font-size: 8px !important;
+    font-weight: 600 !important;
+    line-height: 1.35 !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-next-step > a {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    flex: 0 0 auto !important;
+    min-height: 37px !important;
+    padding: 0 12px !important;
+    border: 1px solid rgba(255,255,255,.62) !important;
+    border-radius: 11px !important;
+    background: linear-gradient(145deg,#ffffff,#e7f4f7) !important;
+    color: #15556b !important;
+    font-size: 9px !important;
+    font-weight: 900 !important;
+    text-decoration: none !important;
+    box-shadow: 0 6px 15px rgba(9,42,57,.16) !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-next-step > a b {
+    color: #15556b !important;
+    font-size: 11px !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-progress {
+    min-width: 0 !important;
+    padding: 12px !important;
+    border: 1px solid rgba(255,255,255,.16) !important;
+    border-radius: 15px !important;
+    background: rgba(8,43,58,.2) !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-progress-heading {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    margin-bottom: 9px !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-progress-heading > div {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+    min-width: 0 !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-progress-heading > div span {
+    color: rgba(224,243,247,.75) !important;
+    font-size: 7px !important;
+    font-weight: 850 !important;
+    letter-spacing: 1px !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-progress-heading > div strong {
+    color: #ffffff !important;
+    font-size: 10px !important;
+    font-weight: 850 !important;
+    line-height: 1.25 !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-progress-heading > b {
+    color: #ffffff !important;
+    font-size: 17px !important;
+    font-weight: 950 !important;
+    letter-spacing: -.4px !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-progress-track {
+    width: 100% !important;
+    height: 7px !important;
+    overflow: hidden !important;
+    border-radius: 20px !important;
+    background: rgba(234,247,250,.24) !important;
+    box-shadow: inset 0 1px 2px rgba(9,35,48,.12) !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-progress-track > span {
+    display: block !important;
+    width: 0;
+    height: 100% !important;
+    border-radius: inherit !important;
+    background: linear-gradient(90deg,#b8f0df,#e1fbef) !important;
+    box-shadow: 0 0 12px rgba(206,251,238,.36) !important;
+    transition: width .35s ease !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-progress-caption {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    margin-top: 7px !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-progress-caption span {
+    color: rgba(236,248,250,.78) !important;
+    font-size: 7px !important;
+    font-weight: 650 !important;
+    line-height: 1.3 !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-progress-caption span:last-child {
+    flex: 0 0 auto !important;
+    font-weight: 800 !important;
+  }
+}
+
+@media (max-width: 390px) {
+  html.student-glass-ui body.dashboard-page .shared-header-brand img {
+    width: 35px !important;
+    height: 35px !important;
+    flex-basis: 35px !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-overview-top {
+    grid-template-columns: 64px minmax(0,1fr) !important;
+    gap: 10px !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-date-tile {
+    width: 64px !important;
+    min-height: 78px !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-date-tile strong {
+    font-size: 25px !important;
+  }
+
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-next-step,
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-progress {
+    padding: 10px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-progress-track > span {
+    transition: none !important;
+  }
+}
