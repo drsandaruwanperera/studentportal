@@ -1485,3 +1485,7 @@ html.student-glass-ui body .shared-more-panel a.active {
   color: #075c6c !important;
 }
 
+
+html.student-glass-ui body .notice[hidden] {
+  display: none !important;
+}
