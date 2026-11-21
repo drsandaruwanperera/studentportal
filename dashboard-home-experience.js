@@ -79,8 +79,13 @@
     document.querySelectorAll(".shared-floating-teacher").forEach(button => {
       button.setAttribute("aria-expanded", String(open));
     });
-    if (open) byId("studyBuddyInput")?.focus();
-    else launcher.focus();
+    if (open) {
+      byId("studyBuddyInput")?.focus();
+    } else {
+      const portrait = document.querySelector(".shared-floating-teacher");
+      if (portrait && window.matchMedia("(max-width: 800px)").matches) portrait.focus();
+      else launcher.focus();
+    }
   }
 
   function addStudyBuddyMessage(message, kind) {
