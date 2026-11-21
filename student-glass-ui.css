@@ -4506,3 +4506,43 @@ html.student-glass-ui body.dashboard-page #dashboardAnnouncementSummary .portal-
     line-height: 1.55 !important;
   }
 }
+
+
+/* ==========================================================
+   FINAL COHORT ALLOW-LIST — only the current student's cards
+   ========================================================== */
+html.student-glass-ui body.dashboard-page #learningProgram .portal-program-card {
+  display: none !important;
+}
+
+html.student-glass-ui body.dashboard-page[data-student-cohort="grade10"] #learningProgram #portalProgramHub,
+html.student-glass-ui body.dashboard-page[data-student-cohort="grade10"] #learningProgram #modelPapersCard,
+html.student-glass-ui body.dashboard-page[data-student-cohort="grade10"] #learningProgram #programProgressCard,
+html.student-glass-ui body.dashboard-page[data-student-cohort="grade11"] #learningProgram #modelPapersCard,
+html.student-glass-ui body.dashboard-page[data-student-cohort="grade11"] #learningProgram #programProgressCard,
+html.student-glass-ui body.dashboard-page[data-student-cohort="al2027"] #learningProgram #modelPapersCard,
+html.student-glass-ui body.dashboard-page[data-student-cohort="al2028"] #learningProgram #modelPapersCard,
+html.student-glass-ui body.dashboard-page[data-student-cohort="al2028"] #learningProgram #smartBookAnswersCard,
+html.student-glass-ui body.dashboard-page[data-student-cohort="al2028"] #learningProgram #schoolPaperAnswersCard {
+  display: flex !important;
+}
+
+html.student-glass-ui body.dashboard-page #learningProgram .portal-program-card[hidden],
+html.student-glass-ui body.dashboard-page.dashboard-cohort-pending #learningProgram .portal-program-card {
+  display: none !important;
+}
+
+/* Explicit visibility must win over old per-grade scripts that write
+   ordinary inline display values while their Firestore listeners resolve. */
+html.student-glass-ui body.dashboard-page[data-student-cohort="grade10"] #learningProgram #portalProgramHub:not([hidden]),
+html.student-glass-ui body.dashboard-page[data-student-cohort="grade10"] #learningProgram #modelPapersCard:not([hidden]),
+html.student-glass-ui body.dashboard-page[data-student-cohort="grade10"] #learningProgram #programProgressCard:not([hidden]),
+html.student-glass-ui body.dashboard-page[data-student-cohort="grade11"] #learningProgram #modelPapersCard:not([hidden]),
+html.student-glass-ui body.dashboard-page[data-student-cohort="grade11"] #learningProgram #programProgressCard:not([hidden]),
+html.student-glass-ui body.dashboard-page[data-student-cohort="al2027"] #learningProgram #modelPapersCard:not([hidden]),
+html.student-glass-ui body.dashboard-page[data-student-cohort="al2028"] #learningProgram #modelPapersCard:not([hidden]),
+html.student-glass-ui body.dashboard-page[data-student-cohort="al2028"] #learningProgram #smartBookAnswersCard:not([hidden]),
+html.student-glass-ui body.dashboard-page[data-student-cohort="al2028"] #learningProgram #schoolPaperAnswersCard:not([hidden]) {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
