@@ -6,11 +6,19 @@
     const standalone =
       (typeof window.matchMedia === "function" && window.matchMedia("(display-mode: standalone)").matches) ||
       navigator.standalone === true;
-    if (standalone) {
-      document.documentElement.classList.add("installed-lms-app");
-      document.documentElement.dataset.lmsDisplayMode = "standalone";
+    if (sessionStorage.getItem("loggedIn") !== "true") {
+      window.location.replace("index.html");
+      return;
     }
-  } catch (_) {}
+    if (!standalone) {
+      window.location.replace("app-required.html");
+      return;
+    }
+    document.documentElement.classList.add("installed-lms-app");
+    document.documentElement.dataset.lmsDisplayMode = "standalone";
+  } catch (_) {
+    window.location.replace("index.html");
+  }
 })();
 </script>
 
