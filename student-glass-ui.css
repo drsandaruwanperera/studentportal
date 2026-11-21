@@ -5,15 +5,15 @@
    ========================================================== */
 
 :root {
-  --student-glass-bg: #0b1020;
-  --student-glass-bg-2: #11182b;
+  --student-glass-bg: #140b20;
+  --student-glass-bg-2: #1c112b;
   --student-glass-ink: #f4f7ff;
-  --student-glass-muted: #aeb8ce;
+  --student-glass-muted: #bbaece;
   --student-glass-teal: #a6ff2e;
-  --student-glass-teal-dark: #7cc51f;
+  --student-glass-teal-dark: #a6ff2e;
   --student-glass-teal-soft: rgba(91,75,255,.16);
   --student-glass-line: rgba(186,174,255,.24);
-  --student-glass-card: rgba(19,24,48,.70);
+  --student-glass-card: rgba(31, 19, 48, .70);
   --student-glass-shadow: 0 18px 48px rgba(0,0,0,.28);
   --student-glass-radius: 22px;
 }
@@ -25,7 +25,7 @@ html.student-glass-ui body {
   background:
     radial-gradient(ellipse at 8% 0%, rgba(91,75,255,.24), transparent 35%),
     radial-gradient(ellipse at 94% 88%, rgba(124,58,237,.18), transparent 34%),
-    linear-gradient(145deg, #0b1020 0%, #11182b 50%, #0b1020 100%) !important;
+    linear-gradient(145deg, #140b20 0%, #1c112b 50%, #140b20 100%) !important;
   color: var(--student-glass-ink) !important;
 }
 
@@ -49,14 +49,14 @@ html.student-glass-ui body :is(a,button,input,select,textarea,[tabindex]):focus-
 
 html.student-glass-ui body :is(input,select,textarea) {
   color: var(--student-glass-ink) !important;
-  background: rgba(8,13,27,.78) !important;
+  background: rgba(16, 8, 27, .78) !important;
   border: 1px solid rgba(186,174,255,.28) !important;
   border-radius: 12px !important;
   color-scheme: dark !important;
 }
 
 html.student-glass-ui body :is(input,select,textarea)::placeholder {
-  color: #7885a1 !important;
+  color: #8978a1 !important;
 }
 
 html.student-glass-ui body :is(button,.btn,.button,[role="button"]) {
@@ -77,8 +77,8 @@ html.student-glass-ui body :is(.sidebar,.side) {
   overflow-y: auto !important;
   background: linear-gradient(180deg, rgba(248,253,255,.98), rgba(226,241,248,.98)) !important;
   color: var(--student-glass-ink) !important;
-  border-right: 1px solid #c7e0eb !important;
-  box-shadow: 10px 0 32px rgba(34,88,112,.08) !important;
+  border-right: 1px solid #d6c7eb !important;
+  box-shadow: 10px 0 32px rgba(67, 34, 112, .08) !important;
   z-index: 120 !important;
 }
 
@@ -89,7 +89,7 @@ html.student-glass-ui body :is(.sidebar-brand,.brand) {
   min-height: 76px !important;
   padding: 8px 8px 17px !important;
   margin-bottom: 14px !important;
-  border-bottom: 1px solid #cfe3eb !important;
+  border-bottom: 1px solid #dbcfeb !important;
 }
 
 html.student-glass-ui body :is(.brand-logo,.logo) {
@@ -100,14 +100,14 @@ html.student-glass-ui body :is(.brand-logo,.logo) {
   place-items: center !important;
   border-radius: 15px !important;
   overflow: hidden !important;
-  background: linear-gradient(145deg,#5b4bff,#4037c9) !important;
+  background: linear-gradient(145deg,#5b4bff,#7437c9) !important;
   color: #fff !important;
-  box-shadow: 0 9px 22px rgba(6,111,127,.2) !important;
+  box-shadow: 0 9px 22px rgba(56, 6, 127, .2) !important;
 }
 
 html.student-glass-ui body :is(.brand-text strong,.brand b) {
   display: block !important;
-  color: #14233e !important;
+  color: #26143e !important;
   font-size: 14px !important;
   font-weight: 850 !important;
   line-height: 1.25 !important;
@@ -116,14 +116,14 @@ html.student-glass-ui body :is(.brand-text strong,.brand b) {
 html.student-glass-ui body :is(.brand-text span,.brand span) {
   display: block !important;
   margin-top: 3px !important;
-  color: #648197 !important;
+  color: #796497 !important;
   font-size: 9px !important;
   font-weight: 700 !important;
 }
 
 html.student-glass-ui body :is(.sidebar-section-title) {
   padding: 14px 12px 9px !important;
-  color: #648197 !important;
+  color: #796497 !important;
   font-size: 9px !important;
   font-weight: 850 !important;
   letter-spacing: 1.15px !important;
@@ -144,7 +144,7 @@ html.student-glass-ui body :is(.sidebar-link,.side nav a) {
   border: 1px solid transparent !important;
   border-radius: 13px !important;
   background: transparent !important;
-  color: #4a667d !important;
+  color: #5f4a7d !important;
   text-decoration: none !important;
   font-size: 12px !important;
   font-weight: 780 !important;
@@ -153,15 +153,15 @@ html.student-glass-ui body :is(.sidebar-link,.side nav a) {
 
 html.student-glass-ui body :is(.sidebar-link:hover,.side nav a:hover) {
   background: #e1f1f7 !important;
-  color: #4037c9 !important;
+  color: #7437c9 !important;
   transform: translateX(2px);
 }
 
 html.student-glass-ui body :is(.sidebar-link.active,.side nav a.active) {
-  background: linear-gradient(110deg,#7c3aed,#4037c9) !important;
+  background: linear-gradient(110deg,#7c3aed,#7437c9) !important;
   border-color: rgba(255,255,255,.42) !important;
   color: #fff !important;
-  box-shadow: 0 9px 20px rgba(7,107,122,.18) !important;
+  box-shadow: 0 9px 20px rgba(55, 7, 122, .18) !important;
 }
 
 html.student-glass-ui body :is(.sidebar-link .nav-icon,.side nav a .nav-icon) {
@@ -184,7 +184,7 @@ html.student-glass-ui body :is(.sidebar-link svg,.side nav a svg) {
 html.student-glass-ui body :is(.student-account,.side-profile,.side-bottom) {
   margin-top: auto !important;
   padding-top: 15px !important;
-  border-top: 1px solid #cfe3eb !important;
+  border-top: 1px solid #dbcfeb !important;
 }
 
 html.student-glass-ui body :is(.student-avatar,.side-avatar) {
@@ -193,7 +193,7 @@ html.student-glass-ui body :is(.student-avatar,.side-avatar) {
   border-radius: 50% !important;
   display: grid !important;
   place-items: center !important;
-  background: linear-gradient(145deg,#7c3aed,#4037c9) !important;
+  background: linear-gradient(145deg,#7c3aed,#7437c9) !important;
   color: #fff !important;
   font-weight: 850 !important;
 }
@@ -201,7 +201,7 @@ html.student-glass-ui body :is(.student-avatar,.side-avatar) {
 html.student-glass-ui body :is(.student-account-info strong,.side-profile strong) {
   display: block !important;
   max-width: 155px !important;
-  color: #172943 !important;
+  color: #291743 !important;
   font-size: 11px !important;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -210,7 +210,7 @@ html.student-glass-ui body :is(.student-account-info strong,.side-profile strong
 
 html.student-glass-ui body :is(.student-account-info span,.side-profile span) {
   display: block !important;
-  color: #70899d !important;
+  color: #83709d !important;
   font-size: 9px !important;
   margin-top: 3px !important;
 }
@@ -223,10 +223,10 @@ html.student-glass-ui body :is(.sidebar-logout,.logout) {
   justify-content: center !important;
   gap: 8px !important;
   margin-top: 10px !important;
-  border: 1px solid #d2e3eb !important;
+  border: 1px solid #dcd2eb !important;
   border-radius: 12px !important;
   background: rgba(255,255,255,.72) !important;
-  color: #426178 !important;
+  color: #594278 !important;
   text-decoration: none !important;
   font-size: 11px !important;
   font-weight: 800 !important;
@@ -249,7 +249,7 @@ html.student-glass-ui body .shared-sidebar-more-trigger {
   border: 1px solid transparent !important;
   border-radius: 13px !important;
   background: transparent !important;
-  color: #4a667d !important;
+  color: #5f4a7d !important;
   font: 780 12px/1.2 Inter,system-ui,sans-serif !important;
   text-align: left !important;
   cursor: pointer !important;
@@ -259,11 +259,11 @@ html.student-glass-ui body .shared-sidebar-more-trigger {
 html.student-glass-ui body .shared-sidebar-more-trigger:hover,
 html.student-glass-ui body .shared-sidebar-more-trigger.is-open {
   background: #e1f1f7 !important;
-  color: #4037c9 !important;
+  color: #7437c9 !important;
 }
 
 html.student-glass-ui body .shared-sidebar-more-trigger.is-current {
-  background: linear-gradient(110deg,#7c3aed,#4037c9) !important;
+  background: linear-gradient(110deg,#7c3aed,#7437c9) !important;
   color: #fff !important;
 }
 
@@ -317,13 +317,13 @@ html.student-glass-ui body .lms-header {
   background: rgba(249,253,255,.78) !important;
   border: 1px solid rgba(255,255,255,.8) !important;
   border-radius: 0 0 22px 22px !important;
-  box-shadow: 0 8px 24px rgba(46,100,127,.07) !important;
+  box-shadow: 0 8px 24px rgba(80, 46, 127, .07) !important;
   backdrop-filter: blur(18px) !important;
 }
 
 html.student-glass-ui body .lms-header-title p {
   margin: 0 0 3px !important;
-  color: #68849a !important;
+  color: #7d689a !important;
   font-size: 9px !important;
   font-weight: 850 !important;
   letter-spacing: 1.05px !important;
@@ -331,7 +331,7 @@ html.student-glass-ui body .lms-header-title p {
 
 html.student-glass-ui body .lms-header-title h1 {
   margin: 0 !important;
-  color: #152641 !important;
+  color: #271541 !important;
   font-size: clamp(19px,2vw,25px) !important;
   font-weight: 850 !important;
   letter-spacing: -.55px !important;
@@ -339,27 +339,27 @@ html.student-glass-ui body .lms-header-title h1 {
 
 html.student-glass-ui body .lms-header-actions { gap: 12px !important; }
 html.student-glass-ui body .lms-search {
-  border: 1px solid #d4e6ee !important;
+  border: 1px solid #dfd4ee !important;
   border-radius: 13px !important;
   background: rgba(255,255,255,.86) !important;
   box-shadow: none !important;
 }
 
-html.student-glass-ui body .lms-search input { color: #172943 !important; }
+html.student-glass-ui body .lms-search input { color: #291743 !important; }
 html.student-glass-ui body .lms-notification {
   min-height: 39px !important;
-  border: 1px solid #d4e6ee !important;
+  border: 1px solid #dfd4ee !important;
   border-radius: 12px !important;
   background: rgba(255,255,255,.85) !important;
-  color: #4037c9 !important;
+  color: #7437c9 !important;
   box-shadow: none !important;
 }
 
-html.student-glass-ui body .lms-user strong { color: #1b2d47 !important; }
-html.student-glass-ui body .lms-user span { color: #6d8699 !important; }
+html.student-glass-ui body .lms-user strong { color: #2d1b47 !important; }
+html.student-glass-ui body .lms-user span { color: #7f6d99 !important; }
 html.student-glass-ui body .lms-avatar {
   border-radius: 50% !important;
-  background: linear-gradient(145deg,#7c3aed,#4037c9) !important;
+  background: linear-gradient(145deg,#7c3aed,#7437c9) !important;
   color: #fff !important;
 }
 
@@ -384,9 +384,9 @@ html.student-glass-ui body .dashboard-learning-banner {
   border-radius: 28px !important;
   background:
     radial-gradient(circle at 90% 12%,rgba(255,255,255,.19),transparent 28%),
-    linear-gradient(116deg,#0b6b78 0%,#0c8593 51%,#3f9aac 100%) !important;
+    linear-gradient(116deg,#380b78 0%,#440c93 51%,#6c3fac 100%) !important;
   color: #fff !important;
-  box-shadow: 0 20px 44px rgba(13,102,119,.2) !important;
+  box-shadow: 0 20px 44px rgba(57, 13, 119, .2) !important;
 }
 
 html.student-glass-ui body .dashboard-learning-banner::after {
@@ -441,7 +441,7 @@ html.student-glass-ui body .learning-banner-copy h2 {
 }
 
 html.student-glass-ui body .learning-banner-copy h2 b {
-  color: #d5fcff !important;
+  color: #e7d5ff !important;
 }
 
 html.student-glass-ui body .learning-banner-copy p {
@@ -507,7 +507,7 @@ html.student-glass-ui body .shared-calendar-head {
 }
 
 html.student-glass-ui body .shared-calendar-head strong {
-  color: #162844 !important;
+  color: #291644 !important;
   font-size: 14px !important;
   font-weight: 900 !important;
 }
@@ -541,7 +541,7 @@ html.student-glass-ui body .shared-calendar-empty {
 }
 
 html.student-glass-ui body .shared-calendar-weekday {
-  color: #7690a2;
+  color: #8876a2;
   font-size: 9px;
   font-weight: 850;
 }
@@ -549,14 +549,14 @@ html.student-glass-ui body .shared-calendar-weekday {
 html.student-glass-ui body .shared-calendar-day {
   border: 0;
   background: transparent;
-  color: #35526a;
+  color: #4b356a;
   font: 750 11px/1 Inter,system-ui,sans-serif;
 }
 
 html.student-glass-ui body .shared-calendar-day.is-today {
-  background: linear-gradient(145deg,#7c3aed,#075e6d);
+  background: linear-gradient(145deg,#7c3aed,#32076d);
   color: #fff;
-  box-shadow: 0 5px 13px rgba(8,123,136,.2);
+  box-shadow: 0 5px 13px rgba(61, 8, 136, .2);
 }
 
 html.student-glass-ui body .shared-next-event-placeholder {
@@ -568,11 +568,11 @@ html.student-glass-ui body .shared-next-event-placeholder {
 
 html.student-glass-ui body .shared-next-event-placeholder[hidden] { display: none !important; }
 html.student-glass-ui body .shared-next-event-placeholder strong {
-  color: #142b47 !important;
+  color: #291447 !important;
   font-size: 15px !important;
 }
 html.student-glass-ui body .shared-next-event-placeholder span {
-  color: #607b90;
+  color: #746090;
   font-size: 11px;
   line-height: 1.55;
 }
@@ -587,9 +587,9 @@ html.student-glass-ui body .exam-focus {
   padding: 19px !important;
   border: 1px solid rgba(255,255,255,.35) !important;
   border-radius: 22px !important;
-  background: linear-gradient(135deg,#0c6d7a,#7c3aed) !important;
+  background: linear-gradient(135deg,#3a0c7a,#7c3aed) !important;
   color: #fff !important;
-  box-shadow: 0 16px 34px rgba(8,103,118,.19) !important;
+  box-shadow: 0 16px 34px rgba(54, 8, 118, .19) !important;
 }
 
 html.student-glass-ui body .exam-focus[hidden] { display: none !important; }
@@ -615,7 +615,7 @@ html.student-glass-ui body .exam-copy p {
 html.student-glass-ui body .exam-link {
   display: inline-flex;
   margin-top: 8px;
-  color: #d8fbff !important;
+  color: #e8d8ff !important;
   font-size: 9px;
   font-weight: 800;
   text-decoration: none;
@@ -636,15 +636,15 @@ html.student-glass-ui body .timer-unit {
   border: 1px solid rgba(255,255,255,.55) !important;
   border-radius: 13px !important;
   background: rgba(255,255,255,.89) !important;
-  color: #12304a !important;
+  color: #29124a !important;
 }
 html.student-glass-ui body .timer-unit strong {
-  color: #12304a !important;
+  color: #29124a !important;
   font-size: clamp(19px,2.1vw,25px) !important;
   font-weight: 950 !important;
 }
 html.student-glass-ui body .timer-unit small {
-  color: #5d758a !important;
+  color: #705d8a !important;
   font-size: 8px !important;
   font-weight: 800 !important;
 }
@@ -666,7 +666,7 @@ html.student-glass-ui body .lms-side-column>section {
   border: 1px solid rgba(255,255,255,.84) !important;
   border-radius: 20px !important;
   background: rgba(255,255,255,.78) !important;
-  color: #172943 !important;
+  color: #291743 !important;
   box-shadow: var(--student-glass-shadow) !important;
   backdrop-filter: blur(14px) !important;
 }
@@ -678,12 +678,12 @@ html.student-glass-ui body .lms-stat-card {
 }
 
 html.student-glass-ui body .lms-stat-card strong {
-  color: #152b47 !important;
+  color: #2a1547 !important;
   font-size: clamp(22px,2.4vw,29px) !important;
   font-weight: 950 !important;
 }
 html.student-glass-ui body .lms-stat-card span {
-  color: #607a90 !important;
+  color: #746090 !important;
   font-size: 10px !important;
   font-weight: 750 !important;
 }
@@ -694,7 +694,7 @@ html.student-glass-ui body .lms-stat-icon {
   place-items: center !important;
   border-radius: 14px !important;
   background: #ddf4f5 !important;
-  color: #087887 !important;
+  color: #3d0887 !important;
   font-size: 18px !important;
 }
 
@@ -713,7 +713,7 @@ html.student-glass-ui body .panel-head {
 
 html.student-glass-ui body :is(.portal-section-heading h2,.lms-section-heading h2,.section-header h2,.results-head h2,.panel-head h2) {
   margin: 0 !important;
-  color: #152b47 !important;
+  color: #2a1547 !important;
   font-size: clamp(17px,2vw,22px) !important;
   font-weight: 900 !important;
   letter-spacing: -.45px !important;
@@ -721,7 +721,7 @@ html.student-glass-ui body :is(.portal-section-heading h2,.lms-section-heading h
 
 html.student-glass-ui body :is(.portal-section-heading p,.section-header p,.results-head p,.panel-head p) {
   margin: 4px 0 0 !important;
-  color: #688195 !important;
+  color: #7b6895 !important;
   font-size: 10px !important;
 }
 
@@ -757,7 +757,7 @@ html.student-glass-ui body .portal-program-card {
 
 html.student-glass-ui body .portal-program-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 19px 40px rgba(35,103,129,.17) !important;
+  box-shadow: 0 19px 40px rgba(74, 35, 129, .17) !important;
 }
 
 html.student-glass-ui body .portal-program-card[hidden] { display: none !important; }
@@ -769,7 +769,7 @@ html.student-glass-ui body .portal-program-icon {
   place-items: center !important;
   border-radius: 15px !important;
   background: #ddf4f5 !important;
-  color: #087986 !important;
+  color: #3d0886 !important;
 }
 html.student-glass-ui body .portal-program-icon svg {
   width: 22px !important;
@@ -780,18 +780,18 @@ html.student-glass-ui body .portal-program-icon svg {
 }
 html.student-glass-ui body .portal-program-copy { min-width: 0 !important; display: grid; gap: 6px; }
 html.student-glass-ui body .portal-program-copy small {
-  color: #6f8ca0 !important;
+  color: #836fa0 !important;
   font-size: 8px !important;
   font-weight: 900 !important;
   letter-spacing: .9px !important;
 }
 html.student-glass-ui body .portal-program-copy strong {
-  color: #142943 !important;
+  color: #281443 !important;
   font-size: 13px !important;
   line-height: 1.3 !important;
 }
 html.student-glass-ui body .portal-program-copy>span:not(.material-link) {
-  color: #617b90 !important;
+  color: #756190 !important;
   font-size: 10px !important;
   line-height: 1.5 !important;
 }
@@ -823,18 +823,18 @@ html.student-glass-ui body .dashboard-summary-card {
   border: 1px solid rgba(255,255,255,.87) !important;
   border-radius: 17px !important;
   background: rgba(255,255,255,.82) !important;
-  box-shadow: 0 10px 25px rgba(42,100,128,.1) !important;
-  color: #152b47 !important;
+  box-shadow: 0 10px 25px rgba(78, 42, 128, .1) !important;
+  color: #2a1547 !important;
 }
 
 html.student-glass-ui body .dashboard-announcement-tabs { gap: 7px !important; }
 html.student-glass-ui body .dashboard-announcement-tab {
   min-height: 31px !important;
   padding: 7px 12px !important;
-  border: 1px solid #d3e5ec !important;
+  border: 1px solid #ddd3ec !important;
   border-radius: 999px !important;
   background: rgba(255,255,255,.68) !important;
-  color: #557389 !important;
+  color: #6b5589 !important;
   font-size: 9px !important;
   font-weight: 850 !important;
 }
@@ -845,12 +845,12 @@ html.student-glass-ui body .dashboard-announcement-tab.active {
 }
 
 html.student-glass-ui body .progress-widget .widget-heading h2 {
-  color: #142b47 !important;
+  color: #291447 !important;
 }
 html.student-glass-ui body .progress-widget .widget-subtitle,
 html.student-glass-ui body .progress-widget .progress-legend,
 html.student-glass-ui body .progress-widget .progress-legend span {
-  color: #627d92 !important;
+  color: #766292 !important;
 }
 
 /* Section page shared structure */
@@ -862,24 +862,24 @@ html.student-glass-ui body .top {
   border: 1px solid rgba(255,255,255,.82) !important;
   border-radius: 20px !important;
   background: rgba(255,255,255,.75) !important;
-  box-shadow: 0 10px 27px rgba(42,100,128,.09) !important;
+  box-shadow: 0 10px 27px rgba(78, 42, 128, .09) !important;
   backdrop-filter: blur(14px) !important;
 }
 
 html.student-glass-ui body .top h1 {
-  color: #152943 !important;
+  color: #281543 !important;
   font-size: clamp(21px,2.2vw,28px) !important;
   font-weight: 900 !important;
   letter-spacing: -.55px !important;
 }
 html.student-glass-ui body .top p {
-  color: #627d92 !important;
+  color: #766292 !important;
   font-size: 11px !important;
   line-height: 1.5 !important;
 }
 html.student-glass-ui body .back {
   padding: 10px 13px !important;
-  border: 1px solid #d1e4ec !important;
+  border: 1px solid #dcd1ec !important;
   border-radius: 12px !important;
   background: rgba(255,255,255,.82) !important;
   color: #7c3aed !important;
@@ -894,9 +894,9 @@ html.student-glass-ui body .performance-hero {
   overflow: hidden !important;
   border: 1px solid rgba(255,255,255,.5) !important;
   border-radius: 24px !important;
-  background: linear-gradient(115deg,#7c3aed,#7c3aed 64%,#3d9eac) !important;
+  background: linear-gradient(115deg,#7c3aed,#7c3aed 64%,#6b3dac) !important;
   color: #fff !important;
-  box-shadow: 0 17px 38px rgba(7,108,124,.18) !important;
+  box-shadow: 0 17px 38px rgba(56, 7, 124, .18) !important;
 }
 
 html.student-glass-ui body .hero :is(h2,small,p),
@@ -921,10 +921,10 @@ html.student-glass-ui body .tabs {
 }
 html.student-glass-ui body .tab {
   padding: 8px 13px !important;
-  border: 1px solid #cfe3ec !important;
+  border: 1px solid #dbcfec !important;
   border-radius: 999px !important;
   background: rgba(255,255,255,.72) !important;
-  color: #547287 !important;
+  color: #695487 !important;
   font-size: 10px !important;
   font-weight: 850 !important;
 }
@@ -948,17 +948,17 @@ html.student-glass-ui body .card {
   border: 1px solid rgba(255,255,255,.85) !important;
   border-radius: 19px !important;
   background: rgba(255,255,255,.8) !important;
-  color: #172943 !important;
+  color: #291743 !important;
   box-shadow: var(--student-glass-shadow) !important;
 }
 html.student-glass-ui body .card[style*="display:none"] { display: none !important; }
 html.student-glass-ui body .card h3 {
-  color: #152943 !important;
+  color: #281543 !important;
   font-size: 14px !important;
   line-height: 1.35 !important;
 }
 html.student-glass-ui body .card p {
-  color: #607b90 !important;
+  color: #746090 !important;
   font-size: 10px !important;
   line-height: 1.55 !important;
 }
@@ -989,14 +989,14 @@ html.student-glass-ui body .bar-track,
 html.student-glass-ui body .result-progress {
   overflow: hidden !important;
   border-radius: 999px !important;
-  background: rgba(135,169,190,.25) !important;
+  background: rgba(158, 135, 190, .25) !important;
 }
 html.student-glass-ui body .track .fill,
 html.student-glass-ui body .mini-track i,
 html.student-glass-ui body .bar-track i,
 html.student-glass-ui body .result-progress i {
   border-radius: inherit !important;
-  background: linear-gradient(90deg,#08b88e,#39d7b5) !important;
+  background: linear-gradient(90deg,#5108b8,#7b39d7) !important;
 }
 html.student-glass-ui body .stats {
   display: grid !important;
@@ -1011,7 +1011,7 @@ html.student-glass-ui body .results {
   border: 1px solid rgba(255,255,255,.83) !important;
   border-radius: 19px !important;
   background: rgba(255,255,255,.8) !important;
-  color: #172943 !important;
+  color: #291743 !important;
   box-shadow: var(--student-glass-shadow) !important;
 }
 html.student-glass-ui body .stat { padding: 15px !important; }
@@ -1019,24 +1019,24 @@ html.student-glass-ui body .stat small,
 html.student-glass-ui body .stat span,
 html.student-glass-ui body .panel p,
 html.student-glass-ui body .results p {
-  color: #648095 !important;
+  color: #786495 !important;
 }
-html.student-glass-ui body .stat b { color: #152943 !important; font-size: 25px !important; }
+html.student-glass-ui body .stat b { color: #281543 !important; font-size: 25px !important; }
 html.student-glass-ui body .panel { padding: 18px !important; }
 html.student-glass-ui body .results { padding: 18px !important; margin-top: 15px !important; }
 html.student-glass-ui body .result {
   border: 1px solid #dcebf1 !important;
   border-radius: 15px !important;
   background: rgba(255,255,255,.78) !important;
-  color: #172943 !important;
+  color: #291743 !important;
 }
-html.student-glass-ui body .result :is(strong,.score,b) { color: #152943 !important; }
-html.student-glass-ui body .result :is(small,span) { color: #648095 !important; }
+html.student-glass-ui body .result :is(strong,.score,b) { color: #281543 !important; }
+html.student-glass-ui body .result :is(small,span) { color: #786495 !important; }
 html.student-glass-ui body .result em {
   padding: 5px 9px !important;
   border-radius: 999px !important;
   background: #dff7ed !important;
-  color: #09815e !important;
+  color: #a6ff2e !important;
   font-style: normal !important;
 }
 
@@ -1051,11 +1051,11 @@ html.student-glass-ui body .notice {
   border: 1px solid rgba(255,255,255,.86) !important;
   border-radius: 19px !important;
   background: rgba(255,255,255,.82) !important;
-  color: #172943 !important;
+  color: #291743 !important;
   box-shadow: var(--student-glass-shadow) !important;
 }
-html.student-glass-ui body .notice h3 { color: #152943 !important; font-size: 14px !important; }
-html.student-glass-ui body .notice p { color: #607b90 !important; font-size: 11px !important; }
+html.student-glass-ui body .notice h3 { color: #281543 !important; font-size: 14px !important; }
+html.student-glass-ui body .notice p { color: #746090 !important; font-size: 11px !important; }
 html.student-glass-ui body .notice .tag {
   background: #e0f4f5 !important;
   color: #7c3aed !important;
@@ -1065,13 +1065,13 @@ html.student-glass-ui body .chat {
   border: 1px solid rgba(255,255,255,.85) !important;
   border-radius: 20px !important;
   background: rgba(255,255,255,.82) !important;
-  color: #172943 !important;
+  color: #291743 !important;
   box-shadow: var(--student-glass-shadow) !important;
 }
 html.student-glass-ui body .support-card h2,
-html.student-glass-ui body .chat b { color: #152943 !important; }
+html.student-glass-ui body .chat b { color: #281543 !important; }
 html.student-glass-ui body .support-card p,
-html.student-glass-ui body .chat span { color: #607b90 !important; }
+html.student-glass-ui body .chat span { color: #746090 !important; }
 
 /* Shared announcement filters */
 html.student-glass-ui body .shared-announcement-filters {
@@ -1083,10 +1083,10 @@ html.student-glass-ui body .shared-announcement-filters {
 html.student-glass-ui body .shared-announcement-filters button {
   min-height: 34px;
   padding: 7px 14px;
-  border: 1px solid #cfe3ec;
+  border: 1px solid #dbcfec;
   border-radius: 999px;
   background: rgba(255,255,255,.75);
-  color: #547287;
+  color: #695487;
   font: 800 10px/1 Inter,system-ui,sans-serif;
   cursor: pointer;
   box-shadow: none !important;
@@ -1113,7 +1113,7 @@ html.student-glass-ui body .shared-mobile-header {
   border: 1px solid rgba(255,255,255,.88);
   border-radius: 0 0 18px 18px;
   background: rgba(248,253,255,.88);
-  box-shadow: 0 8px 23px rgba(38,99,125,.1);
+  box-shadow: 0 8px 23px rgba(74, 38, 125, .1);
   backdrop-filter: blur(18px);
 }
 
@@ -1123,7 +1123,7 @@ html.student-glass-ui body .shared-header-brand {
   align-items: center;
   gap: 9px;
   flex: 1;
-  color: #142943 !important;
+  color: #281443 !important;
   text-decoration: none;
 }
 
@@ -1134,12 +1134,12 @@ html.student-glass-ui body .shared-header-brand img {
   border-radius: 12px;
   object-fit: cover;
   background: #5b4bff;
-  box-shadow: 0 6px 14px rgba(7,107,122,.16);
+  box-shadow: 0 6px 14px rgba(55, 7, 122, .16);
 }
 
 html.student-glass-ui body .shared-header-brand strong {
   display: block;
-  color: #142943 !important;
+  color: #281443 !important;
   font-size: 12px !important;
   font-weight: 900 !important;
   line-height: 1.2 !important;
@@ -1147,7 +1147,7 @@ html.student-glass-ui body .shared-header-brand strong {
 html.student-glass-ui body .shared-header-brand small {
   display: block;
   margin-top: 2px;
-  color: #6b8598 !important;
+  color: #7e6b98 !important;
   font-size: 8px !important;
   font-weight: 750 !important;
 }
@@ -1157,7 +1157,7 @@ html.student-glass-ui body .shared-header-action {
   flex: 0 0 36px;
   display: grid;
   place-items: center;
-  border: 1px solid #d4e6ee !important;
+  border: 1px solid #dfd4ee !important;
   border-radius: 50% !important;
   background: rgba(255,255,255,.8) !important;
   color: #7c3aed !important;
@@ -1172,7 +1172,7 @@ html.student-glass-ui body .shared-header-student {
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: linear-gradient(145deg,#7c3aed,#4037c9);
+  background: linear-gradient(145deg,#7c3aed,#7437c9);
   color: #fff;
   font-size: 11px;
   font-weight: 900;
@@ -1193,7 +1193,7 @@ html.student-glass-ui body .shared-bottom-nav {
   border: 1px solid rgba(255,255,255,.92);
   border-radius: 21px;
   background: rgba(249,253,255,.9);
-  box-shadow: 0 14px 34px rgba(27,84,111,.2);
+  box-shadow: 0 14px 34px rgba(62, 27, 111, .2);
   backdrop-filter: blur(22px);
 }
 
@@ -1210,7 +1210,7 @@ html.student-glass-ui body .shared-bottom-nav>button {
   border: 0 !important;
   border-radius: 13px !important;
   background: transparent !important;
-  color: #435e77 !important;
+  color: #594377 !important;
   text-decoration: none !important;
   font: 800 8px/1.1 Inter,system-ui,sans-serif !important;
   box-shadow: none !important;
@@ -1229,9 +1229,9 @@ html.student-glass-ui body .shared-bottom-nav svg {
 
 html.student-glass-ui body .shared-bottom-nav>a.active,
 html.student-glass-ui body .shared-bottom-nav>button.active {
-  background: linear-gradient(145deg,#7c3aed,#075d6b) !important;
+  background: linear-gradient(145deg,#7c3aed,#31076b) !important;
   color: #fff !important;
-  box-shadow: 0 8px 17px rgba(8,112,128,.2) !important;
+  box-shadow: 0 8px 17px rgba(58, 8, 128, .2) !important;
 }
 
 html.student-glass-ui body .shared-floating-teacher {
@@ -1244,7 +1244,7 @@ html.student-glass-ui body .shared-floating-teacher {
   border: 3px solid rgba(255,255,255,.96);
   border-radius: 50%;
   background: #fff;
-  box-shadow: 0 8px 19px rgba(24,78,103,.2);
+  box-shadow: 0 8px 19px rgba(57, 24, 103, .2);
   pointer-events: none;
 }
 
@@ -1269,7 +1269,7 @@ html.student-glass-ui body .shared-more-panel {
   border: 1px solid rgba(255,255,255,.93);
   border-radius: 19px;
   background: rgba(248,253,255,.96);
-  box-shadow: 0 16px 36px rgba(26,80,105,.2);
+  box-shadow: 0 16px 36px rgba(59, 26, 105, .2);
   backdrop-filter: blur(18px);
 }
 html.student-glass-ui body .shared-more-panel.open { display: grid; }
@@ -1282,13 +1282,13 @@ html.student-glass-ui body .shared-more-panel a {
   border: 1px solid #dcebf1;
   border-radius: 13px;
   background: rgba(255,255,255,.84);
-  color: #24435d !important;
+  color: #3c245d !important;
   text-decoration: none;
   font-size: 11px;
   font-weight: 850;
 }
 html.student-glass-ui body .shared-more-panel a span {
-  color: #07808e;
+  color: #3f078e;
   font-size: 15px;
 }
 
@@ -1458,25 +1458,25 @@ html.student-glass-ui body .shared-sidebar-more-panel a {
   gap: 9px !important;
   padding: 9px 11px !important;
   border-radius: 10px !important;
-  color: #46647b !important;
+  color: #5c467b !important;
   font-weight: 780 !important;
   text-decoration: none !important;
 }
 
 html.student-glass-ui body .shared-sidebar-more-panel a:hover {
   background: #e1f1f7 !important;
-  color: #4037c9 !important;
+  color: #7437c9 !important;
 }
 
 html.student-glass-ui body .shared-sidebar-more-panel a.active {
-  background: linear-gradient(110deg,#7c3aed,#4037c9) !important;
+  background: linear-gradient(110deg,#7c3aed,#7437c9) !important;
   color: #fff !important;
 }
 
 html.student-glass-ui body .shared-more-panel a.active {
-  border-color: #93d5dc !important;
+  border-color: #b193dc !important;
   background: #e0f5f5 !important;
-  color: #4037c9 !important;
+  color: #7437c9 !important;
 }
 
 
@@ -1498,22 +1498,22 @@ html.student-glass-ui body .portal-program-card[style*="display:none"] {
 
 /* Keep the existing AI Study Buddy above the new fixed mobile navigation. */
 html.student-glass-ui body .study-buddy-launcher {
-  border: 1px solid #c8e0e9 !important;
+  border: 1px solid #d6c8e9 !important;
   background: rgba(249,253,255,.96) !important;
-  color: #17314b !important;
-  box-shadow: 0 12px 28px rgba(35,91,117,.18) !important;
+  color: #2d174b !important;
+  box-shadow: 0 12px 28px rgba(69, 35, 117, .18) !important;
 }
 html.student-glass-ui body .study-buddy-launcher strong {
-  color: #17314b !important;
+  color: #2d174b !important;
 }
 html.student-glass-ui body .study-buddy-launcher small {
-  color: #638095 !important;
+  color: #786395 !important;
 }
 html.student-glass-ui body .study-buddy-launch-icon {
   border-color: rgba(255,255,255,.65) !important;
-  background: linear-gradient(145deg,#0d8998,#4037c9) !important;
+  background: linear-gradient(145deg,#470d98,#7437c9) !important;
   color: #fff !important;
-  box-shadow: 0 5px 16px rgba(7,110,126,.22) !important;
+  box-shadow: 0 5px 16px rgba(57, 7, 126, .22) !important;
 }
 
 @media (max-width: 800px) {
@@ -1942,7 +1942,7 @@ html.student-glass-ui body *::after {
     margin: 0 !important;
     min-height: 68px !important;
     border-radius: 0 0 19px 19px !important;
-    box-shadow: 0 10px 25px rgba(20,65,90,.09) !important;
+    box-shadow: 0 10px 25px rgba(49, 20, 90, .09) !important;
   }
   html.student-glass-ui body .shared-header-action svg {
     display: block !important;
@@ -1969,8 +1969,8 @@ html.student-glass-ui body *::after {
     overflow: hidden !important;
     background:
       radial-gradient(circle at 88% 14%, rgba(255,255,255,.19), transparent 31%),
-      linear-gradient(118deg,#086d7a 0%,#0c8795 58%,#2d9cac 100%) !important;
-    box-shadow: 0 16px 34px rgba(11,111,126,.19) !important;
+      linear-gradient(118deg,#38087a 0%,#450c95 58%,#622dac 100%) !important;
+    box-shadow: 0 16px 34px rgba(59, 11, 126, .19) !important;
   }
   html.student-glass-ui body .learning-banner-copy {
     position: relative !important;
@@ -2005,7 +2005,7 @@ html.student-glass-ui body *::after {
   }
   html.student-glass-ui body .learning-banner-copy h2 b {
     display: inline !important;
-    color: #bdeeff !important;
+    color: #d9bdff !important;
     padding: 0 !important;
   }
   html.student-glass-ui body .learning-banner-copy p {
@@ -2028,7 +2028,7 @@ html.student-glass-ui body *::after {
     border: 2px solid rgba(255,255,255,.88) !important;
     border-radius: 18px !important;
     background: rgba(255,255,255,.22) !important;
-    box-shadow: 0 10px 24px rgba(0,34,52,.2) !important;
+    box-shadow: 0 10px 24px rgba(22, 0, 52, .2) !important;
   }
   html.student-glass-ui body .shared-banner-portrait img {
     width: 100% !important;
@@ -2049,15 +2049,15 @@ html.student-glass-ui body *::after {
     padding: 0 17px !important;
     border: 1px solid rgba(255,255,255,.34) !important;
     border-radius: 15px !important;
-    background: linear-gradient(135deg,#effcff,#d9f5f8) !important;
-    color: #075b69 !important;
-    box-shadow: 0 9px 20px rgba(0,39,59,.16) !important;
+    background: linear-gradient(135deg,#effcff,#e6d9f8) !important;
+    color: #300769 !important;
+    box-shadow: 0 9px 20px rgba(25, 0, 59, .16) !important;
     font-size: 14px !important;
     font-weight: 900 !important;
     text-decoration: none !important;
   }
   html.student-glass-ui body .hero-continue-btn strong {
-    color: #087b89 !important;
+    color: #3e0889 !important;
     font-size: 22px !important;
   }
 
@@ -2077,11 +2077,11 @@ html.student-glass-ui body *::after {
     min-height: 112px !important;
     height: auto !important;
     padding: 12px 10px !important;
-    border: 1px solid #d8e9f1 !important;
+    border: 1px solid #e2d8f1 !important;
     border-radius: 18px !important;
     background: linear-gradient(145deg,rgba(255,255,255,.97),rgba(231,247,251,.95)) !important;
-    color: #152b47 !important;
-    box-shadow: 0 9px 22px rgba(43,100,128,.1) !important;
+    color: #2a1547 !important;
+    box-shadow: 0 9px 22px rgba(78, 43, 128, .1) !important;
   }
   html.student-glass-ui body .lms-stat-grid .lms-stat-card > div:first-child {
     display: grid !important;
@@ -2089,13 +2089,13 @@ html.student-glass-ui body *::after {
     width: 100% !important;
   }
   html.student-glass-ui body .lms-stat-grid .lms-stat-card strong {
-    color: #132b46 !important;
+    color: #281346 !important;
     font-size: clamp(20px,5vw,25px) !important;
     line-height: 1 !important;
     font-weight: 950 !important;
   }
   html.student-glass-ui body .lms-stat-grid .lms-stat-card span {
-    color: #58738b !important;
+    color: #6d588b !important;
     font-size: 10px !important;
     line-height: 1.35 !important;
     font-weight: 750 !important;
@@ -2105,7 +2105,7 @@ html.student-glass-ui body *::after {
     width: 34px !important;
     height: 34px !important;
     flex: 0 0 34px !important;
-    border: 1px solid #d5e8f3 !important;
+    border: 1px solid #e2d5f3 !important;
     border-radius: 11px !important;
     background: #e8f4fc !important;
     color: #7c3aed !important;
@@ -2126,7 +2126,7 @@ html.student-glass-ui body *::after {
     border: 1px solid rgba(255,255,255,.94) !important;
     border-radius: 19px !important;
     background: linear-gradient(145deg,rgba(255,255,255,.96),rgba(242,250,253,.94)) !important;
-    box-shadow: 0 10px 25px rgba(42,100,128,.09) !important;
+    box-shadow: 0 10px 25px rgba(78, 42, 128, .09) !important;
   }
   html.student-glass-ui body .portal-program-icon {
     width: 48px !important;
@@ -2163,26 +2163,26 @@ html.student-glass-ui body *::after {
     border: 1px solid rgba(255,255,255,.96) !important;
     border-radius: 22px !important;
     background: rgba(255,255,255,.9) !important;
-    box-shadow: 0 12px 28px rgba(42,100,128,.1) !important;
+    box-shadow: 0 12px 28px rgba(78, 42, 128, .1) !important;
   }
-  html.student-glass-ui body .progress-widget :is(h2,strong) { color: #142943 !important; }
+  html.student-glass-ui body .progress-widget :is(h2,strong) { color: #281443 !important; }
   html.student-glass-ui body .progress-widget :is(p,.widget-subtitle,.progress-legend,.progress-legend span) {
-    color: #61798f !important;
+    color: #74618f !important;
   }
   html.student-glass-ui body .progress-ring {
     background: #e6f3f8 !important;
-    box-shadow: inset 0 0 0 9px #d3e9f1, 0 8px 20px rgba(30,86,111,.1) !important;
+    box-shadow: inset 0 0 0 9px #e0d3f1, 0 8px 20px rgba(64, 30, 111, .1) !important;
   }
-  html.student-glass-ui body .progress-ring :is(strong,span) { color: #18334f !important; }
+  html.student-glass-ui body .progress-ring :is(strong,span) { color: #2f184f !important; }
 
   html.student-glass-ui body .portal-support-card {
     min-width: 0 !important;
     border: 1px solid rgba(255,255,255,.95) !important;
     border-radius: 18px !important;
     background: rgba(255,255,255,.88) !important;
-    box-shadow: 0 10px 24px rgba(42,100,128,.09) !important;
+    box-shadow: 0 10px 24px rgba(78, 42, 128, .09) !important;
   }
-  html.student-glass-ui body .portal-support-card :is(strong,small) { color: #17314b !important; }
+  html.student-glass-ui body .portal-support-card :is(strong,small) { color: #2d174b !important; }
 
   /* The floating AI pill is replaced on phones by the clickable centre portrait. */
   html.student-glass-ui body .study-buddy-launcher { display: none !important; }
@@ -2199,7 +2199,7 @@ html.student-glass-ui body *::after {
     border: 1px solid rgba(255,255,255,.94) !important;
     border-radius: 24px !important;
     background: rgba(250,254,255,.98) !important;
-    box-shadow: 0 22px 65px rgba(8,43,62,.26) !important;
+    box-shadow: 0 22px 65px rgba(31, 8, 62, .26) !important;
     z-index: 2200 !important;
   }
 }
@@ -2219,8 +2219,8 @@ html.student-glass-ui body .shared-floating-teacher {
   margin: -23px 0 0 !important;
   border: 3px solid rgba(255,255,255,.98) !important;
   border-radius: 50% !important;
-  background: linear-gradient(145deg,#eaf8fc,#cceaf2) !important;
-  box-shadow: 0 9px 24px rgba(18,82,108,.24) !important;
+  background: linear-gradient(145deg,#eaf8fc,#dcccf2) !important;
+  box-shadow: 0 9px 24px rgba(56, 18, 108, .24) !important;
   cursor: pointer !important;
   appearance: none !important;
   -webkit-appearance: none !important;
@@ -2255,7 +2255,7 @@ html.student-glass-ui body .shared-floating-teacher:focus-visible {
   outline-offset: 4px !important;
 }
 html.student-glass-ui body .shared-floating-teacher[aria-expanded="true"] {
-  box-shadow: 0 0 0 5px rgba(8,123,136,.15),0 10px 26px rgba(18,82,108,.28) !important;
+  box-shadow: 0 0 0 5px rgba(61, 8, 136, .15),0 10px 26px rgba(56, 18, 108, .28) !important;
 }
 
 /* Shared assistant panel styling; the helper is usable on desktop and mobile. */
@@ -2278,7 +2278,7 @@ html.student-glass-ui body .study-buddy-panel {
   border: 1px solid rgba(255,255,255,.95) !important;
   border-radius: 24px !important;
   background: #f9fdff !important;
-  box-shadow: 0 20px 60px rgba(12,53,76,.24) !important;
+  box-shadow: 0 20px 60px rgba(39, 12, 76, .24) !important;
   z-index: 2200 !important;
   pointer-events: auto !important;
 }
@@ -2292,7 +2292,7 @@ html.student-glass-ui body .study-buddy-head {
   gap: 12px !important;
   min-height: 70px !important;
   padding: 12px 16px !important;
-  background: linear-gradient(115deg,#08727f,#0c8d9b) !important;
+  background: linear-gradient(115deg,#3a087f,#480c9b) !important;
 }
 html.student-glass-ui body .study-buddy-avatar {
   display: grid !important;
@@ -2336,7 +2336,7 @@ html.student-glass-ui body .study-buddy-launcher i {
   height: 7px !important;
   flex: 0 0 7px !important;
   border-radius: 50% !important;
-  background: #b6ef75 !important;
+  background: #a6ff2e !important;
 }
 html.student-glass-ui body .study-buddy-close {
   display: grid !important;
@@ -2372,13 +2372,13 @@ html.student-glass-ui body .study-buddy-welcome > small {
 }
 html.student-glass-ui body .study-buddy-welcome h2 {
   margin: 6px 0 !important;
-  color: #142943 !important;
+  color: #281443 !important;
   font-size: 19px !important;
   line-height: 1.3 !important;
 }
 html.student-glass-ui body .study-buddy-welcome p {
   margin: 0 !important;
-  color: #61798f !important;
+  color: #74618f !important;
   font-size: 11px !important;
   line-height: 1.5 !important;
 }
@@ -2390,17 +2390,17 @@ html.student-glass-ui body .study-buddy-prompts {
 html.student-glass-ui body .study-buddy-prompt {
   max-width: 100% !important;
   padding: 8px 10px !important;
-  border: 1px solid #cde5ec !important;
+  border: 1px solid #dacdec !important;
   border-radius: 999px !important;
   background: #edf8fa !important;
-  color: #0a6876 !important;
+  color: #370a76 !important;
   font-size: 10px !important;
   font-weight: 800 !important;
   line-height: 1.35 !important;
   cursor: pointer !important;
 }
 html.student-glass-ui body .study-buddy-prompt:active {
-  background: #d5f0f2 !important;
+  background: #e1d5f2 !important;
 }
 html.student-glass-ui body .study-buddy-thread {
   display: grid !important;
@@ -2426,8 +2426,8 @@ html.student-glass-ui body .study-buddy-message.bot {
   border: 1px solid #dcebf0 !important;
   border-bottom-left-radius: 5px !important;
   background: #fff !important;
-  color: #244059 !important;
-  box-shadow: 0 5px 14px rgba(40,90,114,.07) !important;
+  color: #3a2459 !important;
+  box-shadow: 0 5px 14px rgba(71, 40, 114, .07) !important;
 }
 html.student-glass-ui body .study-buddy-message.bot small {
   display: block !important;
@@ -2450,10 +2450,10 @@ html.student-glass-ui body .study-buddy-form input {
   flex: 1 1 auto !important;
   height: 44px !important;
   padding: 0 13px !important;
-  border: 1px solid #d3e4eb !important;
+  border: 1px solid #ddd3eb !important;
   border-radius: 13px !important;
   background: #f7fbfd !important;
-  color: #18334f !important;
+  color: #2f184f !important;
   font-size: 13px !important;
 }
 html.student-glass-ui body .study-buddy-form button {
@@ -2464,7 +2464,7 @@ html.student-glass-ui body .study-buddy-form button {
   flex: 0 0 44px !important;
   border: 0 !important;
   border-radius: 13px !important;
-  background: linear-gradient(135deg,#0b8290,#4037c9) !important;
+  background: linear-gradient(135deg,#420b90,#7437c9) !important;
   color: #fff !important;
 }
 html.student-glass-ui body .study-buddy-form button svg {
@@ -2477,7 +2477,7 @@ html.student-glass-ui body .study-buddy-form button svg {
 html.student-glass-ui body .study-buddy-note {
   margin: 0 !important;
   padding: 0 15px 12px !important;
-  color: #788fa2 !important;
+  color: #8a78a2 !important;
   font-size: 9px !important;
   line-height: 1.4 !important;
   text-align: center !important;
@@ -2492,11 +2492,11 @@ html.student-glass-ui body .study-buddy-launcher {
   max-width: min(300px,calc(100vw - 40px)) !important;
   min-height: 62px !important;
   padding: 9px 15px 9px 9px !important;
-  border: 1px solid #c8e0e9 !important;
+  border: 1px solid #d6c8e9 !important;
   border-radius: 999px !important;
   background: rgba(250,254,255,.97) !important;
-  color: #17314b !important;
-  box-shadow: 0 12px 28px rgba(35,91,117,.18) !important;
+  color: #2d174b !important;
+  box-shadow: 0 12px 28px rgba(69, 35, 117, .18) !important;
   z-index: 2100 !important;
   pointer-events: auto !important;
   cursor: pointer !important;
@@ -2508,7 +2508,7 @@ html.student-glass-ui body .study-buddy-launch-icon {
   height: 43px !important;
   flex: 0 0 43px !important;
   border-radius: 50% !important;
-  background: linear-gradient(145deg,#0d8998,#4037c9) !important;
+  background: linear-gradient(145deg,#470d98,#7437c9) !important;
   color: #fff !important;
 }
 html.student-glass-ui body .study-buddy-launch-icon svg {
@@ -2520,7 +2520,7 @@ html.student-glass-ui body .study-buddy-launch-icon svg {
 }
 html.student-glass-ui body .study-buddy-launcher strong {
   display: block !important;
-  color: #17314b !important;
+  color: #2d174b !important;
   font-size: 12px !important;
   font-weight: 900 !important;
 }
@@ -2529,7 +2529,7 @@ html.student-glass-ui body .study-buddy-launcher small {
   align-items: center !important;
   gap: 5px !important;
   margin-top: 3px !important;
-  color: #638095 !important;
+  color: #786395 !important;
   font-size: 9px !important;
 }
 
@@ -2621,7 +2621,7 @@ html.student-glass-ui body .study-buddy-launcher small {
     border: 1px solid rgba(255,255,255,.94) !important;
     border-radius: 23px !important;
     background: rgba(248,253,255,.94) !important;
-    box-shadow: 0 14px 36px rgba(30,82,109,.22) !important;
+    box-shadow: 0 14px 36px rgba(63, 30, 109, .22) !important;
     backdrop-filter: blur(22px) saturate(1.25) !important;
     -webkit-backdrop-filter: blur(22px) saturate(1.25) !important;
     z-index: 4800 !important;
@@ -2640,7 +2640,7 @@ html.student-glass-ui body .study-buddy-launcher small {
     border: 0 !important;
     border-radius: 15px !important;
     background: transparent !important;
-    color: #17314b !important;
+    color: #2d174b !important;
     text-decoration: none !important;
     font: 800 9px/1.1 Inter,system-ui,sans-serif !important;
     white-space: nowrap !important;
@@ -2648,9 +2648,9 @@ html.student-glass-ui body .study-buddy-launcher small {
   }
   html.student-glass-ui body .shared-bottom-nav > a.active,
   html.student-glass-ui body .shared-bottom-nav > button.active {
-    background: linear-gradient(145deg,#7c3aed,#4037c9) !important;
+    background: linear-gradient(145deg,#7c3aed,#7437c9) !important;
     color: #fff !important;
-    box-shadow: 0 7px 17px rgba(7,103,119,.2) !important;
+    box-shadow: 0 7px 17px rgba(54, 7, 119, .2) !important;
   }
   html.student-glass-ui body .shared-bottom-nav > a svg,
   html.student-glass-ui body .shared-bottom-nav > button:not(.shared-floating-teacher) svg {
@@ -2678,8 +2678,8 @@ html.student-glass-ui body .study-buddy-launcher small {
     padding: 3px !important;
     border: 3px solid #fff !important;
     border-radius: 50% !important;
-    background: linear-gradient(145deg,#eaf8fc,#d1edf4) !important;
-    box-shadow: 0 9px 22px rgba(20,81,106,.25) !important;
+    background: linear-gradient(145deg,#eaf8fc,#e0d1f4) !important;
+    box-shadow: 0 9px 22px rgba(56, 20, 106, .25) !important;
     color: #5b4bff !important;
     cursor: pointer !important;
     pointer-events: auto !important;
@@ -2797,7 +2797,7 @@ html.student-glass-ui body .study-buddy-launcher small {
     visibility: visible !important;
     opacity: 1 !important;
     background: rgba(248,253,255,.96) !important;
-    box-shadow: 0 9px 26px rgba(30,80,105,.13) !important;
+    box-shadow: 0 9px 26px rgba(61, 30, 105, .13) !important;
     -webkit-backdrop-filter: blur(20px) saturate(1.3) !important;
     backdrop-filter: blur(20px) saturate(1.3) !important;
   }
@@ -2837,7 +2837,7 @@ html.student-glass-ui body .study-buddy-launcher small {
     min-height:64px!important; margin:0!important; padding:8px 12px!important;
     align-items:center!important; z-index:8000!important; visibility:visible!important; opacity:1!important;
     background:rgba(249,253,255,.97)!important; border:1px solid rgba(255,255,255,.94)!important;
-    border-radius:0 0 20px 20px!important; box-shadow:0 8px 24px rgba(31,83,108,.13)!important;
+    border-radius:0 0 20px 20px!important; box-shadow:0 8px 24px rgba(63, 31, 108, .13)!important;
     -webkit-backdrop-filter:blur(22px) saturate(1.25)!important; backdrop-filter:blur(22px) saturate(1.25)!important;
   }
   html.student-glass-ui body .shared-bottom-nav {
@@ -2847,7 +2847,7 @@ html.student-glass-ui body .study-buddy-launcher small {
     min-height:70px!important; grid-template-columns:repeat(5,minmax(0,1fr))!important; align-items:center!important;
     gap:3px!important; padding:6px!important; margin:0!important; z-index:8100!important;
     border:1px solid rgba(255,255,255,.96)!important; border-radius:23px!important;
-    background:rgba(249,253,255,.97)!important; box-shadow:0 13px 34px rgba(26,81,107,.2)!important;
+    background:rgba(249,253,255,.97)!important; box-shadow:0 13px 34px rgba(60, 26, 107, .2)!important;
     -webkit-backdrop-filter:blur(22px) saturate(1.25)!important; backdrop-filter:blur(22px) saturate(1.25)!important;
   }
   html.student-glass-ui body .shared-bottom-nav > a:not(.shared-floating-teacher),
@@ -2855,14 +2855,14 @@ html.student-glass-ui body .study-buddy-launcher small {
     display:flex!important; min-width:0!important; min-height:55px!important; width:100%!important;
     flex-direction:column!important; align-items:center!important; justify-content:center!important; gap:5px!important;
     padding:5px 1px!important; margin:0!important; border:0!important; border-radius:15px!important;
-    background:transparent!important; color:#17314b!important; text-decoration:none!important;
+    background:transparent!important; color:#2d174b!important; text-decoration:none!important;
     font:800 9px/1.1 Inter,system-ui,sans-serif!important; white-space:nowrap!important; box-shadow:none!important;
     cursor:pointer!important; list-style:none!important; -webkit-tap-highlight-color:transparent!important;
   }
   html.student-glass-ui body .shared-bottom-nav > a.active,
   html.student-glass-ui body .shared-bottom-nav > details[open] > summary {
-    background:linear-gradient(145deg,#7c3aed,#4037c9)!important; color:#fff!important;
-    box-shadow:0 7px 17px rgba(7,103,119,.2)!important;
+    background:linear-gradient(145deg,#7c3aed,#7437c9)!important; color:#fff!important;
+    box-shadow:0 7px 17px rgba(54, 7, 119, .2)!important;
   }
   html.student-glass-ui body .shared-bottom-nav > a:not(.shared-floating-teacher) svg,
   html.student-glass-ui body .shared-bottom-nav > details > summary svg {
@@ -2874,7 +2874,7 @@ html.student-glass-ui body .study-buddy-launcher small {
     display:flex!important; position:relative!important; grid-column:3!important; justify-self:center!important;
     align-self:start!important; width:62px!important; height:62px!important; min-height:62px!important;
     padding:3px!important; margin:-23px 0 0!important; border:3px solid #fff!important; border-radius:50%!important;
-    background:linear-gradient(145deg,#eaf8fc,#d1edf4)!important; box-shadow:0 9px 22px rgba(20,81,106,.25)!important;
+    background:linear-gradient(145deg,#eaf8fc,#e0d1f4)!important; box-shadow:0 9px 22px rgba(56, 20, 106, .25)!important;
     pointer-events:auto!important; z-index:2!important; overflow:hidden!important;
   }
   html.student-glass-ui body .shared-bottom-nav > .shared-floating-teacher img {
@@ -2886,14 +2886,14 @@ html.student-glass-ui body .study-buddy-launcher small {
   html.student-glass-ui body .shared-bottom-nav > details > .shared-more-panel {
     position:fixed!important; left:50%!important; right:auto!important; bottom:calc(83px + env(safe-area-inset-bottom,0px))!important;
     transform:translateX(-50%)!important; display:none!important; width:min(calc(100vw - 24px),420px)!important;
-    max-width:420px!important; padding:12px!important; border:1px solid #d6e7ee!important; border-radius:18px!important;
-    background:rgba(249,253,255,.98)!important; box-shadow:0 14px 38px rgba(26,81,107,.2)!important; z-index:8200!important;
+    max-width:420px!important; padding:12px!important; border:1px solid #e0d6ee!important; border-radius:18px!important;
+    background:rgba(249,253,255,.98)!important; box-shadow:0 14px 38px rgba(60, 26, 107, .2)!important; z-index:8200!important;
   }
   html.student-glass-ui body .shared-bottom-nav > details[open] > .shared-more-panel { display:grid!important; }
   html.student-glass-ui body .shared-bottom-nav > details > .shared-more-panel a {
     display:flex!important; min-height:44px!important; align-items:center!important; gap:10px!important;
     padding:10px 12px!important; border:1px solid #dcebf1!important; border-radius:12px!important;
-    background:#fff!important; color:#24435d!important; font-size:12px!important; font-weight:800!important; text-decoration:none!important;
+    background:#fff!important; color:#3c245d!important; font-size:12px!important; font-weight:800!important; text-decoration:none!important;
   }
   html.student-glass-ui body .lms-dashboard,
   html.student-glass-ui body .main,
@@ -2980,27 +2980,27 @@ html.student-glass-ui body .study-buddy-launcher small {
     gap: 8px !important;
     padding: 12px 10px !important;
     overflow: hidden !important;
-    border: 1px solid rgba(173, 194, 224, .18) !important;
+    border: 1px solid rgba(194, 173, 224,  .18) !important;
     border-radius: 17px !important;
-    background: linear-gradient(148deg, #17243d 0%, #101a2e 100%) !important;
+    background: linear-gradient(148deg, #27173d 0%, #1d102e 100%) !important;
     color: #f8fbff !important;
-    box-shadow: 0 12px 27px rgba(3, 9, 22, .24), inset 0 1px 0 rgba(255,255,255,.035) !important;
+    box-shadow: 0 12px 27px rgba(11, 3, 22,  .24), inset 0 1px 0 rgba(255,255,255,.035) !important;
     text-align: left !important;
   }
 
   html.student-glass-ui body .lms-dashboard .lms-stat-grid > .lms-stat-card:nth-child(1) {
     border-color: rgba(158, 132, 255, .28) !important;
-    background: linear-gradient(148deg, #242044 0%, #151a30 100%) !important;
+    background: linear-gradient(148deg, #242044 0%, #201530 100%) !important;
   }
 
   html.student-glass-ui body .lms-dashboard .lms-stat-grid > .lms-stat-card:nth-child(2) {
-    border-color: rgba(93, 169, 255, .26) !important;
-    background: linear-gradient(148deg, #172d49 0%, #111b30 100%) !important;
+    border-color: rgba(161, 93, 255,  .26) !important;
+    background: linear-gradient(148deg, #2c1749 0%, #1e1130 100%) !important;
   }
 
   html.student-glass-ui body .lms-dashboard .lms-stat-grid > .lms-stat-card:nth-child(3) {
-    border-color: rgba(75, 214, 171, .25) !important;
-    background: linear-gradient(148deg, #143b3b 0%, #10242f 100%) !important;
+    border-color: rgba(166, 255, 46,  .25) !important;
+    background: linear-gradient(148deg, #24143b 0%, #1d102f 100%) !important;
   }
 
   html.student-glass-ui body .lms-dashboard .lms-stat-grid > .lms-stat-card::before {
@@ -3016,11 +3016,11 @@ html.student-glass-ui body .study-buddy-launcher small {
   }
 
   html.student-glass-ui body .lms-dashboard .lms-stat-grid > .lms-stat-card:nth-child(2)::before {
-    background: #60a5fa !important;
+    background: #a060fa !important;
   }
 
   html.student-glass-ui body .lms-dashboard .lms-stat-grid > .lms-stat-card:nth-child(3)::before {
-    background: #34d399 !important;
+    background: #a6ff2e !important;
   }
 
   html.student-glass-ui body .lms-dashboard .lms-stat-grid > .lms-stat-card::after {
@@ -3037,11 +3037,11 @@ html.student-glass-ui body .study-buddy-launcher small {
   }
 
   html.student-glass-ui body .lms-dashboard .lms-stat-grid > .lms-stat-card:nth-child(2)::after {
-    background: rgba(96, 165, 250, .12) !important;
+    background: rgba(160, 96, 250,  .12) !important;
   }
 
   html.student-glass-ui body .lms-dashboard .lms-stat-grid > .lms-stat-card:nth-child(3)::after {
-    background: rgba(52, 211, 153, .12) !important;
+    background: rgba(166, 255, 46,  .12) !important;
   }
 
   html.student-glass-ui body .lms-dashboard .lms-stat-grid > .lms-stat-card > div:first-child {
@@ -3070,7 +3070,7 @@ html.student-glass-ui body .study-buddy-launcher small {
   html.student-glass-ui body .lms-dashboard .lms-stat-grid > .lms-stat-card span {
     display: block !important;
     max-width: 100% !important;
-    color: #d1dced !important;
+    color: #ddd1ed !important;
     font-family: Inter, "Segoe UI", Arial, sans-serif !important;
     font-size: 10px !important;
     font-weight: 700 !important;
@@ -3102,20 +3102,20 @@ html.student-glass-ui body .study-buddy-launcher small {
   }
 
   html.student-glass-ui body .lms-dashboard .lms-stat-grid > .lms-stat-card:nth-child(2) .lms-stat-icon {
-    border-color: rgba(147, 197, 253, .22) !important;
-    background: rgba(96, 165, 250, .15) !important;
-    color: #b9dcff !important;
+    border-color: rgba(191, 147, 253,  .22) !important;
+    background: rgba(160, 96, 250,  .15) !important;
+    color: #d6b9ff !important;
   }
 
   html.student-glass-ui body .lms-dashboard .lms-stat-grid > .lms-stat-card:nth-child(3) .lms-stat-icon {
-    border-color: rgba(110, 231, 183, .22) !important;
-    background: rgba(52, 211, 153, .15) !important;
-    color: #a7f3d0 !important;
+    border-color: rgba(166, 255, 46,  .22) !important;
+    background: rgba(166, 255, 46,  .15) !important;
+    color: #d1ff75 !important;
   }
 
   html.student-glass-ui body .lms-dashboard .lms-stat-grid > .lms-stat-card:hover {
     transform: translateY(-2px) !important;
-    box-shadow: 0 16px 31px rgba(3, 9, 22, .3) !important;
+    box-shadow: 0 16px 31px rgba(11, 3, 22,  .3) !important;
   }
 }
 
@@ -3162,8 +3162,8 @@ html.student-glass-ui body .study-buddy-launcher small {
     gap: 8px !important;
     border: 1px solid rgba(255,255,255,.24) !important;
     border-radius: 0 0 20px 20px !important;
-    background: linear-gradient(115deg, #205a70 0%, #347a8c 58%, #4a8794 100%) !important;
-    box-shadow: 0 11px 28px rgba(21,75,94,.22), inset 0 1px 0 rgba(255,255,255,.14) !important;
+    background: linear-gradient(115deg, #412070 0%, #59348c 58%, #694a94 100%) !important;
+    box-shadow: 0 11px 28px rgba(51, 21, 94, .22), inset 0 1px 0 rgba(255,255,255,.14) !important;
     -webkit-backdrop-filter: blur(18px) saturate(1.18) !important;
     backdrop-filter: blur(18px) saturate(1.18) !important;
   }
@@ -3179,7 +3179,7 @@ html.student-glass-ui body .study-buddy-launcher small {
     border: 1px solid rgba(255,255,255,.34) !important;
     border-radius: 13px !important;
     background: rgba(255,255,255,.16) !important;
-    box-shadow: 0 6px 16px rgba(5,35,51,.2) !important;
+    box-shadow: 0 6px 16px rgba(24, 5, 51, .2) !important;
   }
 
   html.student-glass-ui body.dashboard-page .shared-header-brand strong {
@@ -3215,9 +3215,9 @@ html.student-glass-ui body .study-buddy-launcher small {
     height: 35px !important;
     flex: 0 0 35px !important;
     border: 1px solid rgba(255,255,255,.36) !important;
-    background: linear-gradient(145deg, #d8f1f3, #a8d9e1) !important;
-    color: #14546a !important;
-    box-shadow: 0 6px 15px rgba(5,35,51,.15) !important;
+    background: linear-gradient(145deg, #e3d8f3, #c0a8e1) !important;
+    color: #38146a !important;
+    box-shadow: 0 6px 15px rgba(24, 5, 51, .15) !important;
   }
 
   html.student-glass-ui body.dashboard-page .lms-dashboard {
@@ -3238,9 +3238,9 @@ html.student-glass-ui body .study-buddy-launcher small {
     border: 1px solid rgba(255,255,255,.22) !important;
     border-radius: 22px !important;
     background:
-      radial-gradient(circle at 92% 5%, rgba(194,239,245,.18), transparent 34%),
-      linear-gradient(145deg, #316d80 0%, #477f8e 58%, #5a8c98 100%) !important;
-    box-shadow: 0 16px 34px rgba(24,80,97,.2), inset 0 1px 0 rgba(255,255,255,.15) !important;
+      radial-gradient(circle at 92% 5%, rgba(215, 194, 245, .18), transparent 34%),
+      linear-gradient(145deg, #523180 0%, #65478e 58%, #745a98 100%) !important;
+    box-shadow: 0 16px 34px rgba(54, 24, 97, .2), inset 0 1px 0 rgba(255,255,255,.15) !important;
   }
 
   html.student-glass-ui body.dashboard-page .dashboard-learning-banner > .learning-glow,
@@ -3277,12 +3277,12 @@ html.student-glass-ui body .study-buddy-launcher small {
     border: 1px solid rgba(255,255,255,.82) !important;
     border-radius: 15px !important;
     background: linear-gradient(160deg, #ffffff 0%, #edf7fa 100%) !important;
-    box-shadow: 0 8px 19px rgba(14,52,68,.16) !important;
+    box-shadow: 0 8px 19px rgba(37, 14, 68, .16) !important;
     text-align: center !important;
   }
 
   html.student-glass-ui body.dashboard-page .dashboard-mobile-date-tile span {
-    color: #53788a !important;
+    color: #6a538a !important;
     font-size: 8px !important;
     font-weight: 800 !important;
     line-height: 1.2 !important;
@@ -3291,7 +3291,7 @@ html.student-glass-ui body .study-buddy-launcher small {
   html.student-glass-ui body.dashboard-page .dashboard-mobile-date-tile strong {
     display: block !important;
     margin: 2px 0 !important;
-    color: #194e66 !important;
+    color: #391966 !important;
     font-size: 27px !important;
     font-weight: 950 !important;
     letter-spacing: -1px !important;
@@ -3299,7 +3299,7 @@ html.student-glass-ui body .study-buddy-launcher small {
   }
 
   html.student-glass-ui body.dashboard-page .dashboard-mobile-date-tile small {
-    color: #66879a !important;
+    color: #7c669a !important;
     font-size: 8px !important;
     font-weight: 800 !important;
     line-height: 1.2 !important;
@@ -3346,7 +3346,7 @@ html.student-glass-ui body .study-buddy-launcher small {
     padding: 12px !important;
     border: 1px solid rgba(255,255,255,.18) !important;
     border-radius: 15px !important;
-    background: rgba(9,48,65,.2) !important;
+    background: rgba(32, 9, 65, .2) !important;
     box-shadow: inset 0 1px 0 rgba(255,255,255,.06) !important;
   }
 
@@ -3358,7 +3358,7 @@ html.student-glass-ui body .study-buddy-launcher small {
   }
 
   html.student-glass-ui body.dashboard-page .dashboard-mobile-next-copy > span {
-    color: rgba(222,243,247,.74) !important;
+    color: rgba(232, 222, 247, .74) !important;
     font-size: 7px !important;
     font-weight: 850 !important;
     letter-spacing: 1px !important;
@@ -3389,15 +3389,15 @@ html.student-glass-ui body .study-buddy-launcher small {
     border: 1px solid rgba(255,255,255,.62) !important;
     border-radius: 11px !important;
     background: linear-gradient(145deg,#ffffff,#e7f4f7) !important;
-    color: #15556b !important;
+    color: #39156b !important;
     font-size: 9px !important;
     font-weight: 900 !important;
     text-decoration: none !important;
-    box-shadow: 0 6px 15px rgba(9,42,57,.16) !important;
+    box-shadow: 0 6px 15px rgba(29, 9, 57, .16) !important;
   }
 
   html.student-glass-ui body.dashboard-page .dashboard-mobile-next-step > a b {
-    color: #15556b !important;
+    color: #39156b !important;
     font-size: 11px !important;
   }
 
@@ -3406,7 +3406,7 @@ html.student-glass-ui body .study-buddy-launcher small {
     padding: 12px !important;
     border: 1px solid rgba(255,255,255,.16) !important;
     border-radius: 15px !important;
-    background: rgba(8,43,58,.2) !important;
+    background: rgba(29, 8, 58, .2) !important;
   }
 
   html.student-glass-ui body.dashboard-page .dashboard-mobile-progress-heading {
@@ -3451,7 +3451,7 @@ html.student-glass-ui body .study-buddy-launcher small {
     overflow: hidden !important;
     border-radius: 20px !important;
     background: rgba(234,247,250,.24) !important;
-    box-shadow: inset 0 1px 2px rgba(9,35,48,.12) !important;
+    box-shadow: inset 0 1px 2px rgba(25, 9, 48, .12) !important;
   }
 
   html.student-glass-ui body.dashboard-page .dashboard-mobile-progress-track > span {
@@ -3459,8 +3459,8 @@ html.student-glass-ui body .study-buddy-launcher small {
     width: 0;
     height: 100% !important;
     border-radius: inherit !important;
-    background: linear-gradient(90deg,#b8f0df,#e1fbef) !important;
-    box-shadow: 0 0 12px rgba(206,251,238,.36) !important;
+    background: linear-gradient(90deg,#d1ff75,#d1ff75) !important;
+    box-shadow: 0 0 12px rgba(209, 255, 117, .36) !important;
     transition: width .35s ease !important;
   }
 
@@ -3534,17 +3534,17 @@ html.student-glass-ui body.dashboard-page .lms-stat-grid[hidden] { display: none
    SKY GLASS STUDENT EXPERIENCE — shared mobile + page finish
    ========================================================== */
 :root {
-  --student-sky: #54a9d1;
-  --student-sky-strong: #2788b8;
+  --student-sky: #8854d1;
+  --student-sky-strong: #6327b8;
   --student-sky-soft: #e5f5fb;
-  --student-ink: #18364d;
-  --student-muted: #668397;
+  --student-ink: #2e184d;
+  --student-muted: #7a6697;
 }
 
 html.student-glass-ui body.dark-mode {
   background:
     radial-gradient(ellipse at 8% 0%, rgba(255,255,255,.95), transparent 37%),
-    radial-gradient(ellipse at 94% 88%, rgba(113,195,220,.18), transparent 36%),
+    radial-gradient(ellipse at 94% 88%, rgba(158, 113, 220, .18), transparent 36%),
     linear-gradient(145deg,#edf8fc 0%,#e3f2f8 52%,#f1f9fc 100%) !important;
   color: var(--student-ink) !important;
   color-scheme: light !important;
@@ -3567,8 +3567,8 @@ html.student-glass-ui body.dark-mode :is(.main h1,.main h2,.main h3,.main strong
     gap: 8px !important;
     border: 1px solid rgba(255,255,255,.56) !important;
     border-radius: 0 0 20px 20px !important;
-    background: linear-gradient(115deg,#286d88 0%,#398aa6 55%,#56a0b4 100%) !important;
-    box-shadow: 0 10px 27px rgba(28,99,127,.2), inset 0 1px 0 rgba(255,255,255,.18) !important;
+    background: linear-gradient(115deg,#502888 0%,#6639a6 55%,#7d56b4 100%) !important;
+    box-shadow: 0 10px 27px rgba(69, 28, 127, .2), inset 0 1px 0 rgba(255,255,255,.18) !important;
     -webkit-backdrop-filter: blur(20px) saturate(1.22) !important;
     backdrop-filter: blur(20px) saturate(1.22) !important;
   }
@@ -3584,7 +3584,7 @@ html.student-glass-ui body.dark-mode :is(.main h1,.main h2,.main h3,.main strong
     flex-basis: 39px !important;
     border: 1px solid rgba(255,255,255,.44) !important;
     border-radius: 13px !important;
-    box-shadow: 0 6px 17px rgba(8,44,61,.18) !important;
+    box-shadow: 0 6px 17px rgba(30, 8, 61, .18) !important;
   }
 
   html.student-glass-ui body .shared-header-brand strong {
@@ -3624,23 +3624,23 @@ html.student-glass-ui body.dark-mode :is(.main h1,.main h2,.main h3,.main strong
     height: 35px !important;
     flex: 0 0 35px !important;
     border: 1px solid rgba(255,255,255,.46) !important;
-    background: linear-gradient(145deg,#e8f8fc,#c5e8f1) !important;
-    color: #14546b !important;
-    box-shadow: 0 5px 14px rgba(10,50,67,.12) !important;
+    background: linear-gradient(145deg,#e8f8fc,#d7c5f1) !important;
+    color: #38146b !important;
+    box-shadow: 0 5px 14px rgba(34, 10, 67, .12) !important;
   }
 
   /* Frosted bottom navigation with sky-blue active state. */
   html.student-glass-ui body .shared-bottom-nav {
     background: rgba(247,252,255,.82) !important;
     border: 1px solid rgba(255,255,255,.92) !important;
-    box-shadow: 0 14px 36px rgba(38,101,130,.18), inset 0 1px 0 rgba(255,255,255,.9) !important;
+    box-shadow: 0 14px 36px rgba(76, 38, 130, .18), inset 0 1px 0 rgba(255,255,255,.9) !important;
     -webkit-backdrop-filter: blur(22px) saturate(1.35) !important;
     backdrop-filter: blur(22px) saturate(1.35) !important;
   }
 
   html.student-glass-ui body .shared-bottom-nav > a:not(.shared-floating-teacher),
   html.student-glass-ui body .shared-bottom-nav > details.shared-more-menu > summary {
-    color: #5f7e92 !important;
+    color: #745f92 !important;
     border-radius: 13px !important;
     transition: background .2s ease, color .2s ease, transform .2s ease, box-shadow .2s ease !important;
   }
@@ -3649,8 +3649,8 @@ html.student-glass-ui body.dark-mode :is(.main h1,.main h2,.main h3,.main strong
   html.student-glass-ui body .shared-bottom-nav > a[aria-current="page"]:not(.shared-floating-teacher),
   html.student-glass-ui body .shared-bottom-nav > details.shared-more-menu.is-current > summary {
     color: #fff !important;
-    background: linear-gradient(135deg,#4aa7cf,#2685b4) !important;
-    box-shadow: 0 7px 17px rgba(39,137,185,.24), inset 0 1px 0 rgba(255,255,255,.24) !important;
+    background: linear-gradient(135deg,#814acf,#6126b4) !important;
+    box-shadow: 0 7px 17px rgba(100, 39, 185, .24), inset 0 1px 0 rgba(255,255,255,.24) !important;
   }
 
   html.student-glass-ui body .shared-bottom-nav > a.active svg,
@@ -3666,7 +3666,7 @@ html.student-glass-ui body.dark-mode :is(.main h1,.main h2,.main h3,.main strong
 
   html.student-glass-ui body .shared-floating-teacher {
     border: 3px solid rgba(255,255,255,.96) !important;
-    box-shadow: 0 7px 20px rgba(26,91,124,.28),0 0 0 4px rgba(91,175,211,.12) !important;
+    box-shadow: 0 7px 20px rgba(67, 26, 124, .28),0 0 0 4px rgba(141, 91, 211, .12) !important;
   }
 }
 
@@ -3707,7 +3707,7 @@ html.student-glass-ui body .shared-more-panel {
   border: 1px solid rgba(255,255,255,.94) !important;
   border-radius: 18px !important;
   background: rgba(246,252,255,.94) !important;
-  box-shadow: 0 17px 42px rgba(29,93,122,.2), inset 0 1px 0 rgba(255,255,255,.96) !important;
+  box-shadow: 0 17px 42px rgba(68, 29, 122, .2), inset 0 1px 0 rgba(255,255,255,.96) !important;
   -webkit-backdrop-filter: blur(22px) saturate(1.4) !important;
   backdrop-filter: blur(22px) saturate(1.4) !important;
   animation: student-more-rise .2s ease both;
@@ -3727,11 +3727,11 @@ html.student-glass-ui body .shared-more-panel .shared-more-link {
   border: 1px solid #deedf4 !important;
   border-radius: 12px !important;
   background: rgba(255,255,255,.9) !important;
-  color: #315c74 !important;
+  color: #4d3174 !important;
   font-size: 10px !important;
   font-weight: 850 !important;
   text-decoration: none !important;
-  box-shadow: 0 3px 10px rgba(48,115,144,.045) !important;
+  box-shadow: 0 3px 10px rgba(88, 48, 144, .045) !important;
   transition: transform .18s ease, border-color .18s ease, background .18s ease !important;
 }
 
@@ -3750,9 +3750,9 @@ html.student-glass-ui body .shared-more-panel .shared-more-link > span {
 
 html.student-glass-ui body .shared-more-panel a.active,
 html.student-glass-ui body .shared-more-panel a[aria-current="page"] {
-  border-color: #9bd1e5 !important;
+  border-color: #ba9be5 !important;
   background: linear-gradient(110deg,#e5f6fc,#f8fdff) !important;
-  color: #176c91 !important;
+  color: #4a1791 !important;
 }
 
 html.student-glass-ui body .shared-more-panel a:active {
@@ -3780,8 +3780,8 @@ html.student-glass-ui body #firestoreAnnouncementList .notice {
   border: 1px solid rgba(255,255,255,.95) !important;
   border-radius: 18px !important;
   background: linear-gradient(145deg,rgba(255,255,255,.96),rgba(235,247,252,.91)) !important;
-  color: #23465d !important;
-  box-shadow: 0 11px 27px rgba(39,101,131,.09) !important;
+  color: #3b235d !important;
+  box-shadow: 0 11px 27px rgba(77, 39, 131, .09) !important;
   -webkit-backdrop-filter: blur(15px) !important;
   backdrop-filter: blur(15px) !important;
   animation: student-glass-enter .38s ease both;
@@ -3793,9 +3793,9 @@ html.student-glass-ui body #firestoreAnnouncementList .notice > i {
   flex: 0 0 42px !important;
   display: grid !important;
   place-items: center !important;
-  border: 1px solid #d3eaf3 !important;
+  border: 1px solid #e0d3f3 !important;
   border-radius: 13px !important;
-  background: linear-gradient(145deg,#e8f7fc,#d7edf6) !important;
+  background: linear-gradient(145deg,#e8f7fc,#e4d7f6) !important;
   color: #7c3aed !important;
   font-size: 17px !important;
 }
@@ -3813,7 +3813,7 @@ html.student-glass-ui body #firestoreAnnouncementList .notice .notice-top {
 }
 
 html.student-glass-ui body #firestoreAnnouncementList .notice .notice-top > div > div:first-child {
-  color: #4386a7 !important;
+  color: #6d43a7 !important;
   font-size: 9px !important;
   font-weight: 900 !important;
   letter-spacing: .8px !important;
@@ -3822,7 +3822,7 @@ html.student-glass-ui body #firestoreAnnouncementList .notice .notice-top > div 
 
 html.student-glass-ui body #firestoreAnnouncementList .notice h3 {
   margin: 0 !important;
-  color: #1b3d55 !important;
+  color: #331b55 !important;
   font-size: 14px !important;
   font-weight: 900 !important;
   line-height: 1.4 !important;
@@ -3831,7 +3831,7 @@ html.student-glass-ui body #firestoreAnnouncementList .notice h3 {
 
 html.student-glass-ui body #firestoreAnnouncementList .notice time {
   flex: 0 0 auto !important;
-  color: #7895a7 !important;
+  color: #8c78a7 !important;
   font-size: 8px !important;
   font-weight: 800 !important;
 }
@@ -3842,7 +3842,7 @@ html.student-glass-ui body #firestoreAnnouncementList .notice p {
   margin: 9px 0 10px !important;
   max-height: none !important;
   overflow: visible !important;
-  color: #547286 !important;
+  color: #695486 !important;
   font-size: 11px !important;
   font-weight: 550 !important;
   line-height: 1.7 !important;
@@ -3854,10 +3854,10 @@ html.student-glass-ui body #firestoreAnnouncementList .notice p {
 html.student-glass-ui body #firestoreAnnouncementList .notice .tag {
   display: inline-flex !important;
   align-items: center !important;
-  border: 1px solid #c8e8f3 !important;
+  border: 1px solid #dac8f3 !important;
   border-radius: 8px !important;
   background: #e8f7fc !important;
-  color: #2b87ad !important;
+  color: #612bad !important;
   padding: 4px 7px !important;
   font-size: 7px !important;
   font-weight: 900 !important;
@@ -3874,7 +3874,7 @@ html.student-glass-ui body .shared-announcement-filters {
   border: 1px solid rgba(255,255,255,.94) !important;
   border-radius: 15px !important;
   background: rgba(242,250,254,.78) !important;
-  box-shadow: 0 8px 21px rgba(40,103,132,.07) !important;
+  box-shadow: 0 8px 21px rgba(78, 40, 132, .07) !important;
   -webkit-backdrop-filter: blur(14px) !important;
   backdrop-filter: blur(14px) !important;
 }
@@ -3882,10 +3882,10 @@ html.student-glass-ui body .shared-announcement-filters {
 html.student-glass-ui body .shared-announcement-filters button {
   min-height: 34px !important;
   padding: 0 15px !important;
-  border: 1px solid #d1e7f0 !important;
+  border: 1px solid #ded1f0 !important;
   border-radius: 10px !important;
   background: rgba(255,255,255,.86) !important;
-  color: #628197 !important;
+  color: #786297 !important;
   font-size: 9px !important;
   font-weight: 850 !important;
   box-shadow: none !important;
@@ -3894,10 +3894,10 @@ html.student-glass-ui body .shared-announcement-filters button {
 
 html.student-glass-ui body .shared-announcement-filters button.active,
 html.student-glass-ui body .shared-announcement-filters button[aria-pressed="true"] {
-  border-color: #5baed0 !important;
-  background: linear-gradient(135deg,#58b3d9,#2a8fbe) !important;
+  border-color: #8c5bd0 !important;
+  background: linear-gradient(135deg,#8e58d9,#682abe) !important;
   color: #fff !important;
-  box-shadow: 0 7px 16px rgba(43,143,190,.2) !important;
+  box-shadow: 0 7px 16px rgba(104, 43, 190, .2) !important;
 }
 
 /* Dashboard notices and the overall-progress widget use the light portal surface. */
@@ -3908,18 +3908,18 @@ html.student-glass-ui body.dashboard-page .dashboard-summary-card {
   border: 1px solid rgba(255,255,255,.95) !important;
   border-radius: 16px !important;
   background: linear-gradient(145deg,rgba(255,255,255,.96),rgba(235,247,252,.9)) !important;
-  box-shadow: 0 10px 23px rgba(38,101,131,.08) !important;
+  box-shadow: 0 10px 23px rgba(77, 38, 131, .08) !important;
 }
 
 html.student-glass-ui body.dashboard-page .dashboard-summary-number {
-  color: #4197bd !important;
+  color: #7541bd !important;
   font-size: 10px !important;
   font-weight: 950 !important;
 }
 
 html.student-glass-ui body.dashboard-page .dashboard-summary-copy strong,
 html.student-glass-ui body.dashboard-page .dashboard-summary-top strong {
-  color: #20435a !important;
+  color: #38205a !important;
   font-size: 11px !important;
   line-height: 1.45 !important;
   white-space: normal !important;
@@ -3927,15 +3927,15 @@ html.student-glass-ui body.dashboard-page .dashboard-summary-top strong {
 
 html.student-glass-ui body.dashboard-page .dashboard-summary-copy p {
   display: block !important;
-  color: #648397 !important;
+  color: #796497 !important;
   font-size: 9px !important;
   line-height: 1.55 !important;
   -webkit-line-clamp: 2 !important;
 }
 
 html.student-glass-ui body.dashboard-page .dashboard-summary-icon {
-  background: linear-gradient(145deg,#e1f3fa,#cce8f3) !important;
-  color: #287fa5 !important;
+  background: linear-gradient(145deg,#e1f3fa,#dcccf3) !important;
+  color: #5c28a5 !important;
 }
 
 html.student-glass-ui body.dashboard-page .progress-widget,
@@ -3943,16 +3943,16 @@ html.student-glass-ui body.dashboard-page .lms-widget.progress-widget {
   border: 1px solid rgba(255,255,255,.98) !important;
   border-radius: 20px !important;
   background: linear-gradient(145deg,#fff 0%,#f6fbfd 100%) !important;
-  color: #1a3d56 !important;
-  box-shadow: 0 12px 30px rgba(37,100,131,.09) !important;
+  color: #331a56 !important;
+  box-shadow: 0 12px 30px rgba(76, 37, 131, .09) !important;
 }
 
 html.student-glass-ui body.dashboard-page .progress-widget :is(h2,strong) {
-  color: #1b4059 !important;
+  color: #351b59 !important;
 }
 
 html.student-glass-ui body.dashboard-page .progress-widget :is(p,span,.progress-legend div) {
-  color: #6d899b !important;
+  color: #806d9b !important;
 }
 
 html.student-glass-ui body.dashboard-page .progress-ring:after {
@@ -3960,7 +3960,7 @@ html.student-glass-ui body.dashboard-page .progress-ring:after {
 }
 
 html.student-glass-ui body.dashboard-page .progress-ring strong {
-  color: #1e4a64 !important;
+  color: #3b1e64 !important;
 }
 
 /* Study tab: sky glass resource cards, clear hierarchy and no duplicate title slab. */
@@ -3979,11 +3979,11 @@ html.student-glass-ui body.study-page .top {
 }
 
 html.student-glass-ui body.study-page .top h1 {
-  color: #1a4058 !important;
+  color: #341a58 !important;
 }
 
 html.student-glass-ui body.study-page .top p {
-  color: #6d8b9e !important;
+  color: #816d9e !important;
 }
 
 html.student-glass-ui body.study-page .hero {
@@ -3991,42 +3991,42 @@ html.student-glass-ui body.study-page .hero {
   border-radius: 20px !important;
   background:
     radial-gradient(circle at 94% 5%,rgba(255,255,255,.7),transparent 30%),
-    linear-gradient(135deg,#e6f6fc,#cceaf5 58%,#dff3f9) !important;
-  box-shadow: 0 12px 28px rgba(43,116,147,.1) !important;
-  color: #1b4059 !important;
+    linear-gradient(135deg,#e6f6fc,#ddccf5 58%,#eadff9) !important;
+  box-shadow: 0 12px 28px rgba(86, 43, 147, .1) !important;
+  color: #351b59 !important;
 }
 
 html.student-glass-ui body.study-page .hero small {
-  color: #4d8eac !important;
+  color: #754dac !important;
   font-size: 9px !important;
   font-weight: 900 !important;
   letter-spacing: 1.1px !important;
 }
 
 html.student-glass-ui body.study-page .hero h2 {
-  color: #173e56 !important;
+  color: #311756 !important;
   font-size: 24px !important;
   font-weight: 950 !important;
 }
 
 html.student-glass-ui body.study-page .hero p {
-  color: #64869a !important;
+  color: #7b649a !important;
 }
 
 html.student-glass-ui body.study-page .tabs .tab {
-  border: 1px solid #c6e5f0 !important;
+  border: 1px solid #d8c6f0 !important;
   border-radius: 11px !important;
   background: rgba(255,255,255,.88) !important;
-  color: #5a8198 !important;
+  color: #745a98 !important;
   font-size: 10px !important;
   font-weight: 900 !important;
 }
 
 html.student-glass-ui body.study-page .tabs .tab.active {
-  border-color: #50a8cf !important;
-  background: linear-gradient(135deg,#5ab4da,#c4b5fd) !important;
+  border-color: #8550cf !important;
+  background: linear-gradient(135deg,#8f5ada,#c4b5fd) !important;
   color: #fff !important;
-  box-shadow: 0 7px 16px rgba(43,143,190,.18) !important;
+  box-shadow: 0 7px 16px rgba(104, 43, 190, .18) !important;
 }
 
 html.student-glass-ui body.study-page .grid {
@@ -4039,21 +4039,21 @@ html.student-glass-ui body.study-page .grid .card {
   border: 1px solid rgba(255,255,255,.97) !important;
   border-radius: 17px !important;
   background: linear-gradient(145deg,rgba(255,255,255,.97),rgba(237,248,252,.92)) !important;
-  color: #21455d !important;
-  box-shadow: 0 11px 25px rgba(39,104,134,.09) !important;
+  color: #3a215d !important;
+  box-shadow: 0 11px 25px rgba(79, 39, 134, .09) !important;
   backdrop-filter: blur(15px) !important;
   animation: student-glass-enter .42s ease both;
 }
 
 html.student-glass-ui body.study-page .grid .card h3 {
-  color: #1c425a !important;
+  color: #361c5a !important;
   font-size: 13px !important;
   font-weight: 900 !important;
   line-height: 1.4 !important;
 }
 
 html.student-glass-ui body.study-page .grid .card p {
-  color: #648499 !important;
+  color: #7a6499 !important;
   font-size: 10px !important;
   line-height: 1.55 !important;
 }
@@ -4065,29 +4065,29 @@ html.student-glass-ui body.study-page .grid .card a {
 }
 
 html.student-glass-ui body.study-page .grid .card .ico {
-  border: 1px solid #d5eaf2 !important;
+  border: 1px solid #e1d5f2 !important;
   border-radius: 12px !important;
-  background: linear-gradient(145deg,#e7f6fb,#d6edf6) !important;
-  color: #318bb5 !important;
+  background: linear-gradient(145deg,#e7f6fb,#e3d6f6) !important;
+  color: #6831b5 !important;
 }
 
 /* Keep the generic Support and Results pages on the same light glass palette. */
 html.student-glass-ui body.dark-mode :is(.support-card,.result,.notice,.lms-widget,.card) {
-  color: #25475f !important;
+  color: #3d255f !important;
 }
 
 html.student-glass-ui body.dark-mode :is(.support-card,.result,.lms-widget,.card) {
   border: 1px solid rgba(255,255,255,.94) !important;
   background: linear-gradient(145deg,rgba(255,255,255,.96),rgba(236,248,252,.91)) !important;
-  box-shadow: 0 11px 26px rgba(41,101,129,.09) !important;
+  box-shadow: 0 11px 26px rgba(78, 41, 129, .09) !important;
 }
 
 html.student-glass-ui body.dark-mode :is(.support-card h2,.result h3,.result strong,.card h3) {
-  color: #20435b !important;
+  color: #39205b !important;
 }
 
 html.student-glass-ui body.dark-mode :is(.support-card p,.result p,.card p) {
-  color: #69879a !important;
+  color: #7d699a !important;
 }
 
 /* Mobile layout: remove the redundant Study title slab while retaining programme content. */
@@ -4173,7 +4173,7 @@ html.student-glass-ui body :is(.portal-program-card,.lms-widget,.dashboard-summa
 
 html.student-glass-ui body :is(.portal-program-card,.lms-widget,.dashboard-summary-card,.support-card,.result,.notice):hover {
   transform: translateY(-2px);
-  box-shadow: 0 16px 32px rgba(37,105,135,.14) !important;
+  box-shadow: 0 16px 32px rgba(78, 37, 135, .14) !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -4199,7 +4199,7 @@ html.student-glass-ui body.dashboard-page .dashboard-announcement-tabs {
   border: 1px solid rgba(255,255,255,.95) !important;
   border-radius: 15px !important;
   background: rgba(243,250,254,.84) !important;
-  box-shadow: 0 8px 21px rgba(40,103,132,.07) !important;
+  box-shadow: 0 8px 21px rgba(78, 40, 132, .07) !important;
   -webkit-backdrop-filter: blur(15px) !important;
   backdrop-filter: blur(15px) !important;
 }
@@ -4207,10 +4207,10 @@ html.student-glass-ui body.dashboard-page .dashboard-announcement-tabs {
 html.student-glass-ui body.dashboard-page .dashboard-announcement-tabs .dashboard-announcement-tab {
   min-height: 34px !important;
   padding: 0 15px !important;
-  border: 1px solid #d1e7f0 !important;
+  border: 1px solid #ded1f0 !important;
   border-radius: 10px !important;
   background: rgba(255,255,255,.88) !important;
-  color: #628197 !important;
+  color: #786297 !important;
   font-size: 9px !important;
   font-weight: 850 !important;
   box-shadow: none !important;
@@ -4220,10 +4220,10 @@ html.student-glass-ui body.dashboard-page .dashboard-announcement-tabs .dashboar
 
 html.student-glass-ui body.dashboard-page .dashboard-announcement-tabs .dashboard-announcement-tab.active,
 html.student-glass-ui body.dashboard-page .dashboard-announcement-tabs .dashboard-announcement-tab[aria-selected="true"] {
-  border-color: #50a8cf !important;
-  background: linear-gradient(135deg,#58b3d9,#c4b5fd) !important;
+  border-color: #8550cf !important;
+  background: linear-gradient(135deg,#8e58d9,#c4b5fd) !important;
   color: #fff !important;
-  box-shadow: 0 7px 16px rgba(43,143,190,.2) !important;
+  box-shadow: 0 7px 16px rgba(104, 43, 190, .2) !important;
 }
 
 html.student-glass-ui body.dashboard-page .dashboard-announcement-tabs .dashboard-announcement-tab:active {
@@ -4241,7 +4241,7 @@ html.student-glass-ui body.dashboard-page .dashboard-summary-copy p {
   display: block !important;
   max-height: none !important;
   overflow: visible !important;
-  color: #58788d !important;
+  color: #6e588d !important;
   font-size: 10px !important;
   line-height: 1.65 !important;
   white-space: normal !important;
@@ -4252,11 +4252,11 @@ html.student-glass-ui body.dashboard-page .dashboard-summary-copy p {
 
 html.student-glass-ui body.dashboard-page .dashboard-summary-meta span {
   background: #e6f5fa !important;
-  color: #3988aa !important;
+  color: #6839aa !important;
 }
 
 html.student-glass-ui body.dashboard-page .dashboard-summary-meta b {
-  color: #2c8eb9 !important;
+  color: #672cb9 !important;
 }
 
 
@@ -4278,25 +4278,25 @@ html.student-glass-ui body.dashboard-page #learningProgram .portal-program-card:
 
 /* The exam milestone follows the same light sky-blue theme as the rest of the app. */
 html.student-glass-ui body.dashboard-page #examFocus {
-  color: #1d4057 !important;
+  color: #351d57 !important;
   background:
     radial-gradient(circle at 94% 8%,rgba(255,255,255,.88),transparent 30%),
-    linear-gradient(125deg,#f9fdff 0%,#e8f6fb 56%,#dceff7 100%) !important;
-  border: 1px solid #c7e3ef !important;
-  border-left: 4px solid #57acd0 !important;
+    linear-gradient(125deg,#f9fdff 0%,#e8f6fb 56%,#e7dcf7 100%) !important;
+  border: 1px solid #d8c7ef !important;
+  border-left: 4px solid #8957d0 !important;
   border-radius: 19px !important;
-  box-shadow: 0 13px 30px rgba(42,112,143,.1),inset 0 1px 0 rgba(255,255,255,.96) !important;
+  box-shadow: 0 13px 30px rgba(84, 42, 143, .1),inset 0 1px 0 rgba(255,255,255,.96) !important;
 }
 
 html.student-glass-ui body.dashboard-page #examFocus .exam-copy .exam-kicker {
-  color: #438eae !important;
+  color: #7043ae !important;
   font-size: 9px !important;
   font-weight: 900 !important;
   letter-spacing: 1.1px !important;
 }
 
 html.student-glass-ui body.dashboard-page #examFocus .exam-copy h3 {
-  color: #1a4058 !important;
+  color: #341a58 !important;
   font-size: 17px !important;
   font-weight: 900 !important;
   line-height: 1.35 !important;
@@ -4304,45 +4304,45 @@ html.student-glass-ui body.dashboard-page #examFocus .exam-copy h3 {
 }
 
 html.student-glass-ui body.dashboard-page #examFocus .exam-copy p:not(.exam-kicker) {
-  color: #628196 !important;
+  color: #786296 !important;
   font-size: 10px !important;
   line-height: 1.6 !important;
 }
 
 html.student-glass-ui body.dashboard-page #examFocus .exam-link {
-  color: #2786b1 !important;
+  color: #6127b1 !important;
   font-size: 9px !important;
   font-weight: 900 !important;
 }
 
 html.student-glass-ui body.dashboard-page #examFocus .exam-timer {
-  color: #285a75 !important;
+  color: #482875 !important;
 }
 
 html.student-glass-ui body.dashboard-page #examFocus .timer-unit {
   min-width: 62px !important;
   padding: 10px 9px !important;
-  border: 1px solid #d7eaf2 !important;
+  border: 1px solid #e2d7f2 !important;
   border-radius: 12px !important;
   background: rgba(255,255,255,.91) !important;
-  box-shadow: 0 5px 14px rgba(48,113,142,.07),inset 0 1px 0 #fff !important;
+  box-shadow: 0 5px 14px rgba(87, 48, 142, .07),inset 0 1px 0 #fff !important;
 }
 
 html.student-glass-ui body.dashboard-page #examFocus .timer-unit strong {
-  color: #2c789d !important;
+  color: #5b2c9d !important;
   font-size: 22px !important;
   font-weight: 950 !important;
 }
 
 html.student-glass-ui body.dashboard-page #examFocus .timer-unit small {
-  color: #83a5b6 !important;
+  color: #9883b6 !important;
   font-size: 8px !important;
   font-weight: 850 !important;
   letter-spacing: .35px !important;
 }
 
 html.student-glass-ui body.dashboard-page #examFocus .timer-sep {
-  color: #7ca9bc !important;
+  color: #977cbc !important;
 }
 
 /* dashboard-enhancements.js creates .portal-notice cards, not .dashboard-summary-card.
@@ -4360,9 +4360,9 @@ html.student-glass-ui body.dashboard-page .lms-main-column #dashboardAnnouncemen
   border: 1px solid rgba(255,255,255,.98) !important;
   border-radius: 16px !important;
   background: linear-gradient(145deg,rgba(255,255,255,.98),rgba(238,248,252,.96)) !important;
-  color: #24485f !important;
+  color: #3d245f !important;
   text-align: left !important;
-  box-shadow: 0 9px 22px rgba(41,104,132,.085),inset 0 1px 0 #fff !important;
+  box-shadow: 0 9px 22px rgba(79, 41, 132, .085),inset 0 1px 0 #fff !important;
   -webkit-backdrop-filter: blur(15px) !important;
   backdrop-filter: blur(15px) !important;
   transition: transform .2s ease,box-shadow .2s ease,border-color .2s ease !important;
@@ -4370,9 +4370,9 @@ html.student-glass-ui body.dashboard-page .lms-main-column #dashboardAnnouncemen
 
 html.student-glass-ui body.dashboard-page .lms-main-column #dashboardAnnouncementSummary .portal-notice.dashboard-announcement-item:hover {
   transform: translateY(-2px) !important;
-  border-color: #b9dfed !important;
+  border-color: #cfb9ed !important;
   background: linear-gradient(145deg,#fff,#edf8fc) !important;
-  box-shadow: 0 13px 27px rgba(41,104,132,.12) !important;
+  box-shadow: 0 13px 27px rgba(79, 41, 132, .12) !important;
 }
 
 html.student-glass-ui body.dashboard-page #dashboardAnnouncementSummary .portal-notice-icon {
@@ -4380,10 +4380,10 @@ html.student-glass-ui body.dashboard-page #dashboardAnnouncementSummary .portal-
   height: 38px !important;
   display: grid !important;
   place-items: center !important;
-  border: 1px solid #d4eaf2 !important;
+  border: 1px solid #e1d4f2 !important;
   border-radius: 12px !important;
-  background: linear-gradient(145deg,#e9f7fb,#dceff6) !important;
-  color: #3187ac !important;
+  background: linear-gradient(145deg,#e9f7fb,#e7dcf6) !important;
+  color: #6431ac !important;
   font-size: 15px !important;
 }
 
@@ -4395,7 +4395,7 @@ html.student-glass-ui body.dashboard-page #dashboardAnnouncementSummary .portal-
 
 html.student-glass-ui body.dashboard-page #dashboardAnnouncementSummary .portal-notice strong {
   display: block !important;
-  color: #20445b !important;
+  color: #39205b !important;
   font-size: 11px !important;
   font-weight: 900 !important;
   line-height: 1.45 !important;
@@ -4407,10 +4407,10 @@ html.student-glass-ui body.dashboard-page #dashboardAnnouncementSummary .dashboa
   display: inline-block !important;
   margin-left: 5px !important;
   padding: 3px 6px !important;
-  border: 1px solid #cce7f0 !important;
+  border: 1px solid #dbccf0 !important;
   border-radius: 6px !important;
   background: #e8f6fb !important;
-  color: #3985a7 !important;
+  color: #6739a7 !important;
   font-size: 7px !important;
   font-weight: 900 !important;
   letter-spacing: .35px !important;
@@ -4421,7 +4421,7 @@ html.student-glass-ui body.dashboard-page #dashboardAnnouncementSummary .portal-
   display: block !important;
   max-width: none !important;
   margin: 5px 0 0 !important;
-  color: #607f92 !important;
+  color: #756092 !important;
   font-size: 9.5px !important;
   font-weight: 550 !important;
   line-height: 1.6 !important;
@@ -4434,7 +4434,7 @@ html.student-glass-ui body.dashboard-page #dashboardAnnouncementSummary .portal-
 html.student-glass-ui body.dashboard-page #dashboardAnnouncementSummary .portal-notice time {
   display: block !important;
   margin-top: 6px !important;
-  color: #8aa4b2 !important;
+  color: #9b8ab2 !important;
   font-size: 8px !important;
   font-weight: 750 !important;
 }
@@ -4448,15 +4448,15 @@ html.student-glass-ui body.dashboard-page #dashboardAnnouncementSummary .dashboa
   place-items: center !important;
   border-radius: 8px !important;
   background: #e7f5fa !important;
-  color: #398caf !important;
+  color: #6a39af !important;
   font-size: 17px !important;
 }
 
 html.student-glass-ui body.dashboard-page #dashboardAnnouncementSummary .portal-empty {
-  border: 1px dashed #c8e1ec !important;
+  border: 1px dashed #d7c8ec !important;
   border-radius: 14px !important;
   background: rgba(255,255,255,.78) !important;
-  color: #6b8a9d !important;
+  color: #806b9d !important;
 }
 
 @media(max-width:800px) {
@@ -4532,52 +4532,52 @@ html.student-glass-ui.installed-lms-app body.dashboard-page #learningProgram .po
    Replaces legacy green / orange / violet dashboard accents.
    ========================================================== */
 html.student-glass-ui {
-  --student-glass-teal: #278fc4 !important;
-  --student-glass-teal-dark: #176d9f !important;
+  --student-glass-teal: #6827c4 !important;
+  --student-glass-teal-dark: #50179f !important;
   --student-glass-teal-soft: #e4f5fc !important;
-  --grade-accent: #45a9d5 !important;
-  --grade-accent-2: #287fb8 !important;
-  --grade-glow: rgba(54,158,207,.18) !important;
-  --grade-banner: #17476a !important;
-  --home-lime: #55b6e3 !important;
-  --home-blue: #4ca7d7 !important;
-  --portal-lime: #4ca7d7 !important;
+  --grade-accent: #8145d5 !important;
+  --grade-accent-2: #6428b8 !important;
+  --grade-glow: rgba(118, 54, 207, .18) !important;
+  --grade-banner: #3a176a !important;
+  --home-lime: #9055e3 !important;
+  --home-blue: #864cd7 !important;
+  --portal-lime: #864cd7 !important;
 }
 
 html.student-glass-ui body :is(.sidebar,.side) {
   background:
     linear-gradient(180deg,rgba(255,255,255,.97) 0%,rgba(247,252,255,.95) 48%,rgba(232,245,252,.95) 100%) !important;
-  border-right: 1px solid rgba(178,216,235,.68) !important;
-  box-shadow: 12px 0 34px rgba(46,111,145,.08),inset -1px 0 rgba(255,255,255,.92) !important;
+  border-right: 1px solid rgba(202, 178, 235, .68) !important;
+  box-shadow: 12px 0 34px rgba(87, 46, 145, .08),inset -1px 0 rgba(255,255,255,.92) !important;
   backdrop-filter: blur(24px) saturate(145%) !important;
   -webkit-backdrop-filter: blur(24px) saturate(145%) !important;
 }
 
 html.student-glass-ui body :is(.sidebar-brand,.brand) {
-  border-bottom-color: rgba(181,216,234,.62) !important;
+  border-bottom-color: rgba(203, 181, 234, .62) !important;
 }
 
 html.student-glass-ui body :is(.brand-logo,.logo) {
-  background: linear-gradient(145deg,#79cdf0 0%,#2c91c4 100%) !important;
+  background: linear-gradient(145deg,#ab79f0 0%,#6b2cc4 100%) !important;
   color: #fff !important;
   border: 1px solid rgba(255,255,255,.9) !important;
-  box-shadow: 0 8px 20px rgba(48,145,190,.18) !important;
+  box-shadow: 0 8px 20px rgba(107, 48, 190, .18) !important;
 }
 
 html.student-glass-ui body :is(.brand-text strong,.brand b) {
-  color: #173650 !important;
+  color: #2f1750 !important;
   font-family: Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif !important;
   font-weight: 850 !important;
   letter-spacing: -.2px !important;
 }
 
 html.student-glass-ui body :is(.brand-text span,.brand span) {
-  color: #6e8ba0 !important;
+  color: #836ea0 !important;
   font-weight: 700 !important;
 }
 
 html.student-glass-ui body .sidebar-section-title {
-  color: #7694a8 !important;
+  color: #8b76a8 !important;
   letter-spacing: 1.3px !important;
   font-weight: 850 !important;
 }
@@ -4593,7 +4593,7 @@ html.student-glass-ui body .side nav a {
   border: 1px solid transparent !important;
   border-radius: 13px !important;
   background: rgba(255,255,255,.45) !important;
-  color: #59758a !important;
+  color: #6d598a !important;
   font-family: Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif !important;
   font-size: 12px !important;
   font-weight: 760 !important;
@@ -4604,19 +4604,19 @@ html.student-glass-ui body .side nav a {
 
 html.student-glass-ui body .sidebar-nav .sidebar-link:hover,
 html.student-glass-ui body .side nav a:hover {
-  border-color: rgba(105,181,217,.23) !important;
-  background: rgba(222,243,252,.82) !important;
-  color: #226f99 !important;
+  border-color: rgba(152, 105, 217, .23) !important;
+  background: rgba(235, 222, 252, .82) !important;
+  color: #542299 !important;
   transform: translateX(2px) !important;
 }
 
 html.student-glass-ui body .sidebar-nav .sidebar-link.active,
 html.student-glass-ui body .side nav a.active,
 html.student-glass-ui body #studentSidebar .sidebar-link.active {
-  border-color: rgba(105,184,222,.48) !important;
-  background: linear-gradient(115deg,rgba(218,242,253,.98),rgba(197,231,247,.94)) !important;
-  color: #176c9a !important;
-  box-shadow: 0 8px 20px rgba(50,139,183,.12),inset 0 1px rgba(255,255,255,.98) !important;
+  border-color: rgba(154, 105, 222, .48) !important;
+  background: linear-gradient(115deg,rgba(233, 218, 253, .98),rgba(218, 197, 247, .94)) !important;
+  color: #4e179a !important;
+  box-shadow: 0 8px 20px rgba(105, 50, 183, .12),inset 0 1px rgba(255,255,255,.98) !important;
   font-weight: 900 !important;
   transform: none !important;
 }
@@ -4624,11 +4624,11 @@ html.student-glass-ui body #studentSidebar .sidebar-link.active {
 html.student-glass-ui body .sidebar-nav .sidebar-link.active .nav-icon,
 html.student-glass-ui body .side nav a.active .nav-icon,
 html.student-glass-ui body #studentSidebar .sidebar-link.active .nav-icon {
-  color: #2186b8 !important;
+  color: #6021b8 !important;
 }
 
 html.student-glass-ui body :is(.sidebar-link .nav-icon,.side nav a .nav-icon) {
-  color: #6f9fba !important;
+  color: #8e6fba !important;
 }
 
 html.student-glass-ui body .sidebar-nav .sidebar-link svg,
@@ -4637,35 +4637,35 @@ html.student-glass-ui body .side nav a svg {
 }
 
 html.student-glass-ui body :is(.student-account,.side-profile,.side-bottom) {
-  border-top-color: rgba(181,216,234,.68) !important;
+  border-top-color: rgba(203, 181, 234, .68) !important;
 }
 
 html.student-glass-ui body :is(.student-avatar,.side-avatar) {
-  background: linear-gradient(145deg,#7ccdf0,#318dbd) !important;
-  box-shadow: 0 7px 17px rgba(47,139,184,.15) !important;
+  background: linear-gradient(145deg,#ac7cf0,#6b31bd) !important;
+  box-shadow: 0 7px 17px rgba(104, 47, 184, .15) !important;
 }
 
 html.student-glass-ui body :is(.student-account-info strong,.side-profile strong) {
-  color: #21445d !important;
+  color: #3a215d !important;
 }
 
 html.student-glass-ui body :is(.student-account-info span,.side-profile span) {
-  color: #7591a4 !important;
+  color: #8975a4 !important;
 }
 
 html.student-glass-ui body :is(.sidebar-logout,.logout) {
-  border-color: rgba(160,205,226,.7) !important;
+  border-color: rgba(188, 160, 226, .7) !important;
   background: linear-gradient(145deg,rgba(255,255,255,.96),rgba(233,246,252,.88)) !important;
   color: #c4b5fd !important;
-  box-shadow: 0 5px 14px rgba(56,126,159,.06) !important;
+  box-shadow: 0 5px 14px rgba(99, 56, 159, .06) !important;
 }
 
 /* Sky-blue action/accent colour across Grade 10, Grade 11 and both A/L years. */
 html.student-glass-ui body .hero-continue-btn {
   border: 1px solid rgba(255,255,255,.88) !important;
-  background: linear-gradient(110deg,#5b4bff 0%,#7c3aed 58%,#4037c9 100%) !important;
+  background: linear-gradient(110deg,#5b4bff 0%,#7c3aed 58%,#7437c9 100%) !important;
   color: #fff !important;
-  box-shadow: 0 10px 24px rgba(44,139,189,.2) !important;
+  box-shadow: 0 10px 24px rgba(104, 44, 189, .2) !important;
 }
 html.student-glass-ui body .hero-continue-btn strong {
   color: #fff !important;
@@ -4682,11 +4682,11 @@ html.student-glass-ui body .timer-sep {
 }
 html.student-glass-ui body .portal-journey-status i {
   background: #a6ff2e !important;
-  box-shadow: 0 0 0 4px rgba(84,183,226,.14) !important;
+  box-shadow: 0 0 0 4px rgba(143, 84, 226, .14) !important;
 }
 html.student-glass-ui body .portal-journey-steps>div:first-child i {
-  border-color: #9fd7f0 !important;
-  background: #dff3fc !important;
+  border-color: #c19ff0 !important;
+  background: #ebdffc !important;
 }
 html.student-glass-ui body .portal-section-link,
 html.student-glass-ui body .portal-program-copy .material-link,
@@ -4697,69 +4697,69 @@ html.student-glass-ui body .dashboard-summary-number,
 html.student-glass-ui body .dashboard-summary-meta b,
 html.student-glass-ui body .dashboard-summary-meta span,
 html.student-glass-ui body .quick-nav-card>b {
-  color: #2789bb !important;
+  color: #6527bb !important;
 }
 html.student-glass-ui body .portal-program-primary {
-  border-color: rgba(83,173,215,.34) !important;
-  background: linear-gradient(145deg,rgba(223,244,253,.97),rgba(255,255,255,.93) 68%) !important;
+  border-color: rgba(138, 83, 215, .34) !important;
+  background: linear-gradient(145deg,rgba(236, 223, 253, .97),rgba(255,255,255,.93) 68%) !important;
 }
 html.student-glass-ui body .portal-program-card:hover,
 html.student-glass-ui body .portal-support-card:hover {
-  border-color: rgba(76,167,213,.45) !important;
-  box-shadow: 0 16px 34px rgba(44,127,170,.13) !important;
+  border-color: rgba(133, 76, 213, .45) !important;
+  box-shadow: 0 16px 34px rgba(97, 44, 170, .13) !important;
 }
 html.student-glass-ui body .lms-stat-icon,
 html.student-glass-ui body .quick-nav-icon,
 html.student-glass-ui body .portal-program-icon:not(.gold),
 html.student-glass-ui body .dashboard-summary-icon {
   color: #c4b5fd !important;
-  border-color: rgba(86,172,213,.27) !important;
-  background: rgba(222,243,252,.88) !important;
+  border-color: rgba(139, 86, 213, .27) !important;
+  background: rgba(235, 222, 252, .88) !important;
 }
 html.student-glass-ui body .portal-program-icon.gold {
   color: #c4b5fd !important;
-  border-color: rgba(86,172,213,.27) !important;
-  background: rgba(222,243,252,.88) !important;
+  border-color: rgba(139, 86, 213, .27) !important;
+  background: rgba(235, 222, 252, .88) !important;
 }
 html.student-glass-ui body .dashboard-announcement-tab.active,
 html.student-glass-ui body .dashboard-mobile-nav a.active,
 html.student-glass-ui body .shared-more-menu.is-current>summary {
-  border-color: rgba(91,174,214,.3) !important;
-  background: linear-gradient(110deg,#dff3fc,#cdeafa) !important;
+  border-color: rgba(142, 91, 214, .3) !important;
+  background: linear-gradient(110deg,#ebdffc,#e0cdfa) !important;
   color: #c4b5fd !important;
-  box-shadow: 0 7px 18px rgba(51,137,181,.12) !important;
+  box-shadow: 0 7px 18px rgba(105, 51, 181, .12) !important;
 }
 html.student-glass-ui body .dashboard-mobile-nav a.active svg,
 html.student-glass-ui body .shared-more-menu.is-current>summary svg {
-  color: #287eaa !important;
+  color: #5e28aa !important;
   stroke: currentColor !important;
 }
 
 /* Match the main dashboard content to the same white-glass visual language. */
 html.student-glass-ui body .lms-header {
   background: rgba(255,255,255,.82) !important;
-  border-bottom: 1px solid rgba(177,213,231,.62) !important;
-  box-shadow: 0 7px 22px rgba(47,112,146,.05) !important;
+  border-bottom: 1px solid rgba(200, 177, 231, .62) !important;
+  box-shadow: 0 7px 22px rgba(88, 47, 146, .05) !important;
   backdrop-filter: blur(22px) saturate(145%) !important;
 }
 html.student-glass-ui body .lms-header-title h1,
 html.student-glass-ui body .lms-header-title p,
 html.student-glass-ui body .lms-user strong,
 html.student-glass-ui body .lms-user span {
-  color: #1b3c56 !important;
+  color: #341b56 !important;
 }
 html.student-glass-ui body .dashboard-learning-banner {
-  border-color: rgba(139,202,231,.55) !important;
+  border-color: rgba(177, 139, 231, .55) !important;
   background:
     radial-gradient(circle at 90% 10%,rgba(255,255,255,.92),transparent 34%),
-    linear-gradient(120deg,#e5f5fc 0%,#d4edfa 52%,#edf8fd 100%) !important;
-  box-shadow: 0 18px 42px rgba(47,117,151,.11),inset 0 1px rgba(255,255,255,.98) !important;
+    linear-gradient(120deg,#e5f5fc 0%,#e4d4fa 52%,#edf8fd 100%) !important;
+  box-shadow: 0 18px 42px rgba(90, 47, 151, .11),inset 0 1px rgba(255,255,255,.98) !important;
 }
 html.student-glass-ui body .learning-banner-copy h2 {
-  color: #163550 !important;
+  color: #2e1650 !important;
 }
 html.student-glass-ui body .learning-banner-copy p {
-  color: #54738b !important;
+  color: #6b548b !important;
 }
 html.student-glass-ui body .portal-program-card,
 html.student-glass-ui body .portal-support-card,
@@ -4770,8 +4770,8 @@ html.student-glass-ui body .lms-widget,
 html.student-glass-ui body .quick-nav-card {
   border-color: rgba(255,255,255,.96) !important;
   background: linear-gradient(145deg,rgba(255,255,255,.97),rgba(238,248,253,.94)) !important;
-  color: #193a54 !important;
-  box-shadow: 0 12px 30px rgba(44,110,145,.09),inset 0 1px rgba(255,255,255,.99) !important;
+  color: #321954 !important;
+  box-shadow: 0 12px 30px rgba(86, 44, 145, .09),inset 0 1px rgba(255,255,255,.99) !important;
 }
 html.student-glass-ui body .portal-program-copy>strong,
 html.student-glass-ui body .portal-program-copy>span:not(.material-link),
@@ -4786,62 +4786,62 @@ html.student-glass-ui body .widget-heading h2,
 html.student-glass-ui body .widget-subtitle,
 html.student-glass-ui body .quick-nav-card strong,
 html.student-glass-ui body .quick-nav-card small {
-  color: #294c65 !important;
+  color: #422965 !important;
 }
 html.student-glass-ui body .lms-section-heading h2,
 html.student-glass-ui body .portal-section-heading h2,
 html.student-glass-ui body .widget-heading h2 {
-  color: #193c58 !important;
+  color: #331958 !important;
 }
 html.student-glass-ui body .dashboard-announcement-tabs {
-  border: 1px solid rgba(177,215,233,.72) !important;
+  border: 1px solid rgba(200, 177, 233, .72) !important;
   background: rgba(255,255,255,.72) !important;
 }
 html.student-glass-ui body .dashboard-announcement-tab {
   border-color: transparent !important;
   background: transparent !important;
-  color: #668399 !important;
+  color: #7b6699 !important;
 }
 html.student-glass-ui body .dashboard-announcement-tab.active {
-  background: linear-gradient(110deg,#dff3fc,#cdeafa) !important;
+  background: linear-gradient(110deg,#ebdffc,#e0cdfa) !important;
   color: #c4b5fd !important;
 }
 html.student-glass-ui body .exam-focus {
-  border-color: rgba(97,177,215,.35) !important;
-  border-left-color: #50aeda !important;
-  background: linear-gradient(115deg,#e5f5fc,#d7eef9 60%,#f5fbfe) !important;
-  box-shadow: 0 12px 30px rgba(44,110,145,.09) !important;
+  border-color: rgba(146, 97, 215, .35) !important;
+  border-left-color: #8a50da !important;
+  background: linear-gradient(115deg,#e5f5fc,#e5d7f9 60%,#f5fbfe) !important;
+  box-shadow: 0 12px 30px rgba(86, 44, 145, .09) !important;
 }
 html.student-glass-ui body .exam-copy h3,
 html.student-glass-ui body .exam-copy p:not(.exam-kicker),
 html.student-glass-ui body .exam-link,
 html.student-glass-ui body .timer-unit strong,
 html.student-glass-ui body .timer-unit small {
-  color: #2c5873 !important;
+  color: #4a2c73 !important;
 }
 html.student-glass-ui body .timer-unit {
-  border-color: rgba(166,211,231,.74) !important;
+  border-color: rgba(193, 166, 231, .74) !important;
   background: rgba(255,255,255,.76) !important;
 }
 
 @media (max-width: 800px) {
   html.student-glass-ui body .dashboard-mobile-nav,
   html.student-glass-ui body .shared-bottom-nav {
-    border-color: rgba(173,214,234,.78) !important;
+    border-color: rgba(198, 173, 234, .78) !important;
     background: rgba(255,255,255,.94) !important;
-    box-shadow: 0 12px 32px rgba(36,105,141,.12) !important;
+    box-shadow: 0 12px 32px rgba(80, 36, 141, .12) !important;
     backdrop-filter: blur(20px) saturate(150%) !important;
   }
   html.student-glass-ui body .dashboard-mobile-nav a,
   html.student-glass-ui body .shared-bottom-nav>a,
   html.student-glass-ui body .shared-more-menu>summary {
-    color: #5b788d !important;
+    color: #705b8d !important;
   }
   html.student-glass-ui body .dashboard-mobile-nav a.active,
   html.student-glass-ui body .shared-bottom-nav>a.active,
   html.student-glass-ui body .shared-more-menu.is-current>summary {
-    background: linear-gradient(110deg,#dff3fc,#cdeafa) !important;
-    color: #1e729f !important;
+    background: linear-gradient(110deg,#ebdffc,#e0cdfa) !important;
+    color: #541e9f !important;
   }
 }
 
@@ -4857,20 +4857,20 @@ html.student-glass-ui body .timer-unit {
 html.student-glass-ui,
 html.student-glass-ui body {
   color-scheme: dark !important;
-  --student-glass-bg: #0b1020;
-  --student-glass-bg-2: #11182b;
+  --student-glass-bg: #140b20;
+  --student-glass-bg-2: #1c112b;
   --student-glass-ink: #f4f7ff;
-  --student-glass-muted: #aeb8ce;
+  --student-glass-muted: #bbaece;
   --student-glass-purple: #5b4bff;
   --student-glass-violet: #7c3aed;
   --student-glass-lime: #a6ff2e;
   --student-glass-line: rgba(185,174,255,.22);
-  --student-glass-card: rgba(18,25,47,.66);
+  --student-glass-card: rgba(30, 18, 47, .66);
   --student-glass-shadow: 0 18px 48px rgba(0,0,0,.28);
   background:
     radial-gradient(ellipse at 9% 0%, rgba(91,75,255,.22), transparent 34%),
     radial-gradient(ellipse at 96% 82%, rgba(124,58,237,.16), transparent 34%),
-    linear-gradient(145deg,#0b1020 0%,#10152b 55%,#0b1020 100%) !important;
+    linear-gradient(145deg,#140b20 0%,#1b102b 55%,#140b20 100%) !important;
   color: var(--student-glass-ink) !important;
 }
 
@@ -4885,7 +4885,7 @@ html.student-glass-ui body :is(h1,h2,h3,h4,h5,h6,strong,b,label,legend) {
 }
 
 html.student-glass-ui body :is(p,small,.muted,.subtitle,.description,.hint,.meta,.eyebrow,.card-subtitle) {
-  color: #aeb8ce !important;
+  color: #bbaece !important;
 }
 
 html.student-glass-ui body a {
@@ -4898,7 +4898,7 @@ html.student-glass-ui body a:hover {
 
 html.student-glass-ui body :is(input,select,textarea) {
   color: #f4f7ff !important;
-  background: rgba(8,13,27,.72) !important;
+  background: rgba(16, 8, 27, .72) !important;
   border: 1px solid rgba(173,159,255,.25) !important;
   border-radius: 12px !important;
   color-scheme: dark !important;
@@ -4906,7 +4906,7 @@ html.student-glass-ui body :is(input,select,textarea) {
 }
 
 html.student-glass-ui body :is(input,select,textarea)::placeholder {
-  color: #7785a2 !important;
+  color: #8977a2 !important;
 }
 
 html.student-glass-ui body :is(input,select,textarea):focus {
@@ -4927,7 +4927,7 @@ html.student-glass-ui body :is(.app,.main-content,.main,#main) {
 }
 
 html.student-glass-ui body :is(.lms-header,.top,.mobile-lms-header,.section-mobile-header,.shared-mobile-header) {
-  background: rgba(11,16,32,.68) !important;
+  background: rgba(20, 11, 32, .68) !important;
   border-color: rgba(173,159,255,.20) !important;
   color: #f4f7ff !important;
   box-shadow: 0 12px 34px rgba(0,0,0,.18), inset 0 1px rgba(255,255,255,.06) !important;
@@ -4940,7 +4940,7 @@ html.student-glass-ui body :is(.lms-header-title h1,.top h1,.profile-page-headin
 }
 
 html.student-glass-ui body :is(.lms-header-title p,.top p,.lms-user span,.mobile-lms-title span,.mobile-lms-title strong) {
-  color: #9eabc5 !important;
+  color: #ae9ec5 !important;
 }
 
 html.student-glass-ui body :is(.lms-search,.lms-notification,.back,.profile-back,.mobile-menu-btn,.section-menu-toggle) {
@@ -4954,7 +4954,7 @@ html.student-glass-ui body :is(.lms-search,.lms-notification,.back,.profile-back
 
 /* Shared sidebar, profile strip and navigation. */
 html.student-glass-ui body :is(.sidebar,.side,#studentSidebar,#sectionSidebar) {
-  background: linear-gradient(180deg,rgba(11,16,32,.94),rgba(17,24,43,.88)) !important;
+  background: linear-gradient(180deg,rgba(20, 11, 32, .94),rgba(28, 17, 43, .88)) !important;
   border-right: 1px solid rgba(173,159,255,.20) !important;
   box-shadow: 16px 0 48px rgba(0,0,0,.26) !important;
   color: #f4f7ff !important;
@@ -4977,13 +4977,13 @@ html.student-glass-ui body :is(.brand-text strong,.brand b,.brand-text span,.bra
 }
 
 html.student-glass-ui body :is(.sidebar-section-title) {
-  color: #8d9abb !important;
+  color: #a08dbb !important;
 }
 
 html.student-glass-ui body :is(.sidebar-link,.side nav a,.shared-sidebar-more-trigger) {
   border-color: transparent !important;
   background: transparent !important;
-  color: #aeb8ce !important;
+  color: #bbaece !important;
 }
 
 html.student-glass-ui body :is(.sidebar-link:hover,.side nav a:hover,.shared-sidebar-more-trigger:hover) {
@@ -4993,7 +4993,7 @@ html.student-glass-ui body :is(.sidebar-link:hover,.side nav a:hover,.shared-sid
 }
 
 html.student-glass-ui body :is(.sidebar-link.active,.side nav a.active,.shared-sidebar-more-trigger.is-current) {
-  background: linear-gradient(110deg,rgba(64,55,201,.92),rgba(91,75,255,.84)) !important;
+  background: linear-gradient(110deg,rgba(116, 55, 201, .92),rgba(91,75,255,.84)) !important;
   border-color: rgba(194,183,255,.42) !important;
   border-left: 3px solid #a6ff2e !important;
   color: #fff !important;
@@ -5027,7 +5027,7 @@ html.student-glass-ui body :is(
   .card,.answers-heading,.answers-group,.answer-row,.answers-empty,
   .exam-focus,.timer-unit,.study-buddy-panel,.study-buddy-launcher
 ) {
-  background: linear-gradient(145deg,rgba(30,34,68,.78),rgba(13,19,39,.68)) !important;
+  background: linear-gradient(145deg,rgba(46, 30, 68, .78),rgba(24, 13, 39, .68)) !important;
   border: 1px solid rgba(173,159,255,.25) !important;
   border-radius: 18px !important;
   color: #f4f7ff !important;
@@ -5043,21 +5043,21 @@ html.student-glass-ui body :is(
   background:
     radial-gradient(circle at 86% 12%,rgba(166,255,46,.10),transparent 24%),
     radial-gradient(circle at 12% 95%,rgba(124,58,237,.26),transparent 38%),
-    linear-gradient(118deg,rgba(30,20,75,.94),rgba(58,36,132,.82) 54%,rgba(14,45,65,.88)) !important;
+    linear-gradient(118deg,rgba(30,20,75,.94),rgba(58,36,132,.82) 54%,rgba(35, 14, 65, .88)) !important;
   border-color: rgba(166,255,46,.24) !important;
   box-shadow: 0 22px 54px rgba(0,0,0,.28), inset 0 1px rgba(255,255,255,.10) !important;
 }
 
 html.student-glass-ui body :is(.hero-continue-btn,.profile-btn.primary,.answer-link.primary) {
-  border: 1px solid rgba(220,255,170,.65) !important;
-  background: linear-gradient(105deg,#a6ff2e,#d1ff75) !important;
-  color: #11182b !important;
+  border: 1px solid rgba(209, 255, 117, .65) !important;
+  background: linear-gradient(105deg,#a6ff2e,#a6ff2e) !important;
+  color: #1c112b !important;
   font-weight: 850 !important;
   box-shadow: 0 9px 26px rgba(166,255,46,.18), inset 0 1px rgba(255,255,255,.35) !important;
 }
 
 html.student-glass-ui body :is(.hero-continue-btn,.profile-btn.primary,.answer-link.primary) * {
-  color: #11182b !important;
+  color: #1c112b !important;
 }
 
 /* Dashboard: announcements filters, empty state, summaries and widgets. */
@@ -5066,7 +5066,7 @@ html.student-glass-ui body :is(.lms-section-heading h2,.portal-section-heading h
 }
 
 html.student-glass-ui body :is(.lms-section-heading p,.announcement-summary-sub,.widget-subtitle) {
-  color: #aeb8ce !important;
+  color: #bbaece !important;
 }
 
 html.student-glass-ui body :is(.lms-section-heading>a,.lms-section-heading a,.widget-heading a,.portal-section-link,.announcement-link) {
@@ -5085,21 +5085,21 @@ html.student-glass-ui body .dashboard-announcement-tabs {
 html.student-glass-ui body .dashboard-announcement-tab {
   background: transparent !important;
   border: 1px solid transparent !important;
-  color: #aeb8ce !important;
+  color: #bbaece !important;
 }
 
 html.student-glass-ui body .dashboard-announcement-tab.active {
-  background: linear-gradient(110deg,#a6ff2e,#d1ff75) !important;
-  border-color: rgba(220,255,170,.66) !important;
-  color: #11182b !important;
+  background: linear-gradient(110deg,#a6ff2e,#a6ff2e) !important;
+  border-color: rgba(209, 255, 117, .66) !important;
+  color: #1c112b !important;
   box-shadow: 0 7px 20px rgba(166,255,46,.16) !important;
 }
 
 html.student-glass-ui body :is(.dashboard-announcement-summary,.dashboard-summary-empty,.dashboard-summary-loading,.dashboard-announcement-empty,.portal-empty,.announcement-empty,.empty,.answers-empty) {
-  background: linear-gradient(145deg,rgba(33,39,76,.72),rgba(15,22,42,.70)) !important;
+  background: linear-gradient(145deg,rgba(51, 33, 76, .72),rgba(26, 15, 42, .70)) !important;
   border: 1px solid rgba(173,159,255,.22) !important;
   border-radius: 16px !important;
-  color: #aeb8ce !important;
+  color: #bbaece !important;
   box-shadow: inset 0 1px rgba(255,255,255,.06), 0 10px 26px rgba(0,0,0,.16) !important;
 }
 
@@ -5144,11 +5144,11 @@ html.student-glass-ui body .tabs {
 html.student-glass-ui body .tab {
   background: rgba(255,255,255,.04) !important;
   border: 1px solid rgba(173,159,255,.18) !important;
-  color: #c6cce0 !important;
+  color: #d1c6e0 !important;
 }
 
 html.student-glass-ui body .tab.active {
-  background: linear-gradient(110deg,#4037c9,#7c3aed) !important;
+  background: linear-gradient(110deg,#7437c9,#7c3aed) !important;
   border-color: rgba(194,183,255,.42) !important;
   color: #fff !important;
   box-shadow: 0 8px 20px rgba(91,75,255,.22) !important;
@@ -5164,7 +5164,7 @@ html.student-glass-ui body .card a {
 
 /* Results tab: score tiles, chart panels and published result rows. */
 html.student-glass-ui body :is(.stat small,.stat span,.panel-head p,.results-head p,.result-body small,.result-top em,.hint) {
-  color: #aeb8ce !important;
+  color: #bbaece !important;
 }
 
 html.student-glass-ui body :is(.stat b,.panel-head h2,.results-head h2,.result-main strong,.result-main .score) {
@@ -5184,13 +5184,13 @@ html.student-glass-ui body :is(.notice,.result,.answer-row,.chat) {
 }
 
 html.student-glass-ui body :is(.notice-message,.result-body,.answer-copy,.chat span) {
-  color: #b9c4da !important;
+  color: #c7b9da !important;
 }
 
 /* Support and profile sections. */
 html.student-glass-ui body .support-card.green {
-  background: linear-gradient(145deg,rgba(10,66,57,.70),rgba(13,29,42,.78)) !important;
-  border-color: rgba(74,222,128,.28) !important;
+  background: linear-gradient(145deg,rgba(33, 10, 66, .70),rgba(25, 13, 42, .78)) !important;
+  border-color: rgba(166, 255, 46, .28) !important;
 }
 
 html.student-glass-ui body :is(.support-card h2,.profile-card h3,.profile-hero-copy h2) {
@@ -5198,7 +5198,7 @@ html.student-glass-ui body :is(.support-card h2,.profile-card h3,.profile-hero-c
 }
 
 html.student-glass-ui body :is(.profile-data-item small,.profile-field label,.recovery-status small,.recovery-note,.answers-note) {
-  color: #9eabc5 !important;
+  color: #ae9ec5 !important;
 }
 
 html.student-glass-ui body :is(.profile-data-item strong,.profile-status-chip,.recovery-status strong) {
@@ -5215,7 +5215,7 @@ html.student-glass-ui body :is(.profile-btn.secondary,.profile-back) {
 /* Shared mobile navigation: floating frosted glass, not an opaque bar. */
 @media (max-width: 800px) {
   html.student-glass-ui body :is(.dashboard-mobile-nav,.shared-bottom-nav,.mobile-nav) {
-    background: rgba(11,16,32,.80) !important;
+    background: rgba(20, 11, 32, .80) !important;
     border: 1px solid rgba(173,159,255,.27) !important;
     box-shadow: 0 16px 40px rgba(0,0,0,.38), inset 0 1px rgba(255,255,255,.08) !important;
     -webkit-backdrop-filter: blur(24px) saturate(160%) !important;
@@ -5223,7 +5223,7 @@ html.student-glass-ui body :is(.profile-btn.secondary,.profile-back) {
   }
 
   html.student-glass-ui body :is(.dashboard-mobile-nav a,.shared-bottom-nav>a,.shared-more-menu>summary,.mobile-nav a) {
-    color: #aeb8ce !important;
+    color: #bbaece !important;
   }
 
   html.student-glass-ui body :is(.dashboard-mobile-nav a.active,.shared-bottom-nav>a.active,.shared-more-menu.is-current>summary,.mobile-nav a.active) {
@@ -5256,12 +5256,12 @@ html.student-glass-ui body :is(.profile-btn.secondary,.profile-back) {
 html.student-glass-ui.lms-brand-glass body .dashboard-announcement-tab.active,
 html.student-glass-ui.lms-brand-glass body .shared-announcement-filters button.active,
 html.student-glass-ui.lms-brand-glass body .tab.active{
-  background:linear-gradient(110deg,#a6ff2e,#d1ff75)!important;
-  border-color:rgba(220,255,170,.72)!important;
-  color:#0b1020!important;
+  background:linear-gradient(110deg,#a6ff2e,#a6ff2e)!important;
+  border-color:rgba(209, 255, 117, .72)!important;
+  color:#140b20!important;
 }
 html.student-glass-ui.lms-brand-glass body .shared-mobile-header{
-  background:rgba(11,16,32,.84)!important;
+  background:rgba(20, 11, 32, .84)!important;
   border-color:rgba(186,174,255,.25)!important;
   box-shadow:0 12px 34px rgba(0,0,0,.24)!important;
   -webkit-backdrop-filter:blur(22px)!important;
@@ -5272,13 +5272,13 @@ html.student-glass-ui.lms-brand-glass body .shared-header-brand strong{
   color:#f4f7ff!important;
 }
 html.student-glass-ui.lms-brand-glass body .shared-header-brand small{
-  color:#aeb8ce!important;
+  color:#bbaece!important;
 }
 html.student-glass-ui.lms-brand-glass body .shared-header-brand img{
   background:linear-gradient(145deg,#5b4bff,#7c3aed)!important;
 }
 html.student-glass-ui.lms-brand-glass body .shared-floating-teacher-caption{
-  background:#a6ff2e!important;color:#0b1020!important;border-color:#0b1020!important;
+  background:#a6ff2e!important;color:#140b20!important;border-color:#140b20!important;
 }
 html.student-glass-ui.lms-brand-glass body .shared-floating-teacher:focus-visible{
   outline:3px solid #a6ff2e!important;
@@ -5299,8 +5299,8 @@ html.student-glass-ui.lms-brand-glass body .shared-bottom-nav>.shared-floating-t
   box-shadow:0 10px 28px rgba(91,75,255,.26)!important;
 }
 html.student-glass-ui.lms-brand-glass body .hero-continue-btn{
-  background:linear-gradient(110deg,#a6ff2e,#d1ff75)!important;
-  color:#0b1020!important;border-color:rgba(220,255,170,.78)!important;
+  background:linear-gradient(110deg,#a6ff2e,#a6ff2e)!important;
+  color:#140b20!important;border-color:rgba(209, 255, 117, .78)!important;
 }
 html.student-glass-ui.lms-brand-glass body .learning-banner-copy>span,
 html.student-glass-ui.lms-brand-glass body .portal-journey-mark,
