@@ -36,6 +36,7 @@ import { db, doc, onSnapshot } from "./firebase.js";
       document.head.appendChild(link);
     }
     link.href = brandStylesheetUrl;
+    document.head.appendChild(link); // Keep the brand lock as the final stylesheet in the cascade.
   }
 
   function isAutomaticChristmasSeason(now = new Date()) {
