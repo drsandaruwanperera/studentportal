@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en" class="student-glass-ui">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#4b9fc9">
+  <title>Model Paper Answers | Dr. Sandaruwan LMS</title>
+  <link rel="stylesheet" href="./student-glass-ui.css?v=18">
+  <style>
+    body.answers-hub-page{min-height:100vh;background:linear-gradient(145deg,#edf8fc,#e5f3f9 55%,#f7fbfd);color:#173a51}
+    .answers-shell{width:min(900px,calc(100% - 28px));margin:24px auto 116px}
+    .answers-heading{margin:0 0 18px;padding:21px;border:1px solid rgba(255,255,255,.96);border-radius:22px;background:linear-gradient(135deg,#fff,#e7f5fb);box-shadow:0 13px 30px rgba(39,104,134,.09)}
+    .answers-eyebrow{color:#4b91af;font-size:9px;font-weight:900;letter-spacing:1.4px}
+    .answers-heading h1{margin:7px 0 5px;color:#1b4058;font-size:clamp(22px,4vw,30px);font-weight:950;letter-spacing:-.7px}
+    .answers-heading p{margin:0;color:#69879a;font-size:11px;line-height:1.55}
+    .answers-group{display:grid;gap:10px}
+    .answers-group-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 2px 2px}
+    .answers-group-title h2{margin:0;color:#264c65;font-size:13px;font-weight:900}
+    .answers-group-title span{color:#7794a5;font-size:9px;font-weight:750}
+    .answer-row{display:flex;align-items:center;gap:12px;min-width:0;padding:13px;border:1px solid rgba(255,255,255,.98);border-radius:16px;background:linear-gradient(145deg,rgba(255,255,255,.97),rgba(238,248,252,.95));box-shadow:0 8px 20px rgba(39,104,134,.075);animation:answer-rise .28s ease both}
+    .answer-icon{width:38px;height:38px;flex:0 0 38px;display:grid;place-items:center;border:1px solid #d5eaf2;border-radius:12px;background:#e8f6fb;color:#3289ad;font-size:17px}
+    .answer-copy{min-width:0;flex:1}
+    .answer-copy strong{display:block;color:#20445b;font-size:11px;font-weight:900;line-height:1.35}
+    .answer-copy small{display:block;margin-top:4px;color:#7792a3;font-size:9px;line-height:1.4}
+    .answer-links{display:flex;align-items:center;flex-wrap:wrap;justify-content:flex-end;gap:6px}
+    .answer-link{display:inline-flex;align-items:center;justify-content:center;min-height:33px;padding:0 10px;border:1px solid #c8e5f0;border-radius:10px;background:linear-gradient(135deg,#eff9fc,#dff2f9);color:#267fa5;font-size:9px;font-weight:900;text-decoration:none;white-space:nowrap}
+    .answer-link.primary{border-color:#4da8cf;background:linear-gradient(135deg,#5bb4d9,#318fbf);color:#fff;box-shadow:0 5px 12px rgba(45,139,184,.15)}
+    .answers-note{margin-top:13px;padding:11px 13px;border:1px solid #d8eaf1;border-radius:13px;background:rgba(255,255,255,.64);color:#718d9e;font-size:9px;line-height:1.55}
+    .answers-empty{padding:20px;border:1px dashed #bfdce8;border-radius:16px;background:rgba(255,255,255,.6);color:#6f8b9d;font-size:11px;text-align:center}
+    @keyframes answer-rise{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+    @media(max-width:560px){
+      .answers-shell{margin:15px auto 108px}
+      .answers-heading{padding:16px;border-radius:18px}
+      .answer-row{align-items:flex-start;flex-wrap:wrap;padding:11px}
+      .answer-links{width:100%;padding-left:50px;justify-content:flex-start}
+      .answer-link{flex:1}
+    }
+    @media(prefers-reduced-motion:reduce){.answer-row{animation:none}}
+  </style>
+</head>
+<body class="dark-mode answers-hub-page">
+<header class="shared-mobile-header" aria-label="Student portal header">
+  <a class="shared-header-brand" href="dashboard.html" aria-label="Dr. Sandaruwan LMS home">
+    <img src="./icons/dr-sandaruwan-lms-192.png?v=approved-2026-11-21" alt="">
+    <span><strong>Dr. Sandaruwan LMS</strong><small>STUDENT PORTAL</small></span>
+  </a>
+  <a class="shared-header-action" href="announcements.html" aria-label="Announcements"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg></a>
+  <span class="shared-header-student" aria-label="Student">S</span>
+  <a class="shared-header-action" href="index.html" aria-label="Log out"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3"></path><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"></path></svg></a>
+</header>
+<main class="answers-shell">
+  <section class="answers-heading">
+    <span class="answers-eyebrow">STUDENT ANSWER LIBRARY</span>
+    <h1 id="answersTitle">Model Paper Answers</h1>
+    <p id="answersDescription">Choose the answer set for your current study programme.</p>
+  </section>
+  <section id="answersList" class="answers-group" aria-live="polite">
+    <div class="answers-empty">Loading your answer resources…</div>
+  </section>
+  <p class="answers-note" id="answersNote">Only answer resources assigned to your student grade are shown here.</p>
+</main>
+<nav class="shared-bottom-nav" aria-label="Student navigation">
+  <a href="dashboard.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg><span>Dashboard</span></a>
+  <a class="active" href="my-program.html" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 1 4 17.5z"/><path d="M4 17.5A2.5 2.5 0 0 1 6.5 15H20M8 7h8M8 10.5h8"/></svg><span>Study</span></a>
+  <a class="shared-floating-teacher" href="dashboard.html#study-buddy" aria-label="Open AI Study Buddy"><img src="https://raw.githubusercontent.com/drsandaruwanperera/drsandaruwanperera.github.io/main/assets/sir-photo.png" alt="Dr. Sandaruwan"></a>
+  <a href="progress.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5V12M10 19.5V5M16 19.5V9M22 19.5V3.5"/><path d="M3 20.5h18"/></svg><span>Results</span></a>
+  <details class="shared-more-menu">
+    <summary aria-label="More student pages" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg><span>More</span></summary>
+    <div class="shared-more-panel">
+      <a href="announcements.html"><span aria-hidden="true">◉</span> Announcements</a>
+      <a href="support.html"><span aria-hidden="true">✚</span> Support Team</a>
+      <a href="profile.html"><span aria-hidden="true">◎</span> Profile</a>
+    </div>
+  </details>
+</nav>
+<script>
+(function(){
+  if (sessionStorage.getItem("loggedIn") !== "true") {
+    window.location.replace("index.html");
+    return;
+  }
+
+  const normalise = value => String(value || "").trim().toLowerCase().replace(/[\\s_-]+/g, "");
+  const rawType = normalise(sessionStorage.getItem("studentType"));
+  const rawGrade = normalise(sessionStorage.getItem("studentGrade"));
+  const studentId = String(sessionStorage.getItem("studentId") || "").trim().toUpperCase();
+
+  let cohort = "";
+  if (rawType.includes("grade10") || rawType === "g10" || rawGrade.includes("grade10") || rawGrade === "10") cohort = "grade10";
+  else if (rawType.includes("grade11") || rawType === "g11" || rawGrade.includes("grade11") || rawGrade === "11") cohort = "grade11";
+  else if (/^\\d{5}$/.test(studentId)) {
+    const value = Number(studentId);
+    if (value >= 27000 && value <= 27999) cohort = "grade10";
+    else if (value >= 26000 && value <= 26999) cohort = "grade11";
+  }
+
+  if (cohort !== "grade10" && cohort !== "grade11") {
+    window.location.replace("dashboard.html");
+    return;
+  }
+
+  const list = document.getElementById("answersList");
+  const title = document.getElementById("answersTitle");
+  const description = document.getElementById("answersDescription");
+  const note = document.getElementById("answersNote");
+  const name = String(sessionStorage.getItem("studentName") || "Student").trim().split(/\\s+/)[0] || "Student";
+  const avatar = document.querySelector(".shared-header-student");
+  if (avatar) { avatar.textContent = name.charAt(0).toUpperCase(); avatar.setAttribute("aria-label", "Student " + name); }
+
+  function row(heading, sub, links) {
+    const article = document.createElement("article");
+    article.className = "answer-row";
+    const icon = document.createElement("span");
+    icon.className = "answer-icon";
+    icon.textContent = "📝";
+    const copy = document.createElement("span");
+    copy.className = "answer-copy";
+    const strong = document.createElement("strong");
+    strong.textContent = heading;
+    const small = document.createElement("small");
+    small.textContent = sub;
+    copy.append(strong, small);
+    const actions = document.createElement("span");
+    actions.className = "answer-links";
+    links.forEach(link => {
+      const a = document.createElement("a");
+      a.className = "answer-link" + (link.primary ? " primary" : "");
+      a.href = link.href;
+      a.textContent = link.label;
+      actions.appendChild(a);
+    });
+    article.append(icon, copy, actions);
+    return article;
+  }
+
+  list.innerHTML = "";
+  if (cohort === "grade10") {
+    title.textContent = "Grade 10 Model Paper Answers";
+    description.textContent = "Term 2 answer schemes and MCQ answers for the available Grade 10 model papers.";
+    const heading = document.createElement("div");
+    heading.className = "answers-group-title";
+    heading.innerHTML = "<h2>2nd Term · Available Papers</h2><span>Paper 01–04</span>";
+    list.appendChild(heading);
+    for (let paper = 1; paper <= 4; paper++) {
+      const no = String(paper).padStart(2, "0");
+      list.appendChild(row("Term 2 · Model Paper " + no, "Grade 10 official answers", [
+        {label:"Answer Scheme",primary:true,href:"grade10-answer.html?term=2&paper="+paper},
+        {label:"MCQ Answer",href:"grade10-answer.html?term=2&paper="+paper+"&type=mcq"}
+      ]));
+    }
+    note.textContent = "Only papers with answer files currently published in the LMS are listed.";
+  } else {
+    title.textContent = "Grade 11 Model Paper Answers";
+    description.textContent = "TOP Ranking Paper answers for Grade 11 · Term 3.";
+    const heading = document.createElement("div");
+    heading.className = "answers-group-title";
+    heading.innerHTML = "<h2>Term 3 · TOP Ranking Papers</h2><span>Paper 01–04</span>";
+    list.appendChild(heading);
+    for (let paper = 1; paper <= 4; paper++) {
+      const no = String(paper).padStart(2, "0");
+      const base = "answers/grade11/term3/top-ranking-"+no;
+      list.appendChild(row("TOP Ranking Paper " + no, "Grade 11 · Term 3 answer PDF files", [
+        {label:"Part A",primary:true,href:"grade11-answer.html?file="+encodeURIComponent(base+"-part-a.pdf")+"&title="+encodeURIComponent("TOP Ranking Paper "+no+" — Part A")},
+        {label:"Part B",href:"grade11-answer.html?file="+encodeURIComponent(base+"-part-b.pdf")+"&title="+encodeURIComponent("TOP Ranking Paper "+no+" — Part B")}
+      ]));
+    }
+    note.textContent = "Answer PDFs are opened in the LMS document viewer.";
+  }
+})();
+</script>
+<script defer src="./student-glass-ui.js?v=6"></script>
+</body>
+</html>
