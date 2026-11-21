@@ -6,16 +6,16 @@
 
 :root {
   color-scheme: dark;
-  --portal-bg: #080d1b;
-  --portal-bg-soft: #0b1223;
-  --portal-surface: #111a2e;
-  --portal-surface-2: #151f35;
-  --portal-surface-3: #1a2741;
-  --portal-border: rgba(159, 176, 207, .16);
-  --portal-border-strong: rgba(159, 176, 207, .24);
+  --portal-bg: #10081b;
+  --portal-bg-soft: #150b23;
+  --portal-surface: #1d112e;
+  --portal-surface-2: #221535;
+  --portal-surface-3: #2a1a41;
+  --portal-border: rgba(179, 159, 207,  .16);
+  --portal-border-strong: rgba(179, 159, 207,  .24);
   --portal-text: #f4f7ff;
-  --portal-muted: #aeb8ce;
-  --portal-subtle: #8492ad;
+  --portal-muted: #bbaece;
+  --portal-subtle: #9584ad;
   --portal-purple: #5b4bff;
   --portal-violet: #7c3aed;
   --portal-lime: #a6ff2e;
@@ -65,7 +65,7 @@ button, input, select, textarea {
 }
 
 ::selection {
-  color: #080d1b;
+  color: #10081b;
   background: var(--portal-lime);
 }
 
@@ -76,7 +76,7 @@ button, input, select, textarea {
   width: 252px !important;
   min-height: 100vh;
   color: var(--portal-text) !important;
-  background: linear-gradient(180deg, #0c1426 0%, #0a1120 100%) !important;
+  background: linear-gradient(180deg, #170c26 0%, #130a20 100%) !important;
   border-right: 1px solid var(--portal-border) !important;
   box-shadow: 16px 0 42px rgba(0, 0, 0, .18) !important;
   padding: 18px 14px !important;
@@ -119,14 +119,14 @@ button, input, select, textarea {
 .brand span {
   display: block;
   margin-top: 4px;
-  color: #8f9db7 !important;
+  color: #a08fb7 !important;
   font-size: 10px !important;
   line-height: 1.3;
 }
 
 .sidebar-section-title {
   padding: 24px 12px 10px !important;
-  color: #8290ab !important;
+  color: #9382ab !important;
   font-size: 9px !important;
   font-weight: 850 !important;
   letter-spacing: 1.5px !important;
@@ -152,7 +152,7 @@ button, input, select, textarea {
   border: 1px solid transparent !important;
   border-radius: 13px !important;
   background: transparent !important;
-  color: #b4bfd3 !important;
+  color: #c1b4d3 !important;
   opacity: 1 !important;
   visibility: visible !important;
   text-decoration: none !important;
@@ -176,7 +176,7 @@ button, input, select, textarea {
   flex: 0 0 22px;
   width: 22px;
   height: 22px;
-  color: #91a3c4 !important;
+  color: #a691c4 !important;
 }
 
 .sidebar-link svg,
@@ -239,7 +239,7 @@ button, input, select, textarea {
   place-items: center;
   border-radius: 13px !important;
   color: #fff !important;
-  background: linear-gradient(145deg, #245db7, #5b4bff) !important;
+  background: linear-gradient(145deg, #6124b7, #5b4bff) !important;
   font-size: 15px !important;
   font-weight: 850 !important;
 }
@@ -262,7 +262,7 @@ button, input, select, textarea {
 .side-profile span {
   display: block;
   margin-top: 3px;
-  color: #8f9db7 !important;
+  color: #a08fb7 !important;
   font-size: 9px !important;
 }
 
@@ -324,7 +324,7 @@ button, input, select, textarea {
   border: 1px solid var(--portal-border) !important;
   border-radius: 19px !important;
   color: var(--portal-text) !important;
-  background: linear-gradient(145deg, rgba(18, 28, 49, .96), rgba(13, 21, 38, .96)) !important;
+  background: linear-gradient(145deg, rgba(31, 18, 49,  .96), rgba(23, 13, 38,  .96)) !important;
   box-shadow: 0 12px 34px rgba(0, 0, 0, .17) !important;
 }
 
@@ -334,13 +334,13 @@ button, input, select, textarea {
   border-radius: 0 !important;
   margin-bottom: 0 !important;
   padding: 12px clamp(18px, 2.5vw, 36px) !important;
-  background: rgba(8, 13, 27, .82) !important;
+  background: rgba(16, 8, 27,  .82) !important;
   backdrop-filter: blur(18px);
 }
 
 .lms-header-title p {
   margin: 0 0 5px;
-  color: #8d9bb6 !important;
+  color: #9e8db6 !important;
   font-size: 10px !important;
   font-weight: 800;
   letter-spacing: 1.1px;
@@ -358,7 +358,7 @@ button, input, select, textarea {
 
 .top p {
   margin: 6px 0 0;
-  color: #a5b1c8 !important;
+  color: #b4a5c8 !important;
   font-size: 12px !important;
   line-height: 1.6;
 }
@@ -372,8 +372,8 @@ button, input, select, textarea {
   padding: 0 15px !important;
   border: 1px solid rgba(166, 255, 46, .23) !important;
   border-radius: 12px !important;
-  color: #101725 !important;
-  background: linear-gradient(110deg, #a6ff2e, #c2ff70) !important;
+  color: #191025 !important;
+  background: linear-gradient(110deg, #a6ff2e, #a6ff2e) !important;
   text-decoration: none !important;
   font-size: 10px !important;
   font-weight: 900 !important;
@@ -381,7 +381,7 @@ button, input, select, textarea {
 }
 
 .back:hover {
-  color: #080d1b !important;
+  color: #10081b !important;
   transform: translateY(-1px);
 }
 
@@ -409,7 +409,7 @@ button, input, select, textarea {
   background:
     radial-gradient(circle at 88% 14%, rgba(166, 255, 46, .10), transparent 25%),
     radial-gradient(circle at 10% 100%, rgba(124, 58, 237, .23), transparent 35%),
-    linear-gradient(118deg, #151e3c 0%, #18244a 58%, #112b38 100%) !important;
+    linear-gradient(118deg, #25153c 0%, #2d184a 58%, #211138 100%) !important;
   box-shadow: 0 22px 54px rgba(0, 0, 0, .24), inset 0 1px rgba(255, 255, 255, .05) !important;
 }
 
@@ -455,7 +455,7 @@ button, input, select, textarea {
 
 .learning-banner-copy p {
   max-width: 590px;
-  color: #b8c4dc !important;
+  color: #c7b8dc !important;
   font-size: 12px !important;
   line-height: 1.75 !important;
 }
@@ -466,8 +466,8 @@ button, input, select, textarea {
   padding: 0 19px !important;
   border: 0 !important;
   border-radius: 12px !important;
-  color: #101725 !important;
-  background: linear-gradient(110deg, var(--portal-lime), #c8ff80) !important;
+  color: #191025 !important;
+  background: linear-gradient(110deg, var(--portal-lime), #a6ff2e) !important;
   font-size: 11px !important;
   font-weight: 900 !important;
   box-shadow: 0 10px 28px rgba(166, 255, 46, .16) !important;
@@ -490,7 +490,7 @@ button, input, select, textarea {
   border: 1px solid rgba(166, 255, 46, .23) !important;
   border-left: 4px solid var(--portal-lime) !important;
   border-radius: 18px !important;
-  background: linear-gradient(120deg, #121d35, #10182b) !important;
+  background: linear-gradient(120deg, #211235, #1b102b) !important;
   box-shadow: var(--portal-shadow) !important;
 }
 
@@ -508,7 +508,7 @@ button, input, select, textarea {
 }
 
 .exam-copy p {
-  color: #9eacc5 !important;
+  color: #ae9ec5 !important;
   font-size: 10px !important;
   line-height: 1.55;
 }
@@ -539,7 +539,7 @@ button, input, select, textarea {
 }
 
 .timer-unit span {
-  color: #93a2bb !important;
+  color: #a493bb !important;
   font-size: 8px;
   letter-spacing: 1px;
 }
@@ -556,7 +556,7 @@ button, input, select, textarea {
   min-width: 0;
   border: 1px solid var(--portal-border) !important;
   border-radius: 17px !important;
-  background: linear-gradient(145deg, #121c32, #0f1729) !important;
+  background: linear-gradient(145deg, #1f1232, #1a0f29) !important;
   box-shadow: 0 14px 34px rgba(0, 0, 0, .17) !important;
   color: var(--portal-text) !important;
 }
@@ -577,7 +577,7 @@ button, input, select, textarea {
 .lms-stat-card span,
 .dashboard-summary-copy,
 .dashboard-summary-meta {
-  color: #9daac1 !important;
+  color: #ac9dc1 !important;
   font-size: 10px !important;
 }
 
@@ -612,7 +612,7 @@ button, input, select, textarea {
 
 .portal-section-heading p,
 .widget-subtitle {
-  color: #92a1bb !important;
+  color: #a392bb !important;
   font-size: 10px !important;
 }
 
@@ -635,7 +635,7 @@ button, input, select, textarea {
   border: 1px solid var(--portal-border) !important;
   border-radius: 17px !important;
   color: #f4f7ff !important;
-  background: linear-gradient(145deg, #121c32, #0f1729) !important;
+  background: linear-gradient(145deg, #1f1232, #1a0f29) !important;
   box-shadow: 0 13px 32px rgba(0, 0, 0, .16) !important;
   text-decoration: none !important;
   transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
@@ -658,7 +658,7 @@ button, input, select, textarea {
 .portal-program-copy > span:not(.material-link),
 .portal-support-card p,
 .portal-program-copy small {
-  color: #a2afc6 !important;
+  color: #b1a2c6 !important;
 }
 
 .material-link {
@@ -679,7 +679,7 @@ button, input, select, textarea {
 .dashboard-summary-card {
   border: 1px solid var(--portal-border) !important;
   border-radius: 18px !important;
-  background: linear-gradient(145deg, #121c32, #0f1729) !important;
+  background: linear-gradient(145deg, #1f1232, #1a0f29) !important;
   box-shadow: 0 14px 34px rgba(0, 0, 0, .17) !important;
   color: var(--portal-text) !important;
 }
@@ -696,7 +696,7 @@ button, input, select, textarea {
 
 .announcement-panel p,
 .dashboard-announcement-copy p {
-  color: #a4b0c6 !important;
+  color: #b2a4c6 !important;
 }
 
 .announcement-pill,
@@ -707,7 +707,7 @@ button, input, select, textarea {
 
 .announcement-link,
 .dashboard-announcement-date {
-  color: #91a0bb !important;
+  color: #a391bb !important;
 }
 
 .dashboard-announcement-icon {
@@ -720,7 +720,7 @@ button, input, select, textarea {
 }
 
 .progress-ring::after {
-  background: #10192c !important;
+  background: #1c102c !important;
 }
 
 .progress-ring strong {
@@ -730,7 +730,7 @@ button, input, select, textarea {
 .progress-ring span,
 .progress-legend,
 .dashboard-summary-empty {
-  color: #9daac1 !important;
+  color: #ac9dc1 !important;
 }
 
 /* Section pages: My Program, Progress, Announcements and Support */
@@ -743,7 +743,7 @@ button, input, select, textarea {
   color: #f4f7ff !important;
   background:
     radial-gradient(circle at 90% 10%, rgba(166, 255, 46, .09), transparent 26%),
-    linear-gradient(125deg, #172345, #121b32 72%) !important;
+    linear-gradient(125deg, #2a1745, #1f1232 72%) !important;
   box-shadow: var(--portal-shadow) !important;
 }
 
@@ -756,7 +756,7 @@ button, input, select, textarea {
 
 .hero p,
 .performance-hero p {
-  color: #aab7ce !important;
+  color: #b9aace !important;
 }
 
 .tabs {
@@ -768,7 +768,7 @@ button, input, select, textarea {
   padding: 8px !important;
   border: 1px solid var(--portal-border) !important;
   border-radius: 15px !important;
-  background: #10192b !important;
+  background: #1b102b !important;
 }
 
 .tab {
@@ -779,7 +779,7 @@ button, input, select, textarea {
   padding: 0 16px !important;
   border: 1px solid transparent !important;
   border-radius: 11px !important;
-  color: #c1cce0 !important;
+  color: #cec1e0 !important;
   background: transparent !important;
   opacity: 1 !important;
   visibility: visible !important;
@@ -814,7 +814,7 @@ button, input, select, textarea {
   color: var(--portal-text) !important;
   border: 1px solid var(--portal-border) !important;
   border-radius: 18px !important;
-  background: linear-gradient(145deg, #121c32, #0f1729) !important;
+  background: linear-gradient(145deg, #1f1232, #1a0f29) !important;
   box-shadow: 0 14px 34px rgba(0, 0, 0, .18) !important;
 }
 
@@ -851,7 +851,7 @@ button, input, select, textarea {
 .result p,
 .notice p,
 .support-card p {
-  color: #a5b2c9 !important;
+  color: #b4a5c9 !important;
 }
 
 .ico,
@@ -901,7 +901,7 @@ button, input, select, textarea {
 .bar-track {
   overflow: hidden;
   border-radius: 999px;
-  background: #26334d !important;
+  background: #36264d !important;
 }
 
 .fill,
@@ -951,14 +951,14 @@ button, input, select, textarea {
 }
 
 .notice-message {
-  color: #aab7cc !important;
+  color: #b8aacc !important;
   font-size: 13px !important;
   line-height: 1.8 !important;
   overflow-wrap: anywhere;
 }
 
 .empty {
-  color: #9caac2 !important;
+  color: #ac9cc2 !important;
 }
 
 /* Support */
@@ -987,7 +987,7 @@ button, input, select, textarea {
   border: 1px solid var(--portal-border) !important;
   border-radius: 14px !important;
   color: #f4f7ff !important;
-  background: #151f35 !important;
+  background: #221535 !important;
   text-decoration: none !important;
 }
 
@@ -998,13 +998,13 @@ button, input, select, textarea {
 
 .chat span,
 .chat small {
-  color: #a6b2c7 !important;
+  color: #b4a6c7 !important;
 }
 
 .chat a,
 .chat button,
 .chat .chat-now {
-  color: #101725 !important;
+  color: #191025 !important;
   background: var(--portal-lime) !important;
   border-radius: 10px !important;
   font-weight: 850 !important;
@@ -1015,7 +1015,7 @@ button, input, select, textarea {
 .mobile-nav {
   border: 1px solid var(--portal-border) !important;
   border-radius: 17px !important;
-  background: rgba(13, 21, 38, .96) !important;
+  background: rgba(23, 13, 38,  .96) !important;
   backdrop-filter: blur(18px);
   box-shadow: 0 16px 38px rgba(0, 0, 0, .32) !important;
 }
@@ -1023,7 +1023,7 @@ button, input, select, textarea {
 .dashboard-mobile-nav a,
 .mobile-nav a {
   min-width: 0;
-  color: #aebbd1 !important;
+  color: #bdaed1 !important;
   opacity: 1 !important;
   text-decoration: none !important;
   font-size: 9px !important;
@@ -1062,14 +1062,14 @@ button, input, select, textarea {
 /* Inputs and controls */
 html body :is(input, select, textarea) {
   color: #f4f7ff !important;
-  background: #0d172a !important;
+  background: #190d2a !important;
   border-color: var(--portal-border-strong) !important;
   border-radius: 11px;
   color-scheme: dark;
 }
 
 html body :is(input, select, textarea)::placeholder {
-  color: #8291ad !important;
+  color: #9482ad !important;
 }
 
 html body :is(input, select, textarea):focus {
@@ -1086,7 +1086,7 @@ html body :is(button, .btn, [role="button"]) {
 .section-mobile-header,
 .mobile-lms-header {
   color: #f4f7ff !important;
-  background: rgba(9, 15, 29, .96) !important;
+  background: rgba(17, 9, 29,  .96) !important;
   border-bottom: 1px solid var(--portal-border) !important;
   backdrop-filter: blur(18px);
 }
@@ -1104,7 +1104,7 @@ html body :is(button, .btn, [role="button"]) {
 .section-mobile-brand small,
 .mobile-lms-title span,
 .mobile-lms-title strong {
-  color: #98a6c0 !important;
+  color: #a998c0 !important;
 }
 
 .section-menu-toggle,
@@ -1112,7 +1112,7 @@ html body :is(button, .btn, [role="button"]) {
   border: 1px solid var(--portal-border-strong) !important;
   border-radius: 13px !important;
   color: #f4f7ff !important;
-  background: #151f35 !important;
+  background: #221535 !important;
 }
 
 .section-menu-toggle svg,
@@ -1225,7 +1225,7 @@ html body :is(button, .btn, [role="button"]) {
     inset: 0 !important;
     z-index: 3100 !important;
     display: none !important;
-    background: rgba(3, 7, 18, .72) !important;
+    background: rgba(9, 3, 18,  .72) !important;
     backdrop-filter: blur(5px);
   }
 
@@ -1255,7 +1255,7 @@ html body :is(button, .btn, [role="button"]) {
     position: fixed !important;
     inset: 0 !important;
     z-index: 3100 !important;
-    background: rgba(3, 7, 18, .72) !important;
+    background: rgba(9, 3, 18,  .72) !important;
     backdrop-filter: blur(5px);
   }
 
