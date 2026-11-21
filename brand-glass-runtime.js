@@ -70,7 +70,7 @@
     document.body.appendChild(layer);
   }
 
-  const loginCssUrl = new URL("login-professional-theme.css?v=approved-purple-glass-3", assetBase).href;
+  const loginCssUrl = new URL("login-professional-theme.css?v=approved-purple-glass-4", assetBase).href;
 
   function ensureLoginGlassStylesheet() {
     if (!document.getElementById("loginBtn") && !document.getElementById("lms-app-splash")) return;
