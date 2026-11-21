@@ -221,8 +221,9 @@ import { db, doc, onSnapshot } from "./firebase.js";
       return;
     }
 
-    const accent = active && /^#[0-9a-f]{6}$/i.test(active.accentColour || "") ? active.accentColour : "#a6ff2e";
-    const background = active && /^#[0-9a-f]{6}$/i.test(active.backgroundColour || "") ? active.backgroundColour : "#0b1020";
+    // Keep the LMS identity consistent even when a seasonal schedule is configured.
+    const accent = "#a6ff2e";
+    const background = "#0b1020";
     document.documentElement.style.setProperty("--season-accent", accent);
     document.documentElement.style.setProperty("--season-bg", background);
     document.documentElement.classList.add("christmas-theme-active");
