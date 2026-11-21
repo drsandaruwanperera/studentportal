@@ -243,6 +243,8 @@
   window.renderDashboardHome = function (key, year) {
     const cohort = cohorts[key];
     if (!cohort) return;
+    document.body.dataset.studentCohort = key;
+    document.body.classList.remove("dashboard-cohort-pending");
     document.body.classList.toggle("al2028-dashboard", key === "al2028");
     initDashboardSectionMotion();
     const label = key === "al2027" || key === "al2028" ? "A/L " + (year || key.slice(-4)) : cohort.label;
@@ -271,7 +273,7 @@
       byId("portalProgramHubDescription").textContent = cohort.hubDescription || "Open the notes and materials selected for your grade.";
     }
     if (model) {
-      model.hidden = key === "al2028";
+      model.hidden = false;
       model.href = cohort.model;
       byId("modelPapersTitle").textContent = cohort.modelTitle;
       byId("modelPapersDescription").textContent = cohort.modelDescription;
