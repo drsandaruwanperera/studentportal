@@ -355,44 +355,113 @@ function formatDate(value) {
     return ms ? new Date(ms).toLocaleDateString("en-GB", { day:"2-digit", month:"short", year:"numeric" }) : "";
 }
 
+const AL_2028_NUMERIC_STUDENT_IDS = new Set(
+    "11074 11094 12705 13959 14069 14319 14334 14368 14369 14421 14723 14800 15189 15483 15508 15585 15690 15854 15960 16365 16889 16890 16891 16892 16895 16896 16898 16899 16900 16902 16903 16906 16907 16908 16909 16910 16913 16914 16915 16920 16923 16924 16941 16947 16966 16967 16975 16978 16979 16980 16986 16987 16988 16991 16995 17038 17039 17052 17054 17064 17071 17080 17093 17125 17172 17187 17188 17190 17191 17197 17205 17206 17207 17208 17209 17210 17212 17213 17218 17220 17225 17226 17240 17241 17242 17243 17244 17246 17247 17249 17254 17256 17269 17279 17280 17287 17288 17296 17306 17307 17317 17326 17327 17364 17366 17368 17386 17387 17427 17450".split(/\s+/)
+);
+
 function normalizeGrade(value) {
-    return String(value || "")
-        .toLowerCase()
-        .replace(/[^a-z0-9]/g, "");
+    return String(value || "").trim().toLowerCase().replace(/[^a-z0-9]/g, "");
 }
 
-function announcementMatchesStudent(item) {
-    if (item.enabled === false || item.active === false) return false;
+function resolveDashboardCohort(data = {}) {
+    const id = String(studentId || "").trim().toUpperCase();
+    const values = [
+        data?.studentType, data?.studentCategory, data?.category, data?.grade,
+        data?.studentGrade, sessionStorage.getItem("studentType"),
+        sessionStorage.getItem("studentGrade")
+    ].filter(value => value !== undefined && value !== null && value !== "");
+
+    let type = "";
+    for (const raw of values) {
+        const value = normalizeGrade(raw);
+        if (value === "grade10" || value === "g10" || value === "10" || value.includes("grade10")) { type = "grade10"; break; }
+        if (value === "grade11" || value === "g11" || value === "11" || value.includes("grade11")) { type = "grade11"; break; }
+        if (["al", "alevel", "advanced", "advancedlevel"].includes(value) || value.includes("advancedlevel")) { type = "al"; break; }
+    }
+
+    if (!type) {
+        if (AL_2028_NUMERIC_STUDENT_IDS.has(id) || /^A2[789]\d{3}$/.test(id) || /^(?:27|28|29)[CN]/.test(id)) {
+            type = "al";
+        } else if (/^\d{5}$/.test(id)) {
+            const number = Number(id);
+            if (number >= 26000 && number <= 26999) type = "grade11";
+            else if (number >= 27000 && number <= 27999) type = "grade10";
+        }
+    }
+
+    let alYear = "";
+    if (type === "al") {
+        if (AL_2028_NUMERIC_STUDENT_IDS.has(id)) alYear = "2028";
+        const explicitYear = Number(data?.alYear || 0);
+        if (!alYear && [2027, 2028, 2029].includes(explicitYear)) alYear = String(explicitYear);
+        if (!alYear) {
+            const savedYear = String(sessionStorage.getItem("alYear") || "").match(/^20(27|28|29)$/);
+            if (savedYear) alYear = savedYear[0];
+        }
+        if (!alYear) {
+            const context = values.join(" ");
+            const match = context.match(/20(27|28|29)/);
+            if (match) alYear = "20" + match[1];
+        }
+        if (!alYear) {
+            const match = id.match(/^(?:A)?(27|28|29)\d{3}$/) || id.match(/^(27|28|29)[CN]/);
+            if (match) alYear = "20" + match[1];
+        }
+        if (!alYear) alYear = "2027";
+    }
+
+    return { type, alYear, key: type === "al" ? "al" + alYear : type };
+}
+
+function announcementTargetMatches(value, cohort) {
+    const target = normalizeGrade(value);
+    if (!target || ["all", "allstudents", "everyone"].includes(target)) return true;
+    if (["grade10", "g10", "10"].includes(target)) return cohort.type === "grade10";
+    if (["grade11", "g11", "11"].includes(target)) return cohort.type === "grade11";
+
+    const yearMatch = target.match(/(?:al|alevel|advancedlevel)(?:20)?(27|28|29)/) ||
+        target.match(/(?:20)?(27|28|29)(?:al|alevel)/);
+    if (yearMatch) return cohort.type === "al" && cohort.alYear === "20" + yearMatch[1];
+    if (["al", "alevel", "advanced", "advancedlevel"].includes(target)) return cohort.type === "al";
+    return target === normalizeGrade(cohort.type);
+}
+
+function announcementContentMatchesCohort(item, cohort) {
+    const content = [item?.title, item?.message, item?.description, item?.category, item?.type]
+        .filter(Boolean).join(" ").toLowerCase();
+    if (!content) return true;
+
+    const mentionsGrade10 = /\bgrade\s*[-_]?\s*10\b|\bg10\b/.test(content);
+    const mentionsGrade11 = /\bgrade\s*[-_]?\s*11\b|\bg11\b/.test(content);
+    const mentionsAL = /\ba\s*\/\s*l\b|\badvanced\s+level\b|\balevel\b/.test(content);
+    const alYear = content.match(/\b(?:a\s*\/\s*l|advanced\s+level|alevel)\s*(?:20)?(27|28|29)\b/);
+    const year = content.match(/\b20(27|28|29)\b/);
+    const cohortPaperNotice = /top\s*ranking|model\s*paper|province\s*paper|theory\s*examination|smart\s*book|school\s*paper|answer\s*release/i.test(content);
+
+    if (mentionsGrade10 && cohort.type !== "grade10") return false;
+    if (mentionsGrade11 && cohort.type !== "grade11") return false;
+    if (mentionsAL && cohort.type !== "al") return false;
+    if (alYear && (cohort.type !== "al" || cohort.alYear !== "20" + alYear[1])) return false;
+
+    // Year-labelled paper announcements without an explicit "A/L" label still
+    // belong to the matching A/L cohort (for example, "October 2028 Top Ranking Model Paper").
+    if (!alYear && year && cohortPaperNotice && cohort.type === "al" && cohort.alYear !== "20" + year[1]) return false;
+    if (!mentionsAL && year && cohortPaperNotice &&
+        (cohort.type === "grade10" || cohort.type === "grade11")) return false;
+    return true;
+}
+
+function announcementMatchesStudent(item, studentData = {}) {
+    if (item.enabled === false || item.active === false || item.showOnDashboard === false) return false;
     if (item.expiresAt && timestampValue(item.expiresAt) < Date.now()) return false;
-
-    const studentGrade = normalizeGrade(
-        sessionStorage.getItem("studentGrade") ||
-        sessionStorage.getItem("studentType") ||
-        ""
-    );
-
+    const cohort = resolveDashboardCohort(studentData);
+    if (!cohort.type) return false;
     const target = item.grade ?? item.targetGrade ?? item.targetAudience ?? "all";
-
-    if (Array.isArray(target)) {
-        return target.some((value) => {
-            const g = normalizeGrade(value);
-            return !g || g === "all" || g === studentGrade ||
-                (g === "grade10" && studentGrade.includes("10")) ||
-                (g === "grade11" && studentGrade.includes("11")) ||
-                (g === "al" && (studentGrade === "al" || studentGrade.includes("advanced")));
-        });
-    }
-
-    const g = normalizeGrade(target);
-    if (!g || g === "all" || g === "allstudents") return true;
-    if (g === "grade10") return studentGrade.includes("10");
-    if (g === "grade11") return studentGrade.includes("11");
-    if (g === "al" || g === "alevel" || g === "advancedlevel") {
-        return studentGrade === "al" || studentGrade.includes("advanced");
-    }
-    return g === studentGrade;
+    const matchesTarget = Array.isArray(target)
+        ? target.some(value => announcementTargetMatches(value, cohort))
+        : announcementTargetMatches(target, cohort);
+    return matchesTarget && announcementContentMatchesCohort(item, cohort);
 }
-
 function announcementDate(value) {
     const ms = timestampValue(value);
     return ms ? new Date(ms).toLocaleDateString("en-GB", {
@@ -546,7 +615,11 @@ function renderNotificationItems(items) {
     });
 }
 
-function loadLatestMonthlyPaper() {
+function loadLatestMonthlyPaper(studentData = {}) {
+    const cohort = resolveDashboardCohort(studentData);
+    // Monthly TOP Ranking Papers are for A/L 2027 only. Never replace
+    // the A/L 2028 Theory Examination resource with an A/L 2027 paper.
+    if (cohort.key !== "al2027") return;
     try {
         onSnapshot(collection(db, "monthlyTopRankingPapers"), snapshot => {
             const items = snapshot.docs
@@ -649,7 +722,7 @@ function setupDashboardAnnouncementFilters() {
     });
 }
 
-function loadNotifications() {
+function loadNotifications(studentData = {}) {
     setupDashboardAnnouncementFilters();
     ensureNotificationUI();
 
@@ -661,7 +734,7 @@ function loadNotifications() {
             const items = snap.docs
                 .map((d) => ({ id:d.id, ...d.data() }))
                 .filter((item) => !["legacy-grade11-top-ranking-results", "legacy-al-answer-release-paper01-september2026"].includes(item.id))
-                .filter((item) => item.showOnDashboard !== false)
+                .filter((item) => announcementMatchesStudent(item, studentData))
                 .sort((a,b) => timestampValue(b.createdAt) - timestampValue(a.createdAt));
 
             // Dashboard keeps the complete active announcement feed and local category filters.
@@ -680,46 +753,6 @@ function loadNotifications() {
     }
 }
 
-function ensureAlStudyMaterials() {
-    const grade = String(
-        sessionStorage.getItem("studentGrade") ||
-        sessionStorage.getItem("studentType") ||
-        ""
-    ).toLowerCase().trim().replace(/\s+/g, "");
-
-    if (!["al", "a/l", "advanced", "advancedlevel"].includes(grade)) {
-        return;
-    }
-
-    const apply = () => {
-        const model = document.getElementById("modelPapersCard");
-        const past = document.getElementById("pastPapersCard");
-
-        if (model) {
-            model.style.display = "";
-            const title = document.getElementById("modelPapersTitle");
-            const description = document.getElementById("modelPapersDescription");
-            const link = model.querySelector(".material-link");
-            if (title) title.textContent = "🏆 Top Ranking Model";
-            if (description) description.textContent = "A/L Student Top Ranking Model Papers";
-            if (link) link.innerHTML = "Explore Top Ranking Model <span>→</span>";
-        }
-
-        if (past) {
-            past.style.display = "none";
-        }
-    };
-
-    apply();
-
-    const grid = document.getElementById("materialGrid");
-    if (grid && !grid.dataset.alVisibilityGuarded) {
-        grid.dataset.alVisibilityGuarded = "1";
-        const observer = new MutationObserver(apply);
-        observer.observe(grid, { subtree: true, attributes: true, attributeFilter: ["style"] });
-    }
-}
-
 async function init() {
     injectStyle();
     injectSidebarStyle();
@@ -727,27 +760,30 @@ async function init() {
     buildSections();
     setupNavigation();
     setupQuickLinks();
-    ensureAlStudyMaterials();
+    // Cohort-specific Study cards are configured by dashboard-home-experience.js.
 
     // dashboard.js is loaded before this module, so these values are the real live dashboard values.
     animateRealDashboardData();
 
     if (!studentRef) {
-        loadNotifications();
+        loadNotifications({});
         return;
     }
 
     try {
         const snap = await getDoc(studentRef);
         const data = snap.exists() ? snap.data() : {};
+        window.__dashboardStudentData = data;
+        const cohort = resolveDashboardCohort(data);
+        if (cohort.key) document.body.dataset.studentCohort = cohort.key;
         const stats = getTrackedStats(data);
         setupTarget(data, stats);
     } catch (error) {
         console.error("Could not load student enhancement data:", error);
     }
 
-    loadNotifications();
-    loadLatestMonthlyPaper();
+    loadNotifications(window.__dashboardStudentData || {});
+    loadLatestMonthlyPaper(window.__dashboardStudentData || {});
 }
 
 init();
