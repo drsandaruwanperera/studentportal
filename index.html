@@ -18,7 +18,7 @@
     <meta name="description" content="Student Assessment Portal - Secure Student Login">
     <title>Student Assessment Portal</title>
     <link rel="stylesheet" href="style.css?v=mobile-login-fix-1">
-    <link rel="stylesheet" href="portal-theme.css?v=sky-glass-5">
+    <link rel="stylesheet" href="portal-theme.css?v=sky-glass-6">
     <script defer src="professional-theme-expiry.js?v=1" data-theme-css="login-professional-theme.css?v=input-contrast-1"></script>
     <link rel="stylesheet" href="https://drsandaruwanperera.lk/studentportal/christmas-theme.css?v=20261120-winter-blue">
     <script type="module" src="https://drsandaruwanperera.lk/studentportal/christmas-theme.js?v=20261120-winter-blue"></script>
@@ -92,7 +92,16 @@
 
     <section class="brand-panel">
         <div class="brand-content">
-            <div class="brand-logo"><img src="./icons/dr-sandaruwan-lms-192.png?v=approved-2026-11-21" alt="Dr. Sandaruwan LMS"></div>
+            <div class="brand-logo">
+                <img class="brand-logo-photo" src="./icons/dr-sandaruwan-lms-192.png?v=approved-2026-11-21" alt="Dr. Sandaruwan LMS">
+                <span class="brand-logo-desktop-mark" aria-hidden="true">
+                    <svg viewBox="0 0 48 48" role="presentation" focusable="false">
+                        <path d="M4 17.5 24 7l20 10.5L24 28 4 17.5Z" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round"/>
+                        <path d="M12 22.2v10.1c7.1 5.6 16.9 5.6 24 0V22.2M43.8 18v13" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/>
+                        <circle cx="43.8" cy="34.5" r="2.5" fill="currentColor"/>
+                    </svg>
+                </span>
+            </div>
             <div class="brand-label">STUDENT PORTAL</div>
 
             <h1>
@@ -634,6 +643,6 @@ openWhatsAppHelp?.addEventListener("click", openWhatsAppWidget);
 
 <script type="module" src="site-theme-runtime.js?v=6"></script>
 <script defer src="./pwa-install.js?v=2"></script>
-<link rel="stylesheet" href="./portal-theme.css?v=sky-glass-5" id="login-sky-glass-final">
+<link rel="stylesheet" href="./portal-theme.css?v=sky-glass-6" id="login-sky-glass-final">
 </body>
 </html>
