@@ -13,6 +13,7 @@ import { db, doc, onSnapshot } from "./firebase.js";
   let nextTimer = null;
 
   const brandStylesheetUrl = new URL("./brand-glass-theme.css?v=5", import.meta.url).href;
+  const loginStylesheetUrl = new URL("./login-professional-theme.css?v=approved-purple-glass-2", import.meta.url).href;
 
   function removeLegacyWinterBlueStyles() {
     document.documentElement.classList.remove("student-portal-winter-unified");
@@ -36,7 +37,18 @@ import { db, doc, onSnapshot } from "./firebase.js";
       document.head.appendChild(link);
     }
     link.href = brandStylesheetUrl;
-    document.head.appendChild(link); // Keep the brand lock as the final stylesheet in the cascade.
+    document.head.appendChild(link); // Keep the brand lock as the final shared stylesheet.
+    if (document.getElementById("loginBtn") || document.getElementById("lms-app-splash")) {
+      let loginLink = document.getElementById("lms-login-glass-theme-stylesheet");
+      if (!loginLink) {
+        loginLink = document.createElement("link");
+        loginLink.id = "lms-login-glass-theme-stylesheet";
+        loginLink.rel = "stylesheet";
+        document.head.appendChild(loginLink);
+      }
+      loginLink.href = loginStylesheetUrl;
+      document.head.appendChild(loginLink);
+    }
   }
 
   function isAutomaticChristmasSeason(now = new Date()) {
