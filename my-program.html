@@ -151,14 +151,14 @@ document.body.classList.add("dark-mode");localStorage.setItem("lmsTheme","dark")
 })();
 </script><script>
 (function(){
-  const norm = value => String(value || "").trim().toLowerCase().replace(/[\\s_-]+/g, "");
+  const norm = value => String(value || "").trim().toLowerCase().replace(/[\s_-]+/g, "");
   const studentType = norm(sessionStorage.getItem("studentType"));
   const studentGrade = norm(sessionStorage.getItem("studentGrade"));
   const studentId = String(sessionStorage.getItem("studentId") || "").trim().toUpperCase();
   const savedYear = String(sessionStorage.getItem("alYear") || "").match(/^20(27|28|29)$/)?.[0] || "";
   const context = String(sessionStorage.getItem("studentGrade") || "") + " " + String(sessionStorage.getItem("studentType") || "");
   const contextYear = context.match(/20(27|28|29)/);
-  const idYear = studentId.match(/^(?:A)?(27|28|29)\\d{3}$/) || studentId.match(/^(27|28|29)[CN]/);
+  const idYear = studentId.match(/^(?:A)?(27|28|29)\d{3}$/) || studentId.match(/^(27|28|29)[CN]/);
 
   let cohort = "unknown";
   if (studentType.includes("grade10") || studentType === "g10" || studentGrade.includes("grade10") || studentGrade === "10") {
@@ -168,8 +168,8 @@ document.body.classList.add("dark-mode");localStorage.setItem("lmsTheme","dark")
   } else {
     const isAL = ["al","alevel","advanced","advancedlevel"].includes(studentType) ||
       studentType.includes("advancedlevel") || studentGrade.includes("advancedlevel") ||
-      studentGrade.startsWith("al") || /advanced|a\\s*\\/\\s*l|alevel/i.test(context) ||
-      /^A2[789]\\d{3}$/.test(studentId) || /^(?:27|28|29)[CN]/.test(studentId) ||
+      studentGrade.startsWith("al") || /advanced|a\s*\\/\s*l|alevel/i.test(context) ||
+      /^A2[789]\d{3}$/.test(studentId) || /^(?:27|28|29)[CN]/.test(studentId) ||
       Boolean(savedYear || contextYear || idYear);
     if (isAL) cohort = "al";
   }
