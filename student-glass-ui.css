@@ -1533,3 +1533,401 @@ html.student-glass-ui body .study-buddy-launch-icon {
     max-height: min(460px,calc(100dvh - 190px)) !important;
   }
 }
+
+
+/* ==========================================================
+   MOBILE RESPONSIVE REFINEMENT
+   Fluid spacing, readable type and auto-fitting card layouts.
+   Presentation only — no data, auth or navigation logic.
+   ========================================================== */
+html.student-glass-ui body *,
+html.student-glass-ui body *::before,
+html.student-glass-ui body *::after {
+  box-sizing: border-box;
+}
+@media (max-width: 800px) {
+  html.student-glass-ui,
+  html.student-glass-ui body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip !important;
+  }
+  html.student-glass-ui body * {
+    min-width: 0;
+  }
+  html.student-glass-ui body :is(img,svg,video,canvas) {
+    max-width: 100%;
+  }
+  html.student-glass-ui body :is(h1,h2,h3,h4,p,small,strong),
+  html.student-glass-ui body :is(.portal-program-copy,.card,.notice,.support-card,.shared-header-brand,.result) {
+    overflow-wrap: anywhere;
+  }
+  html.student-glass-ui body {
+    padding-bottom: calc(100px + env(safe-area-inset-bottom)) !important;
+  }
+  html.student-glass-ui body :is(.main-content,.main,.lms-dashboard) {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+  }
+  html.student-glass-ui body :is(.main-content,.main) {
+    padding-left: clamp(12px, 3.5vw, 20px) !important;
+    padding-right: clamp(12px, 3.5vw, 20px) !important;
+  }
+  html.student-glass-ui body .lms-dashboard {
+    padding: 12px clamp(12px, 3.5vw, 20px) 108px !important;
+  }
+
+  /* Compact header, with enough room for the brand and touch controls. */
+  html.student-glass-ui body .shared-mobile-header {
+    min-height: 66px !important;
+    gap: 8px !important;
+    padding: 9px 12px !important;
+    padding-top: max(9px, env(safe-area-inset-top)) !important;
+  }
+  html.student-glass-ui body .shared-header-brand {
+    flex: 1 1 auto !important;
+    gap: 8px !important;
+    min-width: 0 !important;
+  }
+  html.student-glass-ui body .shared-header-brand img {
+    width: 36px !important;
+    height: 36px !important;
+    flex: 0 0 36px !important;
+  }
+  html.student-glass-ui body .shared-header-brand strong {
+    font-size: clamp(11px, 3.1vw, 13px) !important;
+    line-height: 1.2 !important;
+  }
+  html.student-glass-ui body .shared-header-brand small {
+    font-size: 8px !important;
+    letter-spacing: .75px !important;
+  }
+  html.student-glass-ui body .shared-header-action,
+  html.student-glass-ui body .shared-header-student {
+    width: 35px !important;
+    height: 35px !important;
+    flex: 0 0 35px !important;
+  }
+
+  /* Bottom navigation respects device safe areas and stays tappable. */
+  html.student-glass-ui body .shared-bottom-nav {
+    left: 10px !important;
+    right: 10px !important;
+    bottom: calc(8px + env(safe-area-inset-bottom)) !important;
+    min-height: 68px !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 2px !important;
+    padding: 6px 5px !important;
+    border-radius: 19px !important;
+  }
+  html.student-glass-ui body .shared-bottom-nav > a,
+  html.student-glass-ui body .shared-bottom-nav > button {
+    min-width: 0 !important;
+    min-height: 52px !important;
+    gap: 4px !important;
+    padding: 6px 2px !important;
+    font-size: 9px !important;
+    line-height: 1.15 !important;
+  }
+  html.student-glass-ui body .shared-bottom-nav svg {
+    width: 21px !important;
+    height: 21px !important;
+  }
+  html.student-glass-ui body .shared-floating-teacher {
+    width: 55px !important;
+    height: 55px !important;
+    margin-top: -20px !important;
+  }
+
+  /* Fluid, predictable grids: cards wrap instead of overflowing. */
+  html.student-glass-ui body .portal-program-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 10.25rem), 1fr)) !important;
+    gap: clamp(9px, 2.2vw, 13px) !important;
+  }
+  html.student-glass-ui body .portal-program-card {
+    display: grid !important;
+    grid-template-columns: 40px minmax(0, 1fr) !important;
+    align-items: start !important;
+    gap: 10px !important;
+    min-height: 126px !important;
+    height: auto !important;
+    padding: 14px !important;
+    border-radius: 18px !important;
+  }
+  html.student-glass-ui body .portal-program-icon {
+    width: 40px !important;
+    height: 40px !important;
+    flex: 0 0 40px !important;
+    border-radius: 13px !important;
+  }
+  html.student-glass-ui body .portal-program-icon svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+  html.student-glass-ui body .portal-program-copy {
+    min-width: 0 !important;
+    gap: 5px !important;
+  }
+  html.student-glass-ui body .portal-program-copy small {
+    font-size: 9px !important;
+    line-height: 1.3 !important;
+    letter-spacing: .7px !important;
+  }
+  html.student-glass-ui body .portal-program-copy strong {
+    font-size: clamp(12px, 3.2vw, 14px) !important;
+    line-height: 1.32 !important;
+  }
+  html.student-glass-ui body .portal-program-copy > span:not(.material-link) {
+    font-size: 10px !important;
+    line-height: 1.45 !important;
+  }
+  html.student-glass-ui body .material-link {
+    font-size: 10px !important;
+    line-height: 1.35 !important;
+  }
+  html.student-glass-ui body .portal-card-arrow {
+    display: none !important;
+  }
+
+  html.student-glass-ui body .grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)) !important;
+    gap: 11px !important;
+  }
+  html.student-glass-ui body .card {
+    min-height: 104px !important;
+    height: auto !important;
+    gap: 13px !important;
+    padding: 15px !important;
+    border-radius: 18px !important;
+  }
+  html.student-glass-ui body .card .ico {
+    width: 42px !important;
+    height: 42px !important;
+    flex: 0 0 42px !important;
+    border-radius: 13px !important;
+    font-size: 19px !important;
+  }
+  html.student-glass-ui body .card h3 {
+    font-size: 14px !important;
+    line-height: 1.35 !important;
+  }
+  html.student-glass-ui body .card p,
+  html.student-glass-ui body .card a {
+    font-size: 11px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Keep compact metric cards balanced on phone screens. */
+  html.student-glass-ui body :is(.lms-stat-grid,.stats) {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+  html.student-glass-ui body .lms-stat-card,
+  html.student-glass-ui body .stat {
+    min-width: 0 !important;
+    min-height: 102px !important;
+    padding: 13px !important;
+    border-radius: 17px !important;
+  }
+  html.student-glass-ui body .lms-stat-card strong,
+  html.student-glass-ui body .stat b {
+    font-size: clamp(20px, 5.7vw, 25px) !important;
+    line-height: 1.1 !important;
+  }
+  html.student-glass-ui body .lms-stat-card span,
+  html.student-glass-ui body .stat small,
+  html.student-glass-ui body .stat span {
+    font-size: 10px !important;
+    line-height: 1.35 !important;
+  }
+  html.student-glass-ui body .lms-stat-icon {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 16px !important;
+  }
+
+  /* Use full-width stacked panels where two narrow columns hurt legibility. */
+  html.student-glass-ui body :is(.lms-dashboard-grid,.performance-grid,.support-grid,.shared-agenda-grid) {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 12px !important;
+  }
+  html.student-glass-ui body .shared-calendar-card {
+    padding: 14px !important;
+    border-radius: 18px !important;
+  }
+  html.student-glass-ui body .shared-calendar-head strong {
+    font-size: 13px !important;
+  }
+  html.student-glass-ui body :is(.shared-calendar-weekday,.shared-calendar-day,.shared-calendar-empty) {
+    min-height: 30px !important;
+    font-size: 10px !important;
+  }
+  html.student-glass-ui body .exam-focus {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 12px !important;
+    padding: 16px !important;
+  }
+  html.student-glass-ui body .exam-copy .exam-kicker { font-size: 9px !important; }
+  html.student-glass-ui body .exam-copy h3 { font-size: 16px !important; }
+  html.student-glass-ui body .exam-copy p { font-size: 11px !important; line-height: 1.5 !important; }
+  html.student-glass-ui body .exam-link { font-size: 10px !important; }
+  html.student-glass-ui body .timer-unit { padding: 9px 5px !important; }
+  html.student-glass-ui body .timer-unit strong { font-size: 20px !important; }
+  html.student-glass-ui body .timer-unit small { font-size: 9px !important; }
+
+  html.student-glass-ui body .dashboard-learning-banner {
+    grid-template-columns: minmax(0, 1fr) clamp(76px, 23vw, 106px) !important;
+    min-height: 166px !important;
+    gap: 11px !important;
+    padding: 17px !important;
+    border-radius: 22px !important;
+  }
+  html.student-glass-ui body .shared-dashboard-greeting {
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+  }
+  html.student-glass-ui body .learning-banner-copy > span {
+    font-size: 9px !important;
+    line-height: 1.35 !important;
+    letter-spacing: .8px !important;
+  }
+  html.student-glass-ui body .learning-banner-copy h2 {
+    font-size: clamp(18px, 5vw, 22px) !important;
+    line-height: 1.18 !important;
+  }
+  html.student-glass-ui body .learning-banner-copy p {
+    font-size: 11px !important;
+    line-height: 1.45 !important;
+  }
+  html.student-glass-ui body .shared-banner-portrait {
+    width: clamp(76px, 23vw, 106px) !important;
+    height: clamp(100px, 29vw, 124px) !important;
+    border-radius: 16px !important;
+  }
+
+  html.student-glass-ui body .top {
+    align-items: flex-start !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    padding: 14px !important;
+  }
+  html.student-glass-ui body .top h1 { font-size: clamp(20px, 5vw, 24px) !important; }
+  html.student-glass-ui body .top p { font-size: 11px !important; line-height: 1.45 !important; }
+
+  html.student-glass-ui body .results,
+  html.student-glass-ui body .panel,
+  html.student-glass-ui body .support-card,
+  html.student-glass-ui body .shared-next-event-placeholder {
+    min-width: 0 !important;
+    padding: 16px !important;
+    border-radius: 18px !important;
+  }
+  html.student-glass-ui body .result-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 10px !important;
+  }
+  html.student-glass-ui body .result {
+    min-width: 0 !important;
+    padding: 13px !important;
+    border-radius: 15px !important;
+  }
+  html.student-glass-ui body .result-top span,
+  html.student-glass-ui body .result-main small { font-size: 10px !important; }
+  html.student-glass-ui body .score { font-size: 24px !important; }
+
+  html.student-glass-ui body .notice {
+    min-width: 0 !important;
+    gap: 12px !important;
+    padding: 14px !important;
+    border-radius: 17px !important;
+  }
+  html.student-glass-ui body .notice i {
+    width: 40px !important;
+    height: 40px !important;
+    flex: 0 0 40px !important;
+    font-size: 18px !important;
+  }
+  html.student-glass-ui body .notice h3 { font-size: 14px !important; line-height: 1.4 !important; }
+  html.student-glass-ui body .notice p { font-size: 12px !important; line-height: 1.6 !important; }
+  html.student-glass-ui body .shared-announcement-filters {
+    display: flex !important;
+    gap: 7px !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    padding: 2px 1px 7px !important;
+    scrollbar-width: none !important;
+  }
+  html.student-glass-ui body .shared-announcement-filters button {
+    min-height: 36px !important;
+    flex: 0 0 auto !important;
+    font-size: 11px !important;
+  }
+
+  html.student-glass-ui body .support-card h2 { font-size: 18px !important; }
+  html.student-glass-ui body .support-card p { font-size: 12px !important; line-height: 1.6 !important; }
+  html.student-glass-ui body .chat {
+    min-width: 0 !important;
+    gap: 10px !important;
+    padding: 13px !important;
+  }
+  html.student-glass-ui body .chat b { font-size: 12px !important; }
+  html.student-glass-ui body .chat span { font-size: 10px !important; line-height: 1.4 !important; }
+  html.student-glass-ui body .chat a {
+    min-height: 40px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    padding: 9px 13px !important;
+    font-size: 11px !important;
+  }
+  html.student-glass-ui body :is(button,a,[role="button"]) {
+    -webkit-tap-highlight-color: transparent;
+  }
+  html.student-glass-ui body :is(input,select,textarea) {
+    width: 100%;
+    max-width: 100%;
+    font-size: 16px !important;
+  }
+}
+@media (max-width: 390px) {
+  html.student-glass-ui body .shared-mobile-header { gap: 6px !important; padding-left: 10px !important; padding-right: 10px !important; }
+  html.student-glass-ui body .shared-header-action,
+  html.student-glass-ui body .shared-header-student { width: 32px !important; height: 32px !important; flex-basis: 32px !important; }
+  html.student-glass-ui body .shared-header-brand strong { font-size: 11px !important; }
+  html.student-glass-ui body .portal-program-card { padding: 12px !important; gap: 8px !important; }
+  html.student-glass-ui body .portal-program-icon { width: 36px !important; height: 36px !important; }
+  html.student-glass-ui body .portal-program-copy strong { font-size: 12px !important; }
+  html.student-glass-ui body .shared-bottom-nav > a,
+  html.student-glass-ui body .shared-bottom-nav > button { font-size: 8px !important; }
+  html.student-glass-ui body .shared-floating-teacher { width: 51px !important; height: 51px !important; }
+}
+@media (max-width: 350px) {
+  html.student-glass-ui body .portal-program-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  html.student-glass-ui body .shared-bottom-nav { left: 7px !important; right: 7px !important; }
+  html.student-glass-ui body .shared-bottom-nav > a,
+  html.student-glass-ui body .shared-bottom-nav > button { font-size: 8px !important; }
+  html.student-glass-ui body .shared-header-brand small { display: none !important; }
+  html.student-glass-ui body .dashboard-learning-banner {
+    grid-template-columns: minmax(0,1fr) 72px !important;
+    gap: 8px !important;
+  }
+  html.student-glass-ui body .shared-banner-portrait {
+    width: 72px !important;
+    height: 96px !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.student-glass-ui body .portal-program-card,
+  html.student-glass-ui body .shared-bottom-nav * {
+    transition: none !important;
+  }
+}
