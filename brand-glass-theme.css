@@ -795,3 +795,53 @@ html.lms-brand-glass body #christmas-garland{display:block!important;opacity:.62
 @media(prefers-reduced-motion:reduce){
   html.lms-brand-glass body #christmas-snowfall .xmas-snowflake{animation:none!important}
 }
+
+
+/* Inline legacy section components: normalize their active states too. */
+html.lms-brand-glass body :is(.theme,.theme-toggle,.theme-switcher){
+  color:#f4f7ff!important;
+  background:rgba(17,24,43,.82)!important;
+  border-color:rgba(186,174,255,.24)!important;
+  box-shadow:0 12px 28px rgba(0,0,0,.24)!important;
+  -webkit-backdrop-filter:blur(18px)!important;
+  backdrop-filter:blur(18px)!important;
+}
+html.lms-brand-glass body :is(.theme button,.theme-toggle button,.theme-switcher button){
+  color:#c4b5fd!important;background:transparent!important;border-color:transparent!important;
+}
+html.lms-brand-glass body :is(.theme button.active,.theme-toggle button.active,.theme-switcher button.active){
+  color:#0b1020!important;background:linear-gradient(110deg,#a6ff2e,#d1ff75)!important;
+}
+html.lms-brand-glass body :is(.back,.profile-back,.notice i,.support-icon,.ico,.feature-icon,.about-icon,.program-icon,.resource-icon,.big-stat-icon,.schedule-icon){
+  color:#c4b5fd!important;
+  background:rgba(91,75,255,.20)!important;
+  border-color:rgba(186,174,255,.24)!important;
+}
+html.lms-brand-glass body :is(.tag,.badge,.pill,.status-chip,.results-count,.panel-badge){
+  color:#c4b5fd!important;
+  background:rgba(91,75,255,.16)!important;
+  border:1px solid rgba(186,174,255,.24)!important;
+}
+html.lms-brand-glass body :is(.chat a,.message-action,.support-card a.primary,.whatsapp-action){
+  color:#0b1020!important;
+  background:linear-gradient(110deg,#a6ff2e,#d1ff75)!important;
+  border:1px solid rgba(220,255,170,.72)!important;
+}
+html.lms-brand-glass body :is(.score,.hero-score,.hero-score strong,.big-stat-number,.stat-number,.result-main .score){
+  color:#a6ff2e!important;
+}
+html.lms-brand-glass body :is(.score small,.hint,.empty,.rname,.result-body small){
+  color:#aeb8ce!important;
+}
+html.lms-brand-glass body :is(.track,.mini-track,.bar-track,.result-progress){
+  background:rgba(196,181,253,.12)!important;
+  border-color:rgba(186,174,255,.22)!important;
+}
+html.lms-brand-glass body :is(.fill,.bar-track span,.result-progress span){
+  background:linear-gradient(90deg,#5b4bff,#a6ff2e)!important;
+}
+html.lms-brand-glass body :is(.support-card.green,.notice,.empty){
+  color:#f4f7ff!important;
+  background:linear-gradient(145deg,rgba(34,29,78,.82),rgba(13,19,39,.86))!important;
+  border-color:rgba(186,174,255,.24)!important;
+}
