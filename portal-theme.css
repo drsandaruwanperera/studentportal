@@ -439,3 +439,414 @@ html body .login-wrapper .login-panel .input-wrapper input#password::selection {
     background: rgba(166, 255, 46, .35);
     color: #ffffff;
 }
+
+
+/* FINAL STUDENT LOGIN — light sky-blue glass experience */
+:root {
+  --portal-sky: #4ca7d1;
+  --portal-sky-dark: #247fae;
+  --portal-sky-ink: #17384f;
+  --portal-sky-muted: #69869a;
+  --portal-sky-line: #d7eaf3;
+}
+html, body {
+  min-height: 100% !important;
+  color-scheme: light !important;
+  background:
+    radial-gradient(ellipse at 10% 4%,rgba(255,255,255,.98),transparent 37%),
+    radial-gradient(ellipse at 96% 92%,rgba(101,184,216,.16),transparent 34%),
+    linear-gradient(145deg,#eef8fc 0%,#e2f2f8 54%,#f5fafc 100%) !important;
+  color: var(--portal-sky-ink) !important;
+}
+body {
+  min-height: 100vh !important;
+  min-height: 100svh !important;
+  overflow-x: hidden !important;
+  font-family: Inter,"Segoe UI",Arial,sans-serif !important;
+}
+.login-wrapper {
+  width: min(1120px,calc(100% - 36px)) !important;
+  min-height: 0 !important;
+  margin: clamp(18px,4vh,42px) auto !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(255,255,255,.96) !important;
+  border-radius: 26px !important;
+  background: rgba(255,255,255,.9) !important;
+  box-shadow: 0 26px 70px rgba(36,100,132,.15),inset 0 1px 0 rgba(255,255,255,.95) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(1.25) !important;
+  backdrop-filter: blur(20px) saturate(1.25) !important;
+}
+.brand-panel {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  border-right: 1px solid rgba(255,255,255,.28) !important;
+  background:
+    radial-gradient(circle at 90% 12%,rgba(255,255,255,.2),transparent 26%),
+    radial-gradient(circle at 12% 90%,rgba(124,218,245,.2),transparent 34%),
+    linear-gradient(145deg,#69b5e4 0%,#4a96ca 48%,#367eaf 100%) !important;
+}
+.brand-panel:before,.brand-panel:after {
+  border-color: rgba(255,255,255,.16) !important;
+  pointer-events: none !important;
+}
+.brand-logo,.mobile-logo {
+  display: grid !important;
+  place-items: center !important;
+  width: 58px !important;
+  height: 58px !important;
+  margin-bottom: 19px !important;
+  border: 1px solid rgba(255,255,255,.76) !important;
+  border-radius: 17px !important;
+  background: linear-gradient(145deg,rgba(255,255,255,.9),rgba(225,244,252,.76)) !important;
+  color: #245d7b !important;
+  box-shadow: 0 11px 25px rgba(25,81,118,.15),inset 0 1px 0 rgba(255,255,255,.9) !important;
+  font-size: 28px !important;
+}
+.brand-label,.welcome-label {
+  color: #eaf8ff !important;
+  font-size: 9px !important;
+  font-weight: 900 !important;
+  letter-spacing: 1.8px !important;
+}
+.brand-content h1 {
+  margin: 14px 0 10px !important;
+  color: #fff !important;
+  font-size: clamp(32px,4vw,52px) !important;
+  font-weight: 900 !important;
+  letter-spacing: -2px !important;
+  line-height: 1.08 !important;
+  text-shadow: 0 2px 15px rgba(29,76,111,.1) !important;
+}
+.brand-content h1 span { color: #e5f8ff !important; }
+.brand-description {
+  max-width: 450px !important;
+  color: rgba(248,253,255,.92) !important;
+  font-size: 13px !important;
+  line-height: 1.7 !important;
+}
+.features {
+  display: grid !important;
+  grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  gap: 10px !important;
+  margin-top: 23px !important;
+}
+.feature {
+  min-width: 0 !important;
+  padding: 11px !important;
+  border: 1px solid rgba(255,255,255,.28) !important;
+  border-radius: 14px !important;
+  background: rgba(239,250,255,.14) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  backdrop-filter: blur(12px) !important;
+}
+.feature-icon {
+  border: 1px solid rgba(255,255,255,.4) !important;
+  border-radius: 10px !important;
+  background: rgba(255,255,255,.2) !important;
+  color: #fff !important;
+}
+.feature strong { color: #fff !important; }
+.feature span { color: rgba(245,252,255,.88) !important; }
+.brand-footer {
+  color: rgba(247,253,255,.92) !important;
+  font-size: 10px !important;
+}
+.secure-dot {
+  background: #c7f5dc !important;
+  box-shadow: 0 0 0 4px rgba(204,255,228,.2),0 0 14px rgba(255,255,255,.5) !important;
+}
+.login-panel {
+  min-width: 0 !important;
+  background: linear-gradient(145deg,rgba(255,255,255,.98),rgba(247,252,254,.96)) !important;
+  padding: clamp(28px,4vw,52px) clamp(23px,4.4vw,62px) !important;
+}
+.login-card { width: 100% !important; max-width: 430px !important; margin: 0 auto !important; }
+.mobile-logo { display: none !important; }
+.login-header { margin-bottom: 24px !important; }
+.login-header h2 {
+  color: #18384f !important;
+  font-size: clamp(27px,3vw,34px) !important;
+  font-weight: 900 !important;
+  letter-spacing: -1.25px !important;
+}
+.login-header p {
+  margin-top: 8px !important;
+  color: #6c8799 !important;
+  font-size: 12px !important;
+  line-height: 1.65 !important;
+}
+.form-group { margin-bottom: 15px !important; }
+.form-group label,.password-label-row label {
+  color: #385b72 !important;
+  font-size: 10px !important;
+  font-weight: 850 !important;
+}
+.input-wrapper {
+  min-width: 0 !important;
+  border: 1px solid #cfe2ec !important;
+  border-radius: 13px !important;
+  background: rgba(255,255,255,.97) !important;
+  box-shadow: 0 4px 12px rgba(38,101,132,.045) !important;
+  transition: border-color .18s ease,box-shadow .18s ease,transform .18s ease !important;
+}
+.input-wrapper:focus-within {
+  border-color: #59acd1 !important;
+  background: #fff !important;
+  box-shadow: 0 0 0 4px rgba(76,167,209,.13),0 6px 17px rgba(38,101,132,.08) !important;
+  transform: translateY(-1px);
+}
+.input-wrapper input,
+html body .login-wrapper .login-panel .input-wrapper input#studentId,
+html body .login-wrapper .login-panel .input-wrapper input#password {
+  min-width: 0 !important;
+  height: 51px !important;
+  border: 0 !important;
+  border-radius: 12px !important;
+  outline: 0 !important;
+  background: transparent !important;
+  color: #1b4058 !important;
+  -webkit-text-fill-color: #1b4058 !important;
+  caret-color: #278bb8 !important;
+  color-scheme: light !important;
+  box-shadow: none !important;
+  font-size: 12px !important;
+  opacity: 1 !important;
+}
+.input-wrapper input::placeholder,
+html body .login-wrapper .login-panel .input-wrapper input#studentId::placeholder,
+html body .login-wrapper .login-panel .input-wrapper input#password::placeholder {
+  color: #8aa2b1 !important;
+  -webkit-text-fill-color: #8aa2b1 !important;
+  opacity: 1 !important;
+}
+.input-wrapper input:-webkit-autofill,
+.input-wrapper input:-webkit-autofill:hover,
+.input-wrapper input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #1b4058 !important;
+  caret-color: #278bb8 !important;
+  -webkit-box-shadow: 0 0 0 1000px #f7fcfe inset !important;
+  box-shadow: 0 0 0 1000px #f7fcfe inset !important;
+  background-color: #f7fcfe !important;
+  color-scheme: light !important;
+}
+.input-icon { color: #5a9dbb !important; filter: none !important; }
+.toggle-password {
+  border-radius: 9px !important;
+  color: #5b849a !important;
+  background: transparent !important;
+}
+.toggle-password:hover { background: #eaf6fb !important; }
+.login-btn,#loginBtn.login-btn {
+  min-height: 51px !important;
+  height: 51px !important;
+  margin-top: 4px !important;
+  border: 1px solid rgba(255,255,255,.76) !important;
+  border-radius: 13px !important;
+  background: linear-gradient(110deg,#58b3d9,#2d91c0) !important;
+  color: #fff !important;
+  box-shadow: 0 10px 23px rgba(42,139,186,.22) !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  transition: transform .18s ease,box-shadow .18s ease,filter .18s ease !important;
+}
+.login-btn:hover,#loginBtn.login-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 15px 29px rgba(42,139,186,.28) !important;
+  filter: brightness(1.03);
+}
+.login-btn:active,#loginBtn.login-btn:active { transform: translateY(0) !important; }
+.login-arrow { color: #e5f8ff !important; }
+.recovery-reset-trigger {
+  display: block !important;
+  margin: 12px auto 0 !important;
+  padding: 6px 8px !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: #58839c !important;
+  font-size: 10px !important;
+  font-weight: 650 !important;
+  box-shadow: none !important;
+}
+.recovery-reset-trigger strong { color: #2585b2 !important; font-weight: 900 !important; }
+.message { color: #b74e5d !important; font-size: 10px !important; line-height: 1.5 !important; }
+.support-box {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 11px !important;
+  margin-top: 13px !important;
+  padding: 13px !important;
+  border: 1px solid #dcecf3 !important;
+  border-radius: 15px !important;
+  background: linear-gradient(145deg,#fff,#f1f9fc) !important;
+  color: #274b62 !important;
+  box-shadow: 0 7px 18px rgba(44,110,138,.06) !important;
+}
+.support-icon,.note-icon {
+  flex: 0 0 36px !important;
+  width: 36px !important;
+  height: 36px !important;
+  border: 1px solid #d2eaf3 !important;
+  border-radius: 11px !important;
+  background: #e5f5fb !important;
+  color: #378fb6 !important;
+}
+.support-content strong,.note-header { color: #23475e !important; font-size: 10px !important; }
+.support-content span,.login-note p { color: #728c9c !important; font-size: 9px !important; line-height: 1.5 !important; }
+.open-whatsapp-help {
+  margin-top: 7px !important;
+  padding: 7px 9px !important;
+  border: 1px solid #c9e6f1 !important;
+  border-radius: 9px !important;
+  background: #eaf7fb !important;
+  color: #2b86ad !important;
+  font-size: 9px !important;
+  font-weight: 850 !important;
+  box-shadow: none !important;
+}
+.login-footer {
+  margin-top: 17px !important;
+  padding-top: 12px !important;
+  border-color: #e3edf2 !important;
+  color: #8aa0ad !important;
+  font-size: 8px !important;
+}
+.whatsapp-widget {
+  border: 1px solid rgba(255,255,255,.95) !important;
+  border-radius: 19px !important;
+  background: rgba(248,253,255,.97) !important;
+  color: #244b63 !important;
+  box-shadow: 0 18px 48px rgba(33,94,122,.2) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  backdrop-filter: blur(20px) !important;
+}
+.whatsapp-widget-header { border-color: #dcecf3 !important; }
+.whatsapp-brand strong { color: #23485f !important; }
+.whatsapp-brand span { color: #5e9bb6 !important; }
+.whatsapp-welcome {
+  border-color: #cfe8f1 !important;
+  background: linear-gradient(135deg,#e9f7fc,#d9eff7) !important;
+}
+.whatsapp-welcome h3,.whatsapp-team h3 { color: #21465e !important; }
+.whatsapp-welcome p,.whatsapp-status { color: #668397 !important; }
+.whatsapp-agent {
+  border: 1px solid #dcecf3 !important;
+  border-radius: 13px !important;
+  background: #f7fbfd !important;
+}
+.agent-info strong { color: #294d64 !important; }
+.agent-info span { color: #7691a2 !important; }
+.whatsapp-widget-footer {
+  border-color: #dcecf3 !important;
+  background: #eaf6fb !important;
+}
+.whatsapp-widget-footer span { color: #4f7d94 !important; }
+.whatsapp-widget-footer span:first-child { background: rgba(65,158,196,.12) !important; }
+.whatsapp-fab {
+  border: 2px solid rgba(255,255,255,.9) !important;
+  box-shadow: 0 11px 27px rgba(21,85,111,.24) !important;
+}
+@media(max-width:850px) {
+  .login-wrapper {
+    width: min(620px,calc(100% - 28px)) !important;
+    min-height: 0 !important;
+    margin: 16px auto !important;
+    grid-template-columns: minmax(0,1fr) !important;
+    border-radius: 22px !important;
+  }
+  .brand-panel {
+    display: flex !important;
+    padding: 23px 24px 20px !important;
+    border: 0 !important;
+    border-bottom: 1px solid rgba(255,255,255,.4) !important;
+  }
+  .brand-panel:after { inset: 10px !important; border-radius: 14px !important; }
+  .brand-logo { width: 46px !important; height: 46px !important; margin-bottom: 12px !important; font-size: 23px !important; }
+  .brand-content h1 { margin: 8px 0 !important; font-size: clamp(29px,6vw,39px) !important; letter-spacing: -1.3px !important; }
+  .brand-description { max-width: 540px !important; margin: 8px 0 0 !important; font-size: 11px !important; }
+  .features { display: none !important; }
+  .brand-footer { margin-top: 12px !important; font-size: 9px !important; }
+  .login-panel { padding: 23px 25px 23px !important; }
+  .login-card { max-width: 490px !important; }
+  .login-header { margin-bottom: 19px !important; }
+  .login-header h2 { font-size: 26px !important; }
+  .form-group { margin-bottom: 13px !important; }
+}
+@media(max-width:560px) {
+  body {
+    padding: 0 0 calc(112px + env(safe-area-inset-bottom)) !important;
+    background: linear-gradient(150deg,#eaf7fc,#f8fcfe) !important;
+  }
+  .login-wrapper {
+    width: calc(100% - 20px) !important;
+    margin: 10px auto 0 !important;
+    border: 1px solid rgba(255,255,255,.96) !important;
+    border-radius: 21px !important;
+    box-shadow: 0 17px 38px rgba(39,104,136,.12) !important;
+  }
+  .brand-panel { padding: 20px 18px 18px !important; }
+  .brand-panel:after { inset: 8px !important; border-radius: 14px !important; }
+  .brand-logo { width: 41px !important; height: 41px !important; margin-bottom: 9px !important; border-radius: 12px !important; font-size: 21px !important; }
+  .brand-label { font-size: 8px !important; letter-spacing: 1.3px !important; }
+  .brand-content h1 { margin: 7px 0 !important; font-size: 27px !important; line-height: 1.1 !important; letter-spacing: -1px !important; }
+  .brand-description { max-width: 400px !important; font-size: 10px !important; line-height: 1.5 !important; }
+  .brand-footer { margin-top: 10px !important; font-size: 8px !important; }
+  .login-panel { padding: 21px 18px 19px !important; }
+  .login-header { margin-bottom: 17px !important; }
+  .login-header h2 { font-size: 24px !important; letter-spacing: -.9px !important; }
+  .login-header p { margin-top: 5px !important; font-size: 10px !important; line-height: 1.5 !important; }
+  .form-group { margin-bottom: 12px !important; }
+  .form-group label { font-size: 9px !important; }
+  .input-wrapper input,
+  html body .login-wrapper .login-panel .input-wrapper input#studentId,
+  html body .login-wrapper .login-panel .input-wrapper input#password {
+    height: 47px !important;
+    font-size: 11px !important;
+  }
+  .login-btn,#loginBtn.login-btn { min-height: 47px !important; height: 47px !important; font-size: 11px !important; }
+  .recovery-reset-trigger { margin-top: 8px !important; font-size: 9px !important; }
+  .support-box { margin-top: 10px !important; padding: 10px !important; }
+  .support-icon { width: 31px !important; height: 31px !important; flex-basis: 31px !important; }
+  .support-content strong { font-size: 9px !important; }
+  .support-content span { font-size: 8px !important; }
+  .open-whatsapp-help { margin-top: 5px !important; font-size: 8px !important; }
+  .login-footer { margin-top: 12px !important; padding-top: 9px !important; font-size: 7px !important; }
+  .pwa-install-widget {
+    left: 10px !important;
+    right: auto !important;
+    bottom: calc(10px + env(safe-area-inset-bottom)) !important;
+    z-index: 2600 !important;
+  }
+  .pwa-install-button {
+    min-height: 38px !important;
+    padding: 0 11px !important;
+    border: 1px solid rgba(255,255,255,.9) !important;
+    border-radius: 12px !important;
+    background: linear-gradient(135deg,#e9f7fc,#ccebf5) !important;
+    color: #276781 !important;
+    box-shadow: 0 7px 18px rgba(36,110,144,.16) !important;
+    font-size: 9px !important;
+  }
+  .pwa-install-icon { font-size: 14px !important; }
+  .whatsapp-fab {
+    right: 10px !important;
+    bottom: calc(10px + env(safe-area-inset-bottom)) !important;
+    width: 43px !important;
+    height: 43px !important;
+    z-index: 2601 !important;
+  }
+  .whatsapp-fab svg { width: 21px !important; height: 21px !important; }
+  .whatsapp-widget {
+    right: 10px !important;
+    bottom: calc(62px + env(safe-area-inset-bottom)) !important;
+    left: 10px !important;
+    width: auto !important;
+    max-height: min(70svh,560px) !important;
+    overflow-y: auto !important;
+    z-index: 2602 !important;
+  }
+}
+@media(prefers-reduced-motion:reduce) {
+  .login-wrapper,.feature,.login-btn,.input-wrapper { transition: none !important; animation: none !important; }
+}
