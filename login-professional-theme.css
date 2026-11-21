@@ -65,3 +65,396 @@ html body .login-wrapper .login-panel .input-wrapper input#password::selection {
     background: rgba(166, 255, 46, .35);
     color: #ffffff;
 }
+
+
+/* ==========================================================
+   APPROVED LOGIN + APP LOADING FINISH
+   Dr. Sandaruwan Brand Palette:
+   Navy #0b1020 · Purple #5b4bff · Violet #7c3aed
+   Lime #a6ff2e · White #f4f7ff
+   Presentation only; authentication and recovery are unchanged.
+========================================================== */
+
+html.lms-brand-glass body .login-wrapper{
+  width:min(1120px,calc(100% - 40px))!important;
+  min-height:min(680px,calc(100svh - 36px))!important;
+  margin:18px auto!important;
+  grid-template-columns:minmax(0,1.03fr) minmax(0,.97fr)!important;
+  background:linear-gradient(145deg,rgba(17,24,43,.94),rgba(11,16,32,.96))!important;
+  border:1px solid rgba(196,181,253,.32)!important;
+  border-radius:26px!important;
+  box-shadow:0 30px 90px rgba(0,0,0,.48),0 0 42px rgba(91,75,255,.13),inset 0 1px rgba(255,255,255,.08)!important;
+  -webkit-backdrop-filter:blur(22px) saturate(145%)!important;
+  backdrop-filter:blur(22px) saturate(145%)!important;
+}
+html.lms-brand-glass body .brand-panel{
+  background:
+    radial-gradient(circle at 86% 12%,rgba(166,255,46,.11),transparent 25%),
+    radial-gradient(circle at 14% 92%,rgba(124,58,237,.32),transparent 38%),
+    linear-gradient(145deg,#241b65 0%,#302078 45%,#17153d 100%)!important;
+  border-right:1px solid rgba(196,181,253,.22)!important;
+  padding:clamp(28px,4vw,54px)!important;
+}
+html.lms-brand-glass body .brand-panel::before,
+html.lms-brand-glass body .brand-panel::after{
+  border-color:rgba(196,181,253,.22)!important;
+  box-shadow:0 0 34px rgba(91,75,255,.08)!important;
+}
+html.lms-brand-glass body .brand-logo,
+html.lms-brand-glass body .mobile-logo{
+  background:linear-gradient(145deg,#a6ff2e,#d1ff75)!important;
+  border:1px solid rgba(220,255,170,.75)!important;
+  color:#0b1020!important;
+  box-shadow:0 10px 28px rgba(166,255,46,.20),0 0 20px rgba(166,255,46,.12),inset 0 1px rgba(255,255,255,.45)!important;
+}
+html.lms-brand-glass body .brand-label,
+html.lms-brand-glass body .welcome-label{
+  color:#a6ff2e!important;
+}
+html.lms-brand-glass body .brand-content h1{
+  color:#f4f7ff!important;
+  text-shadow:0 0 28px rgba(196,181,253,.10)!important;
+}
+html.lms-brand-glass body .brand-content h1 span{
+  color:#c4b5fd!important;
+}
+html.lms-brand-glass body .brand-description{
+  color:#c6cce0!important;
+}
+html.lms-brand-glass body .feature{
+  background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(91,75,255,.095))!important;
+  border:1px solid rgba(196,181,253,.24)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.06),0 10px 24px rgba(0,0,0,.12)!important;
+  -webkit-backdrop-filter:blur(14px)!important;
+  backdrop-filter:blur(14px)!important;
+}
+html.lms-brand-glass body .feature:hover{
+  border-color:rgba(166,255,46,.42)!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(91,75,255,.15))!important;
+}
+html.lms-brand-glass body .feature-icon{
+  background:rgba(91,75,255,.30)!important;
+  border:1px solid rgba(196,181,253,.26)!important;
+  color:#d8ccff!important;
+}
+html.lms-brand-glass body .feature strong{color:#f4f7ff!important}
+html.lms-brand-glass body .feature span{color:#b9c1d6!important}
+html.lms-brand-glass body .brand-footer{color:#dbe2f4!important}
+html.lms-brand-glass body .secure-dot{
+  background:#a6ff2e!important;
+  box-shadow:0 0 0 4px rgba(166,255,46,.13),0 0 16px rgba(166,255,46,.42)!important;
+}
+
+html.lms-brand-glass body .login-panel{
+  min-width:0!important;
+  padding:clamp(28px,4vw,50px) clamp(24px,4vw,54px)!important;
+  background:
+    radial-gradient(circle at 92% 6%,rgba(124,58,237,.16),transparent 33%),
+    linear-gradient(145deg,rgba(20,25,49,.97),rgba(11,16,32,.98))!important;
+}
+html.lms-brand-glass body .login-card{
+  width:100%!important;
+  max-width:430px!important;
+}
+html.lms-brand-glass body .login-header h2{
+  color:#f4f7ff!important;
+}
+html.lms-brand-glass body .login-header p{
+  color:#aeb8ce!important;
+}
+html.lms-brand-glass body .form-group label,
+html.lms-brand-glass body .password-label-row label{
+  color:#dce3f4!important;
+}
+html.lms-brand-glass body .input-wrapper{
+  background:rgba(8,13,27,.82)!important;
+  border:1px solid rgba(186,174,255,.30)!important;
+  border-radius:13px!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.035),0 8px 20px rgba(0,0,0,.15)!important;
+}
+html.lms-brand-glass body .input-wrapper:focus-within{
+  background:rgba(8,13,27,.92)!important;
+  border-color:#a6ff2e!important;
+  box-shadow:0 0 0 4px rgba(166,255,46,.10),0 10px 24px rgba(0,0,0,.18)!important;
+}
+html.lms-brand-glass body .login-wrapper .login-panel .input-wrapper input#studentId,
+html.lms-brand-glass body .login-wrapper .login-panel .input-wrapper input#password{
+  height:52px!important;
+  background:transparent!important;
+  border:0!important;
+  color:#f4f7ff!important;
+  -webkit-text-fill-color:#f4f7ff!important;
+  caret-color:#a6ff2e!important;
+  color-scheme:dark!important;
+  box-shadow:none!important;
+  opacity:1!important;
+}
+html.lms-brand-glass body .login-wrapper .login-panel .input-wrapper input#studentId::placeholder,
+html.lms-brand-glass body .login-wrapper .login-panel .input-wrapper input#password::placeholder{
+  color:#8f9bb5!important;
+  -webkit-text-fill-color:#8f9bb5!important;
+  opacity:1!important;
+}
+html.lms-brand-glass body .login-wrapper .login-panel .input-wrapper input#studentId:-webkit-autofill,
+html.lms-brand-glass body .login-wrapper .login-panel .input-wrapper input#password:-webkit-autofill,
+html.lms-brand-glass body .login-wrapper .login-panel .input-wrapper input#studentId:-webkit-autofill:hover,
+html.lms-brand-glass body .login-wrapper .login-panel .input-wrapper input#password:-webkit-autofill:hover,
+html.lms-brand-glass body .login-wrapper .login-panel .input-wrapper input#studentId:-webkit-autofill:focus,
+html.lms-brand-glass body .login-wrapper .login-panel .input-wrapper input#password:-webkit-autofill:focus{
+  -webkit-text-fill-color:#f4f7ff!important;
+  caret-color:#a6ff2e!important;
+  -webkit-box-shadow:0 0 0 1000px #0b1020 inset!important;
+  box-shadow:0 0 0 1000px #0b1020 inset!important;
+  background-color:#0b1020!important;
+  color-scheme:dark!important;
+}
+html.lms-brand-glass body .input-icon,
+html.lms-brand-glass body .toggle-password{
+  color:#c4b5fd!important;
+}
+html.lms-brand-glass body .toggle-password:hover{
+  background:rgba(196,181,253,.12)!important;
+}
+html.lms-brand-glass body .login-btn,
+html.lms-brand-glass body #loginBtn.login-btn{
+  min-height:52px!important;
+  height:52px!important;
+  border:1px solid rgba(220,255,170,.78)!important;
+  border-radius:13px!important;
+  background:linear-gradient(110deg,#a6ff2e,#d1ff75)!important;
+  color:#0b1020!important;
+  font-weight:950!important;
+  box-shadow:0 10px 27px rgba(166,255,46,.19),0 0 20px rgba(166,255,46,.08),inset 0 1px rgba(255,255,255,.45)!important;
+}
+html.lms-brand-glass body .login-btn span,
+html.lms-brand-glass body #loginBtn.login-btn span,
+html.lms-brand-glass body .login-arrow{
+  color:#0b1020!important;
+}
+html.lms-brand-glass body .login-btn:hover,
+html.lms-brand-glass body #loginBtn.login-btn:hover{
+  filter:brightness(1.04)!important;
+  box-shadow:0 14px 32px rgba(166,255,46,.25),0 0 24px rgba(166,255,46,.12)!important;
+}
+html.lms-brand-glass body .recovery-reset-trigger{
+  color:#c4b5fd!important;
+}
+html.lms-brand-glass body .recovery-reset-trigger strong{
+  color:#a6ff2e!important;
+}
+html.lms-brand-glass body .message{
+  color:#ffb4c0!important;
+}
+html.lms-brand-glass body .support-box{
+  background:linear-gradient(145deg,rgba(34,29,78,.72),rgba(13,19,39,.78))!important;
+  border:1px solid rgba(186,174,255,.27)!important;
+  border-radius:15px!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.06),0 12px 30px rgba(0,0,0,.18)!important;
+}
+html.lms-brand-glass body .support-icon{
+  background:rgba(91,75,255,.26)!important;
+  border:1px solid rgba(196,181,253,.27)!important;
+  color:#c4b5fd!important;
+}
+html.lms-brand-glass body .support-content strong{
+  color:#f4f7ff!important;
+}
+html.lms-brand-glass body .support-content span{
+  color:#aeb8ce!important;
+}
+html.lms-brand-glass body .open-whatsapp-help{
+  color:#c4b5fd!important;
+  border:1px solid rgba(196,181,253,.46)!important;
+  border-radius:9px!important;
+  background:rgba(91,75,255,.13)!important;
+}
+html.lms-brand-glass body .open-whatsapp-help:hover{
+  color:#a6ff2e!important;
+  border-color:rgba(166,255,46,.55)!important;
+  background:rgba(166,255,46,.08)!important;
+}
+html.lms-brand-glass body .login-footer{
+  color:#8997b1!important;
+  border-color:rgba(186,174,255,.18)!important;
+}
+html.lms-brand-glass body .whatsapp-widget{
+  background:linear-gradient(145deg,#17153d,#0b1020)!important;
+  border:1px solid rgba(186,174,255,.30)!important;
+  color:#f4f7ff!important;
+}
+html.lms-brand-glass body .whatsapp-widget :is(.whatsapp-widget-header,.whatsapp-widget-footer){
+  background:rgba(11,16,32,.88)!important;
+  border-color:rgba(186,174,255,.20)!important;
+}
+html.lms-brand-glass body .whatsapp-brand strong,
+html.lms-brand-glass body .whatsapp-team h3,
+html.lms-brand-glass body .whatsapp-agent strong{
+  color:#f4f7ff!important;
+}
+html.lms-brand-glass body .whatsapp-brand span,
+html.lms-brand-glass body .whatsapp-agent span,
+html.lms-brand-glass body .whatsapp-welcome p{
+  color:#aeb8ce!important;
+}
+html.lms-brand-glass body .whatsapp-welcome,
+html.lms-brand-glass body .whatsapp-agent{
+  background:rgba(34,29,78,.72)!important;
+  border-color:rgba(186,174,255,.22)!important;
+}
+html.lms-brand-glass body .whatsapp-fab{
+  background:#a6ff2e!important;
+  color:#0b1020!important;
+  box-shadow:0 10px 26px rgba(166,255,46,.24)!important;
+}
+
+/* Installed-app splash: same purple glass identity, visible high-contrast copy. */
+html.installed-lms-app.lms-brand-glass body .lms-app-splash{
+  position:fixed!important;
+  inset:0!important;
+  z-index:2147483000!important;
+  display:grid!important;
+  place-items:center!important;
+  width:100vw!important;
+  min-height:100vh!important;
+  min-height:100svh!important;
+  overflow:hidden!important;
+  padding:calc(22px + env(safe-area-inset-top)) 24px calc(22px + env(safe-area-inset-bottom))!important;
+  background:
+    radial-gradient(ellipse at 50% 42%,rgba(91,75,255,.19),transparent 31%),
+    radial-gradient(ellipse at 0% 0%,rgba(124,58,237,.26),transparent 38%),
+    radial-gradient(ellipse at 100% 100%,rgba(166,255,46,.055),transparent 32%),
+    linear-gradient(145deg,#0b1020 0%,#17153d 52%,#0b1020 100%)!important;
+  color:#f4f7ff!important;
+  color-scheme:dark!important;
+}
+html.installed-lms-app.lms-brand-glass body .lms-splash-orbit{
+  width:min(72vw,330px)!important;
+  border:1px solid rgba(196,181,253,.19)!important;
+  box-shadow:0 0 45px rgba(91,75,255,.10),inset 0 0 35px rgba(91,75,255,.06)!important;
+}
+html.installed-lms-app.lms-brand-glass body .lms-splash-orbit::before{
+  border-color:rgba(124,58,237,.48)!important;
+}
+html.installed-lms-app.lms-brand-glass body .lms-splash-orbit::after{
+  border-color:rgba(196,181,253,.28)!important;
+}
+html.installed-lms-app.lms-brand-glass body .lms-splash-logo-wrap::before{
+  border-color:rgba(196,181,253,.22)!important;
+  border-top-color:#a6ff2e!important;
+  border-right-color:#7c3aed!important;
+  box-shadow:0 0 18px rgba(166,255,46,.12)!important;
+}
+html.installed-lms-app.lms-brand-glass body .lms-splash-logo-wrap::after{
+  border-color:rgba(196,181,253,.36)!important;
+  box-shadow:0 0 25px rgba(91,75,255,.20)!important;
+}
+html.installed-lms-app.lms-brand-glass body .lms-splash-logo{
+  border:3px solid rgba(196,181,253,.78)!important;
+  border-radius:24px!important;
+  background:#0b1020!important;
+  box-shadow:0 0 0 5px rgba(91,75,255,.16),0 12px 38px rgba(0,0,0,.42),0 0 32px rgba(124,58,237,.34)!important;
+}
+html.installed-lms-app.lms-brand-glass body .lms-splash-title{
+  color:#f4f7ff!important;
+  text-shadow:0 2px 24px rgba(196,181,253,.16)!important;
+}
+html.installed-lms-app.lms-brand-glass body .lms-splash-subtitle{
+  color:#a6ff2e!important;
+  letter-spacing:3.2px!important;
+}
+html.installed-lms-app.lms-brand-glass body .lms-splash-status{
+  color:#aeb8ce!important;
+  font-size:12px!important;
+}
+html.installed-lms-app.lms-brand-glass body .lms-splash-track{
+  height:9px!important;
+  border:1px solid rgba(196,181,253,.48)!important;
+  background:rgba(91,75,255,.24)!important;
+  box-shadow:0 0 18px rgba(91,75,255,.16),inset 0 1px rgba(255,255,255,.07)!important;
+}
+html.installed-lms-app.lms-brand-glass body .lms-splash-track::before{
+  background:linear-gradient(90deg,#7c3aed,#a6ff2e)!important;
+  box-shadow:0 0 15px rgba(166,255,46,.30)!important;
+}
+html.installed-lms-app.lms-brand-glass body .lms-splash-dots span{
+  background:#7c3aed!important;
+  box-shadow:0 0 10px rgba(124,58,237,.34)!important;
+}
+html.installed-lms-app.lms-brand-glass body .lms-splash-dots span:nth-child(2){
+  background:#a6ff2e!important;
+  box-shadow:0 0 11px rgba(166,255,46,.42)!important;
+}
+html.installed-lms-app.lms-brand-glass body .lms-splash-dots span:nth-child(3){
+  background:#c4b5fd!important;
+}
+html.installed-lms-app.lms-brand-glass body .lms-app-splash.is-leaving{
+  opacity:0!important;
+  visibility:hidden!important;
+}
+
+@media(min-width:851px) and (max-height:760px){
+  html.lms-brand-glass body .login-wrapper{
+    min-height:min(680px,calc(100svh - 28px))!important;
+    margin:14px auto!important;
+  }
+  html.lms-brand-glass body .brand-panel{
+    padding:28px clamp(28px,3.4vw,46px)!important;
+  }
+  html.lms-brand-glass body .brand-logo{
+    width:48px!important;height:48px!important;margin-bottom:12px!important;border-radius:14px!important;
+  }
+  html.lms-brand-glass body .brand-content h1{
+    margin:8px 0!important;font-size:clamp(30px,3.5vw,43px)!important;letter-spacing:-1.6px!important;
+  }
+  html.lms-brand-glass body .brand-description{margin-top:9px!important;font-size:12px!important}
+  html.lms-brand-glass body .features{gap:8px!important;margin-top:17px!important}
+  html.lms-brand-glass body .feature{min-height:54px!important;padding:9px!important}
+  html.lms-brand-glass body .feature-icon{width:32px!important;height:32px!important}
+  html.lms-brand-glass body .brand-footer{margin-top:17px!important}
+  html.lms-brand-glass body .login-panel{padding:18px 28px!important}
+  html.lms-brand-glass body .login-header{margin-bottom:17px!important}
+  html.lms-brand-glass body .login-header h2{font-size:clamp(25px,2.7vw,31px)!important}
+  html.lms-brand-glass body .form-group{margin-bottom:12px!important}
+  html.lms-brand-glass body .input-wrapper input{height:46px!important}
+  html.lms-brand-glass body .login-btn{min-height:47px!important;height:47px!important}
+  html.lms-brand-glass body .support-box{margin-top:8px!important;padding:10px!important}
+  html.lms-brand-glass body .login-footer{margin-top:12px!important}
+}
+@media(max-width:850px){
+  html.lms-brand-glass body .login-wrapper{
+    min-height:0!important;
+    margin:18px auto!important;
+    grid-template-columns:1fr!important;
+  }
+  html.lms-brand-glass body .brand-panel{
+    border-right:0!important;
+    border-bottom:1px solid rgba(196,181,253,.22)!important;
+    padding:28px clamp(22px,5vw,38px)!important;
+  }
+  html.lms-brand-glass body .login-panel{
+    padding:30px clamp(22px,5vw,38px)!important;
+  }
+}
+@media(max-width:560px){
+  html.lms-brand-glass body .login-wrapper{
+    width:100%!important;
+    margin:0!important;
+    border-radius:0!important;
+    border-left:0!important;border-right:0!important;
+  }
+  html.lms-brand-glass body .brand-panel{padding:24px 22px!important}
+  html.lms-brand-glass body .login-panel{padding:25px 22px calc(25px + env(safe-area-inset-bottom))!important}
+  html.lms-brand-glass body .brand-content h1{font-size:30px!important}
+  html.lms-brand-glass body .features{grid-template-columns:1fr!important}
+  html.installed-lms-app.lms-brand-glass body .lms-splash-content{width:min(100%,330px)!important}
+  html.installed-lms-app.lms-brand-glass body .lms-splash-logo-wrap{width:112px!important;height:112px!important;margin-bottom:23px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  html.installed-lms-app.lms-brand-glass body .lms-splash-orbit,
+  html.installed-lms-app.lms-brand-glass body .lms-splash-logo-wrap::before,
+  html.installed-lms-app.lms-brand-glass body .lms-splash-logo,
+  html.installed-lms-app.lms-brand-glass body .lms-splash-track::before,
+  html.installed-lms-app.lms-brand-glass body .lms-splash-dots span{
+    animation:none!important;
+  }
+}
