@@ -74,6 +74,7 @@
     ensureSnowfall();
     // Keep the last-loaded glass stylesheet above seasonal and page-specific styles.
     link.href = cssUrl;
+    document.head.appendChild(link); // Keep the shared brand theme above page-local style layers.
   }
 
   refresh();
