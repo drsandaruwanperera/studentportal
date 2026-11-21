@@ -5,9 +5,14 @@
   root.classList.add("student-glass-ui");
 
   const page = (window.location.pathname.split("/").pop() || "dashboard.html").toLowerCase();
-  const isDashboard = page === "dashboard.html" || page === "";
-  const isStudy = page === "my-program.html";
-  const isResults = page === "progress.html";
+  // Some hosting routes and home-screen shortcuts serve the dashboard from "/" or an alias.
+  // Detect the actual dashboard markup as well as the filename so the mobile navigation
+  // and the teacher portrait are present on the page students are really viewing.
+  const hasDashboardMarkup = !!document.querySelector(".dashboard-learning-banner, #learningProgram, .lms-stat-grid");
+  const isDashboard = page === "dashboard.html" || page === "" ||
+    page === "index.html" || page.includes("dashboard") || hasDashboardMarkup;
+  const isStudy = page === "my-program.html" || page === "study.html";
+  const isResults = page === "progress.html" || page === "results.html";
   const isAnnouncements = page === "announcements.html";
   const isSupport = page === "support.html";
 
@@ -520,10 +525,23 @@
   function init() {
     buildMobileHeader();
     const sidebarMore = addMoreNavigation();
-    const moreLinks = sidebarMore
+    let moreLinks = sidebarMore
       ? Array.from(sidebarMore.wrapper.querySelectorAll(".shared-sidebar-more-panel a"))
       : [];
+    // Keep the More sheet usable even on pages that do not render a sidebar.
+    if (!moreLinks.length) {
+      moreLinks = [
+        ["announcements.html", "Announcements"],
+        ["support.html", "Support"]
+      ].map(([href, label]) => {
+        const link = document.createElement("a");
+        link.href = href;
+        link.textContent = label;
+        return link;
+      });
+    }
     buildMobileNavigation(moreLinks);
+    document.body.classList.add("student-mobile-navigation-ready");
     updatePageTitles();
     addDashboardGreetingAndPortrait();
     buildCalendar();
