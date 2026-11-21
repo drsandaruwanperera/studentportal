@@ -129,7 +129,7 @@ html,body{background:#080d1b!important;color:#f5f7ff!important}
 <div class="side-bottom"><div class="side-profile"><div class="side-avatar" id="sideAvatar">S</div><div><strong id="sideName">Student</strong><span id="sideGrade">Student</span></div></div><a class="logout" href="index.html" aria-label="Log out of student portal"><svg viewBox="0 0 24 24" aria-hidden="true" style="width:17px;height:17px;flex:none;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg><span>Logout</span></a></div></aside><main class="main"><div class="top"><div><h1>My Program</h1><p>Your study materials and examination resources in one place.</p></div><a class="back" href="dashboard.html">← Dashboard</a></div><section class="hero"><small>CURRENT PROGRAM</small><h2 id="programTitle">Accounting</h2><p>Learn • Practise • Achieve with structured resources.</p></section><div class="tabs">
     <span class="tab active">Accounting</span>
 </div>
-<section class="grid"><article class="card" data-content-id="modelPapers"><div class="ico">🏆</div><div><h3 id="modelCardTitle">TOP Ranking Papers</h3><p id="modelCardDescription">TOP Ranking papers for exam preparation.</p><a id="modelLink" href="model-papers.html">Open Papers →</a></div></article><article class="card" data-content-id="modelPaperAnswers" style="display:none"><div class="ico">✅</div><div><h3>Model Paper Answers</h3><p>Official answers for the 1st and 2nd model papers.</p><a href="model-paper-answers.html">View Answers →</a></div></article><article class="card" data-content-id="smartBookAnswers" style="display:none"><div class="ico">📚</div><div><h3>Smart Book Answers</h3><p>Open Paper No. 1 answers in the LMS viewer.</p><a href="smart-book.html">Open Smart Book →</a></div></article><article class="card" data-content-id="schoolPaperAnswers" style="display:none"><div class="ico">🏫</div><div><h3>School Paper Answer</h3><p>School paper answers organised by paper.</p><a href="school-paper-answers.html">Open School Papers →</a></div></article><article class="card" data-content-id="revisionNotes"><div class="ico">🟢</div><div><h3>Revision Notes</h3><p>Structured revision material and key concepts.</p><a href="#">View Notes →</a></div></article></section></main><script>
+<section class="grid"><article class="card" data-content-id="modelPapers"><div class="ico">🏆</div><div><h3 id="modelCardTitle">TOP Ranking Papers</h3><p id="modelCardDescription">TOP Ranking papers for exam preparation.</p><a id="modelLink" href="model-papers.html">Open Papers →</a></div></article><article class="card" data-content-id="modelPaperAnswers" style="display:none"><div class="ico">✅</div><div><h3>Model Paper Answers</h3><p>Official answers for the 1st and 2nd model papers.</p><a href="model-paper-answers.html">View Answers →</a></div></article><article class="card" data-content-id="smartBookAnswers" style="display:none"><div class="ico">📚</div><div><h3>Smart Book Answers</h3><p>Open Paper No. 1 answers in the LMS viewer.</p><a href="smart-book.html">Open Smart Book →</a></div></article><article class="card" data-content-id="schoolPaperAnswers" style="display:none"><div class="ico">🏫</div><div><h3>School Paper Answer</h3><p>School paper answers organised by paper.</p><a href="school-paper-answers.html">Open School Papers →</a></div></article></section></main><script>
 if(sessionStorage.getItem("loggedIn")!=="true")location.replace("index.html");
 document.body.classList.add("dark-mode");localStorage.setItem("lmsTheme","dark");
 </script><script>
@@ -149,87 +149,113 @@ document.body.classList.add("dark-mode");localStorage.setItem("lmsTheme","dark")
  const key=path==="dashboard.html"?"dashboard":path==="my-program.html"?"program":path==="progress.html"?"results":path==="announcements.html"?"announcements":"support";
  document.querySelector('.side nav a[data-nav="'+key+'"]')?.classList.add("active");
 })();
-</script><script>const t=(sessionStorage.getItem("studentGrade")||sessionStorage.getItem("studentType")||"").toLowerCase();
-const modelCardTitle=document.getElementById("modelCardTitle");
-const modelCardDescription=document.getElementById("modelCardDescription");
-const modelCard=document.getElementById("modelLink")?.closest(".card");
+</script><script>
+(function(){
+  const norm = value => String(value || "").trim().toLowerCase().replace(/[\\s_-]+/g, "");
+  const studentType = norm(sessionStorage.getItem("studentType"));
+  const studentGrade = norm(sessionStorage.getItem("studentGrade"));
+  const studentId = String(sessionStorage.getItem("studentId") || "").trim().toUpperCase();
+  const savedYear = String(sessionStorage.getItem("alYear") || "").match(/^20(27|28|29)$/)?.[0] || "";
+  const context = String(sessionStorage.getItem("studentGrade") || "") + " " + String(sessionStorage.getItem("studentType") || "");
+  const contextYear = context.match(/20(27|28|29)/);
+  const idYear = studentId.match(/^(?:A)?(27|28|29)\\d{3}$/) || studentId.match(/^(27|28|29)[CN]/);
 
-if(t.includes("10")){
-  modelLink.href="grade10-model-papers.html";
-  programTitle.textContent="Grade 10 Commerce"; modelCardTitle.textContent="Term Test Model Papers";
-  modelCardDescription.textContent="Grade 10 term test model papers for practice.";
-}else if(t.includes("11")){
-  modelLink.href="grade11-model-papers.html";
-  programTitle.textContent="Grade 11 Commerce"; modelCardTitle.textContent="TOP Ranking Papers";
-  modelCardDescription.textContent="Grade 11 TOP Ranking papers for exam preparation.";
-}else if(t.includes("advanced")||t==="al"||t.includes("a/l")){
-  const studentId=String(sessionStorage.getItem("studentId")||"").trim().toUpperCase();
-  const yearMatch=studentId.match(/^(?:A)?(27|28|29)\d{3}$/)||studentId.match(/^(27|28|29)[CN]/);
-  const studentContext=String(sessionStorage.getItem("studentGrade")||"")+" "+String(sessionStorage.getItem("studentType")||"");
-  const explicitYear=studentContext.match(/20(27|28|29)/);
-  const sessionYear=String(sessionStorage.getItem("alYear")||"").match(/^20(27|28|29)$/);
-  const isALStudent=/advanced|a\/l|alevel/i.test(studentContext)||/^(?:A2[789]\d{3}|(?:27|28|29)[CN])/.test(studentId)||!!sessionYear;
-  const alYear=yearMatch?"20"+yearMatch[1]:(sessionYear?sessionYear[0]:(explicitYear?"20"+explicitYear[1]:"2027"));
-  const showModelAnswers=!(isALStudent&&(alYear==="2027"||alYear==="2028"));
-  const answersCard=document.querySelector('[data-content-id="modelPaperAnswers"]');
-  if(answersCard)answersCard.style.display=showModelAnswers?"flex":"none";
-  const isAL2028=isALStudent&&alYear==="2028";
-  if(isAL2028){
-    const smartBookCard=document.querySelector('[data-content-id="smartBookAnswers"]');
-    const schoolPaperCard=document.querySelector('[data-content-id="schoolPaperAnswers"]');
-    if(smartBookCard)smartBookCard.style.display="flex";
-    if(schoolPaperCard)schoolPaperCard.style.display="flex";
-    programTitle.textContent="A/L 2028";
-    const tab=document.querySelector(".tabs .tab"); if(tab)tab.textContent="A/L 2028";
-    if(modelCard){
-      modelCard.style.display="flex"; modelCard.querySelector(".ico").textContent="📘";
-      modelCardTitle.textContent="Theory Examination";
-      modelCardDescription.textContent="";
-      modelLink.href="theory-examination.html"; modelLink.textContent="Open Papers →";
+  let cohort = "unknown";
+  if (studentType.includes("grade10") || studentType === "g10" || studentGrade.includes("grade10") || studentGrade === "10") {
+    cohort = "grade10";
+  } else if (studentType.includes("grade11") || studentType === "g11" || studentGrade.includes("grade11") || studentGrade === "11") {
+    cohort = "grade11";
+  } else {
+    const isAL = ["al","alevel","advanced","advancedlevel"].includes(studentType) ||
+      studentType.includes("advancedlevel") || studentGrade.includes("advancedlevel") ||
+      studentGrade.startsWith("al") || /advanced|a\\s*\\/\\s*l|alevel/i.test(context) ||
+      /^A2[789]\\d{3}$/.test(studentId) || /^(?:27|28|29)[CN]/.test(studentId) ||
+      Boolean(savedYear || contextYear || idYear);
+    if (isAL) cohort = "al";
+  }
+
+  const year = cohort === "al"
+    ? (savedYear || (contextYear ? "20" + contextYear[1] : "") || (idYear ? "20" + idYear[1] : "") || "2027")
+    : "";
+
+  window.__lmsProgramCohort = { type: cohort, year, key: cohort === "al" ? "al" + year : cohort };
+
+  const programTitle = document.getElementById("programTitle");
+  const tab = document.querySelector(".tabs .tab");
+  const modelCardTitle = document.getElementById("modelCardTitle");
+  const modelCardDescription = document.getElementById("modelCardDescription");
+  const modelLink = document.getElementById("modelLink");
+
+  if (cohort === "grade10") {
+    if (programTitle) programTitle.textContent = "Grade 10 Commerce";
+    if (modelCardTitle) modelCardTitle.textContent = "Term Test Model Papers";
+    if (modelCardDescription) modelCardDescription.textContent = "Grade 10 term test model papers for practice.";
+    if (modelLink) modelLink.href = "grade10-model-papers.html";
+  } else if (cohort === "grade11") {
+    if (programTitle) programTitle.textContent = "Grade 11 Commerce";
+    if (modelCardTitle) modelCardTitle.textContent = "TOP Ranking Papers";
+    if (modelCardDescription) modelCardDescription.textContent = "Grade 11 TOP Ranking papers for exam preparation.";
+    if (modelLink) modelLink.href = "grade11-model-papers.html";
+  } else if (cohort === "al" && year === "2028") {
+    if (programTitle) programTitle.textContent = "A/L 2028";
+    if (tab) tab.textContent = "A/L 2028";
+    if (modelCardTitle) modelCardTitle.textContent = "Theory Examination";
+    if (modelCardDescription) modelCardDescription.textContent = "A/L 2028 theory and examination preparation.";
+    if (modelLink) {
+      modelLink.href = "theory-examination.html";
+      modelLink.textContent = "Open Papers →";
     }
-    document.querySelectorAll(".grid > .card").forEach(card=>{if(card!==modelCard&&card!==smartBookCard&&card!==schoolPaperCard)card.style.display="none";});
-
-  }else{
-    programTitle.textContent="Advanced Level Accounting";
-    modelCardTitle.textContent="TOP Ranking Papers";
-    modelCardDescription.textContent="A/L TOP Ranking papers for exam preparation.";
-    if(alYear==="2027"){
-      programTitle.textContent="A/L 2027";
-      modelCardTitle.textContent="Monthly TOP Ranking Papers";
-      modelCardDescription.textContent="Month-wise TOP Ranking papers with 1st- and 2nd-paper answers inside each month.";
-      modelLink.textContent="Browse monthly papers →";
+  } else if (cohort === "al") {
+    if (programTitle) programTitle.textContent = "A/L 2027";
+    if (tab) tab.textContent = "A/L 2027";
+    if (modelCardTitle) modelCardTitle.textContent = "Monthly TOP Ranking Papers";
+    if (modelCardDescription) modelCardDescription.textContent = "Month-wise TOP Ranking papers with 1st- and 2nd-paper answers inside each month.";
+    if (modelLink) {
+      modelLink.href = "model-papers.html";
+      modelLink.textContent = "Browse monthly papers →";
     }
   }
-}</script><script type="module">
+})();
+</script><script type="module">
 import {db,collection,onSnapshot} from "./firebase.js";
 const cards=[...document.querySelectorAll("[data-content-id]")];
-const defaults=Object.fromEntries(cards.map(c=>[c.dataset.contentId,true]));
+const defaults=Object.fromEntries(cards.map(card=>[card.dataset.contentId,true]));
+const cohort=window.__lmsProgramCohort || {type:"unknown",year:"",key:"unknown"};
+
+const cohortAllowList = {
+  grade10: new Set(["modelPapers"]),
+  grade11: new Set(["modelPapers"]),
+  al2027: new Set(["modelPapers"]),
+  al2028: new Set(["modelPapers","modelPaperAnswers","smartBookAnswers","schoolPaperAnswers"])
+};
+
+const allowedContent=cohortAllowList[cohort.key] || new Set();
+
 function apply(snapshot){
   const state={...defaults};
-  snapshot.forEach(d=>{if(Object.prototype.hasOwnProperty.call(state,d.id))state[d.id]=d.data().published!==false});
-  const studentId=String(sessionStorage.getItem("studentId")||"").trim().toUpperCase();
-  const yearMatch=studentId.match(/^(?:A)?(27|28|29)\d{3}$/)||studentId.match(/^(27|28|29)[CN]/);
-  const context=String(sessionStorage.getItem("studentGrade")||"")+" "+String(sessionStorage.getItem("studentType")||"");
-  const explicitYear=context.match(/20(27|28|29)/);
-  const sessionYear=String(sessionStorage.getItem("alYear")||"").match(/^20(27|28|29)$/);
-  const isAL=/advanced|a\/l|alevel/i.test(context)||/^(?:A2[789]\d{3}|(?:27|28|29)[CN])/.test(studentId)||!!sessionYear;
-  const year=yearMatch?"20"+yearMatch[1]:(sessionYear?sessionYear[0]:(explicitYear?"20"+explicitYear[1]:"2027"));
-  const showModelAnswers=!(isAL&&(year==="2027"||year==="2028"));
-  const isAL2028=isAL&&year==="2028";
-  const programmeContent = isAL2028
-    ? new Set(["modelPapers","smartBookAnswers","schoolPaperAnswers"])
-    : isAL && year==="2027"
-      ? new Set(["modelPapers"])
-      : new Set(["modelPapers","modelPaperAnswers"]);
-  cards.forEach(c=>{
-    const published=state[c.dataset.contentId];
-    const yearAllowed=c.dataset.contentId!=="modelPaperAnswers"||showModelAnswers;
-    const programAllowed=programmeContent.has(c.dataset.contentId);
-    c.style.display=published&&yearAllowed&&programAllowed?"flex":"none";
+  snapshot.forEach(documentSnapshot=>{
+    if(Object.prototype.hasOwnProperty.call(state,documentSnapshot.id)){
+      state[documentSnapshot.id]=documentSnapshot.data().published!==false;
+    }
   });
+
+  cards.forEach(card=>{
+    const id=card.dataset.contentId;
+    const cohortAllowed=allowedContent.has(id);
+    const published=state[id]!==false;
+    const visible=cohortAllowed&&published;
+    card.hidden=!visible;
+    card.setAttribute("aria-hidden",String(!visible));
+    card.style.display=visible?"flex":"none";
+  });
+
+  document.body.dataset.studentCohort=cohort.key;
+  document.body.dataset.programYear=cohort.year || "";
 }
-onSnapshot(collection(db,"lmsProgramContent"),apply,()=>apply({forEach(){}}));
-</script><nav class="mobile-nav" aria-label="Primary navigation">
+
+onSnapshot(collection(db,"lmsProgramContent"),apply,()=>{
+  apply({forEach(){}});
+});</script><nav class="mobile-nav" aria-label="Primary navigation">
 <a href="dashboard.html" data-nav="dashboard"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3.5 10.5 8.5-7 8.5 7"/><path d="M5.5 9.5v10h13v-10M9.5 19.5v-6h5v6"/></svg><span>Dashboard</span></a>
 <a href="my-program.html" data-nav="program"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3.5" width="16" height="17" rx="2.5"/><path d="M8 7.5h8M8 11.5h8M8 15.5h5"/></svg><span>My Program</span></a>
 <a href="progress.html" data-nav="results"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5V12M10 19.5V5M16 19.5V9M22 19.5V3.5" transform="translate(-1 0)"/><path d="M3 20.5h18"/></svg><span>Progress</span></a>
