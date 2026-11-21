@@ -1445,3 +1445,43 @@ html.student-glass-ui body .shared-more-panel a span {
     animation-iteration-count: 1 !important;
   }
 }
+
+
+/* Clear active states for the desktop and mobile More menus. */
+html.student-glass-ui body .shared-sidebar-more-trigger svg {
+  width: 19px !important;
+  height: 19px !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 1.8 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+
+html.student-glass-ui body .shared-sidebar-more-panel a {
+  display: flex !important;
+  align-items: center !important;
+  gap: 9px !important;
+  padding: 9px 11px !important;
+  border-radius: 10px !important;
+  color: #46647b !important;
+  font-weight: 780 !important;
+  text-decoration: none !important;
+}
+
+html.student-glass-ui body .shared-sidebar-more-panel a:hover {
+  background: #e1f1f7 !important;
+  color: #075c6c !important;
+}
+
+html.student-glass-ui body .shared-sidebar-more-panel a.active {
+  background: linear-gradient(110deg,#087f8d,#0b6474) !important;
+  color: #fff !important;
+}
+
+html.student-glass-ui body .shared-more-panel a.active {
+  border-color: #93d5dc !important;
+  background: #e0f5f5 !important;
+  color: #075c6c !important;
+}
+
