@@ -48,20 +48,20 @@ import {db,doc,getDoc} from "./firebase.js";
     grade11: {
       label: "Grade 11",
       model: "grade11-model-papers.html",
-      past: "grade11-past-paper.html",
+      past: null,
       modelTitle: "TOP Ranking Papers",
       pastTitle: "Past Papers",
-      modelDescription: "Grade 11 TOP Ranking papers",
-      pastDescription: "Past papers for exam practice"
+      modelDescription: "Grade 11 TOP Ranking papers and Model Paper Answers",
+      pastDescription: ""
     },
     al: {
       label: "Advanced Level",
       model: "model-papers.html",
-      past: "province-paper1.html",
-      modelTitle: "A/L Model Papers",
+      past: null,
+      modelTitle: "Monthly TOP Ranking Papers",
       pastTitle: "Province Papers",
-      modelDescription: "Advanced Level model papers",
-      pastDescription: "Provincial examination papers"
+      modelDescription: "Month-wise A/L 2027 TOP Ranking papers with their matching answers",
+      pastDescription: ""
     }
   };
 
