@@ -7,17 +7,27 @@ import { db, doc, onSnapshot } from "./firebase.js";
 
   const SETTINGS_DOC_ID = "__themeSeasonSchedule";
   const stylesheetUrl = new URL("./christmas-theme.css?v=20261120-dashboard-ice", import.meta.url).href;
-  const dashboardStylesheetUrl = new URL("./winter-dashboard-theme.css?v=20261120-transition-stable", import.meta.url).href;
-  const unifiedPortalStylesheetUrl = new URL("./portal-winter-unified.css?v=20261120-unified2", import.meta.url).href;
   const DEFAULT_CHRISTMAS_EMOJIS = ["❄️", "🎄", "🎅", "🎁", "🔔", "⭐", "🦌", "🕯️"];
   let sessions = [];
   let currentSignature = "";
   let nextTimer = null;
 
-  const brandStylesheetUrl = new URL("./brand-glass-theme.css?v=1", import.meta.url).href;
+  const brandStylesheetUrl = new URL("./brand-glass-theme.css?v=2", import.meta.url).href;
+
+  function removeLegacyWinterBlueStyles() {
+    document.documentElement.classList.remove("student-portal-winter-unified");
+    document.querySelectorAll(
+      'link[href*="winter-dashboard-theme.css"],link[href*="portal-winter-unified.css"]'
+    ).forEach(link => link.remove());
+    ["winter-dashboard-theme-stylesheet","portal-winter-unified-stylesheet"].forEach(id => {
+      const link = document.getElementById(id);
+      if (link) link.remove();
+    });
+  }
 
   function ensureBrandStylesheet() {
-    document.documentElement.classList.add("lms-brand-glass");
+    document.documentElement.classList.add("lms-brand-glass", "student-glass-ui");
+    removeLegacyWinterBlueStyles();
     let link = document.getElementById("lms-brand-glass-theme-stylesheet");
     if (!link) {
       link = document.createElement("link");
@@ -49,29 +59,8 @@ import { db, doc, onSnapshot } from "./firebase.js";
     baseLink.id = "christmas-theme-stylesheet";
     baseLink.href = stylesheetUrl;
 
-    let dashboardLink = document.getElementById("winter-dashboard-theme-stylesheet");
-    if (!dashboardLink) {
-      dashboardLink = document.createElement("link");
-      dashboardLink.id = "winter-dashboard-theme-stylesheet";
-      dashboardLink.rel = "stylesheet";
-      document.head.appendChild(dashboardLink);
-    }
-    dashboardLink.href = dashboardStylesheetUrl;
-
-    const isStudentPortalPage = Boolean(
-      document.querySelector(".lms-dashboard, .section-mobile-header")
-    );
-    let unifiedPortalLink = document.getElementById("portal-winter-unified-stylesheet");
-    if (isStudentPortalPage) {
-      document.documentElement.classList.add("student-portal-winter-unified");
-      if (!unifiedPortalLink) {
-        unifiedPortalLink = document.createElement("link");
-        unifiedPortalLink.id = "portal-winter-unified-stylesheet";
-        unifiedPortalLink.rel = "stylesheet";
-        document.head.appendChild(unifiedPortalLink);
-      }
-      unifiedPortalLink.href = unifiedPortalStylesheetUrl;
-    }
+    // Do not load the legacy Ice Blue winter palette.
+    removeLegacyWinterBlueStyles();
     ensureBrandStylesheet();
   }
 
