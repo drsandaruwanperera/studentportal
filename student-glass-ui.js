@@ -93,10 +93,13 @@
     const button = document.createElement("button");
     button.type = "button";
     button.className = "shared-sidebar-more-trigger";
+    button.setAttribute("aria-expanded", "false");
     button.innerHTML = icons.more + "<span>More</span><span class=\"shared-more-chevron\" aria-hidden=\"true\">⌄</span>";
 
     const panel = document.createElement("div");
     panel.className = "shared-sidebar-more-panel";
+    panel.id = "sharedSidebarMorePanel";
+    button.setAttribute("aria-controls", panel.id);
     panel.hidden = true;
 
     button.addEventListener("click", () => {
@@ -194,7 +197,10 @@
     photo.src = teacherPhoto;
     photo.alt = "";
     photo.loading = "eager";
-    photo.onerror = () => portrait.remove();
+    photo.onerror = () => {
+      photo.onerror = null;
+      photo.src = appIcon;
+    };
     portrait.appendChild(photo);
 
     const more = document.createElement("button");
@@ -301,7 +307,10 @@
       image.src = teacherPhoto;
       image.alt = "Dr. Sandaruwan";
       image.loading = "eager";
-      image.onerror = () => portrait.remove();
+      image.onerror = () => {
+        image.onerror = null;
+        image.src = appIcon;
+      };
       portrait.appendChild(image);
       copy.parentElement?.appendChild(portrait);
     }
