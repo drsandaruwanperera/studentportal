@@ -1540,25 +1540,28 @@ html.student-glass-ui body .study-buddy-launch-icon {
    Fluid spacing, readable type and auto-fitting card layouts.
    Presentation only — no data, auth or navigation logic.
    ========================================================== */
-html.student-glass-ui,
-html.student-glass-ui body {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: clip !important;
-}
 html.student-glass-ui body *,
 html.student-glass-ui body *::before,
 html.student-glass-ui body *::after {
   box-sizing: border-box;
-  min-width: 0;
-}
-html.student-glass-ui body :is(img,svg,video,canvas) {
-  max-width: 100%;
-}
-html.student-glass-ui body :is(h1,h2,h3,h4,p,small,strong,span,a,button) {
-  overflow-wrap: anywhere;
 }
 @media (max-width: 800px) {
+  html.student-glass-ui,
+  html.student-glass-ui body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip !important;
+  }
+  html.student-glass-ui body * {
+    min-width: 0;
+  }
+  html.student-glass-ui body :is(img,svg,video,canvas) {
+    max-width: 100%;
+  }
+  html.student-glass-ui body :is(h1,h2,h3,h4,p,small,strong),
+  html.student-glass-ui body :is(.portal-program-copy,.card,.notice,.support-card,.shared-header-brand,.result) {
+    overflow-wrap: anywhere;
+  }
   html.student-glass-ui body {
     padding-bottom: calc(100px + env(safe-area-inset-bottom)) !important;
   }
