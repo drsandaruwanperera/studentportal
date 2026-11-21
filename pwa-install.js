@@ -2,13 +2,20 @@
   "use strict";
 
   const isStandalone = () =>
-    window.matchMedia("(display-mode: standalone)").matches ||
+    (typeof window.matchMedia === "function" && window.matchMedia("(display-mode: standalone)").matches) ||
     navigator.standalone === true;
+
+  // Mark the installed PWA explicitly so app-only layout safeguards can
+  // be applied without changing the normal browser website.
+  if (isStandalone()) {
+    document.documentElement.classList.add("installed-lms-app");
+    document.documentElement.dataset.lmsDisplayMode = "standalone";
+  }
 
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
       navigator.serviceWorker
-        .register("./service-worker.js", { scope: "./" })
+        .register("./service-worker.js?v=20261121-app-visibility", { scope: "./", updateViaCache: "none" })
         .catch((error) => {
           console.warn("LMS app setup could not register its service worker.", error);
         });
