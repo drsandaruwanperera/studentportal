@@ -2778,3 +2778,57 @@ html.student-glass-ui body .study-buddy-launcher small {
     font-size: 8px !important;
   }
 }
+
+
+/* ==========================================================
+   iOS MOBILE HEADER PINNING + CONTENT CLEARANCE
+   ========================================================== */
+@media (max-width: 800px) {
+  html.student-glass-ui body {
+    padding-top: 0 !important;
+    padding-bottom: calc(100px + env(safe-area-inset-bottom)) !important;
+  }
+  html.student-glass-ui body > .shared-mobile-header {
+    position: fixed !important;
+    top: env(safe-area-inset-top, 0px) !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    width: min(calc(100vw - 16px), 620px) !important;
+    max-width: 620px !important;
+    min-height: 66px !important;
+    margin: 0 !important;
+    z-index: 6000 !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background: rgba(248,253,255,.96) !important;
+    box-shadow: 0 9px 26px rgba(30,80,105,.13) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(1.3) !important;
+    backdrop-filter: blur(20px) saturate(1.3) !important;
+  }
+  /* Offset the page below the fixed header without making the page full-screen. */
+  html.student-glass-ui body > .main-content {
+    padding-top: calc(66px + env(safe-area-inset-top, 0px)) !important;
+  }
+  html.student-glass-ui body > .main {
+    padding-top: calc(66px + env(safe-area-inset-top, 0px)) !important;
+  }
+  html.student-glass-ui body .shared-bottom-nav {
+    position: fixed !important;
+    display: grid !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    bottom: calc(8px + env(safe-area-inset-bottom, 0px)) !important;
+    z-index: 6100 !important;
+  }
+}
+@media (max-width: 380px) {
+  html.student-glass-ui body > .shared-mobile-header {
+    width: calc(100vw - 12px) !important;
+    gap: 6px !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+}
