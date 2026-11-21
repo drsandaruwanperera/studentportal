@@ -2915,3 +2915,45 @@ html.student-glass-ui body .study-buddy-launcher small {
   html.student-glass-ui body .shared-header-action,
   html.student-glass-ui body .shared-header-student { width:32px!important; height:32px!important; flex-basis:32px!important; }
 }
+
+
+/* Dashboard-only hardening: keep the fifth More tab visible in the shared mobile bar. */
+@media (max-width: 800px) {
+  html.student-glass-ui body .shared-bottom-nav > details.shared-more-menu {
+    display: flex !important;
+    grid-column: 5 !important;
+    align-items: stretch !important;
+    justify-content: stretch !important;
+    min-width: 0 !important;
+    min-height: 55px !important;
+    width: 100% !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    overflow: visible !important;
+  }
+
+  html.student-glass-ui body .shared-bottom-nav > details.shared-more-menu > summary {
+    display: flex !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 55px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-direction: column !important;
+    gap: 5px !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    list-style: none !important;
+    cursor: pointer !important;
+  }
+
+  html.student-glass-ui body .shared-bottom-nav > details.shared-more-menu > summary::-webkit-details-marker {
+    display: none !important;
+  }
+
+  html.student-glass-ui body .shared-bottom-nav > details.shared-more-menu[open] > .shared-more-panel {
+    display: grid !important;
+  }
+}
