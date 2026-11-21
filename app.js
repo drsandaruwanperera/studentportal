@@ -10,7 +10,7 @@ import {
     runTransaction
 } from "./firebase.js";
 
-import { requireRecoveryCodeSetup } from "./student-recovery-setup.js";
+import { requireRecoveryCodeSetup } from "./student-recovery-setup.js?v=website-handoff-1";
 import { initRecoveryPasswordReset } from "./student-recovery-reset.js";
 import { isStudentOnboardingComplete } from "./student-onboarding.js";
 
