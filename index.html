@@ -18,7 +18,7 @@
     <meta name="description" content="Student Assessment Portal - Secure Student Login">
     <title>Student Assessment Portal</title>
     <link rel="stylesheet" href="style.css?v=mobile-login-fix-1">
-    <link rel="stylesheet" href="portal-theme.css?v=sky-glass-3">
+    <link rel="stylesheet" href="portal-theme.css?v=sky-glass-4">
     <script defer src="professional-theme-expiry.js?v=1" data-theme-css="login-professional-theme.css?v=input-contrast-1"></script>
     <link rel="stylesheet" href="https://drsandaruwanperera.lk/studentportal/christmas-theme.css?v=20261120-winter-blue">
     <script type="module" src="https://drsandaruwanperera.lk/studentportal/christmas-theme.js?v=20261120-winter-blue"></script>
@@ -58,18 +58,30 @@
     }
     let dismissed = false;
     const startedAt = Date.now();
+    const status = splash.querySelector(".lms-splash-status");
+    const statusTimers = [
+      window.setTimeout(() => {
+        if (!dismissed && status) status.textContent = "Connecting to your secure learning space…";
+      }, 550),
+      window.setTimeout(() => {
+        if (!dismissed && status) status.textContent = "Getting your student portal ready…";
+      }, 1150)
+    ];
+
     const removeSplash = () => {
       if (dismissed) return;
       dismissed = true;
-      const minimumVisible = 850;
+      statusTimers.forEach(timer => window.clearTimeout(timer));
+      const minimumVisible = 1800;
       const wait = Math.max(0, minimumVisible - (Date.now() - startedAt));
       window.setTimeout(() => {
         splash.classList.add("is-leaving");
         window.setTimeout(() => splash.remove(), 420);
       }, wait);
     };
+
     window.addEventListener("load", removeSplash, { once: true });
-    window.setTimeout(removeSplash, 2400);
+    window.setTimeout(removeSplash, 6500);
   })();
 </script>
 
@@ -622,6 +634,6 @@ openWhatsAppHelp?.addEventListener("click", openWhatsAppWidget);
 
 <script type="module" src="site-theme-runtime.js?v=6"></script>
 <script defer src="./pwa-install.js?v=2"></script>
-<link rel="stylesheet" href="./portal-theme.css?v=sky-glass-3" id="login-sky-glass-final">
+<link rel="stylesheet" href="./portal-theme.css?v=sky-glass-4" id="login-sky-glass-final">
 </body>
 </html>
