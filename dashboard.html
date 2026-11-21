@@ -504,7 +504,7 @@ body{background:radial-gradient(circle at 76% 10%,rgba(103,60,255,.10),transpare
  #studentSidebar #logoutBtn .sidebar-logout-icon{display:block!important;width:20px!important;height:20px!important;flex:0 0 20px!important;fill:none!important;stroke:currentColor!important;stroke-width:2!important;stroke-linecap:round!important;stroke-linejoin:round!important;visibility:visible!important;opacity:1!important}
  #studentSidebar #logoutBtn>span{display:inline!important;visibility:visible!important;opacity:1!important;position:static!important;width:auto!important;height:auto!important;margin:0!important;padding:0!important;overflow:visible!important;clip:auto!important;color:#fff!important;font-size:13px!important;font-weight:800!important;line-height:1.2!important;white-space:nowrap!important}
 }
-</style><style id="al2028-announcement-opt-out">body.al2028-dashboard .lms-main-column,body.al2028-dashboard .sidebar-link[href="announcements.html"],body.al2028-dashboard .dashboard-mobile-nav a[href="announcements.html"],body.al2028-dashboard .portal-support-card[href="announcements.html"],body.al2028-dashboard .lms-notification,body.al2028-dashboard .mobile-notification,body.al2028-dashboard .portal-notification-popover,body.al2028-dashboard .announcement-modal{display:none!important}body.al2028-dashboard .lms-dashboard-grid{grid-template-columns:minmax(0,1fr)!important}</style><link rel="stylesheet" href="portal-design-refresh.css?v=2"><link rel="stylesheet" href="dashboard-full-redesign.css?v=default-20261115"><script src="dashboard-home-experience.js?v=7" defer></script>    <link rel="stylesheet" href="portal-unified-theme.css?v=20261120-unified1">
+</style><style id="al2028-announcement-opt-out">body.al2028-dashboard .lms-main-column,body.al2028-dashboard .sidebar-link[href="announcements.html"],body.al2028-dashboard .dashboard-mobile-nav a[href="announcements.html"],body.al2028-dashboard .portal-support-card[href="announcements.html"],body.al2028-dashboard .lms-notification,body.al2028-dashboard .mobile-notification,body.al2028-dashboard .portal-notification-popover,body.al2028-dashboard .announcement-modal{display:none!important}body.al2028-dashboard .lms-dashboard-grid{grid-template-columns:minmax(0,1fr)!important}</style><link rel="stylesheet" href="portal-design-refresh.css?v=2"><link rel="stylesheet" href="dashboard-full-redesign.css?v=default-20261115"><script src="dashboard-home-experience.js?v=8" defer></script>    <link rel="stylesheet" href="portal-unified-theme.css?v=20261120-unified1">
 <link id="christmas-theme-stylesheet" rel="stylesheet" href="./christmas-theme.css?v=20261120-winter-refresh1">
 <link id="winter-dashboard-theme-stylesheet" rel="stylesheet" href="./winter-dashboard-theme.css?v=20261120-winter-refresh1">
 <script src="./winter-theme-preload.js?v=2"></script>
@@ -516,11 +516,11 @@ body{background:radial-gradient(circle at 76% 10%,rgba(103,60,255,.10),transpare
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" sizes="192x192" href="./icons/dr-sandaruwan-lms-192.png?v=approved-2026-11-21">
 
-    <link rel="stylesheet" href="./student-glass-ui.css?v=14">
+    <link rel="stylesheet" href="./student-glass-ui.css?v=15">
 </head>
 
 
-<body class="dashboard-page">
+<body class="dashboard-page dashboard-cohort-pending">
 <header class="shared-mobile-header" aria-label="Student portal header">
   <a class="shared-header-brand" href="dashboard.html" aria-label="Dr. Sandaruwan LMS home">
     <img src="./icons/dr-sandaruwan-lms-192.png?v=approved-2026-11-21" alt="">
@@ -1424,69 +1424,6 @@ document.addEventListener(
   }
   sync();
   [p,viewed,total].filter(Boolean).forEach(el=>new MutationObserver(sync).observe(el,{childList:true,characterData:true,subtree:true}));
-})();
-</script><script type="module">
-import {db,collection,onSnapshot} from "./firebase.js";
-(function(){
-  const summary=document.getElementById("dashboardAnnouncementSummary");
-  if(!summary)return;
-  const esc=(v)=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
-  const timeValue=(v)=>{if(!v)return 0;if(typeof v.toMillis==="function")return v.toMillis();const n=Number(v);return Number.isFinite(n)?n:0};
-  const dateValue=(v)=>{const n=timeValue(v);return n?new Date(n).toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"numeric"}):"Latest"};
-  function renderAnnouncements(snap){
-    try{
-      const normalizeGrade=(v)=>String(v||"").toLowerCase().replace(/[^a-z0-9]/g,"");
-      const grade=normalizeGrade(sessionStorage.getItem("studentType")||sessionStorage.getItem("studentGrade")||"");
-      const now=Date.now();
-      const matchesGrade=(x)=>{
-        const target=x.grade??x.targetGrade??x.targetAudience??"all";
-        const matches=(v)=>{
-          const g=normalizeGrade(v);
-          if(!g||g==="all"||g==="allstudents")return true;
-          if(g==="grade10")return grade.includes("10");
-          if(g==="grade11")return grade.includes("11");
-          const sid=String(sessionStorage.getItem("studentId")||"").trim().toUpperCase();
-          const isAL=grade==="al"||grade.includes("advanced")||grade.startsWith("al");
-          const numeric2028=new Set("11074 11094 12705 13959 14069 14319 14334 14368 14369 14421 14723 14800 15189 15483 15508 15585 15690 15854 15960 16365 16889 16890 16891 16892 16895 16896 16898 16899 16900 16902 16903 16906 16907 16908 16909 16910 16913 16914 16915 16920 16923 16924 16941 16947 16966 16967 16975 16978 16979 16980 16986 16987 16988 16991 16995 17038 17039 17052 17054 17064 17071 17080 17093 17125 17172 17187 17188 17190 17191 17197 17205 17206 17207 17208 17209 17210 17212 17213 17218 17220 17225 17226 17240 17241 17242 17243 17244 17246 17247 17249 17254 17256 17269 17279 17280 17287 17288 17296 17306 17307 17317 17326 17327 17364 17366 17368 17386 17387 17427 17450".split(" "));
-          const inferredYear=(/^(?:A)?27/.test(sid)?2027:(/^(?:A)?28|^28[CN]/.test(sid)||numeric2028.has(sid))?2028:/^A29/.test(sid)?2029:Number(sessionStorage.getItem("alYear"))||0);
-          if(g==="al"||g==="alevel"||g==="advancedlevel")return isAL;
-          if(g==="al2027")return isAL && inferredYear===2027;
-          if(g==="al2028")return isAL && inferredYear===2028;
-          return g===grade;
-        };
-        return Array.isArray(target)?target.some(matches):matches(target);
-      };
-
-      const studentIdForYear=String(sessionStorage.getItem("studentId")||"").trim().toUpperCase();
-      const studentContextForYear=normalizeGrade((sessionStorage.getItem("studentType")||"")+" "+(sessionStorage.getItem("studentGrade")||"")+" "+(sessionStorage.getItem("alYear")||""));
-      const isALStudentForYear=studentContextForYear.includes("al")||studentContextForYear.includes("advancedlevel")||/^A\d{4,}$/.test(studentIdForYear)||/^[A-Z]?2[789]\d{3}$/.test(studentIdForYear)||/^(?:27|28|29)[CN]/.test(studentIdForYear);
-      const isAL2028Dashboard=isALStudentForYear&&(studentContextForYear.includes("2028")||/^(?:A)?28\d{3}$/.test(studentIdForYear)||/^28[CN]/.test(studentIdForYear)||Number(sessionStorage.getItem("alYear"))===2028);
-      const items=snap.docs.map(d=>({id:d.id,...d.data()}))
-        .filter(x=>!["legacy-grade11-top-ranking-results","legacy-al-answer-release-paper01-september2026"].includes(x.id))
-        .filter(x=>!isAL2028Dashboard)
-        .filter(x=>x.enabled!==false && x.active!==false)
-        .filter(x=>x.showOnDashboard!==false)
-        .filter(x=>!x.expiresAt || timeValue(x.expiresAt)>=now)
-        .filter(matchesGrade)
-        .sort((a,b)=>timeValue(b.createdAt)-timeValue(a.createdAt));
-
-      if(!items.length){
-        summary.innerHTML='<div class="dashboard-summary-empty">No new announcements right now.</div>';
-        return;
-      }
-
-      summary.innerHTML=items.map((x,i)=>'<a class="dashboard-summary-card" href="announcements.html?id='+encodeURIComponent(x.id)+'"><div class="dashboard-summary-number">'+String(i+1).padStart(2,"0")+'</div><div class="dashboard-summary-icon">📢</div><div class="dashboard-summary-copy"><div class="dashboard-summary-top"><strong>'+esc(x.title||"Portal Update")+'</strong><span>'+esc(dateValue(x.createdAt))+'</span></div><p>'+esc(x.message||x.description||"Important information for students.")+'</p><div class="dashboard-summary-meta"><span>ANNOUNCEMENT</span><b>View details →</b></div></div></a>').join("");
-    }catch(e){
-      console.error("Could not render dashboard announcements.",e);
-      summary.innerHTML='<div class="dashboard-summary-empty">Unable to load announcements right now.</div>';
-    }
-  }
-
-  onSnapshot(collection(db,"announcements"),renderAnnouncements,(error)=>{
-    console.error("Dashboard announcements listener failed.",error);
-    summary.innerHTML='<div class="dashboard-summary-empty">Unable to load announcements right now.</div>';
-  });
-
 })();
 </script><script>
 (function(){
