@@ -9,9 +9,17 @@
     ? document.currentScript.src
     : window.location.href;
   const assetBase = new URL(".", scriptUrl);
-  const cssUrl = new URL("brand-glass-theme.css?v=1", assetBase).href;
+  const cssUrl = new URL("brand-glass-theme.css?v=2", assetBase).href;
 
-  document.documentElement.classList.add("lms-brand-glass");
+  document.documentElement.classList.add("lms-brand-glass", "student-glass-ui");
+  document.documentElement.classList.remove("student-portal-winter-unified");
+  document.querySelectorAll(
+    'link[href*="winter-dashboard-theme.css"],link[href*="portal-winter-unified.css"]'
+  ).forEach(item => item.remove());
+  ["winter-dashboard-theme-stylesheet","portal-winter-unified-stylesheet"].forEach(id => {
+    const oldLink = document.getElementById(id);
+    if (oldLink) oldLink.remove();
+  });
   let link = document.getElementById("lms-brand-glass-theme-stylesheet");
   if (!link) {
     link = document.createElement("link");
