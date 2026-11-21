@@ -10,8 +10,8 @@
 }
 
 :root {
-    --primary: #5b4cf6;
-    --primary-dark: #4738d8;
+    --primary: #5b4bff;
+    --primary-dark: #4037c9;
 
     --navy: #111827;
     --navy-2: #172033;
@@ -28,7 +28,7 @@
     --green-light: #e8f8ef;
     --orange-light: #fff1df;
 
-    --success: #16a56a;
+    --success: #a6ff2e;
 
     --shadow:
         0 10px 30px rgba(31, 41, 55, 0.07);
@@ -130,7 +130,7 @@ body {
     background:
         linear-gradient(
             135deg,
-            #6d5dfc,
+            #5b4bff,
             #4b3edb
         );
 
@@ -245,8 +245,8 @@ body {
     background:
         linear-gradient(
             90deg,
-            #5b4cf6,
-            #695cf7
+            #5b4bff,
+            #5b4bff
         );
 
     color: #ffffff;
@@ -676,9 +676,9 @@ body {
     background:
         linear-gradient(
             120deg,
-            #5044e9 0%,
-            #6254f3 48%,
-            #7468f7 100%
+            #4037c9 0%,
+            #5b4bff 48%,
+            #7c3aed 100%
         );
 
     color: #ffffff;
@@ -1008,7 +1008,7 @@ body {
     width: 6px;
     height: 6px;
 
-    background: #22c55e;
+    background: #a6ff2e;
 
     border-radius: 50%;
 }
@@ -1070,7 +1070,7 @@ body {
 
     background: var(--green-light);
 
-    color: #17845a;
+    color: #7cc51f;
 
     font-size: 9px;
 
@@ -1083,7 +1083,7 @@ body {
 
     border-radius: 50%;
 
-    background: #20b26d;
+    background: #a6ff2e;
 }
 
 
@@ -1321,7 +1321,7 @@ body {
 }
 
 .activity-count {
-    color: #17845a;
+    color: #7cc51f;
 
     background: var(--green-light);
 
@@ -1912,11 +1912,11 @@ body .student-avatar{background:#eeeaff}
 body .sidebar-logout{background:#fff1f1;color:#ef4444;border-color:#ffdede}
 body .top-header{background:rgba(255,255,255,.94);backdrop-filter:blur(12px)}
 body .search-box{background:#f8f9fc}
-body .hero-card{background:linear-gradient(120deg,#5b4cf6 0%,#477ce5 100%)}
+body .hero-card{background:linear-gradient(120deg,#5b4bff 0%,#5b4bff 100%)}
 body .material-card,body .activity-item,body .announcement-card,body .support-card{background:#fff}
 body .theme-switch{display:flex;gap:5px;padding:5px;background:#fff;border:1px solid #e7eaf0;border-radius:12px}
 .theme-switch button{border:0;background:transparent;border-radius:8px;padding:7px 10px;font-size:10px;font-weight:800;color:#667085;cursor:pointer}
-.theme-switch button.active{background:#eeeaff;color:#5b4cf6}
+.theme-switch button.active{background:#eeeaff;color:#5b4bff}
 body.dark-mode{background:#0b1220;color:#eef2ff}
 body.dark-mode .sidebar{background:#111827;color:#fff;border-right-color:#263147}
 body.dark-mode .brand-text strong,body.dark-mode .student-account-info strong{color:#fff}
@@ -2003,7 +2003,7 @@ body.dark-mode .theme-switch button.active{background:#29235d;color:#fff}
     top:0;
     width:4px;
     height:100%;
-    background:linear-gradient(180deg,#6d5dfc,#477ce5);
+    background:linear-gradient(180deg,#5b4bff,#5b4bff);
 }
 
 .quick-access-card::after{
@@ -2086,14 +2086,14 @@ body.dark-mode .theme-switch button.active{background:#29235d;color:#fff}
 .quick-access-card:hover .quick-card-arrow{
     transform:translateX(3px);
     background:#eeeaff;
-    color:#5b4cf6;
+    color:#5b4bff;
 }
 
-.quick-progress::before{background:linear-gradient(180deg,#3b82f6,#06b6d4)}
+.quick-progress::before{background:linear-gradient(180deg,#5b4bff,#7c3aed)}
 .quick-progress .quick-card-icon{background:#eaf4ff}
 .quick-news::before{background:linear-gradient(180deg,#f59e0b,#f97316)}
 .quick-news .quick-card-icon{background:#fff4df}
-.quick-support::before{background:linear-gradient(180deg,#10b981,#14b8a6)}
+.quick-support::before{background:linear-gradient(180deg,#a6ff2e,#a6ff2e)}
 .quick-support .quick-card-icon{background:#e8fbf4}
 
 .summary-card{
@@ -2133,7 +2133,7 @@ body.dark-mode .theme-switch button.active{background:#29235d;color:#fff}
     position:absolute;
     inset:0 0 auto 0;
     height:3px;
-    background:linear-gradient(90deg,#6d5dfc,#477ce5);
+    background:linear-gradient(90deg,#5b4bff,#5b4bff);
     opacity:.9;
 }
 
@@ -2243,7 +2243,7 @@ body.dark-mode .quick-support .quick-card-icon{
 }
 
 .quick-theme-card::before{
-    background:linear-gradient(180deg,#f6b73c,#7c6cf6);
+    background:linear-gradient(180deg,#f6b73c,#7c3aed);
 }
 
 .quick-theme-card .quick-card-icon{
@@ -2270,13 +2270,13 @@ body.dark-mode .quick-support .quick-card-icon{
 
 .theme-card-btn:hover{
     border-color:#bdb6ff;
-    color:#5b4cf6;
+    color:#5b4bff;
     background:#f0eeff;
 }
 
 .theme-card-btn.active{
-    background:#5b4cf6;
-    border-color:#5b4cf6;
+    background:#5b4bff;
+    border-color:#5b4bff;
     color:#fff;
     box-shadow:0 4px 12px rgba(91,76,246,.18);
 }
@@ -2298,13 +2298,13 @@ body.dark-mode .theme-card-btn{
 
 body.dark-mode .theme-card-btn:hover{
     background:#29235d;
-    border-color:#5b4cf6;
+    border-color:#5b4bff;
     color:#fff;
 }
 
 body.dark-mode .theme-card-btn.active{
-    background:#5b4cf6;
-    border-color:#5b4cf6;
+    background:#5b4bff;
+    border-color:#5b4bff;
     color:#fff;
 }
 
