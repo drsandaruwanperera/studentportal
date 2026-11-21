@@ -2808,10 +2808,10 @@ html.student-glass-ui body .study-buddy-launcher small {
     backdrop-filter: blur(20px) saturate(1.3) !important;
   }
   /* Offset the page below the fixed header without making the page full-screen. */
-  html.student-glass-ui body > .main-content {
+  html.student-glass-ui body .main-content {
     padding-top: calc(66px + env(safe-area-inset-top, 0px)) !important;
   }
-  html.student-glass-ui body > .main {
+  html.student-glass-ui body .main {
     padding-top: calc(66px + env(safe-area-inset-top, 0px)) !important;
   }
   html.student-glass-ui body .shared-bottom-nav {
