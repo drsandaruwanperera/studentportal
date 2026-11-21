@@ -84,8 +84,8 @@
   let studyCardObserver = null;
 
   function resolveSessionCohort() {
-    const typeValue = String(sessionStorage.getItem("studentType") || "").trim().toLowerCase().replace(/[\\s_-]+/g, "");
-    const gradeValue = String(sessionStorage.getItem("studentGrade") || "").trim().toLowerCase().replace(/[\\s_-]+/g, "");
+    const typeValue = String(sessionStorage.getItem("studentType") || "").trim().toLowerCase().replace(/[\s_-]+/g, "");
+    const gradeValue = String(sessionStorage.getItem("studentGrade") || "").trim().toLowerCase().replace(/[\s_-]+/g, "");
     const id = String(sessionStorage.getItem("studentId") || "").trim().toUpperCase();
 
     if (typeValue.includes("grade10") || gradeValue.includes("grade10") || typeValue === "g10") {
@@ -100,14 +100,14 @@
       /^al(?:20)?(?:2027|2028|2029|27|28|29)$/.test(gradeValue) ||
       /^a\/l(?:20)?(?:2027|2028|2029|27|28|29)$/.test(gradeValue);
 
-    if (isAl || /^A2[789]\\d{3}$/.test(id) || /^(?:27|28|29)[CN]/.test(id)) {
+    if (isAl || /^A2[789]\d{3}$/.test(id) || /^(?:27|28|29)[CN]/.test(id)) {
       let year = String(sessionStorage.getItem("alYear") || "").match(/^20(27|28|29)$/)?.[0] || "";
       if (!year) {
         const match = (gradeValue + " " + typeValue).match(/20(27|28|29)/);
         if (match) year = "20" + match[1];
       }
       if (!year) {
-        const match = id.match(/^(?:A)?(27|28|29)\\d{3}$/) || id.match(/^(27|28|29)[CN]/);
+        const match = id.match(/^(?:A)?(27|28|29)\d{3}$/) || id.match(/^(27|28|29)[CN]/);
         if (match) year = "20" + match[1];
       }
       return { key: year === "2028" ? "al2028" : "al2027", year: year || "2027" };
