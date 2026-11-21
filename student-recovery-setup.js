@@ -87,12 +87,13 @@ function buildPrintableRecoveryPage(studentId, code) {
 </html>`;
 }
 
-export async function requireRecoveryCodeSetup(studentRef, studentId, studentData = {}) {
+export async function requireRecoveryCodeSetup(studentRef, studentId, studentData = {}, options = {}) {
+  const forceRegenerate = options?.forceRegenerate === true;
   const existingHash = String(studentData?.recoveryCodeHash || "").trim();
   const setupComplete = studentData?.recoveryCodeSetupComplete === true &&
     /^[a-f0-9]{64}$/i.test(existingHash);
 
-  if (setupComplete) return true;
+  if (setupComplete && !forceRegenerate) return true;
 
   if (document.getElementById(RECOVERY_OVERLAY_ID)) {
     throw new Error("Recovery setup is already open. Please complete that step first.");
@@ -111,9 +112,9 @@ export async function requireRecoveryCodeSetup(studentRef, studentId, studentDat
     overlay.innerHTML = `
       <section class="src-dialog" role="dialog" aria-modal="true" aria-labelledby="src-title" aria-describedby="src-description">
         <div class="src-brand"><span class="src-brand-mark">🔐</span><span>DR. SANDARUWAN LMS</span></div>
-        <div class="src-step">ONE-TIME ACCOUNT SETUP</div>
-        <h1 id="src-title">Save your Recovery Code</h1>
-        <p id="src-description" class="src-description">Before entering your dashboard, save this code by printing it or downloading a copy. You will need it if you forget your password.</p>
+        <div class="src-step">${forceRegenerate ? "SECURITY UPDATE" : "ONE-TIME ACCOUNT SETUP"}</div>
+        <h1 id="src-title">${forceRegenerate ? "Create a new Recovery Code" : "Save your Recovery Code"}</h1>
+        <p id="src-description" class="src-description">${forceRegenerate ? "Your previous Recovery Code will stop working after this update. Download or print the new code and keep it somewhere safe." : "Before entering your dashboard, save this code by printing it or downloading a copy. You will need it if you forget your password."}</p>
 
         <div class="src-student-id"><span>STUDENT ID</span><strong>${escapeHTML(studentId)}</strong></div>
 
@@ -135,7 +136,7 @@ export async function requireRecoveryCodeSetup(studentRef, studentId, studentDat
 
         <p class="src-status" id="srcStatus" role="status">Choose Print or Download, then confirm that you have saved your code.</p>
 
-        <button type="button" class="src-btn src-btn-continue" id="srcContinueBtn" disabled>Continue to Dashboard <span aria-hidden="true">→</span></button>
+        <button type="button" class="src-btn src-btn-continue" id="srcContinueBtn" disabled>${forceRegenerate ? "Save New Recovery Code" : "Continue to Dashboard"} <span aria-hidden="true">→</span></button>
         <p class="src-footnote">Your full recovery code is never stored in the student record. Only its SHA-256 verification hash is saved.</p>
       </section>
     `;
@@ -230,10 +231,11 @@ export async function requireRecoveryCodeSetup(studentRef, studentId, studentDat
         await updateDoc(studentRef, {
           recoveryCodeHash,
           recoveryCodeAlgorithm: "SHA-256",
-          recoveryCodeVersion: 1,
+          recoveryCodeVersion: forceRegenerate ? Math.max(2, Number(studentData?.recoveryCodeVersion || 1) + 1) : 1,
           recoveryCodeSetupComplete: true,
           recoveryCodeSetupAt: Date.now(),
-          recoveryCodeDeliveryMethod: exportedMethod
+          recoveryCodeDeliveryMethod: exportedMethod,
+          ...(forceRegenerate ? { recoveryCodeReplacedAt: Date.now() } : {})
         });
 
         document.body.classList.remove("src-modal-open");
