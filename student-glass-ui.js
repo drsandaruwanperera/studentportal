@@ -16,9 +16,20 @@
   const isAnnouncements = page === "announcements.html";
   const isSupport = page === "support.html";
 
+  // Safari/iOS private browsing and privacy restrictions can throw when
+  // sessionStorage is accessed. A blocked storage read must never stop the
+  // shared header and mobile navigation from rendering.
+  function readSessionValue(key) {
+    try {
+      return window.sessionStorage.getItem(key) || "";
+    } catch (error) {
+      return "";
+    }
+  }
+
   const studentName = String(
-    sessionStorage.getItem("studentName") ||
-    sessionStorage.getItem("studentId") ||
+    readSessionValue("studentName") ||
+    readSessionValue("studentId") ||
     "Student"
   ).trim() || "Student";
 
