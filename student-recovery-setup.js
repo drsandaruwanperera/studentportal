@@ -89,6 +89,7 @@ function buildPrintableRecoveryPage(studentId, code) {
 
 export async function requireRecoveryCodeSetup(studentRef, studentId, studentData = {}, options = {}) {
   const forceRegenerate = options?.forceRegenerate === true;
+  const websiteHandoff = options?.websiteHandoff === true;
   const existingHash = String(studentData?.recoveryCodeHash || "").trim();
   const setupComplete = studentData?.recoveryCodeSetupComplete === true &&
     /^[a-f0-9]{64}$/i.test(existingHash);
@@ -114,7 +115,7 @@ export async function requireRecoveryCodeSetup(studentRef, studentId, studentDat
         <div class="src-brand"><span class="src-brand-mark">🔐</span><span>DR. SANDARUWAN LMS</span></div>
         <div class="src-step">${forceRegenerate ? "SECURITY UPDATE" : "ONE-TIME ACCOUNT SETUP"}</div>
         <h1 id="src-title">${forceRegenerate ? "Create a new Recovery Code" : "Save your Recovery Code"}</h1>
-        <p id="src-description" class="src-description">${forceRegenerate ? "Your previous Recovery Code will stop working after this update. Download or print the new code and keep it somewhere safe." : "Before entering your dashboard, save this code by printing it or downloading a copy. You will need it if you forget your password."}</p>
+        <p id="src-description" class="src-description">${forceRegenerate ? "Your previous Recovery Code will stop working after this update. Save the new code safely before installing the LMS app." : websiteHandoff ? "Save this one-time Recovery Code first. The LMS app must be installed before you can open your student dashboard." : "Before entering your dashboard, save this code by printing it or downloading a copy. You will need it if you forget your password."}</p>
 
         <div class="src-student-id"><span>STUDENT ID</span><strong>${escapeHTML(studentId)}</strong></div>
 
@@ -136,7 +137,7 @@ export async function requireRecoveryCodeSetup(studentRef, studentId, studentDat
 
         <p class="src-status" id="srcStatus" role="status">Choose Print or Download, then confirm that you have saved your code.</p>
 
-        <button type="button" class="src-btn src-btn-continue" id="srcContinueBtn" disabled>${forceRegenerate ? "Save New Recovery Code" : "Continue to Dashboard"} <span aria-hidden="true">→</span></button>
+        <button type="button" class="src-btn src-btn-continue" id="srcContinueBtn" disabled>${websiteHandoff ? "Continue to Install LMS App" : forceRegenerate ? "Save New Recovery Code" : "Continue to Dashboard"} <span aria-hidden="true">→</span></button>
         <p class="src-footnote">Your full recovery code is never stored in the student record. Only its SHA-256 verification hash is saved.</p>
       </section>
     `;
@@ -234,7 +235,7 @@ export async function requireRecoveryCodeSetup(studentRef, studentId, studentDat
           recoveryCodeVersion: forceRegenerate ? Math.max(2, Number(studentData?.recoveryCodeVersion || 1) + 1) : 1,
           recoveryCodeSetupComplete: true,
           recoveryCodeSetupAt: Date.now(),
-          recoveryCodeDeliveryMethod: exportedMethod,
+          recoveryCodeDeliveryMethod: websiteHandoff ? "website-" + exportedMethod : exportedMethod,
           ...(forceRegenerate ? { recoveryCodeReplacedAt: Date.now() } : {})
         });
 
@@ -244,7 +245,7 @@ export async function requireRecoveryCodeSetup(studentRef, studentId, studentDat
       } catch (error) {
         console.error("Recovery code setup save failed:", error);
         saving = false;
-        continueButton.textContent = "Continue to Dashboard →";
+        continueButton.textContent = websiteHandoff ? "Continue to Install LMS App →" : "Continue to Dashboard →";
         status.textContent = "Could not save your recovery setup. Check your connection and try again. Your code is still visible.";
         status.classList.add("is-error");
         updateContinueState();
