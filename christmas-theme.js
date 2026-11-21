@@ -6,13 +6,13 @@ import { db, doc, onSnapshot } from "./firebase.js";
   window.__drSandaruwanChristmasMounted = true;
 
   const SETTINGS_DOC_ID = "__themeSeasonSchedule";
-  const stylesheetUrl = new URL("./christmas-theme.css?v=20261120-dashboard-ice", import.meta.url).href;
+  const stylesheetUrl = new URL("./christmas-theme.css?v=20261121-purple-glass5", import.meta.url).href;
   const DEFAULT_CHRISTMAS_EMOJIS = ["❄️", "🎄", "🎅", "🎁", "🔔", "⭐", "🦌", "🕯️"];
   let sessions = [];
   let currentSignature = "";
   let nextTimer = null;
 
-  const brandStylesheetUrl = new URL("./brand-glass-theme.css?v=3", import.meta.url).href;
+  const brandStylesheetUrl = new URL("./brand-glass-theme.css?v=4", import.meta.url).href;
 
   function removeLegacyWinterBlueStyles() {
     document.documentElement.classList.remove("student-portal-winter-unified");
