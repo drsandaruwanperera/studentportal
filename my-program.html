@@ -91,6 +91,7 @@ html,body{background:#080d1b!important;color:#f5f7ff!important}
 <link id="christmas-theme-stylesheet" rel="stylesheet" href="./christmas-theme.css?v=20261120-winter-refresh1">
 <link id="winter-dashboard-theme-stylesheet" rel="stylesheet" href="./winter-dashboard-theme.css?v=20261120-winter-refresh1">
 <script src="./winter-theme-preload.js?v=2"></script>
+    <link rel="stylesheet" href="./student-glass-ui.css?v=1">
 </head><body>
 <header class="section-mobile-header" role="banner">
   <a class="section-mobile-brand" href="dashboard.html" aria-label="Dr. Sandaruwan LMS home"><span class="section-brand-mark">🎓</span><span><strong>Dr. Sandaruwan</strong><small>LMS · Student Portal</small></span></a>
@@ -169,6 +170,12 @@ if(t.includes("10")){
     programTitle.textContent="Advanced Level Accounting";
     modelCardTitle.textContent="TOP Ranking Papers";
     modelCardDescription.textContent="A/L TOP Ranking papers for exam preparation.";
+    if(alYear==="2027"){
+      programTitle.textContent="A/L 2027";
+      modelCardTitle.textContent="Monthly TOP Ranking Papers";
+      modelCardDescription.textContent="Month-wise TOP Ranking papers with 1st- and 2nd-paper answers inside each month.";
+      modelLink.textContent="Browse monthly papers →";
+    }
   }
 }</script><script type="module">
 import {db,collection,onSnapshot} from "./firebase.js";
@@ -186,10 +193,15 @@ function apply(snapshot){
   const year=yearMatch?"20"+yearMatch[1]:(sessionYear?sessionYear[0]:(explicitYear?"20"+explicitYear[1]:"2027"));
   const showModelAnswers=!(isAL&&(year==="2027"||year==="2028"));
   const isAL2028=isAL&&year==="2028";
+  const programmeContent = isAL2028
+    ? new Set(["modelPapers","smartBookAnswers","schoolPaperAnswers"])
+    : isAL && year==="2027"
+      ? new Set(["modelPapers"])
+      : new Set(["modelPapers","modelPaperAnswers"]);
   cards.forEach(c=>{
     const published=state[c.dataset.contentId];
     const yearAllowed=c.dataset.contentId!=="modelPaperAnswers"||showModelAnswers;
-    const programAllowed=(c.dataset.contentId!=="smartBookAnswers"&&c.dataset.contentId!=="schoolPaperAnswers")||isAL2028;
+    const programAllowed=programmeContent.has(c.dataset.contentId);
     c.style.display=published&&yearAllowed&&programAllowed?"flex":"none";
   });
 }
@@ -215,5 +227,6 @@ onSnapshot(collection(db,"lmsProgramContent"),apply,()=>apply({forEach(){}}));
 })();
 </script><script type="module" src="./christmas-theme.js?v=20261120-winter-refresh2"></script>
 <script type="module" src="./student-pop-notices.js?v=3"></script>
+    <script defer src="./student-glass-ui.js?v=1"></script>
 </body></html>
 

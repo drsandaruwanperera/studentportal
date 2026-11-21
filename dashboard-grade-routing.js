@@ -40,28 +40,28 @@ import {db,doc,getDoc} from "./firebase.js";
       label: "Grade 10",
       model: "grade10-model-papers.html",
       past: null,
-      modelTitle: "Model Papers",
+      modelTitle: "Term Test Model Papers",
       pastTitle: "Past Papers",
-      modelDescription: "Grade 10 model papers and practice resources",
+      modelDescription: "Grade 10 term test model papers and model paper answers",
       pastDescription: "Grade 10 past papers"
     },
     grade11: {
       label: "Grade 11",
       model: "grade11-model-papers.html",
-      past: "grade11-past-paper.html",
+      past: null,
       modelTitle: "TOP Ranking Papers",
       pastTitle: "Past Papers",
-      modelDescription: "Grade 11 TOP Ranking papers",
-      pastDescription: "Past papers for exam practice"
+      modelDescription: "Grade 11 TOP Ranking papers and Model Paper Answers",
+      pastDescription: ""
     },
     al: {
       label: "Advanced Level",
       model: "model-papers.html",
-      past: "province-paper1.html",
-      modelTitle: "A/L Model Papers",
+      past: null,
+      modelTitle: "Monthly TOP Ranking Papers",
       pastTitle: "Province Papers",
-      modelDescription: "Advanced Level model papers",
-      pastDescription: "Provincial examination papers"
+      modelDescription: "Month-wise A/L 2027 TOP Ranking papers with their matching answers",
+      pastDescription: ""
     }
   };
 
