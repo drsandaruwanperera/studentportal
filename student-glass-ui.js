@@ -150,15 +150,17 @@
     if (announcementLink || supportLink) {
       const more = makeMoreButton();
       if (announcementLink) {
-        announcementLink.classList.remove("active");
-        announcementLink.removeAttribute("aria-current");
+        announcementLink.classList.toggle("active", isAnnouncements);
+        if (isAnnouncements) announcementLink.setAttribute("aria-current", "page");
+        else announcementLink.removeAttribute("aria-current");
         const label = announcementLink.querySelector("span:not(.nav-icon)");
         if (label) label.textContent = "Announcements";
         more.panel.appendChild(announcementLink);
       }
       if (supportLink) {
-        supportLink.classList.remove("active");
-        supportLink.removeAttribute("aria-current");
+        supportLink.classList.toggle("active", isSupport);
+        if (isSupport) supportLink.setAttribute("aria-current", "page");
+        else supportLink.removeAttribute("aria-current");
         const label = supportLink.querySelector("span:not(.nav-icon)");
         if (label) label.textContent = "Support";
         more.panel.appendChild(supportLink);
