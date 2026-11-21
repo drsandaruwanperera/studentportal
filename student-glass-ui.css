@@ -3527,3 +3527,10 @@ html.student-glass-ui body .study-buddy-launcher small {
 /* Keep the dashboard-only mobile overview and removed stats out of desktop layouts. */
 html.student-glass-ui body.dashboard-page .dashboard-mobile-overview { display: none !important; }
 html.student-glass-ui body.dashboard-page .lms-stat-grid[hidden] { display: none !important; }
+
+/* Mobile breakpoint wins over the desktop-only overview hide rule. */
+@media (max-width: 800px) {
+  html.student-glass-ui body.dashboard-page .dashboard-mobile-overview {
+    display: grid !important;
+  }
+}
