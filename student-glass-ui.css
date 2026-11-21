@@ -4851,3 +4851,408 @@ html.student-glass-ui body .timer-unit {
   }
 }
 
+
+
+/* ==========================================================
+   DR. SANDARUWAN LMS — PURPLE FROSTED GLASS FINISH
+   Shared visual layer for Dashboard, Study, Results,
+   Announcements, Support, Profile and answer resources.
+   Presentation only: no data, routes, auth or access logic.
+========================================================== */
+
+html.student-glass-ui,
+html.student-glass-ui body {
+  color-scheme: dark !important;
+  --student-glass-bg: #0b1020;
+  --student-glass-bg-2: #11182b;
+  --student-glass-ink: #f4f7ff;
+  --student-glass-muted: #aeb8ce;
+  --student-glass-purple: #5b4bff;
+  --student-glass-violet: #7c3aed;
+  --student-glass-lime: #a6ff2e;
+  --student-glass-line: rgba(185,174,255,.22);
+  --student-glass-card: rgba(18,25,47,.66);
+  --student-glass-shadow: 0 18px 48px rgba(0,0,0,.28);
+  background:
+    radial-gradient(ellipse at 9% 0%, rgba(91,75,255,.22), transparent 34%),
+    radial-gradient(ellipse at 96% 82%, rgba(124,58,237,.16), transparent 34%),
+    linear-gradient(145deg,#0b1020 0%,#10152b 55%,#0b1020 100%) !important;
+  color: var(--student-glass-ink) !important;
+}
+
+html.student-glass-ui body {
+  min-height: 100vh !important;
+  font-family: Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif !important;
+  overflow-x: hidden;
+}
+
+html.student-glass-ui body :is(h1,h2,h3,h4,h5,h6,strong,b,label,legend) {
+  color: #f4f7ff !important;
+}
+
+html.student-glass-ui body :is(p,small,.muted,.subtitle,.description,.hint,.meta,.eyebrow,.card-subtitle) {
+  color: #aeb8ce !important;
+}
+
+html.student-glass-ui body a {
+  text-decoration-color: rgba(166,255,46,.35);
+}
+
+html.student-glass-ui body a:hover {
+  color: #a6ff2e !important;
+}
+
+html.student-glass-ui body :is(input,select,textarea) {
+  color: #f4f7ff !important;
+  background: rgba(8,13,27,.72) !important;
+  border: 1px solid rgba(173,159,255,.25) !important;
+  border-radius: 12px !important;
+  color-scheme: dark !important;
+  box-shadow: inset 0 1px rgba(255,255,255,.035) !important;
+}
+
+html.student-glass-ui body :is(input,select,textarea)::placeholder {
+  color: #7785a2 !important;
+}
+
+html.student-glass-ui body :is(input,select,textarea):focus {
+  border-color: rgba(166,255,46,.65) !important;
+  box-shadow: 0 0 0 3px rgba(166,255,46,.10) !important;
+  outline: none !important;
+}
+
+html.student-glass-ui body :is(a,button,input,select,textarea,[tabindex]):focus-visible {
+  outline: 2px solid rgba(166,255,46,.85) !important;
+  outline-offset: 3px !important;
+}
+
+/* Shared page canvas and frosted headers. */
+html.student-glass-ui body :is(.app,.main-content,.main,#main) {
+  background: transparent !important;
+  color: #f4f7ff !important;
+}
+
+html.student-glass-ui body :is(.lms-header,.top,.mobile-lms-header,.section-mobile-header,.shared-mobile-header) {
+  background: rgba(11,16,32,.68) !important;
+  border-color: rgba(173,159,255,.20) !important;
+  color: #f4f7ff !important;
+  box-shadow: 0 12px 34px rgba(0,0,0,.18), inset 0 1px rgba(255,255,255,.06) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(150%) !important;
+  backdrop-filter: blur(22px) saturate(150%) !important;
+}
+
+html.student-glass-ui body :is(.lms-header-title h1,.top h1,.profile-page-heading h1,.lms-user strong,.mobile-lms-title b) {
+  color: #f4f7ff !important;
+}
+
+html.student-glass-ui body :is(.lms-header-title p,.top p,.lms-user span,.mobile-lms-title span,.mobile-lms-title strong) {
+  color: #9eabc5 !important;
+}
+
+html.student-glass-ui body :is(.lms-search,.lms-notification,.back,.profile-back,.mobile-menu-btn,.section-menu-toggle) {
+  background: rgba(255,255,255,.055) !important;
+  border: 1px solid rgba(173,159,255,.25) !important;
+  color: #e8eaff !important;
+  box-shadow: inset 0 1px rgba(255,255,255,.055), 0 8px 22px rgba(0,0,0,.14) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  backdrop-filter: blur(16px) !important;
+}
+
+/* Shared sidebar, profile strip and navigation. */
+html.student-glass-ui body :is(.sidebar,.side,#studentSidebar,#sectionSidebar) {
+  background: linear-gradient(180deg,rgba(11,16,32,.94),rgba(17,24,43,.88)) !important;
+  border-right: 1px solid rgba(173,159,255,.20) !important;
+  box-shadow: 16px 0 48px rgba(0,0,0,.26) !important;
+  color: #f4f7ff !important;
+  -webkit-backdrop-filter: blur(22px) saturate(145%) !important;
+  backdrop-filter: blur(22px) saturate(145%) !important;
+}
+
+html.student-glass-ui body :is(.sidebar-brand,.brand,.student-account,.side-profile,.side-bottom) {
+  border-color: rgba(173,159,255,.18) !important;
+}
+
+html.student-glass-ui body :is(.brand-logo,.logo,.section-brand-mark) {
+  background: linear-gradient(140deg,#5b4bff,#7c3aed 68%,#a6ff2e) !important;
+  color: #fff !important;
+  box-shadow: 0 10px 28px rgba(91,75,255,.34) !important;
+}
+
+html.student-glass-ui body :is(.brand-text strong,.brand b,.brand-text span,.brand span,.student-account-info strong,.student-account-info span,.side-profile strong,.side-profile span) {
+  color: #eaf0ff !important;
+}
+
+html.student-glass-ui body :is(.sidebar-section-title) {
+  color: #8d9abb !important;
+}
+
+html.student-glass-ui body :is(.sidebar-link,.side nav a,.shared-sidebar-more-trigger) {
+  border-color: transparent !important;
+  background: transparent !important;
+  color: #aeb8ce !important;
+}
+
+html.student-glass-ui body :is(.sidebar-link:hover,.side nav a:hover,.shared-sidebar-more-trigger:hover) {
+  background: rgba(124,58,237,.16) !important;
+  border-color: rgba(173,159,255,.16) !important;
+  color: #fff !important;
+}
+
+html.student-glass-ui body :is(.sidebar-link.active,.side nav a.active,.shared-sidebar-more-trigger.is-current) {
+  background: linear-gradient(110deg,rgba(64,55,201,.92),rgba(91,75,255,.84)) !important;
+  border-color: rgba(194,183,255,.42) !important;
+  border-left: 3px solid #a6ff2e !important;
+  color: #fff !important;
+  box-shadow: 0 10px 28px rgba(91,75,255,.28), inset 0 1px rgba(255,255,255,.12) !important;
+}
+
+html.student-glass-ui body :is(.sidebar-link .nav-icon,.side nav a .nav-icon) {
+  color: inherit !important;
+}
+
+html.student-glass-ui body :is(.student-avatar,.side-avatar,.lms-avatar,.mobile-avatar) {
+  background: linear-gradient(145deg,#5b4bff,#7c3aed) !important;
+  color: #fff !important;
+  box-shadow: 0 8px 22px rgba(91,75,255,.26) !important;
+}
+
+html.student-glass-ui body :is(.sidebar-logout,.logout) {
+  background: linear-gradient(110deg,#b91c35,#e33e50) !important;
+  border: 1px solid rgba(255,130,145,.34) !important;
+  color: #fff !important;
+  box-shadow: 0 9px 22px rgba(185,28,53,.20) !important;
+}
+
+/* Glass surfaces shared by the dashboard and every student tab. */
+html.student-glass-ui body :is(
+  .dashboard-learning-banner,.dashboard-analytics-hero,.hero-card,
+  .portal-program-card,.portal-support-card,.dashboard-summary-card,
+  .lms-stat-card,.announcement-panel,.lms-widget,.quick-nav-card,
+  .hero,.panel,.stat,.result,.notice,.support-card,.chat,
+  .profile-hero,.profile-card,.profile-data-item,.profile-app-row,
+  .card,.answers-heading,.answers-group,.answer-row,.answers-empty,
+  .exam-focus,.timer-unit,.study-buddy-panel,.study-buddy-launcher
+) {
+  background: linear-gradient(145deg,rgba(30,34,68,.78),rgba(13,19,39,.68)) !important;
+  border: 1px solid rgba(173,159,255,.25) !important;
+  border-radius: 18px !important;
+  color: #f4f7ff !important;
+  box-shadow: 0 16px 42px rgba(0,0,0,.24), inset 0 1px rgba(255,255,255,.075) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(145%) !important;
+  backdrop-filter: blur(20px) saturate(145%) !important;
+}
+
+html.student-glass-ui body :is(
+  .dashboard-learning-banner,.dashboard-analytics-hero,.hero-card,
+  .hero.performance-hero,.profile-hero
+) {
+  background:
+    radial-gradient(circle at 86% 12%,rgba(166,255,46,.10),transparent 24%),
+    radial-gradient(circle at 12% 95%,rgba(124,58,237,.26),transparent 38%),
+    linear-gradient(118deg,rgba(30,20,75,.94),rgba(58,36,132,.82) 54%,rgba(14,45,65,.88)) !important;
+  border-color: rgba(166,255,46,.24) !important;
+  box-shadow: 0 22px 54px rgba(0,0,0,.28), inset 0 1px rgba(255,255,255,.10) !important;
+}
+
+html.student-glass-ui body :is(.hero-continue-btn,.profile-btn.primary,.answer-link.primary) {
+  border: 1px solid rgba(220,255,170,.65) !important;
+  background: linear-gradient(105deg,#a6ff2e,#d1ff75) !important;
+  color: #11182b !important;
+  font-weight: 850 !important;
+  box-shadow: 0 9px 26px rgba(166,255,46,.18), inset 0 1px rgba(255,255,255,.35) !important;
+}
+
+html.student-glass-ui body :is(.hero-continue-btn,.profile-btn.primary,.answer-link.primary) * {
+  color: #11182b !important;
+}
+
+/* Dashboard: announcements filters, empty state, summaries and widgets. */
+html.student-glass-ui body :is(.lms-section-heading h2,.portal-section-heading h2,.widget-heading h2,.dashboard-announcements-heading h2) {
+  color: #f4f7ff !important;
+}
+
+html.student-glass-ui body :is(.lms-section-heading p,.announcement-summary-sub,.widget-subtitle) {
+  color: #aeb8ce !important;
+}
+
+html.student-glass-ui body :is(.lms-section-heading>a,.lms-section-heading a,.widget-heading a,.portal-section-link,.announcement-link) {
+  color: #c1b5ff !important;
+}
+
+html.student-glass-ui body .dashboard-announcement-tabs {
+  background: rgba(255,255,255,.055) !important;
+  border: 1px solid rgba(173,159,255,.22) !important;
+  border-radius: 16px !important;
+  box-shadow: inset 0 1px rgba(255,255,255,.05) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+  backdrop-filter: blur(18px) !important;
+}
+
+html.student-glass-ui body .dashboard-announcement-tab {
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  color: #aeb8ce !important;
+}
+
+html.student-glass-ui body .dashboard-announcement-tab.active {
+  background: linear-gradient(110deg,#a6ff2e,#d1ff75) !important;
+  border-color: rgba(220,255,170,.66) !important;
+  color: #11182b !important;
+  box-shadow: 0 7px 20px rgba(166,255,46,.16) !important;
+}
+
+html.student-glass-ui body :is(.dashboard-announcement-summary,.dashboard-summary-empty,.dashboard-summary-loading,.dashboard-announcement-empty,.portal-empty,.announcement-empty,.empty,.answers-empty) {
+  background: linear-gradient(145deg,rgba(33,39,76,.72),rgba(15,22,42,.70)) !important;
+  border: 1px solid rgba(173,159,255,.22) !important;
+  border-radius: 16px !important;
+  color: #aeb8ce !important;
+  box-shadow: inset 0 1px rgba(255,255,255,.06), 0 10px 26px rgba(0,0,0,.16) !important;
+}
+
+html.student-glass-ui body :is(.dashboard-summary-number,.dashboard-summary-meta b,.dashboard-summary-meta span,.quick-nav-card>b,.portal-card-arrow) {
+  color: #a6ff2e !important;
+}
+
+html.student-glass-ui body :is(.dashboard-summary-top strong,.dashboard-summary-copy,.dashboard-summary-copy p,.quick-nav-card strong,.quick-nav-card small,.lms-stat-card strong,.lms-stat-card span) {
+  color: #eaf0ff !important;
+}
+
+html.student-glass-ui body :is(.lms-stat-icon,.quick-nav-icon,.portal-program-icon,.dashboard-summary-icon) {
+  background: rgba(91,75,255,.20) !important;
+  border: 1px solid rgba(173,159,255,.27) !important;
+  color: #c1b5ff !important;
+}
+
+html.student-glass-ui body :is(.exam-copy h3,.exam-copy p,.exam-link,.timer-unit strong,.timer-unit small) {
+  color: #eaf0ff !important;
+}
+
+/* Study tab: programme banner, tabs and paper/resource cards. */
+html.student-glass-ui body .hero small {
+  color: #a6ff2e !important;
+  letter-spacing: 1.35px !important;
+  font-weight: 850 !important;
+}
+
+html.student-glass-ui body .hero h2 {
+  color: #fff !important;
+}
+
+html.student-glass-ui body .tabs {
+  background: rgba(255,255,255,.055) !important;
+  border: 1px solid rgba(173,159,255,.22) !important;
+  border-radius: 15px !important;
+  padding: 5px !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+  backdrop-filter: blur(18px) !important;
+}
+
+html.student-glass-ui body .tab {
+  background: rgba(255,255,255,.04) !important;
+  border: 1px solid rgba(173,159,255,.18) !important;
+  color: #c6cce0 !important;
+}
+
+html.student-glass-ui body .tab.active {
+  background: linear-gradient(110deg,#4037c9,#7c3aed) !important;
+  border-color: rgba(194,183,255,.42) !important;
+  color: #fff !important;
+  box-shadow: 0 8px 20px rgba(91,75,255,.22) !important;
+}
+
+html.student-glass-ui body .card :is(h3,p) {
+  color: #eaf0ff !important;
+}
+
+html.student-glass-ui body .card a {
+  color: #a6ff2e !important;
+}
+
+/* Results tab: score tiles, chart panels and published result rows. */
+html.student-glass-ui body :is(.stat small,.stat span,.panel-head p,.results-head p,.result-body small,.result-top em,.hint) {
+  color: #aeb8ce !important;
+}
+
+html.student-glass-ui body :is(.stat b,.panel-head h2,.results-head h2,.result-main strong,.result-main .score) {
+  color: #f4f7ff !important;
+}
+
+html.student-glass-ui body :is(.fill,.mini-track i,.result-progress,.bar-track i) {
+  background: linear-gradient(90deg,#7c3aed,#a6ff2e) !important;
+}
+
+html.student-glass-ui body :is(.results,.announcement-list,.profile-grid,.support-grid) {
+  background: transparent !important;
+}
+
+html.student-glass-ui body :is(.notice,.result,.answer-row,.chat) {
+  border-color: rgba(173,159,255,.24) !important;
+}
+
+html.student-glass-ui body :is(.notice-message,.result-body,.answer-copy,.chat span) {
+  color: #b9c4da !important;
+}
+
+/* Support and profile sections. */
+html.student-glass-ui body .support-card.green {
+  background: linear-gradient(145deg,rgba(10,66,57,.70),rgba(13,29,42,.78)) !important;
+  border-color: rgba(74,222,128,.28) !important;
+}
+
+html.student-glass-ui body :is(.support-card h2,.profile-card h3,.profile-hero-copy h2) {
+  color: #f4f7ff !important;
+}
+
+html.student-glass-ui body :is(.profile-data-item small,.profile-field label,.recovery-status small,.recovery-note,.answers-note) {
+  color: #9eabc5 !important;
+}
+
+html.student-glass-ui body :is(.profile-data-item strong,.profile-status-chip,.recovery-status strong) {
+  color: #f4f7ff !important;
+}
+
+html.student-glass-ui body :is(.profile-btn.secondary,.profile-back) {
+  background: rgba(255,255,255,.055) !important;
+  border: 1px solid rgba(173,159,255,.26) !important;
+  color: #e8eaff !important;
+  box-shadow: inset 0 1px rgba(255,255,255,.06) !important;
+}
+
+/* Shared mobile navigation: floating frosted glass, not an opaque bar. */
+@media (max-width: 800px) {
+  html.student-glass-ui body :is(.dashboard-mobile-nav,.shared-bottom-nav,.mobile-nav) {
+    background: rgba(11,16,32,.80) !important;
+    border: 1px solid rgba(173,159,255,.27) !important;
+    box-shadow: 0 16px 40px rgba(0,0,0,.38), inset 0 1px rgba(255,255,255,.08) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(160%) !important;
+    backdrop-filter: blur(24px) saturate(160%) !important;
+  }
+
+  html.student-glass-ui body :is(.dashboard-mobile-nav a,.shared-bottom-nav>a,.shared-more-menu>summary,.mobile-nav a) {
+    color: #aeb8ce !important;
+  }
+
+  html.student-glass-ui body :is(.dashboard-mobile-nav a.active,.shared-bottom-nav>a.active,.shared-more-menu.is-current>summary,.mobile-nav a.active) {
+    background: linear-gradient(135deg,rgba(91,75,255,.42),rgba(124,58,237,.28)) !important;
+    color: #fff !important;
+    box-shadow: inset 0 0 0 1px rgba(194,183,255,.24) !important;
+  }
+
+  html.student-glass-ui body :is(.main,.main-content) {
+    background: transparent !important;
+  }
+
+  html.student-glass-ui body :is(.card,.panel,.notice,.result,.support-card,.profile-card,.answer-row) {
+    border-radius: 17px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.student-glass-ui body *,
+  html.student-glass-ui body *::before,
+  html.student-glass-ui body *::after {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+}
