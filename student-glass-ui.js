@@ -190,18 +190,38 @@
     const study = makeLink("my-program.html", "Study", icons.study, isStudy);
     const results = makeLink("progress.html", "Results", icons.results, isResults);
 
-    const portrait = document.createElement("div");
+    const portrait = document.createElement("button");
+    portrait.type = "button";
     portrait.className = "shared-floating-teacher";
-    portrait.setAttribute("aria-hidden", "true");
+    portrait.setAttribute("aria-label", "Open AI Study Buddy with Dr. Sandaruwan");
+    portrait.setAttribute("aria-controls", "studyBuddyPanel");
+    portrait.setAttribute("aria-expanded", "false");
+    portrait.title = "Open AI Study Buddy";
     const photo = document.createElement("img");
     photo.src = teacherPhoto;
-    photo.alt = "";
+    photo.alt = "Dr. Sandaruwan";
     photo.loading = "eager";
     photo.onerror = () => {
       photo.onerror = null;
       photo.src = appIcon;
     };
-    portrait.appendChild(photo);
+    const caption = document.createElement("span");
+    caption.className = "shared-floating-teacher-caption";
+    caption.textContent = "AI";
+    portrait.append(photo, caption);
+    portrait.addEventListener("click", () => {
+      if (!isDashboard) {
+        window.location.href = "dashboard.html#study-buddy";
+        return;
+      }
+      if (typeof window.openStudentStudyAssistant === "function") {
+        window.openStudentStudyAssistant();
+      } else {
+        const launcher = document.getElementById("studyBuddyLauncher");
+        if (launcher) launcher.click();
+      }
+      portrait.setAttribute("aria-expanded", "true");
+    });
 
     const more = document.createElement("button");
     more.type = "button";
@@ -316,22 +336,10 @@
     }
 
     const journey = document.querySelector(".learning-orbit");
-    if (journey) journey.setAttribute("aria-hidden", "true");
+    if (journey) journey.remove();
 
-    safeText(document.getElementById("programHeading"), "Study");
-    const programLink = document.querySelector(".portal-program-section .portal-section-link");
-    if (programLink) programLink.innerHTML = 'Open Study <span aria-hidden="true">↗</span>';
-    const quickProgram = Array.from(document.querySelectorAll(".quick-nav-card")).find(link =>
-      /my program/i.test(link.textContent || "")
-    );
-    const quickProgramTitle = quickProgram?.querySelector("strong");
-    if (quickProgramTitle) quickProgramTitle.textContent = "Study";
-    const continueStudy = document.querySelector(".hero-continue-btn");
-    if (continueStudy) continueStudy.innerHTML = 'Open Study <strong aria-hidden="true">→</strong>';
-
-    safeText(document.querySelector(".dashboard-announcements-heading h2"), "Important Announcement");
-    const announcementsLink = document.querySelector(".dashboard-announcements-heading a");
-    if (announcementsLink) announcementsLink.textContent = "All announcements →";
+    // Keep the original dashboard section labels and links intact.
+    safeText(document.getElementById("programHeading"), "Your learning program");
   }
 
   function getColomboToday() {

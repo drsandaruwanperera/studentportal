@@ -1931,3 +1931,617 @@ html.student-glass-ui body *::after {
     transition: none !important;
   }
 }
+
+
+/* ==========================================================
+   MOBILE DASHBOARD FINISH — BRAND, PORTRAIT AND STUDY ASSISTANT
+   ========================================================== */
+@media (max-width: 800px) {
+  html.student-glass-ui,
+  html.student-glass-ui body {
+    margin: 0 !important;
+    padding-top: 0 !important;
+    overflow-x: hidden !important;
+  }
+  html.student-glass-ui body .shared-mobile-header {
+    top: 0 !important;
+    margin: 0 !important;
+    min-height: 68px !important;
+    border-radius: 0 0 19px 19px !important;
+    box-shadow: 0 10px 25px rgba(20,65,90,.09) !important;
+  }
+  html.student-glass-ui body .shared-header-action svg {
+    display: block !important;
+    width: 20px !important;
+    height: 20px !important;
+    fill: none !important;
+    stroke: currentColor !important;
+    stroke-width: 1.9 !important;
+    stroke-linecap: round !important;
+    stroke-linejoin: round !important;
+  }
+
+  html.student-glass-ui body .lms-dashboard {
+    padding: 12px 14px calc(108px + env(safe-area-inset-bottom)) !important;
+  }
+  html.student-glass-ui body .dashboard-learning-banner {
+    position: relative !important;
+    display: block !important;
+    min-height: 0 !important;
+    height: auto !important;
+    margin: 0 0 15px !important;
+    padding: 20px 17px 17px !important;
+    border-radius: 24px !important;
+    overflow: hidden !important;
+    background:
+      radial-gradient(circle at 88% 14%, rgba(255,255,255,.19), transparent 31%),
+      linear-gradient(118deg,#086d7a 0%,#0c8795 58%,#2d9cac 100%) !important;
+    box-shadow: 0 16px 34px rgba(11,111,126,.19) !important;
+  }
+  html.student-glass-ui body .learning-banner-copy {
+    position: relative !important;
+    z-index: 3 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  html.student-glass-ui body .shared-dashboard-greeting {
+    max-width: calc(100% - 94px) !important;
+    padding-right: 0 !important;
+    margin: 0 0 8px !important;
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+  }
+  html.student-glass-ui body .learning-banner-copy > span {
+    display: block !important;
+    max-width: calc(100% - 94px) !important;
+    margin: 0 0 8px !important;
+    color: rgba(239,252,255,.8) !important;
+    font-size: 9px !important;
+    line-height: 1.3 !important;
+    letter-spacing: .95px !important;
+  }
+  html.student-glass-ui body .learning-banner-copy h2 {
+    max-width: calc(100% - 94px) !important;
+    margin: 0 !important;
+    color: #fff !important;
+    font-size: clamp(20px,5.5vw,25px) !important;
+    line-height: 1.16 !important;
+    letter-spacing: -.55px !important;
+    overflow-wrap: normal !important;
+  }
+  html.student-glass-ui body .learning-banner-copy h2 b {
+    display: inline !important;
+    color: #bdeeff !important;
+    padding: 0 !important;
+  }
+  html.student-glass-ui body .learning-banner-copy p {
+    max-width: 100% !important;
+    margin: 12px 0 0 !important;
+    color: rgba(246,253,255,.9) !important;
+    font-size: 12px !important;
+    line-height: 1.55 !important;
+  }
+  html.student-glass-ui body .shared-banner-portrait {
+    position: absolute !important;
+    z-index: 2 !important;
+    top: 18px !important;
+    right: 16px !important;
+    width: clamp(76px,22vw,92px) !important;
+    height: clamp(96px,29vw,116px) !important;
+    margin: 0 !important;
+    padding: 3px !important;
+    overflow: hidden !important;
+    border: 2px solid rgba(255,255,255,.88) !important;
+    border-radius: 18px !important;
+    background: rgba(255,255,255,.22) !important;
+    box-shadow: 0 10px 24px rgba(0,34,52,.2) !important;
+  }
+  html.student-glass-ui body .shared-banner-portrait img {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 14px !important;
+    object-fit: cover !important;
+    object-position: center 12% !important;
+  }
+  html.student-glass-ui body .hero-continue-btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 14px !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 54px !important;
+    margin: 16px 0 0 !important;
+    padding: 0 17px !important;
+    border: 1px solid rgba(255,255,255,.34) !important;
+    border-radius: 15px !important;
+    background: linear-gradient(135deg,#effcff,#d9f5f8) !important;
+    color: #075b69 !important;
+    box-shadow: 0 9px 20px rgba(0,39,59,.16) !important;
+    font-size: 14px !important;
+    font-weight: 900 !important;
+    text-decoration: none !important;
+  }
+  html.student-glass-ui body .hero-continue-btn strong {
+    color: #087b89 !important;
+    font-size: 22px !important;
+  }
+
+  /* High-contrast statistic cards; keep all three metrics visible together. */
+  html.student-glass-ui body .lms-stat-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+    gap: 9px !important;
+    padding: 4px 0 18px !important;
+  }
+  html.student-glass-ui body .lms-stat-grid .lms-stat-card {
+    display: flex !important;
+    flex-direction: column-reverse !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    min-width: 0 !important;
+    min-height: 112px !important;
+    height: auto !important;
+    padding: 12px 10px !important;
+    border: 1px solid #d8e9f1 !important;
+    border-radius: 18px !important;
+    background: linear-gradient(145deg,rgba(255,255,255,.97),rgba(231,247,251,.95)) !important;
+    color: #152b47 !important;
+    box-shadow: 0 9px 22px rgba(43,100,128,.1) !important;
+  }
+  html.student-glass-ui body .lms-stat-grid .lms-stat-card > div:first-child {
+    display: grid !important;
+    gap: 5px !important;
+    width: 100% !important;
+  }
+  html.student-glass-ui body .lms-stat-grid .lms-stat-card strong {
+    color: #132b46 !important;
+    font-size: clamp(20px,5vw,25px) !important;
+    line-height: 1 !important;
+    font-weight: 950 !important;
+  }
+  html.student-glass-ui body .lms-stat-grid .lms-stat-card span {
+    color: #58738b !important;
+    font-size: 10px !important;
+    line-height: 1.35 !important;
+    font-weight: 750 !important;
+  }
+  html.student-glass-ui body .lms-stat-grid .lms-stat-icon {
+    align-self: flex-end !important;
+    width: 34px !important;
+    height: 34px !important;
+    flex: 0 0 34px !important;
+    border: 1px solid #d5e8f3 !important;
+    border-radius: 11px !important;
+    background: #e8f4fc !important;
+    color: #087987 !important;
+    font-size: 16px !important;
+    box-shadow: none !important;
+  }
+  /* Full-width resource cards retain the labels and actions from each programme. */
+  html.student-glass-ui body .portal-program-grid {
+    grid-template-columns: minmax(0,1fr) !important;
+    gap: 11px !important;
+  }
+  html.student-glass-ui body .portal-program-card {
+    display: flex !important;
+    align-items: center !important;
+    min-height: 104px !important;
+    gap: 14px !important;
+    padding: 15px !important;
+    border: 1px solid rgba(255,255,255,.94) !important;
+    border-radius: 19px !important;
+    background: linear-gradient(145deg,rgba(255,255,255,.96),rgba(242,250,253,.94)) !important;
+    box-shadow: 0 10px 25px rgba(42,100,128,.09) !important;
+  }
+  html.student-glass-ui body .portal-program-icon {
+    width: 48px !important;
+    height: 48px !important;
+    flex: 0 0 48px !important;
+    border-radius: 15px !important;
+    background: #e5f2fc !important;
+    color: #087987 !important;
+  }
+  html.student-glass-ui body .portal-program-copy { gap: 5px !important; }
+  html.student-glass-ui body .portal-program-copy small {
+    font-size: 9px !important;
+    line-height: 1.3 !important;
+  }
+  html.student-glass-ui body .portal-program-copy strong {
+    font-size: 14px !important;
+    line-height: 1.35 !important;
+  }
+  html.student-glass-ui body .portal-program-copy > span:not(.material-link) {
+    font-size: 11px !important;
+    line-height: 1.45 !important;
+  }
+  html.student-glass-ui body .material-link {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 7px !important;
+    margin-top: 2px !important;
+    font-size: 10px !important;
+  }
+
+  /* Keep progress readable and restore contrast in the progress ring. */
+  html.student-glass-ui body .progress-widget,
+  html.student-glass-ui body .lms-side-column > section {
+    border: 1px solid rgba(255,255,255,.96) !important;
+    border-radius: 22px !important;
+    background: rgba(255,255,255,.9) !important;
+    box-shadow: 0 12px 28px rgba(42,100,128,.1) !important;
+  }
+  html.student-glass-ui body .progress-widget :is(h2,strong) { color: #142943 !important; }
+  html.student-glass-ui body .progress-widget :is(p,.widget-subtitle,.progress-legend,.progress-legend span) {
+    color: #61798f !important;
+  }
+  html.student-glass-ui body .progress-ring {
+    background: #e6f3f8 !important;
+    box-shadow: inset 0 0 0 9px #d3e9f1, 0 8px 20px rgba(30,86,111,.1) !important;
+  }
+  html.student-glass-ui body .progress-ring :is(strong,span) { color: #18334f !important; }
+
+  html.student-glass-ui body .portal-support-card {
+    min-width: 0 !important;
+    border: 1px solid rgba(255,255,255,.95) !important;
+    border-radius: 18px !important;
+    background: rgba(255,255,255,.88) !important;
+    box-shadow: 0 10px 24px rgba(42,100,128,.09) !important;
+  }
+  html.student-glass-ui body .portal-support-card :is(strong,small) { color: #17314b !important; }
+
+  /* The floating AI pill is replaced on phones by the clickable centre portrait. */
+  html.student-glass-ui body .study-buddy-launcher { display: none !important; }
+  html.student-glass-ui body .study-buddy-panel {
+    position: fixed !important;
+    left: 12px !important;
+    right: 12px !important;
+    bottom: calc(88px + env(safe-area-inset-bottom)) !important;
+    width: auto !important;
+    max-width: 480px !important;
+    max-height: min(610px,calc(100dvh - 145px)) !important;
+    height: min(560px,calc(100dvh - 155px)) !important;
+    margin: 0 auto !important;
+    border: 1px solid rgba(255,255,255,.94) !important;
+    border-radius: 24px !important;
+    background: rgba(250,254,255,.98) !important;
+    box-shadow: 0 22px 65px rgba(8,43,62,.26) !important;
+    z-index: 2200 !important;
+  }
+}
+
+/* The centre portrait is a real button, not a decorative image. */
+html.student-glass-ui body .shared-floating-teacher {
+  position: relative !important;
+  z-index: 2 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 62px !important;
+  height: 62px !important;
+  flex: 0 0 62px !important;
+  padding: 3px 3px 0 !important;
+  margin: -23px 0 0 !important;
+  border: 3px solid rgba(255,255,255,.98) !important;
+  border-radius: 50% !important;
+  background: linear-gradient(145deg,#eaf8fc,#cceaf2) !important;
+  box-shadow: 0 9px 24px rgba(18,82,108,.24) !important;
+  cursor: pointer !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  pointer-events: auto !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+html.student-glass-ui body .shared-floating-teacher img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 54px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  object-position: center 12% !important;
+}
+html.student-glass-ui body .shared-floating-teacher-caption {
+  position: absolute !important;
+  right: -3px !important;
+  bottom: -5px !important;
+  min-width: 21px !important;
+  padding: 2px 5px !important;
+  border: 1px solid #fff !important;
+  border-radius: 99px !important;
+  background: #087b88 !important;
+  color: #fff !important;
+  font-size: 8px !important;
+  font-weight: 950 !important;
+  line-height: 1.15 !important;
+}
+html.student-glass-ui body .shared-floating-teacher:focus-visible {
+  outline: 3px solid #087b88 !important;
+  outline-offset: 4px !important;
+}
+html.student-glass-ui body .shared-floating-teacher[aria-expanded="true"] {
+  box-shadow: 0 0 0 5px rgba(8,123,136,.15),0 10px 26px rgba(18,82,108,.28) !important;
+}
+
+/* Shared assistant panel styling; the helper is usable on desktop and mobile. */
+html.student-glass-ui body .study-buddy {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  pointer-events: none !important;
+}
+html.student-glass-ui body .study-buddy-panel {
+  position: fixed !important;
+  right: 20px !important;
+  bottom: 92px !important;
+  display: none !important;
+  flex-direction: column !important;
+  width: min(410px,calc(100vw - 36px)) !important;
+  height: min(570px,calc(100dvh - 130px)) !important;
+  max-height: calc(100dvh - 130px) !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(255,255,255,.95) !important;
+  border-radius: 24px !important;
+  background: #f9fdff !important;
+  box-shadow: 0 20px 60px rgba(12,53,76,.24) !important;
+  z-index: 2200 !important;
+  pointer-events: auto !important;
+}
+html.student-glass-ui body .study-buddy-panel.is-open,
+html.student-glass-ui body .study-buddy-panel[aria-hidden="false"] {
+  display: flex !important;
+}
+html.student-glass-ui body .study-buddy-head {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  min-height: 70px !important;
+  padding: 12px 16px !important;
+  background: linear-gradient(115deg,#08727f,#0c8d9b) !important;
+}
+html.student-glass-ui body .study-buddy-avatar {
+  display: grid !important;
+  place-items: center !important;
+  width: 43px !important;
+  height: 43px !important;
+  flex: 0 0 43px !important;
+  border: 1px solid rgba(255,255,255,.38) !important;
+  border-radius: 14px !important;
+  background: rgba(255,255,255,.16) !important;
+}
+html.student-glass-ui body .study-buddy-avatar svg {
+  width: 24px !important;
+  height: 24px !important;
+  fill: none !important;
+  stroke: #fff !important;
+  stroke-width: 1.8 !important;
+}
+html.student-glass-ui body .study-buddy-title {
+  display: grid !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  gap: 4px !important;
+}
+html.student-glass-ui body .study-buddy-title strong {
+  color: #fff !important;
+  font-size: 15px !important;
+  font-weight: 900 !important;
+}
+html.student-glass-ui body .study-buddy-title small {
+  display: flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  color: rgba(240,253,255,.84) !important;
+  font-size: 10px !important;
+}
+html.student-glass-ui body .study-buddy-title i,
+html.student-glass-ui body .study-buddy-launcher i {
+  display: inline-block !important;
+  width: 7px !important;
+  height: 7px !important;
+  flex: 0 0 7px !important;
+  border-radius: 50% !important;
+  background: #b6ef75 !important;
+}
+html.student-glass-ui body .study-buddy-close {
+  display: grid !important;
+  place-items: center !important;
+  width: 36px !important;
+  height: 36px !important;
+  flex: 0 0 36px !important;
+  border: 1px solid rgba(255,255,255,.28) !important;
+  border-radius: 12px !important;
+  background: rgba(255,255,255,.12) !important;
+  color: #fff !important;
+  font-size: 24px !important;
+  cursor: pointer !important;
+}
+html.student-glass-ui body .study-buddy-body {
+  display: flex !important;
+  flex: 1 1 auto !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  min-height: 0 !important;
+  padding: 15px !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain !important;
+}
+html.student-glass-ui body .study-buddy-welcome {
+  padding: 3px 2px 0 !important;
+}
+html.student-glass-ui body .study-buddy-welcome > small {
+  color: #0b8391 !important;
+  font-size: 9px !important;
+  font-weight: 900 !important;
+  letter-spacing: 1px !important;
+}
+html.student-glass-ui body .study-buddy-welcome h2 {
+  margin: 6px 0 !important;
+  color: #142943 !important;
+  font-size: 19px !important;
+  line-height: 1.3 !important;
+}
+html.student-glass-ui body .study-buddy-welcome p {
+  margin: 0 !important;
+  color: #61798f !important;
+  font-size: 11px !important;
+  line-height: 1.5 !important;
+}
+html.student-glass-ui body .study-buddy-prompts {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 7px !important;
+}
+html.student-glass-ui body .study-buddy-prompt {
+  max-width: 100% !important;
+  padding: 8px 10px !important;
+  border: 1px solid #cde5ec !important;
+  border-radius: 999px !important;
+  background: #edf8fa !important;
+  color: #0a6876 !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  line-height: 1.35 !important;
+  cursor: pointer !important;
+}
+html.student-glass-ui body .study-buddy-prompt:active {
+  background: #d5f0f2 !important;
+}
+html.student-glass-ui body .study-buddy-thread {
+  display: grid !important;
+  gap: 9px !important;
+}
+html.student-glass-ui body .study-buddy-message {
+  max-width: 92% !important;
+  padding: 11px 13px !important;
+  border-radius: 15px !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+  white-space: pre-line !important;
+  overflow-wrap: anywhere !important;
+}
+html.student-glass-ui body .study-buddy-message.user {
+  justify-self: end !important;
+  border-bottom-right-radius: 5px !important;
+  background: #087b88 !important;
+  color: #fff !important;
+}
+html.student-glass-ui body .study-buddy-message.bot {
+  justify-self: start !important;
+  border: 1px solid #dcebf0 !important;
+  border-bottom-left-radius: 5px !important;
+  background: #fff !important;
+  color: #244059 !important;
+  box-shadow: 0 5px 14px rgba(40,90,114,.07) !important;
+}
+html.student-glass-ui body .study-buddy-message.bot small {
+  display: block !important;
+  margin-top: 7px !important;
+  color: #0b8391 !important;
+  font-size: 8px !important;
+  font-weight: 900 !important;
+  letter-spacing: .6px !important;
+}
+html.student-glass-ui body .study-buddy-form {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 11px 13px !important;
+  border-top: 1px solid #e0edf1 !important;
+  background: #fff !important;
+}
+html.student-glass-ui body .study-buddy-form input {
+  min-width: 0 !important;
+  flex: 1 1 auto !important;
+  height: 44px !important;
+  padding: 0 13px !important;
+  border: 1px solid #d3e4eb !important;
+  border-radius: 13px !important;
+  background: #f7fbfd !important;
+  color: #18334f !important;
+  font-size: 13px !important;
+}
+html.student-glass-ui body .study-buddy-form button {
+  display: grid !important;
+  place-items: center !important;
+  width: 44px !important;
+  height: 44px !important;
+  flex: 0 0 44px !important;
+  border: 0 !important;
+  border-radius: 13px !important;
+  background: linear-gradient(135deg,#0b8290,#075d6a) !important;
+  color: #fff !important;
+}
+html.student-glass-ui body .study-buddy-form button svg {
+  width: 21px !important;
+  height: 21px !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 2 !important;
+}
+html.student-glass-ui body .study-buddy-note {
+  margin: 0 !important;
+  padding: 0 15px 12px !important;
+  color: #788fa2 !important;
+  font-size: 9px !important;
+  line-height: 1.4 !important;
+  text-align: center !important;
+}
+html.student-glass-ui body .study-buddy-launcher {
+  position: fixed !important;
+  right: 20px !important;
+  bottom: 22px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 11px !important;
+  max-width: min(300px,calc(100vw - 40px)) !important;
+  min-height: 62px !important;
+  padding: 9px 15px 9px 9px !important;
+  border: 1px solid #c8e0e9 !important;
+  border-radius: 999px !important;
+  background: rgba(250,254,255,.97) !important;
+  color: #17314b !important;
+  box-shadow: 0 12px 28px rgba(35,91,117,.18) !important;
+  z-index: 2100 !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+html.student-glass-ui body .study-buddy-launch-icon {
+  display: grid !important;
+  place-items: center !important;
+  width: 43px !important;
+  height: 43px !important;
+  flex: 0 0 43px !important;
+  border-radius: 50% !important;
+  background: linear-gradient(145deg,#0d8998,#075e6b) !important;
+  color: #fff !important;
+}
+html.student-glass-ui body .study-buddy-launch-icon svg {
+  width: 24px !important;
+  height: 24px !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 1.8 !important;
+}
+html.student-glass-ui body .study-buddy-launcher strong {
+  display: block !important;
+  color: #17314b !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+}
+html.student-glass-ui body .study-buddy-launcher small {
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  margin-top: 3px !important;
+  color: #638095 !important;
+  font-size: 9px !important;
+}
+
+
+@media (max-width: 360px) {
+  html.student-glass-ui body .lms-stat-grid { gap: 6px !important; }
+  html.student-glass-ui body .lms-stat-grid .lms-stat-card { padding: 10px 8px !important; }
+  html.student-glass-ui body .lms-stat-grid .lms-stat-card span { font-size: 9px !important; }
+}
