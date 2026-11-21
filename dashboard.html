@@ -516,7 +516,7 @@ body{background:radial-gradient(circle at 76% 10%,rgba(103,60,255,.10),transpare
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" sizes="192x192" href="./icons/dr-sandaruwan-lms-192.png?v=approved-2026-11-21">
 
-    <link rel="stylesheet" href="./student-glass-ui.css?v=9">
+    <link rel="stylesheet" href="./student-glass-ui.css?v=10">
 </head>
 
 
@@ -1597,7 +1597,7 @@ import {db,collection,onSnapshot} from "./firebase.js";
     if(dateMonth) dateMonth.textContent = new Intl.DateTimeFormat("en",{month:"long"}).format(now);
 
     const rawName = String(sessionStorage.getItem("studentName") || sessionStorage.getItem("studentId") || byId("sidebarStudentId")?.textContent || "Student").trim();
-    const firstName = rawName.split(/\\s+/).filter(Boolean)[0] || "Student";
+    const firstName = rawName.split(/\s+/).filter(Boolean)[0] || "Student";
     const hour = now.getHours();
     const greetingWord = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
     if(greeting) greeting.textContent = greetingWord + ", " + firstName;
