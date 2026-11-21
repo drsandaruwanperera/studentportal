@@ -319,7 +319,7 @@
       if (event.key === "Escape") {
         panel.classList.remove("open");
         more.setAttribute("aria-expanded", "false");
-        more.classList.toggle("active", isAnnouncements || isSupport);
+        more.classList.toggle("active", isAnnouncements || isSupport || isProfile);
       }
     });
 
