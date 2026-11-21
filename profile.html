@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en" class="student-glass-ui">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#dff2fb">
+  <title>Profile | Dr. Sandaruwan LMS</title>
+  <link rel="icon" type="image/png" sizes="192x192" href="./icons/dr-sandaruwan-lms-192.png?v=approved-2026-11-21">
+  <link rel="stylesheet" href="./student-glass-ui.css?v=13">
+  <link rel="stylesheet" href="./student-recovery-setup.css?v=1">
+  <style>
+    .profile-page{width:min(980px,calc(100% - 36px));margin:28px auto 120px}
+    .profile-page-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px}
+    .profile-page-heading .eyebrow{display:block;color:#4c8eaa;font-size:10px;font-weight:900;letter-spacing:1.4px}
+    .profile-page-heading h1{margin:5px 0 0;color:#17334a;font-size:clamp(25px,4vw,34px);font-weight:900;letter-spacing:-1px}
+    .profile-page-heading p{margin:6px 0 0;color:#69879a;font-size:12px}
+    .profile-back{display:inline-flex;align-items:center;gap:7px;padding:10px 14px;border:1px solid #c8e1ed;border-radius:12px;background:rgba(255,255,255,.72);color:#276a88;font-size:11px;font-weight:850;text-decoration:none;white-space:nowrap}
+    .profile-hero{display:flex;align-items:center;gap:16px;margin-bottom:16px;padding:19px;border:1px solid rgba(255,255,255,.9);border-radius:22px;background:linear-gradient(135deg,rgba(255,255,255,.94),rgba(228,245,252,.92));box-shadow:0 14px 32px rgba(39,106,137,.1);backdrop-filter:blur(16px)}
+    .profile-avatar{width:58px;height:58px;flex:0 0 58px;display:grid;place-items:center;border:1px solid #b5dce9;border-radius:18px;background:linear-gradient(145deg,#e7f7fc,#c6e9f3);color:#17627f;font-size:23px;font-weight:950;box-shadow:0 7px 18px rgba(40,126,158,.12)}
+    .profile-hero-copy{min-width:0;flex:1}
+    .profile-hero-copy h2{margin:0;color:#18364d;font-size:18px;font-weight:900;overflow-wrap:anywhere}
+    .profile-hero-copy p{margin:4px 0 0;color:#69879b;font-size:10px;line-height:1.45}
+    .profile-status-chip{display:inline-flex;align-items:center;gap:6px;margin-top:9px;padding:6px 9px;border:1px solid #cde8e6;border-radius:20px;background:#effaf9;color:#287a78;font-size:8px;font-weight:900;letter-spacing:.3px}
+    .profile-status-chip i{width:6px;height:6px;border-radius:50%;background:#25ae99}
+    .profile-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(270px,.9fr);gap:14px;align-items:start}
+    .profile-card{min-width:0;padding:19px;border:1px solid rgba(255,255,255,.92);border-radius:19px;background:rgba(255,255,255,.86);box-shadow:0 12px 29px rgba(40,102,129,.08);backdrop-filter:blur(14px);animation:profile-rise .42s both}
+    .profile-card:nth-child(2){animation-delay:.06s}.profile-card:nth-child(3){animation-delay:.12s}
+    .profile-card h3{margin:0;color:#1d4059;font-size:14px;font-weight:900}
+    .profile-card .card-subtitle{margin:5px 0 15px;color:#7591a3;font-size:10px;line-height:1.5}
+    .profile-data-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .profile-data-item{min-width:0;padding:11px 12px;border:1px solid #e0eef4;border-radius:13px;background:linear-gradient(145deg,#fbfeff,#f2f9fc)}
+    .profile-data-item small{display:block;color:#7893a4;font-size:8px;font-weight:850;letter-spacing:.7px;text-transform:uppercase}
+    .profile-data-item strong{display:block;margin-top:5px;color:#23455d;font-size:11px;font-weight:850;line-height:1.4;overflow-wrap:anywhere}
+    .profile-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+    .profile-btn{min-height:39px;padding:0 13px;border:1px solid #b8dce9;border-radius:11px;background:linear-gradient(145deg,#eaf8fc,#d9f0f8);color:#1e6c8a;font-size:10px;font-weight:900;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
+    .profile-btn:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(34,125,160,.13)}
+    .profile-btn.primary{border-color:#3b9dcc;background:linear-gradient(135deg,#55b2df,#348fc2);color:#fff;box-shadow:0 8px 18px rgba(49,139,187,.18)}
+    .profile-btn.secondary{background:rgba(255,255,255,.8);color:#587b91}
+    .profile-form{display:grid;gap:11px;margin-top:14px;padding-top:14px;border-top:1px solid #e1edf2}
+    .profile-form[hidden]{display:none}
+    .profile-field{display:grid;gap:5px}
+    .profile-field label{color:#58778c;font-size:9px;font-weight:850}
+    .profile-field input{width:100%;min-height:42px;padding:0 12px;border:1px solid #cfe2eb;border-radius:11px;background:#fff;color:#19384f;font-size:12px}
+    .profile-field input:focus{outline:3px solid rgba(71,164,203,.16);border-color:#62afd0}
+    .profile-field input[readonly]{background:#f2f7fa;color:#7890a0}
+    .profile-message{min-height:16px;color:#5c8298;font-size:10px;line-height:1.45}
+    .profile-message.error{color:#bd5360}.profile-message.success{color:#20856f}
+    .profile-recovery{border-color:#c8e6f0;background:linear-gradient(145deg,rgba(255,255,255,.94),rgba(233,247,252,.93))}
+    .recovery-status{display:flex;align-items:center;gap:9px;padding:12px;border:1px solid #cfe8e9;border-radius:13px;background:#effaf9}
+    .recovery-status .lock-icon{width:32px;height:32px;flex:0 0 32px;display:grid;place-items:center;border-radius:10px;background:#d9f2ee;color:#238b80;font-size:15px}
+    .recovery-status strong{display:block;color:#277b76;font-size:10px;font-weight:900}
+    .recovery-status small{display:block;margin-top:3px;color:#6c928f;font-size:8px;line-height:1.45}
+    .recovery-note{margin:12px 0 0;color:#69879a;font-size:10px;line-height:1.6}
+    .recovery-reauth{display:grid;gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid #dcecf2}
+    .recovery-reauth[hidden]{display:none}
+    .profile-app-activity{display:grid;gap:9px}
+    .profile-app-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid #e9f1f4}
+    .profile-app-row:last-child{border-bottom:0}
+    .profile-app-row span{color:#7892a3;font-size:9px;font-weight:750}
+    .profile-app-row strong{color:#31536b;font-size:9px;font-weight:850;text-align:right}
+    .profile-loading{padding:20px;border:1px dashed #bfdae5;border-radius:15px;color:#68899c;font-size:11px;text-align:center}
+    @keyframes profile-rise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+    @media(max-width:760px){
+      .profile-page{width:calc(100% - 24px);margin:18px auto 112px}
+      .profile-page-heading{align-items:flex-start;margin-bottom:13px}
+      .profile-page-heading h1{font-size:25px}
+      .profile-back{display:none}
+      .profile-hero{gap:12px;padding:14px;border-radius:18px}
+      .profile-avatar{width:49px;height:49px;flex-basis:49px;border-radius:15px}
+      .profile-hero-copy h2{font-size:15px}
+      .profile-grid{grid-template-columns:minmax(0,1fr);gap:11px}
+      .profile-card{padding:15px;border-radius:17px}
+      .profile-data-grid{gap:8px}
+    }
+    @media(max-width:370px){.profile-data-grid{grid-template-columns:1fr}.profile-actions .profile-btn{flex:1}}
+    @media(prefers-reduced-motion:reduce){.profile-card,.profile-btn{animation:none!important;transition:none!important}}
+  </style>
+</head>
+<body>
+<header class="shared-mobile-header" aria-label="Student portal header">
+  <a class="shared-header-brand" href="dashboard.html" aria-label="Dr. Sandaruwan LMS home">
+    <img src="./icons/dr-sandaruwan-lms-192.png?v=approved-2026-11-21" alt="">
+    <span><strong>Dr. Sandaruwan LMS</strong><small>STUDENT PORTAL</small></span>
+  </a>
+  <a class="shared-header-action" href="announcements.html" aria-label="Announcements"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg></a>
+  <span class="shared-header-student" aria-label="Student">S</span>
+  <a class="shared-header-action" href="index.html" aria-label="Log out"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3"></path><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"></path></svg></a>
+</header>
+<nav class="shared-bottom-nav" aria-label="Student navigation">
+  <a href="dashboard.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg><span>Dashboard</span></a>
+  <a href="my-program.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 1 4 17.5z"/><path d="M4 17.5A2.5 2.5 0 0 1 6.5 15H20M8 7h8M8 10.5h8"/></svg><span>Study</span></a>
+  <a class="shared-floating-teacher" href="dashboard.html#study-buddy" aria-label="Open AI Study Buddy with Dr. Sandaruwan" title="Open AI Study Buddy"><img src="https://raw.githubusercontent.com/drsandaruwanperera/drsandaruwanperera.github.io/main/assets/sir-photo.png" alt="Dr. Sandaruwan"></a>
+  <a href="progress.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5V12M10 19.5V5M16 19.5V9M22 19.5V3.5"/><path d="M3 20.5h18"/></svg><span>Results</span></a>
+  <details class="shared-more-menu is-current">
+    <summary aria-label="More student pages" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg><span>More</span></summary>
+    <div class="shared-more-panel">
+      <a href="announcements.html"><span aria-hidden="true">◉</span> Announcements</a>
+      <a href="support.html"><span aria-hidden="true">✚</span> Support Team</a>
+      <a href="profile.html" class="active" aria-current="page"><span aria-hidden="true">◎</span> Profile</a>
+    </div>
+  </details>
+</nav>
+
+<main class="profile-page">
+  <div class="profile-page-heading">
+    <div><span class="eyebrow">STUDENT ACCOUNT</span><h1>My Profile</h1><p>Your personal details, onboarding information and account security.</p></div>
+    <a class="profile-back" href="dashboard.html">← Dashboard</a>
+  </div>
+
+  <section class="profile-hero" aria-live="polite">
+    <div class="profile-avatar" id="profileAvatar">S</div>
+    <div class="profile-hero-copy">
+      <h2 id="profileHeroName">Loading student profile…</h2>
+      <p id="profileHeroMeta">Fetching your student record</p>
+      <span class="profile-status-chip"><i></i><span id="profileHeroStatus">Checking account</span></span>
+    </div>
+  </section>
+
+  <div id="profileLoading" class="profile-loading">Loading your profile information…</div>
+  <div id="profileContent" class="profile-grid" hidden>
+    <section class="profile-card">
+      <h3>Personal details</h3>
+      <p class="card-subtitle">Your saved onboarding information. Only editable personal fields are available here.</p>
+      <div class="profile-data-grid">
+        <div class="profile-data-item"><small>Full name</small><strong id="profileName">—</strong></div>
+        <div class="profile-data-item"><small>Student ID</small><strong id="profileStudentId">—</strong></div>
+        <div class="profile-data-item"><small>NIC number</small><strong id="profileNic">—</strong></div>
+        <div class="profile-data-item"><small>Student category</small><strong id="profileCategory">—</strong></div>
+      </div>
+      <div class="profile-actions"><button class="profile-btn primary" type="button" id="editProfileOpen">Edit personal details</button></div>
+      <form class="profile-form" id="editProfileForm" hidden>
+        <div class="profile-field"><label for="editFullName">Full name</label><input id="editFullName" name="fullName" autocomplete="name" maxlength="100" required></div>
+        <div class="profile-field"><label for="editNic">NIC number</label><input id="editNic" name="nicNumber" autocomplete="off" maxlength="12" required></div>
+        <div class="profile-field"><label for="editProfilePassword">Confirm current password</label><input id="editProfilePassword" name="currentPassword" type="password" autocomplete="current-password" required></div>
+        <div class="profile-actions"><button class="profile-btn primary" type="submit" id="saveProfileBtn">Save changes</button><button class="profile-btn secondary" type="button" id="cancelProfileEdit">Cancel</button></div>
+        <p class="profile-message" id="profileEditMessage" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="profile-card">
+      <h3>Onboarding record</h3>
+      <p class="card-subtitle">The programme details recorded when your student account was set up.</p>
+      <div class="profile-data-grid">
+        <div class="profile-data-item"><small>Programme</small><strong id="profileProgramme">—</strong></div>
+        <div class="profile-data-item"><small>Onboarding status</small><strong id="profileOnboardingStatus">—</strong></div>
+        <div class="profile-data-item"><small>Registration date</small><strong id="profileRegistrationDate">—</strong></div>
+        <div class="profile-data-item"><small>Account status</small><strong id="profileAccountStatus">—</strong></div>
+      </div>
+    </section>
+
+    <section class="profile-card profile-recovery">
+      <h3>Recovery Key</h3>
+      <p class="card-subtitle">Protect access to your student account if you forget your password.</p>
+      <div class="recovery-status">
+        <span class="lock-icon" aria-hidden="true">🔐</span>
+        <span><strong id="recoveryStatusTitle">Checking recovery setup</strong><small id="recoveryStatusDetail">Your recovery status will appear here.</small></span>
+      </div>
+      <p class="recovery-note">For security, your existing Recovery Key is stored as a one-way verification hash and cannot be viewed again. You can create a new key; the previous key will stop working after replacement.</p>
+      <div class="profile-actions"><button class="profile-btn primary" type="button" id="replaceRecoveryOpen">Generate a new Recovery Key</button></div>
+      <form class="recovery-reauth" id="replaceRecoveryForm" hidden>
+        <div class="profile-field"><label for="recoveryCurrentPassword">Confirm your current password</label><input id="recoveryCurrentPassword" type="password" autocomplete="current-password" required></div>
+        <button class="profile-btn primary" type="submit" id="generateRecoveryBtn">Verify and generate key</button>
+        <button class="profile-btn secondary" type="button" id="cancelRecoveryReplace">Cancel</button>
+        <p class="profile-message" id="recoveryMessage" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="profile-card">
+      <h3>Installed app activity</h3>
+      <p class="card-subtitle">Device information recorded when you signed in through the installed LMS app.</p>
+      <div class="profile-app-activity">
+        <div class="profile-app-row"><span>First app sign-in</span><strong id="profileAppFirstLogin">Not recorded</strong></div>
+        <div class="profile-app-row"><span>Most recent app sign-in</span><strong id="profileAppLastLogin">Not recorded</strong></div>
+        <div class="profile-app-row"><span>First device</span><strong id="profileAppFirstPlatform">Not recorded</strong></div>
+        <div class="profile-app-row"><span>Last device</span><strong id="profileAppLastPlatform">Not recorded</strong></div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script type="module" src="./profile.js?v=1"></script>
+<script defer src="./student-glass-ui.js?v=6"></script>
+</body>
+</html>
