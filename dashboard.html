@@ -516,7 +516,7 @@ body{background:radial-gradient(circle at 76% 10%,rgba(103,60,255,.10),transpare
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" sizes="192x192" href="./icons/dr-sandaruwan-lms-192.png?v=approved-2026-11-21">
 
-    <link rel="stylesheet" href="./student-glass-ui.css?v=8">
+    <link rel="stylesheet" href="./student-glass-ui.css?v=9">
 </head>
 
 
@@ -1583,6 +1583,7 @@ import {db,collection,onSnapshot} from "./firebase.js";
   const dateMonth = byId("dashboardMobileMonth");
   const greeting = byId("dashboardMobileGreeting");
   const program = byId("dashboardMobileProgram");
+  const headerStudent = document.querySelector(".shared-header-student");
   const count = byId("dashboardMobilePaperCount");
   const percent = byId("dashboardMobileProgressPercent");
   const fill = byId("dashboardMobileProgressFill");
@@ -1600,6 +1601,7 @@ import {db,collection,onSnapshot} from "./firebase.js";
     const hour = now.getHours();
     const greetingWord = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
     if(greeting) greeting.textContent = greetingWord + ", " + firstName;
+    if(headerStudent) { headerStudent.textContent = firstName.charAt(0).toUpperCase(); headerStudent.setAttribute("aria-label", "Student " + firstName); }
 
     const label = byId("topStudentType")?.textContent?.trim() || byId("journeyCohortLabel")?.textContent?.trim() || "Student programme";
     if(program) program.textContent = label + " · Dr. Sandaruwan LMS";
