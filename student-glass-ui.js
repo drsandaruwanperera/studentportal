@@ -159,80 +159,46 @@
 
   function addMoreNavigation() {
     const nav = document.querySelector(".sidebar-nav") || document.querySelector(".side nav");
-    if (!nav || nav.dataset.sharedNavReady === "true") return null;
+    if (!nav) return null;
 
-    const links = Array.from(nav.querySelectorAll("a"));
-    let announcementLink = null;
-    let supportLink = null;
-    let profileLink = null;
+    const labels = {
+      "dashboard.html": "Dashboard",
+      "my-program.html": "Study",
+      "progress.html": "Results",
+      "announcements.html": "Announcements",
+      "support.html": "Support Team",
+      "profile.html": "Profile"
+    };
+    const activePages = {
+      "dashboard.html": isDashboard,
+      "my-program.html": isStudy,
+      "progress.html": isResults,
+      "announcements.html": isAnnouncements,
+      "support.html": isSupport,
+      "profile.html": isProfile
+    };
 
-    links.forEach(link => {
+    Array.from(nav.querySelectorAll("a")).forEach(link => {
       const href = (link.getAttribute("href") || "").split("?")[0];
-      if (href === "dashboard.html") {
-        const label = link.querySelector("span:not(.nav-icon)");
-        if (label) label.textContent = "Dashboard";
-        link.classList.toggle("active", isDashboard);
-        if (isDashboard) link.setAttribute("aria-current", "page");
-        else link.removeAttribute("aria-current");
-      } else if (href === "my-program.html") {
-        const label = link.querySelector("span:not(.nav-icon)");
-        if (label) label.textContent = "Study";
-        link.classList.toggle("active", isStudy);
-        if (isStudy) link.setAttribute("aria-current", "page");
-        else link.removeAttribute("aria-current");
-      } else if (href === "progress.html") {
-        const label = link.querySelector("span:not(.nav-icon)");
-        if (label) label.textContent = "Results";
-        link.classList.toggle("active", isResults);
-        if (isResults) link.setAttribute("aria-current", "page");
-        else link.removeAttribute("aria-current");
-      } else if (href === "announcements.html") {
-        announcementLink = link.cloneNode(true);
-        link.remove();
-      } else if (href === "support.html") {
-        supportLink = link.cloneNode(true);
-        link.remove();
-      } else if (href === "profile.html") {
-        profileLink = link.cloneNode(true);
-        link.remove();
-      }
+      if (!Object.prototype.hasOwnProperty.call(labels, href)) return;
+
+      const label = link.querySelector("span:not(.nav-icon)");
+      if (label) label.textContent = labels[href];
+      const active = Boolean(activePages[href]);
+      link.classList.toggle("active", active);
+      if (active) link.setAttribute("aria-current", "page");
+      else link.removeAttribute("aria-current");
     });
 
-    if (announcementLink || supportLink || profileLink) {
-      const more = makeMoreButton();
-      if (announcementLink) {
-        announcementLink.classList.toggle("active", isAnnouncements);
-        if (isAnnouncements) announcementLink.setAttribute("aria-current", "page");
-        else announcementLink.removeAttribute("aria-current");
-        const label = announcementLink.querySelector("span:not(.nav-icon)");
-        if (label) label.textContent = "Announcements";
-        more.panel.appendChild(announcementLink);
-      }
-      if (supportLink) {
-        supportLink.classList.toggle("active", isSupport);
-        if (isSupport) supportLink.setAttribute("aria-current", "page");
-        else supportLink.removeAttribute("aria-current");
-        const label = supportLink.querySelector("span:not(.nav-icon)");
-        if (label) label.textContent = "Support Team";
-        more.panel.appendChild(supportLink);
-      }
-      if (profileLink) {
-        profileLink.classList.toggle("active", isProfile);
-        if (isProfile) profileLink.setAttribute("aria-current", "page");
-        else profileLink.removeAttribute("aria-current");
-        const label = profileLink.querySelector("span:not(.nav-icon)");
-        if (label) label.textContent = "Profile";
-        more.panel.appendChild(profileLink);
-      }
-      if (isAnnouncements || isSupport || isProfile) more.button.classList.add("is-current");
-      nav.insertAdjacentElement("afterend", more.wrapper);
-    }
-
+    // Desktop navigation keeps all destinations visible as normal sidebar links.
+    // Only the compact mobile bottom bar uses its existing More sheet.
+    nav.querySelectorAll(".shared-sidebar-more").forEach(node => node.remove());
     nav.dataset.sharedNavReady = "true";
+
     return {
-      announcementLink,
-      supportLink,
-      profileLink
+      announcementLink: nav.querySelector('a[href="announcements.html"]'),
+      supportLink: nav.querySelector('a[href="support.html"]'),
+      profileLink: nav.querySelector('a[href="profile.html"]')
     };
   }
 
@@ -593,7 +559,7 @@
     buildMobileHeader();
     const sidebarMore = addMoreNavigation();
     let moreLinks = sidebarMore
-      ? Array.from(sidebarMore.wrapper.querySelectorAll(".shared-sidebar-more-panel a"))
+      ? [sidebarMore.announcementLink, sidebarMore.supportLink, sidebarMore.profileLink].filter(Boolean)
       : [];
     // Keep the More sheet usable even on pages that do not render a sidebar.
     if (!moreLinks.length) {
