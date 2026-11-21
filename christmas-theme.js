@@ -230,7 +230,7 @@ import { db, doc, onSnapshot } from "./firebase.js";
     if (document.body) document.body.classList.add("christmas-theme-active");
 
     addStylesheet();
-    if (active && active.decorations !== false) {
+    if (active && active.themeKey === "christmas" && active.decorations !== false) {
       addGarland();
       addSnowfall();
       addEmojiDecorations(active);
