@@ -64,6 +64,18 @@ html,body{background:#080d1b!important;color:#f5f7ff!important}
 <link id="winter-dashboard-theme-stylesheet" rel="stylesheet" href="./winter-dashboard-theme.css?v=20261120-winter-refresh1">
 <script src="./winter-theme-preload.js?v=2"></script>
     <link rel="stylesheet" href="./student-glass-ui.css?v=14">
+<script id="lms-app-access-guard">
+(function(){
+  const standalone =
+    (typeof window.matchMedia === "function" && window.matchMedia("(display-mode: standalone)").matches) ||
+    navigator.standalone === true;
+  if (sessionStorage.getItem("loggedIn") !== "true") {
+    window.location.replace("index.html");
+  } else if (!standalone) {
+    window.location.replace("app-required.html");
+  }
+})();
+</script>
 </head><body>
 <header class="shared-mobile-header" aria-label="Student portal header">
   <a class="shared-header-brand" href="dashboard.html" aria-label="Dr. Sandaruwan LMS home">
