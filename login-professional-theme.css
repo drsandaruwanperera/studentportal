@@ -709,3 +709,184 @@ html.installed-lms-app.lms-brand-glass body .lms-splash-title{
 html.installed-lms-app.lms-brand-glass body .lms-splash-subtitle{
   color:#a6ff2e!important;
 }
+
+
+/* ==========================================================
+   SIGN-IN MOTION — RIPPLE → PROCESSING → SUCCESS
+   Brand: Dark Navy / Purple / Neon Lime.
+   Applied only to the student login action button.
+========================================================== */
+html.lms-brand-glass body .login-wrapper .login-panel #loginBtn.login-btn{
+  position:relative!important;
+  isolation:isolate!important;
+  overflow:hidden!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:11px!important;
+  transform:translateZ(0);
+  transition:
+    background .28s ease,
+    border-color .28s ease,
+    box-shadow .28s ease,
+    transform .22s cubic-bezier(.2,.8,.2,1),
+    color .2s ease!important;
+}
+html.lms-brand-glass body .login-wrapper .login-panel #loginBtn.login-btn > *{
+  position:relative!important;
+  z-index:2!important;
+  transition:opacity .2s ease,transform .25s ease!important;
+}
+html.lms-brand-glass body .login-wrapper .login-panel #loginBtn.login-btn::after{
+  content:"";
+  position:absolute;
+  left:var(--login-ripple-x,50%);
+  top:var(--login-ripple-y,50%);
+  z-index:1;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  pointer-events:none;
+  opacity:0;
+  background:radial-gradient(circle,rgba(91,75,255,.48) 0%,rgba(124,58,237,.25) 45%,rgba(196,181,253,0) 72%);
+  transform:translate(-50%,-50%) scale(0);
+}
+html.lms-brand-glass body .login-wrapper .login-panel #loginBtn.login-btn.is-rippling::after{
+  animation:lms-login-ripple .68s cubic-bezier(.15,.65,.3,1) forwards;
+}
+@keyframes lms-login-ripple{
+  0%{opacity:.9;transform:translate(-50%,-50%) scale(0)}
+  65%{opacity:.52}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(23)}
+}
+
+/* Processing state: purple glass, rotating lime ring and subtle light sweep. */
+html.lms-brand-glass body .login-wrapper .login-panel #loginBtn.login-btn.is-processing{
+  cursor:wait!important;
+  pointer-events:none!important;
+  color:#f4f7ff!important;
+  -webkit-text-fill-color:#f4f7ff!important;
+  border:1px solid rgba(196,181,253,.68)!important;
+  background:linear-gradient(115deg,#241b65 0%,#17153d 54%,#11182b 100%)!important;
+  box-shadow:
+    0 0 0 1px rgba(91,75,255,.18),
+    0 10px 28px rgba(91,75,255,.24),
+    0 0 25px rgba(124,58,237,.22),
+    inset 0 1px rgba(255,255,255,.10)!important;
+  animation:lms-login-processing-pulse 1.5s ease-in-out infinite alternate!important;
+}
+html.lms-brand-glass body .login-wrapper .login-panel #loginBtn.login-btn.is-processing::before{
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:-85%;
+  z-index:1;
+  width:65%;
+  pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(196,181,253,.16),rgba(166,255,46,.10),transparent);
+  transform:skewX(-18deg);
+  animation:lms-login-shimmer 1.35s ease-in-out infinite;
+}
+html.lms-brand-glass body .login-wrapper .login-panel #loginBtn.login-btn.is-processing > .login-button-label{
+  color:#f4f7ff!important;
+  -webkit-text-fill-color:#f4f7ff!important;
+  font-weight:850!important;
+  letter-spacing:.15px;
+}
+html.lms-brand-glass body .login-wrapper .login-panel #loginBtn.login-btn .login-button-spinner{
+  display:inline-block!important;
+  flex:none!important;
+  width:21px!important;
+  height:21px!important;
+  border:3px solid rgba(196,181,253,.28)!important;
+  border-top-color:#a6ff2e!important;
+  border-right-color:#7c3aed!important;
+  border-radius:50%!important;
+  background:transparent!important;
+  box-shadow:0 0 13px rgba(166,255,46,.18)!important;
+  animation:lms-login-spin .72s linear infinite!important;
+}
+@keyframes lms-login-spin{to{transform:rotate(360deg)}}
+@keyframes lms-login-shimmer{
+  0%{left:-85%;opacity:0}
+  18%{opacity:1}
+  80%{opacity:.85}
+  100%{left:125%;opacity:0}
+}
+@keyframes lms-login-processing-pulse{
+  from{box-shadow:0 0 0 1px rgba(91,75,255,.14),0 8px 23px rgba(91,75,255,.18),inset 0 1px rgba(255,255,255,.08)}
+  to{box-shadow:0 0 0 1px rgba(166,255,46,.14),0 12px 30px rgba(124,58,237,.30),0 0 28px rgba(91,75,255,.22),inset 0 1px rgba(255,255,255,.12)}
+}
+
+/* Success state: lime button morphs in with a check badge. */
+html.lms-brand-glass body .login-wrapper .login-panel #loginBtn.login-btn.is-success{
+  cursor:default!important;
+  pointer-events:none!important;
+  color:#0b1020!important;
+  -webkit-text-fill-color:#0b1020!important;
+  border:1px solid rgba(220,255,170,.88)!important;
+  background:linear-gradient(108deg,#a6ff2e 0%,#c4ff65 55%,#d1ff75 100%)!important;
+  box-shadow:
+    0 0 0 1px rgba(166,255,46,.18),
+    0 12px 32px rgba(166,255,46,.22),
+    0 0 30px rgba(166,255,46,.16),
+    inset 0 1px rgba(255,255,255,.48)!important;
+  animation:lms-login-success-pop .46s cubic-bezier(.18,.9,.26,1.25) both!important;
+}
+html.lms-brand-glass body .login-wrapper .login-panel #loginBtn.login-btn.is-success > .login-button-label{
+  color:#0b1020!important;
+  -webkit-text-fill-color:#0b1020!important;
+  font-weight:950!important;
+}
+html.lms-brand-glass body .login-wrapper .login-panel #loginBtn.login-btn .login-success-check{
+  display:grid!important;
+  place-items:center!important;
+  flex:none!important;
+  width:25px!important;
+  height:25px!important;
+  border:1px solid rgba(166,255,46,.72)!important;
+  border-radius:50%!important;
+  background:#0b1020!important;
+  color:#a6ff2e!important;
+  -webkit-text-fill-color:#a6ff2e!important;
+  font-size:17px!important;
+  font-weight:1000!important;
+  line-height:1!important;
+  box-shadow:0 0 0 3px rgba(11,16,32,.08),0 0 15px rgba(166,255,46,.24)!important;
+  animation:lms-login-check-in .42s cubic-bezier(.2,.9,.25,1.35) .06s both!important;
+}
+@keyframes lms-login-success-pop{
+  0%{transform:scale(.975);filter:brightness(.96)}
+  65%{transform:scale(1.025);filter:brightness(1.08)}
+  100%{transform:scale(1);filter:brightness(1)}
+}
+@keyframes lms-login-check-in{
+  from{opacity:0;transform:scale(.35) rotate(-35deg)}
+  to{opacity:1;transform:scale(1) rotate(0)}
+}
+html.lms-brand-glass body .login-wrapper .login-panel #loginBtn.login-btn:disabled:hover{
+  transform:none!important;
+  filter:none!important;
+}
+html.lms-brand-glass body #msg.is-login-processing-message{
+  color:#c4b5fd!important;
+  -webkit-text-fill-color:#c4b5fd!important;
+  font-weight:650!important;
+}
+html.lms-brand-glass body #msg.is-login-transition-message{
+  color:#a6ff2e!important;
+  -webkit-text-fill-color:#a6ff2e!important;
+  font-weight:750!important;
+  text-shadow:0 0 18px rgba(166,255,46,.12)!important;
+}
+@media(prefers-reduced-motion:reduce){
+  html.lms-brand-glass body .login-wrapper .login-panel #loginBtn.login-btn,
+  html.lms-brand-glass body .login-wrapper .login-panel #loginBtn.login-btn::after,
+  html.lms-brand-glass body .login-wrapper .login-panel #loginBtn.login-btn::before,
+  html.lms-brand-glass body .login-wrapper .login-panel #loginBtn.login-btn .login-button-spinner,
+  html.lms-brand-glass body .login-wrapper .login-panel #loginBtn.login-btn .login-success-check{
+    animation:none!important;
+    transition:none!important;
+  }
+}
