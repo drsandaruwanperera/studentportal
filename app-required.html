@@ -107,51 +107,128 @@
   const isAppleMobile = /iphone|ipad|ipod/i.test(userAgent) ||
     (platform === "MacIntel" && navigator.maxTouchPoints > 1);
   const isAndroid = /android/i.test(userAgent);
+  const isWindows = /windows nt/i.test(userAgent);
+  const isMac = /macintosh|mac os x/i.test(userAgent) && !isAppleMobile;
   const installButton = document.getElementById("installNow");
   const status = document.getElementById("installStatus");
   const stepOne = document.getElementById("stepOneText");
+  const stepTwo = document.querySelector("#installSteps .install-step:nth-child(2) p");
+  const openAppNote = document.getElementById("openAppNote");
   let deferredPrompt = null;
+  let installConfirmed = false;
+  let installationAccepted = false;
+
+  const platformLaunchInstructions = () => {
+    if (isWindows) {
+      return {
+        status: "Next step: open the Windows Start menu, search for “Dr. Sandaruwan LMS”, then click the LMS app. If you pinned it, you can open it from the taskbar or desktop shortcut.",
+        note: "<strong>Windows — open the installed app</strong><br>1. Press the Windows key or click Start.<br>2. Type <b>Dr. Sandaruwan LMS</b> in Search.<br>3. Select the app with the LMS icon. Once it opens, sign in again with your Student ID and password."
+      };
+    }
+    if (isAppleMobile) {
+      return {
+        status: "Installation is ready. Return to your Home Screen and tap the Dr. Sandaruwan LMS icon. Then sign in again inside the app.",
+        note: "<strong>iPhone / iPad — open the installed app</strong><br>Swipe to your Home Screen, find the Dr. Sandaruwan LMS icon, and tap it. Sign in again inside the app."
+      };
+    }
+    if (isAndroid) {
+      return {
+        status: "Installation is ready. Open your app list, tap Dr. Sandaruwan LMS, then sign in again.",
+        note: "<strong>Android — open the installed app</strong><br>Open the app drawer, find Dr. Sandaruwan LMS, and tap it. Sign in again inside the app."
+      };
+    }
+    if (isMac) {
+      return {
+        status: "Next step: open Dr. Sandaruwan LMS from Applications, Launchpad, or the Dock. Then sign in again.",
+        note: "<strong>Mac — open the installed app</strong><br>Open Launchpad, Applications, or the Dock and select Dr. Sandaruwan LMS. Then sign in again."
+      };
+    }
+    return {
+      status: "Open Dr. Sandaruwan LMS from your device's app list or application menu, then sign in again.",
+      note: "<strong>Open the installed LMS app</strong><br>Find Dr. Sandaruwan LMS in your device's app list or application menu. Open it, then sign in again."
+    };
+  };
+
+  const showOpenAppStep = (confirmed) => {
+    installButton.disabled = false;
+    installButton.textContent = "↗ Open LMS App — Next Step";
+    installButton.dataset.nextStep = "true";
+    if (confirmed) {
+      status.textContent = "✓ The browser confirmed that Dr. Sandaruwan LMS was installed. Continue with the next step below.";
+    } else {
+      status.textContent = "The installation was accepted. If the browser has finished installing, continue with the next step below.";
+    }
+    const instructions = platformLaunchInstructions();
+    stepTwo.textContent = isWindows
+      ? "Open Start, search for Dr. Sandaruwan LMS, and launch the app. Then sign in again."
+      : isAppleMobile
+        ? "Return to your Home Screen, tap the Dr. Sandaruwan LMS icon, and sign in again."
+        : isAndroid
+          ? "Open your app list, tap Dr. Sandaruwan LMS, and sign in again."
+          : instructions.status;
+    openAppNote.innerHTML = instructions.note;
+  };
 
   if (isAppleMobile) {
     stepOne.textContent = "In Safari, tap Share → Add to Home Screen → Add. Keep “Open as Web App” enabled if it appears.";
     installButton.textContent = "Show iPhone install steps";
   } else if (isAndroid) {
     stepOne.textContent = "Tap Install LMS App below and accept the browser's installation prompt.";
+  } else if (isWindows) {
+    stepOne.textContent = "Install the app from this browser. After installation, open it from the Windows Start menu.";
+  }
+
+  // A small local marker remembers that this browser installed the PWA before.
+  // It is UI guidance only; dashboard access is still checked using standalone mode.
+  if (localStorage.getItem("lmsPwaInstalled") === "true") {
+    installConfirmed = true;
+    showOpenAppStep(true);
   }
 
   window.addEventListener("beforeinstallprompt", event => {
     event.preventDefault();
     deferredPrompt = event;
-    installButton.textContent = "＋ Install LMS App";
+    if (!installConfirmed) installButton.textContent = "＋ Install LMS App";
   });
 
   window.addEventListener("appinstalled", () => {
+    installConfirmed = true;
+    installationAccepted = true;
+    try { localStorage.setItem("lmsPwaInstalled", "true"); } catch (_) {}
     deferredPrompt = null;
-    installButton.disabled = true;
-    installButton.textContent = "✓ App installed";
-    status.textContent = "Installation complete. Close this browser and open the LMS icon from your Home Screen or app list, then sign in again.";
+    showOpenAppStep(true);
   });
 
   installButton.addEventListener("click", async () => {
+    if (installConfirmed || installationAccepted || installButton.dataset.nextStep === "true") {
+      const instructions = platformLaunchInstructions();
+      status.textContent = instructions.status;
+      openAppNote.innerHTML = instructions.note;
+      installButton.textContent = "✓ Next step shown";
+      return;
+    }
+
     if (deferredPrompt) {
       installButton.disabled = true;
       status.textContent = "Opening the installation prompt…";
       try {
-        await deferredPrompt.prompt();
-        const choice = await deferredPrompt.userChoice;
+        const promptEvent = deferredPrompt;
         deferredPrompt = null;
-        if (choice?.outcome === "accepted") {
-          status.textContent = "The app install was accepted. Open Dr. Sandaruwan LMS from your Home Screen or app list, then sign in again.";
-          installButton.textContent = "✓ Install accepted";
+        await promptEvent.prompt();
+        const choice = await promptEvent.userChoice;
+        if (choice && choice.outcome === "accepted") {
+          installationAccepted = true;
+          try { localStorage.setItem("lmsPwaInstalled", "true"); } catch (_) {}
+          showOpenAppStep(false);
         } else {
           status.textContent = "Installation was cancelled. Dashboard access remains locked until the LMS app is installed.";
           installButton.textContent = "＋ Try installing again";
+          installButton.disabled = false;
         }
       } catch (error) {
         console.warn("LMS install prompt failed:", error);
         status.textContent = "Use your browser menu and choose Install app or Add to Home Screen.";
         installButton.textContent = "Show install steps";
-      } finally {
         installButton.disabled = false;
       }
       return;
@@ -159,6 +236,8 @@
 
     if (isAppleMobile) {
       status.textContent = "Open this page in Safari, tap the Share icon, choose Add to Home Screen, then tap Add. Open the new LMS icon afterwards.";
+    } else if (isWindows) {
+      status.textContent = "In Microsoft Edge, open Settings and more (⋯) → Apps → Install this site as an app. After installation, open Start and search for Dr. Sandaruwan LMS.";
     } else {
       status.textContent = isAndroid
         ? "Open the browser menu (⋮) and choose Install app or Add to Home screen. Open the new LMS icon afterwards."
