@@ -414,15 +414,24 @@ function resolveDashboardCohort(data = {}) {
 }
 
 function announcementTargetMatches(value, cohort) {
-    const target = normalizeGrade(value);
+    const raw = String(value || "");
+    const target = normalizeGrade(raw);
     if (!target || ["all", "allstudents", "everyone"].includes(target)) return true;
-    if (["grade10", "g10", "10"].includes(target)) return cohort.type === "grade10";
-    if (["grade11", "g11", "11"].includes(target)) return cohort.type === "grade11";
+
+    // Admin announcement audiences may be stored as a list in one string.
+    const audienceParts = raw.split(/[,;]|\\s+and\\s+/i).map(normalizeGrade).filter(Boolean);
+    if (audienceParts.length > 1) {
+        return audienceParts.some(part => announcementTargetMatches(part, cohort));
+    }
+
+    if (target.startsWith("grade10") || target === "g10" || target === "10") return cohort.type === "grade10";
+    if (target.startsWith("grade11") || target === "g11" || target === "11") return cohort.type === "grade11";
 
     const yearMatch = target.match(/(?:al|alevel|advancedlevel)(?:20)?(27|28|29)/) ||
         target.match(/(?:20)?(27|28|29)(?:al|alevel)/);
     if (yearMatch) return cohort.type === "al" && cohort.alYear === "20" + yearMatch[1];
-    if (["al", "alevel", "advanced", "advancedlevel"].includes(target)) return cohort.type === "al";
+
+    if (/^(?:al|alevel|advancedlevel|advanced)(?:students?)?$/.test(target)) return cohort.type === "al";
     return target === normalizeGrade(cohort.type);
 }
 
