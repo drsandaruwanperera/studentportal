@@ -1500,3 +1500,36 @@ html.student-glass-ui body .portal-program-card[style*="display: none"],
 html.student-glass-ui body .portal-program-card[style*="display:none"] {
   display: none !important;
 }
+
+
+/* Keep the existing AI Study Buddy above the new fixed mobile navigation. */
+html.student-glass-ui body .study-buddy-launcher {
+  border: 1px solid #c8e0e9 !important;
+  background: rgba(249,253,255,.96) !important;
+  color: #17314b !important;
+  box-shadow: 0 12px 28px rgba(35,91,117,.18) !important;
+}
+html.student-glass-ui body .study-buddy-launcher strong {
+  color: #17314b !important;
+}
+html.student-glass-ui body .study-buddy-launcher small {
+  color: #638095 !important;
+}
+html.student-glass-ui body .study-buddy-launch-icon {
+  border-color: rgba(255,255,255,.65) !important;
+  background: linear-gradient(145deg,#0d8998,#075e6b) !important;
+  color: #fff !important;
+  box-shadow: 0 5px 16px rgba(7,110,126,.22) !important;
+}
+
+@media (max-width: 800px) {
+  html.student-glass-ui body .study-buddy {
+    right: 12px !important;
+    bottom: calc(91px + env(safe-area-inset-bottom)) !important;
+    z-index: 1460 !important;
+  }
+  html.student-glass-ui body .study-buddy-panel {
+    bottom: 62px !important;
+    max-height: min(460px,calc(100dvh - 190px)) !important;
+  }
+}
