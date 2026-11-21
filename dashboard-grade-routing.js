@@ -50,7 +50,8 @@ import {db,doc,getDoc} from "./firebase.js";
       past: null,
       modelTitle: "Term Test Model Papers",
       pastTitle: "Past Papers",
-      modelDescription: "Grade 10 term test model papers and model paper answers",
+      modelDescription: "Grade 10 term test model papers",
+      modelAnswers: "student-model-answers.html",
       pastDescription: "Grade 10 past papers"
     },
     grade11: {
@@ -59,7 +60,8 @@ import {db,doc,getDoc} from "./firebase.js";
       past: null,
       modelTitle: "TOP Ranking Papers",
       pastTitle: "Past Papers",
-      modelDescription: "Grade 11 TOP Ranking papers and Model Paper Answers",
+      modelDescription: "Grade 11 TOP Ranking papers",
+      modelAnswers: "student-model-answers.html",
       pastDescription: ""
     },
     al: {
@@ -144,7 +146,14 @@ import {db,doc,getDoc} from "./firebase.js";
     }
     document.querySelectorAll('a[href="model-papers.html"]').forEach(a => a.href = config.model);
     const answersCard = document.getElementById("modelPaperAnswersCard");
-    if (answersCard) answersCard.style.display = type === "al" && alYear === "2027" ? "none" : "";
+    if (answersCard) {
+      const showModelAnswers = type === "grade10" || type === "grade11";
+      answersCard.hidden = !showModelAnswers;
+      answersCard.setAttribute("aria-hidden", String(!showModelAnswers));
+      if (showModelAnswers) {
+        answersCard.href = config.modelAnswers || "student-model-answers.html";
+      }
+    }
     const quickPapers = [...document.querySelectorAll(".quick-nav-card")].find(a => /past papers/i.test(a.textContent));
     if (quickPapers) {
       if (!config.past) {
