@@ -170,6 +170,12 @@ if(t.includes("10")){
     programTitle.textContent="Advanced Level Accounting";
     modelCardTitle.textContent="TOP Ranking Papers";
     modelCardDescription.textContent="A/L TOP Ranking papers for exam preparation.";
+    if(alYear==="2027"){
+      programTitle.textContent="A/L 2027";
+      modelCardTitle.textContent="Monthly TOP Ranking Papers";
+      modelCardDescription.textContent="Month-wise TOP Ranking papers with 1st- and 2nd-paper answers inside each month.";
+      modelLink.textContent="Browse monthly papers →";
+    }
   }
 }</script><script type="module">
 import {db,collection,onSnapshot} from "./firebase.js";
