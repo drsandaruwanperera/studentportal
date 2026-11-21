@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#4b9fc9">
+  <title>Install Dr. Sandaruwan LMS</title>
+  <link rel="manifest" href="./manifest.webmanifest?v=installed-app-sky-2">
+  <link rel="icon" type="image/png" href="./icons/dr-sandaruwan-lms-192.png?v=approved-2026-11-21">
+  <style>
+    *{box-sizing:border-box}
+    html,body{width:100%;min-height:100%;margin:0}
+    body{min-height:100svh;display:grid;place-items:center;padding:calc(18px + env(safe-area-inset-top)) 16px calc(18px + env(safe-area-inset-bottom));font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:#183b54;background:radial-gradient(circle at 8% 0%,rgba(255,255,255,.95),transparent 35%),radial-gradient(circle at 95% 95%,rgba(76,174,217,.17),transparent 35%),linear-gradient(145deg,#eaf7fc,#f6fbfd 55%,#e1f2f9)}
+    .install-shell{width:min(510px,100%);animation:install-enter .55s cubic-bezier(.2,.75,.25,1) both}
+    .install-card{overflow:hidden;border:1px solid rgba(255,255,255,.97);border-radius:25px;background:rgba(255,255,255,.93);box-shadow:0 24px 65px rgba(37,104,137,.15),inset 0 1px 0 #fff;backdrop-filter:blur(20px)}
+    .install-brand{display:flex;align-items:center;gap:12px;padding:18px 20px;color:#fff;background:linear-gradient(120deg,#176b99,#2396c8 65%,#57b0d2)}
+    .install-brand img{width:49px;height:49px;flex:0 0 49px;object-fit:cover;border:2px solid rgba(255,255,255,.9);border-radius:14px;background:#fff;box-shadow:0 7px 17px rgba(7,61,94,.2)}
+    .install-brand strong{display:block;font-size:14px;font-weight:950;letter-spacing:-.2px}
+    .install-brand small{display:block;margin-top:4px;color:rgba(239,250,255,.82);font-size:8px;font-weight:850;letter-spacing:1.5px}
+    .install-content{padding:25px 22px 22px}
+    .step-label{display:inline-flex;align-items:center;gap:7px;padding:6px 9px;border:1px solid #cce9f3;border-radius:20px;background:#eff9fc;color:#3a8eaf;font-size:8px;font-weight:950;letter-spacing:1px}
+    .step-dot{width:7px;height:7px;border-radius:50%;background:#29aa8b;box-shadow:0 0 0 4px rgba(41,170,139,.1)}
+    h1{margin:12px 0 7px;color:#173b55;font-size:clamp(25px,6vw,31px);font-weight:950;letter-spacing:-1px;line-height:1.12}
+    .intro{margin:0;color:#69869a;font-size:11px;line-height:1.65}
+    .recovery-state{display:flex;align-items:flex-start;gap:10px;margin-top:17px;padding:12px;border:1px solid #cde9e3;border-radius:14px;background:linear-gradient(135deg,#f0fbf8,#f8fdfb)}
+    .recovery-state .check{width:30px;height:30px;flex:0 0 30px;display:grid;place-items:center;border-radius:10px;background:#dcf5ec;color:#16896c;font-size:17px;font-weight:900}
+    .recovery-state strong{display:block;color:#247b6c;font-size:10px;font-weight:900}
+    .recovery-state span{display:block;margin-top:3px;color:#6d9189;font-size:9px;line-height:1.45}
+    .steps{display:grid;gap:10px;margin-top:18px}
+    .install-step{display:grid;grid-template-columns:32px minmax(0,1fr);align-items:start;gap:10px;padding:12px;border:1px solid #deedf3;border-radius:14px;background:linear-gradient(145deg,#fff,#f4fafd)}
+    .number{width:30px;height:30px;display:grid;place-items:center;border:1px solid #cce7f0;border-radius:10px;background:#eaf7fb;color:#328bb0;font-size:11px;font-weight:950}
+    .install-step strong{display:block;color:#254a62;font-size:10px;font-weight:900}
+    .install-step p{margin:4px 0 0;color:#728c9d;font-size:9px;line-height:1.55}
+    .install-button{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;min-height:48px;margin-top:17px;padding:0 16px;border:1px solid rgba(255,255,255,.85);border-radius:13px;background:linear-gradient(110deg,#2699cf,#1978bd);color:#fff;font:900 12px/1 Inter,-apple-system,sans-serif;box-shadow:0 9px 20px rgba(35,132,184,.2);cursor:pointer;transition:transform .18s ease,box-shadow .18s ease}
+    .install-button:active{transform:scale(.985)}
+    .install-button:disabled{opacity:.75;cursor:wait}
+    .install-status{min-height:20px;margin:10px 2px 0;color:#688599;font-size:9px;line-height:1.5}
+    .install-status.error{color:#b94f5b}
+    .open-app-note{margin-top:13px;padding:12px;border:1px dashed #bcdce9;border-radius:13px;background:#f5fbfd;color:#648296;font-size:9px;line-height:1.6}
+    .open-app-note strong{color:#285c77}
+    .footer{margin-top:14px;display:flex;align-items:center;justify-content:space-between;gap:12px;color:#91a6b2;font-size:8px}
+    .footer a{color:#4f8eac;font-weight:850;text-decoration:none}
+    @keyframes install-enter{from{opacity:0;transform:translateY(12px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}
+    @media(max-width:390px){.install-content{padding:21px 16px 18px}.install-brand{padding:15px 16px}.install-card{border-radius:21px}}
+    @media(prefers-reduced-motion:reduce){.install-shell{animation:none}.install-button{transition:none}}
+  </style>
+</head>
+<body>
+  <main class="install-shell">
+    <section class="install-card">
+      <header class="install-brand">
+        <img src="./icons/dr-sandaruwan-lms-192.png?v=approved-2026-11-21" alt="Dr. Sandaruwan LMS">
+        <span><strong>Dr. Sandaruwan LMS</strong><small>STUDENT PORTAL · SECURE ACCESS</small></span>
+      </header>
+      <div class="install-content">
+        <span class="step-label"><i class="step-dot"></i> ONE MORE STEP</span>
+        <h1>Install the LMS app to continue</h1>
+        <p class="intro">Your website sign-in and Recovery Key setup are complete. To protect your student dashboard, continue inside the installed LMS app.</p>
+
+        <div class="recovery-state">
+          <span class="check" aria-hidden="true">✓</span>
+          <span><strong>Recovery Key saved</strong><span>Your one-time Recovery Key has been saved securely. Keep your downloaded or printed copy private.</span></span>
+        </div>
+
+        <div class="steps" id="installSteps">
+          <article class="install-step">
+            <span class="number">1</span>
+            <span><strong>Install Dr. Sandaruwan LMS</strong><p id="stepOneText">Use the install button below, or follow your browser's Add to Home Screen option.</p></span>
+          </article>
+          <article class="install-step">
+            <span class="number">2</span>
+            <span><strong>Open the new LMS app</strong><p>Find the Dr. Sandaruwan LMS icon on your Home Screen or app list and open it.</p></span>
+          </article>
+          <article class="install-step">
+            <span class="number">3</span>
+            <span><strong>Sign in inside the app</strong><p>Use your Student ID and password again. Your dashboard will open from the installed app.</p></span>
+          </article>
+        </div>
+
+        <button class="install-button" type="button" id="installNow">＋ Install LMS App</button>
+        <p class="install-status" id="installStatus" role="status" aria-live="polite">Dashboard access is available only from the installed app.</p>
+
+        <div class="open-app-note" id="openAppNote">
+          <strong>Already installed?</strong> Close this browser tab and open Dr. Sandaruwan LMS from your Home Screen. Sign in there to continue.
+        </div>
+      </div>
+    </section>
+    <footer class="footer"><span>Dr. Sandaruwan LMS · Student Portal</span><a href="index.html" id="switchAccount">Switch account</a></footer>
+  </main>
+<script>
+(() => {
+  const standalone = () =>
+    (typeof window.matchMedia === "function" && window.matchMedia("(display-mode: standalone)").matches) ||
+    navigator.standalone === true;
+
+  if (sessionStorage.getItem("loggedIn") !== "true") {
+    window.location.replace("index.html");
+    return;
+  }
+  if (standalone()) {
+    window.location.replace("dashboard.html");
+    return;
+  }
+
+  const userAgent = String(navigator.userAgent || "");
+  const platform = String(navigator.platform || "");
+  const isAppleMobile = /iphone|ipad|ipod/i.test(userAgent) ||
+    (platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  const isAndroid = /android/i.test(userAgent);
+  const installButton = document.getElementById("installNow");
+  const status = document.getElementById("installStatus");
+  const stepOne = document.getElementById("stepOneText");
+  let deferredPrompt = null;
+
+  if (isAppleMobile) {
+    stepOne.textContent = "In Safari, tap Share → Add to Home Screen → Add. Keep “Open as Web App” enabled if it appears.";
+    installButton.textContent = "Show iPhone install steps";
+  } else if (isAndroid) {
+    stepOne.textContent = "Tap Install LMS App below and accept the browser's installation prompt.";
+  }
+
+  window.addEventListener("beforeinstallprompt", event => {
+    event.preventDefault();
+    deferredPrompt = event;
+    installButton.textContent = "＋ Install LMS App";
+  });
+
+  window.addEventListener("appinstalled", () => {
+    deferredPrompt = null;
+    installButton.disabled = true;
+    installButton.textContent = "✓ App installed";
+    status.textContent = "Installation complete. Close this browser and open the LMS icon from your Home Screen or app list, then sign in again.";
+  });
+
+  installButton.addEventListener("click", async () => {
+    if (deferredPrompt) {
+      installButton.disabled = true;
+      status.textContent = "Opening the installation prompt…";
+      try {
+        await deferredPrompt.prompt();
+        const choice = await deferredPrompt.userChoice;
+        deferredPrompt = null;
+        if (choice?.outcome === "accepted") {
+          status.textContent = "The app install was accepted. Open Dr. Sandaruwan LMS from your Home Screen or app list, then sign in again.";
+          installButton.textContent = "✓ Install accepted";
+        } else {
+          status.textContent = "Installation was cancelled. Dashboard access remains locked until the LMS app is installed.";
+          installButton.textContent = "＋ Try installing again";
+        }
+      } catch (error) {
+        console.warn("LMS install prompt failed:", error);
+        status.textContent = "Use your browser menu and choose Install app or Add to Home Screen.";
+        installButton.textContent = "Show install steps";
+      } finally {
+        installButton.disabled = false;
+      }
+      return;
+    }
+
+    if (isAppleMobile) {
+      status.textContent = "Open this page in Safari, tap the Share icon, choose Add to Home Screen, then tap Add. Open the new LMS icon afterwards.";
+    } else {
+      status.textContent = isAndroid
+        ? "Open the browser menu (⋮) and choose Install app or Add to Home screen. Open the new LMS icon afterwards."
+        : "Use your browser's Install app or Add to Home Screen option, then open the installed LMS icon.";
+    }
+  });
+
+  document.getElementById("switchAccount")?.addEventListener("click", () => {
+    sessionStorage.clear();
+  });
+})();
+</script>
+</body>
+</html>
