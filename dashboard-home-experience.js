@@ -45,8 +45,127 @@
   };
 
   const byId = id => document.getElementById(id);
+
+  const studyCardRules = {
+    grade10: {
+      portalProgramHub: true,
+      modelPapersCard: true,
+      pastPapersCard: false,
+      programProgressCard: true,
+      smartBookAnswersCard: false,
+      schoolPaperAnswersCard: false
+    },
+    grade11: {
+      portalProgramHub: false,
+      modelPapersCard: true,
+      pastPapersCard: false,
+      programProgressCard: true,
+      smartBookAnswersCard: false,
+      schoolPaperAnswersCard: false
+    },
+    al2027: {
+      portalProgramHub: false,
+      modelPapersCard: true,
+      pastPapersCard: false,
+      programProgressCard: false,
+      smartBookAnswersCard: false,
+      schoolPaperAnswersCard: false
+    },
+    al2028: {
+      portalProgramHub: false,
+      modelPapersCard: true,
+      pastPapersCard: false,
+      programProgressCard: false,
+      smartBookAnswersCard: true,
+      schoolPaperAnswersCard: true
+    }
+  };
+
+  let studyCardObserver = null;
+
+  function resolveSessionCohort() {
+    const typeValue = String(sessionStorage.getItem("studentType") || "").trim().toLowerCase().replace(/[\\s_-]+/g, "");
+    const gradeValue = String(sessionStorage.getItem("studentGrade") || "").trim().toLowerCase().replace(/[\\s_-]+/g, "");
+    const id = String(sessionStorage.getItem("studentId") || "").trim().toUpperCase();
+
+    if (typeValue.includes("grade10") || gradeValue.includes("grade10") || typeValue === "g10") {
+      return { key: "grade10", year: "" };
+    }
+    if (typeValue.includes("grade11") || gradeValue.includes("grade11") || typeValue === "g11") {
+      return { key: "grade11", year: "" };
+    }
+
+    const isAl = ["al", "a/l", "alevel", "advanced", "advancedlevel"].includes(typeValue) ||
+      typeValue.includes("advancedlevel") || gradeValue.includes("advancedlevel") ||
+      /^al(?:20)?(?:2027|2028|2029|27|28|29)$/.test(gradeValue) ||
+      /^a\/l(?:20)?(?:2027|2028|2029|27|28|29)$/.test(gradeValue);
+
+    if (isAl || /^A2[789]\\d{3}$/.test(id) || /^(?:27|28|29)[CN]/.test(id)) {
+      let year = String(sessionStorage.getItem("alYear") || "").match(/^20(27|28|29)$/)?.[0] || "";
+      if (!year) {
+        const match = (gradeValue + " " + typeValue).match(/20(27|28|29)/);
+        if (match) year = "20" + match[1];
+      }
+      if (!year) {
+        const match = id.match(/^(?:A)?(27|28|29)\\d{3}$/) || id.match(/^(27|28|29)[CN]/);
+        if (match) year = "20" + match[1];
+      }
+      return { key: year === "2028" ? "al2028" : "al2027", year: year || "2027" };
+    }
+
+    return null;
+  }
+
+  function enforceHiddenStudyCards() {
+    const rules = studyCardRules[activeCohortKey];
+    if (!rules) return;
+    Object.entries(rules).forEach(([id, visible]) => {
+      if (visible) return; // Keep administrator publishing controls in charge of allowed cards.
+      const card = byId(id);
+      if (!card) return;
+      if (!card.hidden) card.hidden = true;
+      if (card.getAttribute("aria-hidden") !== "true") card.setAttribute("aria-hidden", "true");
+      if (card.dataset.cohortVisible !== "false") card.dataset.cohortVisible = "false";
+      if (card.style.getPropertyValue("display") !== "none" || card.style.getPropertyPriority("display") !== "important") {
+        card.style.setProperty("display", "none", "important");
+      }
+    });
+  }
+
+  function observeStudyCardVisibility() {
+    if (studyCardObserver || !("MutationObserver" in window)) return;
+    const grid = byId("learningProgram");
+    if (!grid) return;
+    studyCardObserver = new MutationObserver(enforceHiddenStudyCards);
+    studyCardObserver.observe(grid, {
+      subtree: true,
+      childList: true,
+      attributes: true,
+      attributeFilter: ["hidden", "style", "aria-hidden", "data-cohort-visible"]
+    });
+  }
+
+  function applyStudyCardAllowList(key) {
+    const rules = studyCardRules[key];
+    if (!rules) return;
+    activeCohortKey = key;
+    Object.entries(rules).forEach(([id, visible]) => {
+      const card = byId(id);
+      if (!card) return;
+      card.dataset.cohortVisible = String(visible);
+      card.setAttribute("aria-hidden", String(!visible));
+      if (visible) {
+        card.hidden = false;
+      } else {
+        card.hidden = true;
+        card.style.setProperty("display", "none", "important");
+      }
+    });
+    observeStudyCardVisibility();
+    enforceHiddenStudyCards();
+  }
   let examInterval;
-  let activeCohortKey = "al2028";
+  let activeCohortKey = "";
   let studyBuddyReady = false;
   let scrollRevealStarted = false;
 
@@ -246,6 +365,7 @@
     document.body.dataset.studentCohort = key;
     document.body.classList.remove("dashboard-cohort-pending");
     document.body.classList.toggle("al2028-dashboard", key === "al2028");
+    applyStudyCardAllowList(key);
     initDashboardSectionMotion();
     const label = key === "al2027" || key === "al2028" ? "A/L " + (year || key.slice(-4)) : cohort.label;
     renderStudyBuddy(key, label);
@@ -268,23 +388,7 @@
     const hub = byId("portalProgramHub"), model = byId("modelPapersCard"), past = byId("pastPapersCard");
     const programProgress = byId("programProgressCard"), smartBook = byId("smartBookAnswersCard"), schoolPapers = byId("schoolPaperAnswersCard");
 
-    // This is the single allow-list for Study cards. Hide every card first,
-    // then reveal only the resources assigned to the resolved student cohort.
-    const cohortCardAllowList = {
-      portalProgramHub: key === "grade10",
-      modelPapersCard: true,
-      pastPapersCard: false,
-      programProgressCard: key === "grade10" || key === "grade11",
-      smartBookAnswersCard: key === "al2028",
-      schoolPaperAnswersCard: key === "al2028"
-    };
-    Object.entries(cohortCardAllowList).forEach(([id, visible]) => {
-      const card = byId(id);
-      if (!card) return;
-      card.hidden = !visible;
-      card.setAttribute("aria-hidden", String(!visible));
-      card.dataset.cohortVisible = String(visible);
-    });
+    const cohortCardAllowList = studyCardRules[key];
 
     if (hub) {
       hub.hidden = !cohortCardAllowList.portalProgramHub;
@@ -312,6 +416,16 @@
     if (schoolPapers) schoolPapers.hidden = !cohortCardAllowList.schoolPaperAnswersCard;
     renderExam(cohort.exam);
   };
+
+  // The installed app can reopen a fresh standalone window. Resolve the saved
+  // login cohort immediately, before the Firestore routing module finishes.
+  // The Firestore profile remains authoritative and can replace this on load.
+  const initialSessionCohort = resolveSessionCohort();
+  if (initialSessionCohort) {
+    window.renderDashboardHome(initialSessionCohort.key, initialSessionCohort.year);
+  } else {
+    document.body.classList.add("dashboard-cohort-pending");
+  }
 
   // The centre portrait can open the assistant from any student page via this hash.
   const openAssistantFromHash = () => {
