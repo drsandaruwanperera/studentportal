@@ -12,7 +12,7 @@ import { db, doc, onSnapshot } from "./firebase.js";
   let currentSignature = "";
   let nextTimer = null;
 
-  const brandStylesheetUrl = new URL("./brand-glass-theme.css?v=2", import.meta.url).href;
+  const brandStylesheetUrl = new URL("./brand-glass-theme.css?v=3", import.meta.url).href;
 
   function removeLegacyWinterBlueStyles() {
     document.documentElement.classList.remove("student-portal-winter-unified");
