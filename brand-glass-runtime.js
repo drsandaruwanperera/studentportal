@@ -9,7 +9,7 @@
     ? document.currentScript.src
     : window.location.href;
   const assetBase = new URL(".", scriptUrl);
-  const cssUrl = new URL("brand-glass-theme.css?v=3", assetBase).href;
+  const cssUrl = new URL("brand-glass-theme.css?v=4", assetBase).href;
 
   document.documentElement.classList.add("lms-brand-glass", "student-glass-ui");
   document.documentElement.classList.remove("student-portal-winter-unified");
