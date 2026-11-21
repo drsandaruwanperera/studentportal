@@ -126,6 +126,7 @@
       if (!card.hidden) card.hidden = true;
       if (card.getAttribute("aria-hidden") !== "true") card.setAttribute("aria-hidden", "true");
       if (card.dataset.cohortVisible !== "false") card.dataset.cohortVisible = "false";
+      if (card.dataset.cohortGuardHidden !== "true") card.dataset.cohortGuardHidden = "true";
       if (card.style.getPropertyValue("display") !== "none" || card.style.getPropertyPriority("display") !== "important") {
         card.style.setProperty("display", "none", "important");
       }
@@ -155,9 +156,16 @@
       card.dataset.cohortVisible = String(visible);
       card.setAttribute("aria-hidden", String(!visible));
       if (visible) {
+        // Remove only the inline display rule written by this cohort guard.
+        // Do not clear display rules owned by the admin paper-publishing settings.
+        if (card.dataset.cohortGuardHidden === "true") {
+          card.style.removeProperty("display");
+          delete card.dataset.cohortGuardHidden;
+        }
         card.hidden = false;
       } else {
         card.hidden = true;
+        card.dataset.cohortGuardHidden = "true";
         card.style.setProperty("display", "none", "important");
       }
     });
