@@ -520,7 +520,7 @@ body{background:radial-gradient(circle at 76% 10%,rgba(103,60,255,.10),transpare
 </head>
 
 
-<body>
+<body class="dashboard-page">
 <header class="shared-mobile-header" aria-label="Student portal header">
   <a class="shared-header-brand" href="dashboard.html" aria-label="Dr. Sandaruwan LMS home">
     <img src="./icons/dr-sandaruwan-lms-192.png?v=approved-2026-11-21" alt="">
@@ -715,6 +715,41 @@ body{background:radial-gradient(circle at 76% 10%,rgba(103,60,255,.10),transpare
 
         <div class="lms-dashboard">
             <section class="dashboard-learning-banner dashboard-analytics-hero">
+                <div class="dashboard-mobile-overview" aria-label="Student learning overview">
+                    <div class="dashboard-mobile-overview-top">
+                        <div class="dashboard-mobile-date-tile" aria-label="Today">
+                            <span id="dashboardMobileWeekday">Today</span>
+                            <strong id="dashboardMobileDay">21</strong>
+                            <small id="dashboardMobileMonth">November</small>
+                        </div>
+                        <div class="dashboard-mobile-greeting">
+                            <span class="dashboard-mobile-eyebrow">YOUR LEARNING SPACE</span>
+                            <h2 id="dashboardMobileGreeting">Good morning, Student</h2>
+                            <p id="dashboardMobileProgram">Your learning programme</p>
+                        </div>
+                    </div>
+                    <div class="dashboard-mobile-next-step">
+                        <div class="dashboard-mobile-next-copy">
+                            <span>NEXT STEP</span>
+                            <strong>Continue your learning</strong>
+                            <small>Open your study space and pick up where you left off.</small>
+                        </div>
+                        <a href="my-program.html" aria-label="Open your learning programme">Open <b aria-hidden="true">↗</b></a>
+                    </div>
+                    <div class="dashboard-mobile-progress">
+                        <div class="dashboard-mobile-progress-heading">
+                            <div><span>YOUR PROGRESS</span><strong id="dashboardMobilePaperCount">0 / 0 papers explored</strong></div>
+                            <b id="dashboardMobileProgressPercent">0%</b>
+                        </div>
+                        <div class="dashboard-mobile-progress-track" role="progressbar" aria-label="Learning progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="dashboardMobileProgressBar">
+                            <span id="dashboardMobileProgressFill"></span>
+                        </div>
+                        <div class="dashboard-mobile-progress-caption">
+                            <span>Keep moving forward, one paper at a time</span>
+                            <span id="dashboardMobileRemaining">0 remaining</span>
+                        </div>
+                    </div>
+                </div>
                 <div class="learning-glow glow-one"></div>
                 <div class="learning-glow glow-two"></div>
                 <div class="learning-banner-copy">
@@ -737,7 +772,7 @@ body{background:radial-gradient(circle at 76% 10%,rgba(103,60,255,.10),transpare
                 <div class="exam-timer" id="examTimer" aria-label="Countdown to the first examination day"><div class="timer-unit"><strong id="countDays">—</strong><small>Days</small></div><span class="timer-sep" aria-hidden="true">:</span><div class="timer-unit"><strong id="countHours">—</strong><small>Hours</small></div><span class="timer-sep" aria-hidden="true">:</span><div class="timer-unit"><strong id="countMinutes">—</strong><small>Minutes</small></div></div>
             </section>
 
-            <section class="lms-stat-grid">
+            <section class="lms-stat-grid" hidden aria-hidden="true">
                 <article class="lms-stat-card">
                     <div>
                         <strong id="progressValue">0%</strong>
@@ -1540,6 +1575,65 @@ import {db,collection,onSnapshot} from "./firebase.js";
 <script type="module" src="./christmas-theme.js?v=20261120-winter-refresh2"></script>
 <script defer src="./pwa-install.js?v=1"></script>
     <script defer src="./student-glass-ui.js?v=5"></script>
+<script id="dashboard-mobile-overview-sync">
+(function(){
+  const byId = id => document.getElementById(id);
+  const dateDay = byId("dashboardMobileWeekday");
+  const dateNumber = byId("dashboardMobileDay");
+  const dateMonth = byId("dashboardMobileMonth");
+  const greeting = byId("dashboardMobileGreeting");
+  const program = byId("dashboardMobileProgram");
+  const count = byId("dashboardMobilePaperCount");
+  const percent = byId("dashboardMobileProgressPercent");
+  const fill = byId("dashboardMobileProgressFill");
+  const bar = byId("dashboardMobileProgressBar");
+  const remaining = byId("dashboardMobileRemaining");
+
+  function syncDateAndProfile(){
+    const now = new Date();
+    if(dateDay) dateDay.textContent = new Intl.DateTimeFormat("en",{weekday:"long"}).format(now);
+    if(dateNumber) dateNumber.textContent = new Intl.DateTimeFormat("en",{day:"2-digit"}).format(now);
+    if(dateMonth) dateMonth.textContent = new Intl.DateTimeFormat("en",{month:"long"}).format(now);
+
+    const rawName = String(sessionStorage.getItem("studentName") || sessionStorage.getItem("studentId") || byId("sidebarStudentId")?.textContent || "Student").trim();
+    const firstName = rawName.split(/\\s+/).filter(Boolean)[0] || "Student";
+    const hour = now.getHours();
+    const greetingWord = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
+    if(greeting) greeting.textContent = greetingWord + ", " + firstName;
+
+    const label = byId("topStudentType")?.textContent?.trim() || byId("journeyCohortLabel")?.textContent?.trim() || "Student programme";
+    if(program) program.textContent = label + " · Dr. Sandaruwan LMS";
+  }
+
+  function syncProgress(){
+    const viewed = Math.max(0, parseInt(byId("viewedPapers")?.textContent || "0", 10) || 0);
+    const total = Math.max(0, parseInt(byId("totalPapers")?.textContent || "0", 10) || 0);
+    const rawPercent = parseInt(String(byId("progressValue")?.textContent || "0").replace("%",""), 10);
+    const value = Math.max(0, Math.min(100, Number.isFinite(rawPercent) ? rawPercent : (total ? Math.round(viewed / total * 100) : 0)));
+    const left = Math.max(0, total - viewed);
+
+    if(count) count.textContent = viewed + " / " + total + " papers explored";
+    if(percent) percent.textContent = value + "%";
+    if(fill) fill.style.width = value + "%";
+    if(bar) bar.setAttribute("aria-valuenow", String(value));
+    if(remaining) remaining.textContent = left + " remaining";
+  }
+
+  syncDateAndProfile();
+  syncProgress();
+  document.addEventListener("DOMContentLoaded", syncDateAndProfile, {once:true});
+  const profileSource = byId("topStudentType") || byId("sidebarStudentGrade");
+  if(profileSource && "MutationObserver" in window){
+    new MutationObserver(syncDateAndProfile).observe(profileSource,{childList:true,characterData:true,subtree:true});
+  }
+  ["progressValue","viewedPapers","totalPapers"].forEach(id=>{
+    const source = byId(id);
+    if(source && "MutationObserver" in window){
+      new MutationObserver(syncProgress).observe(source,{childList:true,characterData:true,subtree:true});
+    }
+  });
+})();
+</script>
 </body>
 </body>
 
