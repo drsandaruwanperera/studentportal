@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="student-glass-ui">
 
 <head>
     <link rel="icon" type="image/png" sizes="192x192" href="./icons/dr-sandaruwan-lms-192.png?v=approved-2026-11-21">
@@ -516,11 +516,33 @@ body{background:radial-gradient(circle at 76% 10%,rgba(103,60,255,.10),transpare
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" sizes="192x192" href="./icons/dr-sandaruwan-lms-192.png?v=approved-2026-11-21">
 
-    <link rel="stylesheet" href="./student-glass-ui.css?v=5">
+    <link rel="stylesheet" href="./student-glass-ui.css?v=6">
 </head>
 
 
 <body>
+<header class="shared-mobile-header" aria-label="Student portal header">
+  <a class="shared-header-brand" href="dashboard.html" aria-label="Dr. Sandaruwan LMS home">
+    <img src="./icons/dr-sandaruwan-lms-192.png?v=approved-2026-11-21" alt="">
+    <span><strong>Dr. Sandaruwan LMS</strong><small>STUDENT PORTAL</small></span>
+  </a>
+  <a class="shared-header-action" href="announcements.html" aria-label="Announcements"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg></a>
+  <span class="shared-header-student" aria-label="Student">S</span>
+  <a class="shared-header-action" href="index.html" aria-label="Log out"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3"></path><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"></path></svg></a>
+</header>
+<nav class="shared-bottom-nav" aria-label="Student navigation">
+  <a href="dashboard.html" class="active" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg><span>Dashboard</span></a>
+  <a href="my-program.html" class="" ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 1 4 17.5z"/><path d="M4 17.5A2.5 2.5 0 0 1 6.5 15H20M8 7h8M8 10.5h8"/></svg><span>Study</span></a>
+  <a class="shared-floating-teacher" href="dashboard.html#study-buddy" aria-label="Open AI Study Buddy with Dr. Sandaruwan" title="Open AI Study Buddy"><img src="https://raw.githubusercontent.com/drsandaruwanperera/drsandaruwanperera.github.io/main/assets/sir-photo.png" alt="Dr. Sandaruwan"></a>
+  <a href="progress.html" class="" ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5V12M10 19.5V5M16 19.5V9M22 19.5V3.5"/><path d="M3 20.5h18"/></svg><span>Results</span></a>
+  <details class="shared-more-menu">
+   <summary aria-label="More student pages" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg><span>More</span></summary>
+   <div class="shared-more-panel">
+    <a href="announcements.html"><span aria-hidden="true">◉</span> Announcements</a>
+    <a href="support.html"><span aria-hidden="true">✚</span> Support</a>
+   </div>
+  </details>
+ </nav>
 
 <header class="mobile-lms-header">
     <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open navigation menu" aria-controls="studentSidebar" aria-expanded="false">
@@ -1517,7 +1539,7 @@ import {db,collection,onSnapshot} from "./firebase.js";
 <script type="module" src="student-pop-notices.js?v=3"></script>
 <script type="module" src="./christmas-theme.js?v=20261120-winter-refresh2"></script>
 <script defer src="./pwa-install.js?v=1"></script>
-    <script defer src="./student-glass-ui.js?v=4"></script>
+    <script defer src="./student-glass-ui.js?v=5"></script>
 </body>
 </body>
 
