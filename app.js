@@ -613,6 +613,58 @@ function clearPasswordChangeSession() {
 
 
 // =====================================================
+// INSTALLED LMS APP USAGE TRACKING
+// =====================================================
+// Count a student once when they successfully sign in while the
+// LMS is running as an installed standalone web app. This is an
+// app-use indicator, not a store-verified download receipt.
+// =====================================================
+
+function getInstalledAppUsageFields(studentData, studentType) {
+    const standaloneDisplay =
+        typeof window.matchMedia === "function" &&
+        window.matchMedia("(display-mode: standalone)").matches;
+
+    const isStandaloneApp =
+        standaloneDisplay || navigator.standalone === true;
+
+    if (!isStandaloneApp) {
+        return {};
+    }
+
+    const userAgent = String(navigator.userAgent || "");
+    const platform = String(navigator.platform || "");
+    const isAppleMobile =
+        /iphone|ipad|ipod/i.test(userAgent) ||
+        (platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
+    let appPlatform = "other";
+    if (/android/i.test(userAgent)) {
+        appPlatform = "android";
+    } else if (isAppleMobile) {
+        appPlatform = "apple-mobile";
+    } else if (/macintosh|mac os x/i.test(userAgent)) {
+        appPlatform = "mac";
+    }
+
+    const now = Date.now();
+    const previousFirstLogin = Number(studentData?.lmsAppFirstLoginAt || 0);
+
+    return {
+        lmsAppFirstLoginAt:
+            Number.isFinite(previousFirstLogin) && previousFirstLogin > 0
+                ? previousFirstLogin
+                : now,
+        lmsAppLastLoginAt: now,
+        lmsAppFirstPlatform:
+            String(studentData?.lmsAppFirstPlatform || appPlatform),
+        lmsAppLastPlatform: appPlatform,
+        lmsAppCategory: String(studentType || "unknown")
+    };
+}
+
+
+// =====================================================
 // LOGIN
 // =====================================================
 
@@ -827,7 +879,8 @@ async function loginStudent() {
         // Do not make the student wait for this secondary presence write.
         // The dashboard updates lastActiveAt as soon as it loads.
         void updateDoc(studentRef, {
-            lastActiveAt: Date.now()
+            lastActiveAt: Date.now(),
+            ...getInstalledAppUsageFields(loginStudentData, studentType)
         }).catch((activeError) => {
             console.warn("Last active update failed:", activeError);
         });
