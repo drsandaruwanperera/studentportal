@@ -254,6 +254,10 @@
   function updatePageTitles() {
     if (isStudy) {
       safeText(document.querySelector(".top h1"), "Study");
+      const resourceTab = document.querySelector(".tabs .tab");
+      if (resourceTab && resourceTab.textContent.trim() === "Accounting") {
+        resourceTab.textContent = "Study Resources";
+      }
       document.title = "Study | Dr. Sandaruwan LMS";
     } else if (isResults) {
       safeText(document.querySelector(".top h1"), "Results");
