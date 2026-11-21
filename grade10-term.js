@@ -272,12 +272,6 @@ function isPaperEnabled(
     );
 
 
-    // Model Paper 05 must remain available to Grade 10 students.
-    // Other papers continue to follow the admin-managed Firestore setting.
-    if (paperNumber === "05") {
-        return true;
-    }
-
     // -------------------------------------------------
     // FIELD DOES NOT EXIST
     // -------------------------------------------------
