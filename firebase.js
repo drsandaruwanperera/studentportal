@@ -60,7 +60,7 @@ if (
     window.location.pathname.endsWith("/dashboard.html") ||
     window.location.pathname.endsWith("dashboard.html")
 ) {
-    import("./dashboard-enhancements.js?v=1").catch((error) => {
+    import("./dashboard-enhancements.js?v=2").catch((error) => {
         console.error("Dashboard enhancement module failed to load:", error);
     });
 
