@@ -9,7 +9,7 @@ const adminLoggedIn =
 
 const adminRole = String(
     sessionStorage.getItem("adminRole") || ""
-).trim().toLowerCase().replace(/[\\s_-]+/g, "");
+).trim().toLowerCase().replace(/[\s_-]+/g, "");
 
 const isSuperAdmin =
     adminRole === "superadmin" || adminRole === "full";
@@ -74,7 +74,7 @@ function initializeAppInstallReport() {
 
     const getCategory = (data, studentId) => {
         const saved = String(data?.lmsAppCategory || data?.studentType || "")
-            .trim().toLowerCase().replace(/[\\s_-]+/g, "");
+            .trim().toLowerCase().replace(/[\s_-]+/g, "");
 
         const grade = String(data?.grade || "").trim().toLowerCase();
         const id = String(studentId || "").trim().toUpperCase();
@@ -88,15 +88,15 @@ function initializeAppInstallReport() {
             return "grade11";
         }
         if (saved === "al" || saved.includes("advanced") ||
-            /^A?2[789]\\d{3}$/.test(id) || /^(27|28|29)[CN]/.test(id)) {
+            /^A?2[789]\d{3}$/.test(id) || /^(27|28|29)[CN]/.test(id)) {
             return "al";
         }
 
         const numericId = Number(id);
-        if (/^\\d{5}$/.test(id) && numericId >= 26000 && numericId <= 26999) {
+        if (/^\d{5}$/.test(id) && numericId >= 26000 && numericId <= 26999) {
             return "grade11";
         }
-        if (/^\\d{5}$/.test(id) && numericId >= 27000 && numericId <= 27999) {
+        if (/^\d{5}$/.test(id) && numericId >= 27000 && numericId <= 27999) {
             return "grade10";
         }
         return "other";
@@ -295,9 +295,9 @@ function initializeAppInstallReport() {
             ])
         ];
 
-        const csv = "\\uFEFF" + rows
+        const csv = "\uFEFF" + rows
             .map((row) => row.map(csvCell).join(","))
-            .join("\\r\\n");
+            .join("\r\n");
 
         const url = URL.createObjectURL(
             new Blob([csv], { type: "text/csv;charset=utf-8;" })
