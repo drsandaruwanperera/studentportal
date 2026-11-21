@@ -1489,3 +1489,14 @@ html.student-glass-ui body .shared-more-panel a.active {
 html.student-glass-ui body .notice[hidden] {
   display: none !important;
 }
+
+/* Preserve the existing visibility rules used by the grade and publishing scripts. */
+html.student-glass-ui body [hidden] {
+  display: none !important;
+}
+html.student-glass-ui body .card[style*="display: none"],
+html.student-glass-ui body .card[style*="display:none"],
+html.student-glass-ui body .portal-program-card[style*="display: none"],
+html.student-glass-ui body .portal-program-card[style*="display:none"] {
+  display: none !important;
+}
