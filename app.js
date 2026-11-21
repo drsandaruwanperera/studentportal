@@ -32,6 +32,69 @@ const msg =
     document.getElementById("msg");
 
 let loginInProgress = false;
+let loginRedirecting = false;
+
+function triggerLoginRipple(event) {
+    if (!loginBtn) return;
+
+    const bounds = loginBtn.getBoundingClientRect();
+    const hasPointer = Number.isFinite(event?.clientX) && Number.isFinite(event?.clientY);
+    const x = hasPointer ? event.clientX - bounds.left : bounds.width / 2;
+    const y = hasPointer ? event.clientY - bounds.top : bounds.height / 2;
+
+    loginBtn.style.setProperty("--login-ripple-x", x + "px");
+    loginBtn.style.setProperty("--login-ripple-y", y + "px");
+    loginBtn.classList.remove("is-rippling");
+    void loginBtn.offsetWidth;
+    loginBtn.classList.add("is-rippling");
+
+    window.setTimeout(() => loginBtn?.classList.remove("is-rippling"), 720);
+}
+
+function setLoginProcessingState() {
+    if (loginBtn) {
+        loginBtn.disabled = true;
+        loginBtn.setAttribute("aria-busy", "true");
+        loginBtn.setAttribute("aria-label", "Signing in. Please wait.");
+        loginBtn.classList.remove("is-success", "is-rippling");
+        loginBtn.classList.add("is-processing");
+        loginBtn.innerHTML = `
+            <span class="login-button-spinner" aria-hidden="true"></span>
+            <span class="login-button-label">Signing In...</span>
+        `;
+    }
+
+    showMessage("Verifying your account securely...", "info");
+    msg?.classList.remove("is-login-transition-message");
+    msg?.classList.add("is-login-processing-message");
+}
+
+function showLoginSuccessAndRedirect(
+    destination,
+    buttonLabel = "Success!",
+    statusMessage = "Welcome back! Redirecting to your dashboard..."
+) {
+    loginRedirecting = true;
+
+    if (loginBtn) {
+        loginBtn.disabled = true;
+        loginBtn.removeAttribute("aria-busy");
+        loginBtn.setAttribute("aria-label", buttonLabel + ". Redirecting.");
+        loginBtn.classList.remove("is-processing", "is-rippling");
+        loginBtn.classList.add("is-success");
+        loginBtn.innerHTML = `
+            <span class="login-success-check" aria-hidden="true">✓</span>
+            <span class="login-button-label">${buttonLabel}</span>
+        `;
+    }
+
+    showMessage(statusMessage, "success");
+    msg?.classList.remove("is-login-processing-message");
+    msg?.classList.add("is-login-transition-message");
+
+    // Brief success state before the existing destination is opened.
+    window.setTimeout(() => window.location.replace(destination), 900);
+}
 
 
 // =====================================================
@@ -623,13 +686,11 @@ function isInstalledLmsApp() {
 function redirectWebsiteLoginToAppInstall() {
     if (isInstalledLmsApp()) return false;
 
-    showMessage(
-        "Your Recovery Code is saved. Install and open the Dr. Sandaruwan LMS app to continue.",
-        "info"
+    showLoginSuccessAndRedirect(
+        "app-required.html",
+        "Verified!",
+        "Your account is verified. Opening app instructions..."
     );
-    window.setTimeout(() => {
-        window.location.replace("app-required.html");
-    }, 450);
     return true;
 }
 
@@ -687,7 +748,7 @@ function getInstalledAppUsageFields(studentData, studentType) {
 
 async function loginStudent() {
 
-    if (loginInProgress) return;
+    if (loginInProgress || loginRedirecting) return;
 
     const studentId =
         normalizeStudentId(
@@ -745,16 +806,7 @@ async function loginStudent() {
     // BUTTON LOADING
     // =================================================
 
-    if (loginBtn) {
-        loginBtn.disabled = true;
-        loginBtn.setAttribute("aria-busy", "true");
-        loginBtn.innerHTML = `
-            <span class="login-button-spinner" aria-hidden="true"></span>
-            <span>Checking details...</span>
-        `;
-    }
-
-    showMessage("Checking your student details...", "info");
+    setLoginProcessingState();
 
 
     try {
@@ -969,14 +1021,11 @@ async function loginStudent() {
 
         if (!isStudentOnboardingComplete(loginStudentData)) {
             clearPasswordChangeSession();
-            showMessage(
-                "Please complete your student onboarding form before entering the dashboard.",
-                "info"
+            showLoginSuccessAndRedirect(
+                "student-registration.html",
+                "Verified!",
+                "Account verified. Opening your student registration..."
             );
-
-            setTimeout(() => {
-                window.location.replace("student-registration.html");
-            }, 500);
 
             return;
         }
@@ -1003,21 +1052,10 @@ async function loginStudent() {
 
             if (redirectWebsiteLoginToAppInstall()) return;
 
-            showMessage(
-                "Login successful. Redirecting...",
-                "success"
-            );
-
-
-            setTimeout(
-                () => {
-
-                    window.location.replace(
-                        "dashboard.html"
-                    );
-
-                },
-                500
+            showLoginSuccessAndRedirect(
+                "dashboard.html",
+                "Success!",
+                "Welcome back! Redirecting to your dashboard..."
             );
 
 
@@ -1051,24 +1089,10 @@ async function loginStudent() {
             );
 
 
-            showMessage(
-                `${gradeName} first login. Password change required.`,
-                "success"
-            );
-
-
-            setTimeout(
-                () => {
-
-                    window.location.replace(
-                        "change-password.html?id=" +
-                        encodeURIComponent(
-                            studentId
-                        )
-                    );
-
-                },
-                500
+            showLoginSuccessAndRedirect(
+                "change-password.html?id=" + encodeURIComponent(studentId),
+                "Verified!",
+                "Account verified. Opening your secure password update..."
             );
 
 
@@ -1090,21 +1114,10 @@ async function loginStudent() {
 
             if (redirectWebsiteLoginToAppInstall()) return;
 
-            showMessage(
-                "Login successful. Redirecting...",
-                "success"
-            );
-
-
-            setTimeout(
-                () => {
-
-                    window.location.replace(
-                        "dashboard.html"
-                    );
-
-                },
-                500
+            showLoginSuccessAndRedirect(
+                "dashboard.html",
+                "Success!",
+                "Welcome back! Redirecting to your dashboard..."
             );
 
 
@@ -1121,22 +1134,11 @@ async function loginStudent() {
 
         if (redirectWebsiteLoginToAppInstall()) return;
 
-        showMessage(
-            "Login successful. Redirecting...",
-            "success"
-        );
-
-
-        setTimeout(
-            () => {
-
-                window.location.replace(
-                    "dashboard.html"
-                );
-
-            },
-            500
-        );
+        showLoginSuccessAndRedirect(
+                "dashboard.html",
+                "Success!",
+                "Welcome back! Redirecting to your dashboard..."
+            );
 
     }
     catch (error) {
@@ -1147,6 +1149,7 @@ async function loginStudent() {
         );
 
 
+        msg?.classList.remove("is-login-processing-message", "is-login-transition-message");
         const errorCode = String(error?.code || "");
         if (errorCode === "login/timeout" || ["unavailable", "deadline-exceeded", "network-request-failed", "internal"].includes(errorCode)) {
             showMessage("The connection is taking too long. Check your mobile data or Wi-Fi, then try again.");
@@ -1161,11 +1164,12 @@ async function loginStudent() {
 
         loginInProgress = false;
 
-        if (loginBtn) {
+        if (loginBtn && !loginRedirecting) {
 
             loginBtn.disabled = false;
             loginBtn.removeAttribute("aria-busy");
-
+            loginBtn.removeAttribute("aria-label");
+            loginBtn.classList.remove("is-processing", "is-success", "is-rippling");
 
             loginBtn.innerHTML = `
                 <span>
@@ -1189,6 +1193,8 @@ async function loginStudent() {
 // =====================================================
 
 if (loginBtn) {
+
+    loginBtn.addEventListener("click", triggerLoginRipple);
 
     loginBtn.addEventListener(
         "click",
@@ -1214,6 +1220,7 @@ if (studentIdInput) {
 
                 event.preventDefault();
 
+                triggerLoginRipple();
                 loginStudent();
 
             }
@@ -1236,6 +1243,7 @@ if (passwordInput) {
 
                 event.preventDefault();
 
+                triggerLoginRipple();
                 loginStudent();
 
             }
