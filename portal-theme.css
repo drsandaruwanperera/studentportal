@@ -309,7 +309,7 @@ body {
     font-size: 13px !important;
 }
 .input-wrapper input:focus {
-    border-color: #7187e8 !important;
+    border-color: #8b7cff !important;
     background: #fff !important;
     box-shadow: 0 0 0 4px rgba(73,104,232,.11) !important;
 }
@@ -323,7 +323,7 @@ body {
     height: 53px !important;
     margin-top: 5px !important;
     border-radius: 12px !important;
-    background: linear-gradient(100deg, #344dbd, #536ee1) !important;
+    background: linear-gradient(100deg, #5b4bff, #7c3aed) !important;
     color: #fff !important;
     box-shadow: 0 12px 25px rgba(54,78,190,.24) !important;
     font-weight: 800 !important;
@@ -344,7 +344,7 @@ body {
 }
 .support-content strong { color: #202c45 !important; font-size: 11px !important; }
 .support-content span { color: #79849a !important; font-size: 9px !important; line-height: 1.45 !important; }
-.open-whatsapp-help { color: #2f55c4 !important; }
+.open-whatsapp-help { color: #5b4bff !important; }
 .login-footer { color: #8d97aa !important; border-color: #e9edf3 !important; }
 .mobile-logo { display: none !important; }
 
@@ -443,8 +443,8 @@ html body .login-wrapper .login-panel .input-wrapper input#password::selection {
 
 /* FINAL STUDENT LOGIN — light sky-blue glass experience */
 :root {
-  --portal-sky: #4ca7d1;
-  --portal-sky-dark: #247fae;
+  --portal-sky: #7c3aed;
+  --portal-sky-dark: #5b4bff;
   --portal-sky-ink: #17384f;
   --portal-sky-muted: #69869a;
   --portal-sky-line: #d7eaf3;
@@ -484,7 +484,7 @@ body {
   background:
     radial-gradient(circle at 90% 12%,rgba(255,255,255,.2),transparent 26%),
     radial-gradient(circle at 12% 90%,rgba(124,218,245,.2),transparent 34%),
-    linear-gradient(145deg,#69b5e4 0%,#4a96ca 48%,#367eaf 100%) !important;
+    linear-gradient(145deg,#c4b5fd 0%,#c4b5fd 48%,#c4b5fd 100%) !important;
 }
 .brand-panel:before,.brand-panel:after {
   border-color: rgba(255,255,255,.16) !important;
@@ -592,7 +592,7 @@ body {
   transition: border-color .18s ease,box-shadow .18s ease,transform .18s ease !important;
 }
 .input-wrapper:focus-within {
-  border-color: #59acd1 !important;
+  border-color: #c4b5fd !important;
   background: #fff !important;
   box-shadow: 0 0 0 4px rgba(76,167,209,.13),0 6px 17px rgba(38,101,132,.08) !important;
   transform: translateY(-1px);
@@ -608,7 +608,7 @@ html body .login-wrapper .login-panel .input-wrapper input#password {
   background: transparent !important;
   color: #1b4058 !important;
   -webkit-text-fill-color: #1b4058 !important;
-  caret-color: #278bb8 !important;
+  caret-color: #c4b5fd !important;
   color-scheme: light !important;
   box-shadow: none !important;
   font-size: 12px !important;
@@ -625,13 +625,13 @@ html body .login-wrapper .login-panel .input-wrapper input#password::placeholder
 .input-wrapper input:-webkit-autofill:hover,
 .input-wrapper input:-webkit-autofill:focus {
   -webkit-text-fill-color: #1b4058 !important;
-  caret-color: #278bb8 !important;
+  caret-color: #c4b5fd !important;
   -webkit-box-shadow: 0 0 0 1000px #f7fcfe inset !important;
   box-shadow: 0 0 0 1000px #f7fcfe inset !important;
   background-color: #f7fcfe !important;
   color-scheme: light !important;
 }
-.input-icon { color: #5a9dbb !important; filter: none !important; }
+.input-icon { color: #c4b5fd !important; filter: none !important; }
 .toggle-password {
   border-radius: 9px !important;
   color: #5b849a !important;
@@ -644,7 +644,7 @@ html body .login-wrapper .login-panel .input-wrapper input#password::placeholder
   margin-top: 4px !important;
   border: 1px solid rgba(255,255,255,.76) !important;
   border-radius: 13px !important;
-  background: linear-gradient(110deg,#58b3d9,#2d91c0) !important;
+  background: linear-gradient(110deg,#c4b5fd,#c4b5fd) !important;
   color: #fff !important;
   box-shadow: 0 10px 23px rgba(42,139,186,.22) !important;
   font-size: 12px !important;
@@ -669,7 +669,7 @@ html body .login-wrapper .login-panel .input-wrapper input#password::placeholder
   font-weight: 650 !important;
   box-shadow: none !important;
 }
-.recovery-reset-trigger strong { color: #2585b2 !important; font-weight: 900 !important; }
+.recovery-reset-trigger strong { color: #c4b5fd !important; font-weight: 900 !important; }
 .message { color: #b74e5d !important; font-size: 10px !important; line-height: 1.5 !important; }
 .support-box {
   display: flex !important;
@@ -700,7 +700,7 @@ html body .login-wrapper .login-panel .input-wrapper input#password::placeholder
   border: 1px solid #c9e6f1 !important;
   border-radius: 9px !important;
   background: #eaf7fb !important;
-  color: #2b86ad !important;
+  color: #c4b5fd !important;
   font-size: 9px !important;
   font-weight: 850 !important;
   box-shadow: none !important;
@@ -723,7 +723,7 @@ html body .login-wrapper .login-panel .input-wrapper input#password::placeholder
 }
 .whatsapp-widget-header { border-color: #dcecf3 !important; }
 .whatsapp-brand strong { color: #23485f !important; }
-.whatsapp-brand span { color: #5e9bb6 !important; }
+.whatsapp-brand span { color: #c4b5fd !important; }
 .whatsapp-welcome {
   border-color: #cfe8f1 !important;
   background: linear-gradient(135deg,#e9f7fc,#d9eff7) !important;
@@ -916,7 +916,7 @@ html.installed-lms-app body {
     border-radius: 0 0 22px 22px !important;
     background:
       radial-gradient(circle at 94% 8%,rgba(255,255,255,.24),transparent 26%),
-      linear-gradient(125deg,#0d5d9e 0%,#1684c2 56%,#48a9d5 100%) !important;
+      linear-gradient(125deg,#7c3aed 0%,#7c3aed 56%,#c4b5fd 100%) !important;
     box-shadow: 0 10px 25px rgba(24,103,151,.17) !important;
   }
 
@@ -1050,7 +1050,7 @@ html.installed-lms-app body {
   html.installed-lms-app body .login-header .welcome-label {
     display: block !important;
     margin: 0 0 5px !important;
-    color: #4e98bd !important;
+    color: #c4b5fd !important;
     font-size: 8px !important;
     font-weight: 900 !important;
     letter-spacing: 1.3px !important;
@@ -1122,7 +1122,7 @@ html.installed-lms-app body {
     background: transparent !important;
     color: #1b4058 !important;
     -webkit-text-fill-color: #1b4058 !important;
-    caret-color: #238dbd !important;
+    caret-color: #c4b5fd !important;
     font-size: 12px !important;
     box-shadow: none !important;
   }
@@ -1134,7 +1134,7 @@ html.installed-lms-app body {
   }
 
   html.installed-lms-app body .input-wrapper:focus-within {
-    border-color: #69b4d3 !important;
+    border-color: #c4b5fd !important;
     box-shadow: 0 0 0 3px rgba(66,163,205,.12) !important;
     transform: none !important;
   }
@@ -1163,7 +1163,7 @@ html.installed-lms-app body {
     margin: 3px 0 0 !important;
     border: 1px solid rgba(255,255,255,.78) !important;
     border-radius: 12px !important;
-    background: linear-gradient(110deg,#27a7e5 0%,#1478d1 100%) !important;
+    background: linear-gradient(110deg,#c4b5fd 0%,#c4b5fd 100%) !important;
     color: #ffffff !important;
     font-size: 12px !important;
     font-weight: 900 !important;
@@ -1195,7 +1195,7 @@ html.installed-lms-app body {
   }
 
   html.installed-lms-app body .recovery-reset-trigger strong {
-    color: #147eb8 !important;
+    color: #c4b5fd !important;
     font-weight: 900 !important;
   }
 
@@ -1234,7 +1234,7 @@ html.installed-lms-app body {
     border: 1px solid #d4e9f2 !important;
     border-radius: 10px !important;
     background: #e3f4fa !important;
-    color: #318bb4 !important;
+    color: #c4b5fd !important;
     font-size: 17px !important;
   }
 
