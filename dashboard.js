@@ -386,7 +386,9 @@ function applyPaperVisibility(type, settings) {
             "grade10_term2_01", "grade10_term2_02", "grade10_term2_03", "grade10_term2_04", "grade10_term2_05",
             "grade10_term3_01", "grade10_term3_02", "grade10_term3_03", "grade10_term3_04", "grade10_term3_05"
         ];
-        if (modelPapersCard) modelPapersCard.style.display = isAnyEnabled(settings, modelFields) || settings.modelPapersEnabled === true ? "" : "none";
+        // Keep the Grade 10 Model Papers entry available so students can reach Model Paper 05.
+        // Individual papers remain controlled below on the term page, except the requested Paper 05.
+        if (modelPapersCard) modelPapersCard.style.display = "";
         if (pastPapersCard) pastPapersCard.style.display = settings.pastPapersEnabled === true ? "" : "none";
         return;
     }
