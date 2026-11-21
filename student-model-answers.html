@@ -37,6 +37,18 @@
     }
     @media(prefers-reduced-motion:reduce){.answer-row{animation:none}}
   </style>
+<script id="lms-app-access-guard">
+(function(){
+  const standalone =
+    (typeof window.matchMedia === "function" && window.matchMedia("(display-mode: standalone)").matches) ||
+    navigator.standalone === true;
+  if (sessionStorage.getItem("loggedIn") !== "true") {
+    window.location.replace("index.html");
+  } else if (!standalone) {
+    window.location.replace("app-required.html");
+  }
+})();
+</script>
 </head>
 <body class="dark-mode answers-hub-page">
 <header class="shared-mobile-header" aria-label="Student portal header">
