@@ -70,11 +70,27 @@
     document.body.appendChild(layer);
   }
 
+  const loginCssUrl = new URL("login-professional-theme.css?v=approved-purple-glass-2", assetBase).href;
+
+  function ensureLoginGlassStylesheet() {
+    if (!document.getElementById("loginBtn") && !document.getElementById("lms-app-splash")) return;
+    let loginLink = document.getElementById("lms-login-glass-theme-stylesheet");
+    if (!loginLink) {
+      loginLink = document.createElement("link");
+      loginLink.id = "lms-login-glass-theme-stylesheet";
+      loginLink.rel = "stylesheet";
+      document.head.appendChild(loginLink);
+    }
+    loginLink.href = loginCssUrl;
+    document.head.appendChild(loginLink);
+  }
+
   function refresh() {
     ensureSnowfall();
-    // Keep the last-loaded glass stylesheet above seasonal and page-specific styles.
+    // Keep the shared brand layer last, then place login/loading specifics above it.
     link.href = cssUrl;
-    document.head.appendChild(link); // Keep the shared brand theme above page-local style layers.
+    document.head.appendChild(link);
+    ensureLoginGlassStylesheet();
   }
 
   refresh();
