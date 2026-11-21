@@ -91,7 +91,7 @@ import { db, collection, doc, getDoc, getDocs } from "./firebase.js";
     const link = document.createElement("link");
     link.id = STYLE_ID;
     link.rel = "stylesheet";
-    link.href = new URL("./student-pop-notices.css?v=1", import.meta.url).href;
+    link.href = new URL("./student-pop-notices.css?v=2", import.meta.url).href;
     document.head.appendChild(link);
   }
 
