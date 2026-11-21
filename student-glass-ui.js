@@ -15,6 +15,7 @@
   const isResults = page === "progress.html" || page === "results.html";
   const isAnnouncements = page === "announcements.html";
   const isSupport = page === "support.html";
+  const isProfile = page === "profile.html";
 
   // Safari/iOS private browsing and privacy restrictions can throw when
   // sessionStorage is accessed. A blocked storage read must never stop the
@@ -144,6 +145,7 @@
     const links = Array.from(nav.querySelectorAll("a"));
     let announcementLink = null;
     let supportLink = null;
+    let profileLink = null;
 
     links.forEach(link => {
       const href = (link.getAttribute("href") || "").split("?")[0];
@@ -171,10 +173,13 @@
       } else if (href === "support.html") {
         supportLink = link.cloneNode(true);
         link.remove();
+      } else if (href === "profile.html") {
+        profileLink = link.cloneNode(true);
+        link.remove();
       }
     });
 
-    if (announcementLink || supportLink) {
+    if (announcementLink || supportLink || profileLink) {
       const more = makeMoreButton();
       if (announcementLink) {
         announcementLink.classList.toggle("active", isAnnouncements);
@@ -189,17 +194,26 @@
         if (isSupport) supportLink.setAttribute("aria-current", "page");
         else supportLink.removeAttribute("aria-current");
         const label = supportLink.querySelector("span:not(.nav-icon)");
-        if (label) label.textContent = "Support";
+        if (label) label.textContent = "Support Team";
         more.panel.appendChild(supportLink);
       }
-      if (isAnnouncements || isSupport) more.button.classList.add("is-current");
+      if (profileLink) {
+        profileLink.classList.toggle("active", isProfile);
+        if (isProfile) profileLink.setAttribute("aria-current", "page");
+        else profileLink.removeAttribute("aria-current");
+        const label = profileLink.querySelector("span:not(.nav-icon)");
+        if (label) label.textContent = "Profile";
+        more.panel.appendChild(profileLink);
+      }
+      if (isAnnouncements || isSupport || isProfile) more.button.classList.add("is-current");
       nav.insertAdjacentElement("afterend", more.wrapper);
     }
 
     nav.dataset.sharedNavReady = "true";
     return {
       announcementLink,
-      supportLink
+      supportLink,
+      profileLink
     };
   }
 
@@ -208,6 +222,7 @@
     if (existing) {
       const moreMenu = existing.querySelector(".shared-more-menu");
       if (moreMenu) {
+        moreMenu.classList.toggle("is-current", isAnnouncements || isSupport || isProfile);
         moreMenu.addEventListener("toggle", () => {
           const trigger = moreMenu.querySelector("summary");
           if (trigger) trigger.setAttribute("aria-expanded", String(moreMenu.open));
@@ -259,7 +274,7 @@
 
     const more = document.createElement("button");
     more.type = "button";
-    more.className = "shared-more-mobile-trigger" + ((isAnnouncements || isSupport) ? " active" : "");
+    more.className = "shared-more-mobile-trigger" + ((isAnnouncements || isSupport || isProfile) ? " active" : "");
     more.setAttribute("aria-expanded", "false");
     more.setAttribute("aria-controls", "sharedMorePanel");
     more.innerHTML = icons.more + "<span>More</span>";
@@ -272,12 +287,13 @@
     (moreLinks || []).forEach(link => {
       const href = (link.getAttribute("href") || "").split("?")[0];
       const isAnnouncementLink = href === "announcements.html";
+      const isProfileLink = href === "profile.html";
       const copy = document.createElement("a");
       copy.href = href;
       copy.className = "shared-more-link";
-      copy.innerHTML = '<span aria-hidden="true">' + (isAnnouncementLink ? "◉" : "✚") + "</span><strong>" +
-        (isAnnouncementLink ? "Announcements" : "Support") + "</strong>";
-      if ((isAnnouncements && isAnnouncementLink) || (isSupport && !isAnnouncementLink)) {
+      copy.innerHTML = '<span aria-hidden="true">' + (isAnnouncementLink ? "◉" : isProfileLink ? "◎" : "✚") + "</span><strong>" +
+        (isAnnouncementLink ? "Announcements" : isProfileLink ? "Profile" : "Support Team") + "</strong>";
+      if ((isAnnouncements && isAnnouncementLink) || (isSupport && !isAnnouncementLink && !isProfileLink) || (isProfile && isProfileLink)) {
         copy.classList.add("active");
         copy.setAttribute("aria-current", "page");
       }
@@ -287,7 +303,7 @@
     more.addEventListener("click", () => {
       const open = !panel.classList.contains("open");
       panel.classList.toggle("open", open);
-      more.classList.toggle("active", open || isAnnouncements || isSupport);
+      more.classList.toggle("active", open || isAnnouncements || isSupport || isProfile);
       more.setAttribute("aria-expanded", String(open));
     });
 
@@ -295,7 +311,7 @@
       if (!panel.contains(event.target) && !more.contains(event.target)) {
         panel.classList.remove("open");
         more.setAttribute("aria-expanded", "false");
-        more.classList.toggle("active", isAnnouncements || isSupport);
+        more.classList.toggle("active", isAnnouncements || isSupport || isProfile);
       }
     });
 
@@ -327,7 +343,10 @@
     } else if (isAnnouncements) {
       document.title = "Announcements | Dr. Sandaruwan LMS";
     } else if (isSupport) {
-      document.title = "Support | Dr. Sandaruwan LMS";
+      document.title = "Support Team | Dr. Sandaruwan LMS";
+    } else if (isProfile) {
+      document.title = "Profile | Dr. Sandaruwan LMS";
+      safeText(document.querySelector(".top h1"), "Profile");
     }
   }
 
@@ -561,7 +580,8 @@
     if (!moreLinks.length) {
       moreLinks = [
         ["announcements.html", "Announcements"],
-        ["support.html", "Support"]
+        ["support.html", "Support Team"],
+        ["profile.html", "Profile"]
       ].map(([href, label]) => {
         const link = document.createElement("a");
         link.href = href;
