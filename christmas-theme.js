@@ -13,7 +13,7 @@ import { db, doc, onSnapshot } from "./firebase.js";
   let nextTimer = null;
 
   const brandStylesheetUrl = new URL("./brand-glass-theme.css?v=5", import.meta.url).href;
-  const loginStylesheetUrl = new URL("./login-professional-theme.css?v=approved-purple-glass-2", import.meta.url).href;
+  const loginStylesheetUrl = new URL("./login-professional-theme.css?v=approved-purple-glass-3", import.meta.url).href;
 
   function removeLegacyWinterBlueStyles() {
     document.documentElement.classList.remove("student-portal-winter-unified");
