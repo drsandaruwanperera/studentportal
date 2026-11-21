@@ -458,3 +458,254 @@ html.installed-lms-app.lms-brand-glass body .lms-app-splash.is-leaving{
     animation:none!important;
   }
 }
+
+
+/* ==========================================================
+   MOBILE FULL-PAGE + INPUT VALUE VISIBILITY HOTFIX
+   Last cascade layer for the approved purple / lime login UI.
+========================================================== */
+html.lms-brand-glass body{
+  min-height:100vh!important;
+  min-height:100dvh!important;
+  background:
+    radial-gradient(ellipse at 8% 0%,rgba(91,75,255,.24),transparent 36%),
+    radial-gradient(ellipse at 96% 92%,rgba(124,58,237,.18),transparent 36%),
+    linear-gradient(145deg,#0b1020 0%,#11182b 56%,#0b1020 100%)!important;
+  color:#f4f7ff!important;
+}
+html.lms-brand-glass body .login-wrapper{
+  background:linear-gradient(145deg,rgba(17,24,43,.96),rgba(11,16,32,.98))!important;
+}
+html.lms-brand-glass body .login-panel{
+  background:
+    radial-gradient(ellipse at 95% 5%,rgba(124,58,237,.17),transparent 35%),
+    linear-gradient(145deg,#11182b,#0b1020)!important;
+}
+html.lms-brand-glass body .login-wrapper .login-panel .input-wrapper{
+  background:#0b1020!important;
+  border:1px solid rgba(196,181,253,.42)!important;
+  border-radius:14px!important;
+  box-shadow:inset 0 1px 2px rgba(0,0,0,.28),0 8px 20px rgba(0,0,0,.18)!important;
+}
+html.lms-brand-glass body .login-wrapper .login-panel .input-wrapper:focus-within{
+  background:#0b1020!important;
+  border-color:#a6ff2e!important;
+  box-shadow:0 0 0 4px rgba(166,255,46,.11),0 8px 24px rgba(0,0,0,.2)!important;
+}
+html.lms-brand-glass body .login-wrapper .login-panel .input-wrapper input,
+html.lms-brand-glass body .login-wrapper .login-panel .input-wrapper input#studentId,
+html.lms-brand-glass body .login-wrapper .login-panel .input-wrapper input#password{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:52px!important;
+  height:52px!important;
+  background:transparent!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  caret-color:#a6ff2e!important;
+  opacity:1!important;
+  color-scheme:dark!important;
+  font-size:16px!important;
+  font-weight:600!important;
+  line-height:1.4!important;
+  text-shadow:none!important;
+}
+html.lms-brand-glass body .login-wrapper .login-panel .input-wrapper input::placeholder,
+html.lms-brand-glass body .login-wrapper .login-panel .input-wrapper input#studentId::placeholder,
+html.lms-brand-glass body .login-wrapper .login-panel .input-wrapper input#password::placeholder{
+  color:#9ba7c0!important;
+  -webkit-text-fill-color:#9ba7c0!important;
+  opacity:1!important;
+  font-weight:450!important;
+}
+html.lms-brand-glass body .login-wrapper .login-panel .input-wrapper input:-webkit-autofill,
+html.lms-brand-glass body .login-wrapper .login-panel .input-wrapper input:-webkit-autofill:hover,
+html.lms-brand-glass body .login-wrapper .login-panel .input-wrapper input:-webkit-autofill:focus,
+html.lms-brand-glass body .login-wrapper .login-panel .input-wrapper input#studentId:-webkit-autofill,
+html.lms-brand-glass body .login-wrapper .login-panel .input-wrapper input#password:-webkit-autofill{
+  -webkit-text-fill-color:#ffffff!important;
+  caret-color:#a6ff2e!important;
+  -webkit-box-shadow:0 0 0 1000px #0b1020 inset!important;
+  box-shadow:0 0 0 1000px #0b1020 inset!important;
+  background-color:#0b1020!important;
+  color-scheme:dark!important;
+}
+html.lms-brand-glass body .login-wrapper .login-panel .input-wrapper input::selection{
+  background:rgba(166,255,46,.36)!important;
+  color:#ffffff!important;
+}
+html.lms-brand-glass body .login-wrapper .login-panel .input-icon,
+html.lms-brand-glass body .login-wrapper .login-panel .toggle-password{
+  color:#c4b5fd!important;
+}
+html.lms-brand-glass body .login-wrapper .login-panel .login-btn,
+html.lms-brand-glass body .login-wrapper .login-panel #loginBtn{
+  background:linear-gradient(110deg,#a6ff2e,#d1ff75)!important;
+  color:#0b1020!important;
+  border:1px solid rgba(220,255,170,.8)!important;
+}
+html.lms-brand-glass body .login-wrapper .login-panel #loginBtn *{
+  color:#0b1020!important;
+}
+
+/* Full-height mobile login: no floating card or leftover white viewport. */
+@media(max-width:600px){
+  html.lms-brand-glass,
+  html.lms-brand-glass body{
+    width:100%!important;
+    min-height:100vh!important;
+    min-height:100dvh!important;
+    margin:0!important;
+    padding:0!important;
+    overflow-x:hidden!important;
+    background:#0b1020!important;
+  }
+  html.lms-brand-glass body .login-wrapper{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    align-content:start!important;
+    align-items:stretch!important;
+    width:100%!important;
+    min-height:100vh!important;
+    min-height:100dvh!important;
+    height:auto!important;
+    margin:0!important;
+    padding:0!important;
+    border:0!important;
+    border-radius:0!important;
+    box-shadow:none!important;
+    overflow:visible!important;
+    background:#0b1020!important;
+  }
+  html.lms-brand-glass body .brand-panel{
+    display:flex!important;
+    min-height:190px!important;
+    padding:calc(22px + env(safe-area-inset-top)) 22px 23px!important;
+    border:0!important;
+    border-bottom:1px solid rgba(196,181,253,.24)!important;
+    border-radius:0 0 26px 26px!important;
+    background:
+      radial-gradient(circle at 88% 8%,rgba(166,255,46,.12),transparent 28%),
+      radial-gradient(circle at 15% 100%,rgba(124,58,237,.40),transparent 44%),
+      linear-gradient(145deg,#241b65 0%,#4b2490 54%,#17153d 100%)!important;
+  }
+  html.lms-brand-glass body .brand-content{
+    width:100%!important;
+    max-width:620px!important;
+    margin:0 auto!important;
+  }
+  html.lms-brand-glass body .brand-logo{
+    width:48px!important;height:48px!important;
+    margin-bottom:13px!important;border-radius:14px!important;
+  }
+  html.lms-brand-glass body .brand-content h1{
+    margin:8px 0!important;font-size:clamp(27px,7vw,34px)!important;
+    line-height:1.1!important;letter-spacing:-1.1px!important;
+  }
+  html.lms-brand-glass body .brand-description{
+    margin-top:9px!important;font-size:12px!important;line-height:1.5!important;
+  }
+  html.lms-brand-glass body .features{
+    display:none!important;
+  }
+  html.lms-brand-glass body .brand-footer{
+    margin-top:12px!important;font-size:9px!important;
+  }
+  html.lms-brand-glass body .login-panel{
+    display:flex!important;
+    align-items:flex-start!important;
+    justify-content:flex-start!important;
+    width:100%!important;
+    min-height:0!important;
+    padding:clamp(30px,5vh,48px) 22px calc(24px + env(safe-area-inset-bottom))!important;
+    background:
+      radial-gradient(ellipse at 100% 0%,rgba(124,58,237,.14),transparent 32%),
+      linear-gradient(180deg,#11182b 0%,#0b1020 100%)!important;
+  }
+  html.lms-brand-glass body .login-card{
+    display:block!important;
+    width:100%!important;
+    max-width:480px!important;
+    min-height:0!important;
+    margin:0 auto!important;
+    padding:0!important;
+  }
+  html.lms-brand-glass body .login-header{
+    margin:0 0 27px!important;
+  }
+  html.lms-brand-glass body .login-header h2{
+    font-size:clamp(26px,7.2vw,34px)!important;
+    line-height:1.14!important;
+  }
+  html.lms-brand-glass body .login-header p{
+    font-size:13px!important;
+  }
+  html.lms-brand-glass body .form-group{
+    margin-bottom:18px!important;
+  }
+  html.lms-brand-glass body .login-wrapper .login-panel .input-wrapper input{
+    min-height:56px!important;height:56px!important;font-size:16px!important;
+  }
+  html.lms-brand-glass body .login-wrapper .login-panel .login-btn,
+  html.lms-brand-glass body .login-wrapper .login-panel #loginBtn{
+    min-height:56px!important;height:56px!important;font-size:16px!important;
+  }
+  html.lms-brand-glass body .support-box{
+    margin-top:20px!important;padding:15px!important;
+  }
+  html.lms-brand-glass body .login-footer{
+    margin-top:19px!important;padding-top:13px!important;
+    font-size:9px!important;justify-content:center!important;text-align:center!important;
+  }
+}
+
+/* Full-viewport installed app loading layer, including iOS safe areas. */
+html.installed-lms-app.lms-brand-glass,
+html.installed-lms-app.lms-brand-glass body{
+  min-height:100%!important;
+  background:#0b1020!important;
+}
+html.installed-lms-app.lms-brand-glass body .lms-app-splash{
+  position:fixed!important;
+  inset:0!important;
+  z-index:2147483000!important;
+  display:grid!important;
+  place-items:center!important;
+  width:100vw!important;
+  max-width:100vw!important;
+  height:100vh!important;
+  height:100dvh!important;
+  height:100svh!important;
+  min-height:100vh!important;
+  min-height:100dvh!important;
+  min-height:100svh!important;
+  margin:0!important;
+  padding:calc(24px + env(safe-area-inset-top)) 24px calc(24px + env(safe-area-inset-bottom))!important;
+  overflow:hidden!important;
+  overscroll-behavior:none!important;
+  background:
+    radial-gradient(ellipse at 50% 42%,rgba(91,75,255,.22),transparent 34%),
+    radial-gradient(ellipse at 0% 0%,rgba(124,58,237,.32),transparent 38%),
+    radial-gradient(ellipse at 100% 100%,rgba(166,255,46,.075),transparent 34%),
+    linear-gradient(145deg,#0b1020 0%,#17153d 52%,#0b1020 100%)!important;
+  color:#f4f7ff!important;
+  color-scheme:dark!important;
+}
+html.installed-lms-app.lms-brand-glass body .lms-splash-content{
+  width:min(100%,360px)!important;
+  min-height:0!important;
+  margin:auto!important;
+  color:#f4f7ff!important;
+}
+html.installed-lms-app.lms-brand-glass body .lms-splash-status{
+  color:#c4b5fd!important;
+  margin-top:clamp(30px,6vh,52px)!important;
+  line-height:1.5!important;
+}
+html.installed-lms-app.lms-brand-glass body .lms-splash-title{
+  color:#f4f7ff!important;
+}
+html.installed-lms-app.lms-brand-glass body .lms-splash-subtitle{
+  color:#a6ff2e!important;
+}
