@@ -4,22 +4,22 @@
 ========================================= */
 
 :root {
-    --portal-bg: #0b1020;
-    --portal-surface: #11182b;
-    --portal-surface-2: #151f35;
-    --portal-purple: #4037c9;
+    --portal-bg: #140b20;
+    --portal-surface: #1c112b;
+    --portal-surface-2: #221535;
+    --portal-purple: #7437c9;
     --portal-purple-bright: #5b4bff;
     --portal-violet: #7c3aed;
     --portal-lime: #a6ff2e;
     --portal-text: #f4f7ff;
-    --portal-muted: #aeb8ce;
+    --portal-muted: #bbaece;
     --portal-border: rgba(255, 255, 255, 0.10);
 }
 
 html,
 body {
     background:
-        radial-gradient(circle at 8% 10%, rgba(64, 55, 201, 0.20), transparent 34%),
+        radial-gradient(circle at 8% 10%, rgba(116, 55, 201,  0.20), transparent 34%),
         radial-gradient(circle at 92% 88%, rgba(124, 58, 237, 0.16), transparent 36%),
         var(--portal-bg) !important;
     color: var(--portal-text) !important;
@@ -48,7 +48,7 @@ body {
 .brand-panel {
     background:
         radial-gradient(circle at 85% 8%, rgba(166, 255, 46, 0.08), transparent 26%),
-        linear-gradient(145deg, #24205f 0%, #4037c9 48%, #6d28d9 100%) !important;
+        linear-gradient(145deg, #3a205f 0%, #7437c9 48%, #6d28d9 100%) !important;
 }
 
 .brand-content h1 span {
@@ -88,7 +88,7 @@ body {
 }
 
 .input-wrapper input {
-    background: #0d1426 !important;
+    background: #170d26 !important;
     border-color: rgba(255, 255, 255, 0.12) !important;
     color: var(--portal-text) !important;
 }
@@ -99,12 +99,12 @@ body {
 
 .input-wrapper input:focus {
     border-color: var(--portal-lime) !important;
-    background: #0d1426 !important;
+    background: #170d26 !important;
     box-shadow: 0 0 0 4px rgba(166, 255, 46, 0.08) !important;
 }
 
 .input-wrapper input::placeholder {
-    color: #7f8ba3 !important;
+    color: #8e7fa3 !important;
 }
 
 .toggle-password:hover {
@@ -113,11 +113,11 @@ body {
 
 .login-btn {
     background: linear-gradient(135deg, var(--portal-purple), var(--portal-violet)) !important;
-    box-shadow: 0 12px 28px rgba(64, 55, 201, 0.32) !important;
+    box-shadow: 0 12px 28px rgba(116, 55, 201,  0.32) !important;
 }
 
 .login-btn:hover {
-    box-shadow: 0 16px 34px rgba(64, 55, 201, 0.40) !important;
+    box-shadow: 0 16px 34px rgba(116, 55, 201,  0.40) !important;
 }
 
 .support-box {
@@ -138,7 +138,7 @@ body {
 }
 
 .login-footer {
-    color: #7f8ba3 !important;
+    color: #8e7fa3 !important;
 }
 
 .mobile-logo {
@@ -166,9 +166,9 @@ body {
     padding: 0 !important;
     overflow-x: hidden;
     background:
-        radial-gradient(ellipse at 14% 8%, rgba(67, 91, 194, .10), transparent 32%),
+        radial-gradient(ellipse at 14% 8%, rgba(120, 67, 194,  .10), transparent 32%),
         #f4f6fb !important;
-    color: #14203a !important;
+    color: #24143a !important;
     font-family: Inter, "Segoe UI", Arial, sans-serif;
 }
 .login-wrapper {
@@ -179,14 +179,14 @@ body {
     background: #fff !important;
     border: 1px solid #e2e7f1 !important;
     border-radius: 28px !important;
-    box-shadow: 0 30px 80px rgba(16, 31, 67, .13), 0 5px 20px rgba(16, 31, 67, .05) !important;
+    box-shadow: 0 30px 80px rgba(37, 16, 67,  .13), 0 5px 20px rgba(37, 16, 67,  .05) !important;
 }
 .brand-panel {
     padding: 54px clamp(34px, 5vw, 68px) !important;
     background:
-        radial-gradient(circle at 84% 16%, rgba(168, 240, 74, .14), transparent 24%),
-        radial-gradient(circle at 7% 88%, rgba(94, 119, 229, .24), transparent 32%),
-        linear-gradient(145deg, #0c1734 0%, #142858 59%, #16224a 100%) !important;
+        radial-gradient(circle at 84% 16%, rgba(166, 255, 46,  .14), transparent 24%),
+        radial-gradient(circle at 7% 88%, rgba(150, 94, 229,  .24), transparent 32%),
+        linear-gradient(145deg, #1d0c34 0%, #301458 59%, #2c164a 100%) !important;
 }
 .brand-panel::before {
     width: 520px;
@@ -200,7 +200,7 @@ body {
     height: 370px;
     left: -220px;
     bottom: -230px;
-    border-color: rgba(168,240,74,.13);
+    border-color: rgba(166, 255, 46, .13);
 }
 .brand-content { max-width: 520px !important; }
 .brand-logo, .mobile-logo {
@@ -208,14 +208,14 @@ body {
     height: 58px !important;
     margin-bottom: 23px !important;
     border-radius: 17px !important;
-    background: linear-gradient(145deg, #b9f96c, #9ce43d) !important;
+    background: linear-gradient(145deg, #a6ff2e, #a6ff2e) !important;
     border: 1px solid rgba(255,255,255,.5) !important;
-    box-shadow: 0 12px 28px rgba(168,240,74,.22) !important;
-    color: #152344 !important;
+    box-shadow: 0 12px 28px rgba(166, 255, 46, .22) !important;
+    color: #291544 !important;
     font-size: 30px !important;
 }
 .brand-label, .welcome-label {
-    color: #b5f26a !important;
+    color: #a6ff2e !important;
     font-size: 10px !important;
     letter-spacing: 1.8px !important;
 }
@@ -228,11 +228,11 @@ body {
     letter-spacing: -2.8px !important;
     font-weight: 800 !important;
 }
-.brand-content h1 span { color: #b2f267 !important; }
+.brand-content h1 span { color: #a6ff2e !important; }
 .brand-description {
     max-width: 440px !important;
     margin-top: 17px !important;
-    color: #c4cde1 !important;
+    color: #d0c4e1 !important;
     font-size: 14px !important;
     line-height: 1.75 !important;
 }
@@ -255,7 +255,7 @@ body {
 }
 .feature:hover {
     transform: translateY(-2px);
-    border-color: rgba(178,242,103,.36) !important;
+    border-color: rgba(166, 255, 46, .36) !important;
     background: rgba(255,255,255,.10) !important;
 }
 .feature-icon {
@@ -265,19 +265,19 @@ body {
     display: grid;
     place-items: center;
     border-radius: 11px;
-    background: rgba(168,240,74,.13);
+    background: rgba(166, 255, 46, .13);
     font-size: 17px !important;
 }
 .feature strong { color: #f5f7ff !important; font-size: 11px !important; }
-.feature span { color: #b7c3dc !important; font-size: 9px !important; line-height: 1.4 !important; }
+.feature span { color: #c6b7dc !important; font-size: 9px !important; line-height: 1.4 !important; }
 .brand-footer {
     margin-top: 25px !important;
-    color: #d5def0 !important;
+    color: #e0d5f0 !important;
     font-size: 10px !important;
 }
 .secure-dot {
-    background: #a8f04a !important;
-    box-shadow: 0 0 0 4px rgba(168,240,74,.12), 0 0 15px rgba(168,240,74,.45) !important;
+    background: #a6ff2e !important;
+    box-shadow: 0 0 0 4px rgba(166, 255, 46, .12), 0 0 15px rgba(166, 255, 46, .45) !important;
 }
 .login-panel {
     padding: 52px clamp(34px, 5vw, 72px) !important;
@@ -286,38 +286,38 @@ body {
 .login-card { max-width: 430px !important; }
 .login-header { margin-bottom: 27px !important; }
 .login-header h2 {
-    color: #14203a !important;
+    color: #24143a !important;
     font-size: clamp(30px, 3vw, 38px) !important;
     font-weight: 800 !important;
     letter-spacing: -1.8px !important;
 }
 .login-header p {
     margin-top: 9px !important;
-    color: #67738b !important;
+    color: #76678b !important;
     font-size: 13px !important;
     line-height: 1.7 !important;
 }
 .form-group { margin-bottom: 17px !important; }
-.form-group label { color: #27334d !important; font-size: 11px !important; font-weight: 800 !important; }
+.form-group label { color: #37274d !important; font-size: 11px !important; font-weight: 800 !important; }
 .input-wrapper input {
     height: 52px !important;
     border: 1px solid #dce2ed !important;
     border-radius: 12px !important;
     background: #fff !important;
-    color: #17233e !important;
-    box-shadow: 0 2px 7px rgba(20,32,58,.025);
+    color: #27173e !important;
+    box-shadow: 0 2px 7px rgba(36, 20, 58, .025);
     font-size: 13px !important;
 }
 .input-wrapper input:focus {
     border-color: #8b7cff !important;
     background: #fff !important;
-    box-shadow: 0 0 0 4px rgba(73,104,232,.11) !important;
+    box-shadow: 0 0 0 4px rgba(139, 73, 232, .11) !important;
 }
-.input-wrapper input::placeholder { color: #99a3b6 !important; }
+.input-wrapper input::placeholder { color: #a599b6 !important; }
 .input-icon { filter: grayscale(.25); }
 .toggle-password {
     border-radius: 8px;
-    color: #64718b;
+    color: #74648b;
 }
 .login-btn {
     height: 53px !important;
@@ -325,11 +325,11 @@ body {
     border-radius: 12px !important;
     background: linear-gradient(100deg, #5b4bff, #7c3aed) !important;
     color: #fff !important;
-    box-shadow: 0 12px 25px rgba(54,78,190,.24) !important;
+    box-shadow: 0 12px 25px rgba(111, 54, 190, .24) !important;
     font-weight: 800 !important;
 }
-.login-btn:hover { transform: translateY(-1px); box-shadow: 0 16px 30px rgba(54,78,190,.30) !important; }
-.login-arrow { color: #c9f685 !important; }
+.login-btn:hover { transform: translateY(-1px); box-shadow: 0 16px 30px rgba(111, 54, 190, .30) !important; }
+.login-arrow { color: #d1ff75 !important; }
 .support-box {
     margin-top: 0 !important;
     padding: 14px !important;
@@ -340,12 +340,12 @@ body {
 .support-icon {
     border-radius: 11px !important;
     background: #eef8e8 !important;
-    color: #448a35 !important;
+    color: #a6ff2e !important;
 }
-.support-content strong { color: #202c45 !important; font-size: 11px !important; }
-.support-content span { color: #79849a !important; font-size: 9px !important; line-height: 1.45 !important; }
+.support-content strong { color: #2f2045 !important; font-size: 11px !important; }
+.support-content span { color: #87799a !important; font-size: 9px !important; line-height: 1.45 !important; }
 .open-whatsapp-help { color: #5b4bff !important; }
-.login-footer { color: #8d97aa !important; border-color: #e9edf3 !important; }
+.login-footer { color: #998daa !important; border-color: #e9edf3 !important; }
 .mobile-logo { display: none !important; }
 
 @media (max-width: 900px) {
@@ -408,7 +408,7 @@ body {
    including Chrome/Android/iOS saved-value autofill rendering. */
 html body .login-wrapper .login-panel .input-wrapper input#studentId,
 html body .login-wrapper .login-panel .input-wrapper input#password {
-    background-color: #0b1020 !important;
+    background-color: #140b20 !important;
     color: #f8fafc !important;
     -webkit-text-fill-color: #f8fafc !important;
     caret-color: #a6ff2e !important;
@@ -417,8 +417,8 @@ html body .login-wrapper .login-panel .input-wrapper input#password {
 }
 html body .login-wrapper .login-panel .input-wrapper input#studentId::placeholder,
 html body .login-wrapper .login-panel .input-wrapper input#password::placeholder {
-    color: #8997b1 !important;
-    -webkit-text-fill-color: #8997b1 !important;
+    color: #9a89b1 !important;
+    -webkit-text-fill-color: #9a89b1 !important;
     opacity: 1 !important;
 }
 html body .login-wrapper .login-panel .input-wrapper input#studentId:-webkit-autofill,
@@ -429,9 +429,9 @@ html body .login-wrapper .login-panel .input-wrapper input#studentId:-webkit-aut
 html body .login-wrapper .login-panel .input-wrapper input#password:-webkit-autofill:focus {
     -webkit-text-fill-color: #f8fafc !important;
     caret-color: #a6ff2e !important;
-    -webkit-box-shadow: 0 0 0 1000px #0b1020 inset !important;
-    box-shadow: 0 0 0 1000px #0b1020 inset !important;
-    background-color: #0b1020 !important;
+    -webkit-box-shadow: 0 0 0 1000px #140b20 inset !important;
+    box-shadow: 0 0 0 1000px #140b20 inset !important;
+    background-color: #140b20 !important;
     transition: background-color 99999s ease-out 0s;
 }
 html body .login-wrapper .login-panel .input-wrapper input#studentId::selection,
@@ -445,16 +445,16 @@ html body .login-wrapper .login-panel .input-wrapper input#password::selection {
 :root {
   --portal-sky: #7c3aed;
   --portal-sky-dark: #5b4bff;
-  --portal-sky-ink: #17384f;
-  --portal-sky-muted: #69869a;
-  --portal-sky-line: #d7eaf3;
+  --portal-sky-ink: #2e174f;
+  --portal-sky-muted: #7d699a;
+  --portal-sky-line: #e3d7f3;
 }
 html, body {
   min-height: 100% !important;
   color-scheme: light !important;
   background:
     radial-gradient(ellipse at 10% 4%,rgba(255,255,255,.98),transparent 37%),
-    radial-gradient(ellipse at 96% 92%,rgba(101,184,216,.16),transparent 34%),
+    radial-gradient(ellipse at 96% 92%,rgba(149, 101, 216, .16),transparent 34%),
     linear-gradient(145deg,#eef8fc 0%,#e2f2f8 54%,#f5fafc 100%) !important;
   color: var(--portal-sky-ink) !important;
 }
@@ -472,7 +472,7 @@ body {
   border: 1px solid rgba(255,255,255,.96) !important;
   border-radius: 26px !important;
   background: rgba(255,255,255,.9) !important;
-  box-shadow: 0 26px 70px rgba(36,100,132,.15),inset 0 1px 0 rgba(255,255,255,.95) !important;
+  box-shadow: 0 26px 70px rgba(76, 36, 132, .15),inset 0 1px 0 rgba(255,255,255,.95) !important;
   -webkit-backdrop-filter: blur(20px) saturate(1.25) !important;
   backdrop-filter: blur(20px) saturate(1.25) !important;
 }
@@ -483,7 +483,7 @@ body {
   border-right: 1px solid rgba(255,255,255,.28) !important;
   background:
     radial-gradient(circle at 90% 12%,rgba(255,255,255,.2),transparent 26%),
-    radial-gradient(circle at 12% 90%,rgba(124,218,245,.2),transparent 34%),
+    radial-gradient(circle at 12% 90%,rgba(174, 124, 245, .2),transparent 34%),
     linear-gradient(145deg,#c4b5fd 0%,#c4b5fd 48%,#c4b5fd 100%) !important;
 }
 .brand-panel:before,.brand-panel:after {
@@ -498,9 +498,9 @@ body {
   margin-bottom: 19px !important;
   border: 1px solid rgba(255,255,255,.76) !important;
   border-radius: 17px !important;
-  background: linear-gradient(145deg,rgba(255,255,255,.9),rgba(225,244,252,.76)) !important;
-  color: #245d7b !important;
-  box-shadow: 0 11px 25px rgba(25,81,118,.15),inset 0 1px 0 rgba(255,255,255,.9) !important;
+  background: linear-gradient(145deg,rgba(255,255,255,.9),rgba(236, 225, 252, .76)) !important;
+  color: #48247b !important;
+  box-shadow: 0 11px 25px rgba(64, 25, 118, .15),inset 0 1px 0 rgba(255,255,255,.9) !important;
   font-size: 28px !important;
 }
 .brand-label,.welcome-label {
@@ -516,9 +516,9 @@ body {
   font-weight: 900 !important;
   letter-spacing: -2px !important;
   line-height: 1.08 !important;
-  text-shadow: 0 2px 15px rgba(29,76,111,.1) !important;
+  text-shadow: 0 2px 15px rgba(63, 29, 111, .1) !important;
 }
-.brand-content h1 span { color: #e5f8ff !important; }
+.brand-content h1 span { color: #f0e5ff !important; }
 .brand-description {
   max-width: 450px !important;
   color: rgba(248,253,255,.92) !important;
@@ -554,8 +554,8 @@ body {
   font-size: 10px !important;
 }
 .secure-dot {
-  background: #c7f5dc !important;
-  box-shadow: 0 0 0 4px rgba(204,255,228,.2),0 0 14px rgba(255,255,255,.5) !important;
+  background: #d1ff75 !important;
+  box-shadow: 0 0 0 4px rgba(209, 255, 117, .2),0 0 14px rgba(255,255,255,.5) !important;
 }
 .login-panel {
   min-width: 0 !important;
@@ -566,35 +566,35 @@ body {
 .mobile-logo { display: none !important; }
 .login-header { margin-bottom: 24px !important; }
 .login-header h2 {
-  color: #18384f !important;
+  color: #2f184f !important;
   font-size: clamp(27px,3vw,34px) !important;
   font-weight: 900 !important;
   letter-spacing: -1.25px !important;
 }
 .login-header p {
   margin-top: 8px !important;
-  color: #6c8799 !important;
+  color: #7f6c99 !important;
   font-size: 12px !important;
   line-height: 1.65 !important;
 }
 .form-group { margin-bottom: 15px !important; }
 .form-group label,.password-label-row label {
-  color: #385b72 !important;
+  color: #503872 !important;
   font-size: 10px !important;
   font-weight: 850 !important;
 }
 .input-wrapper {
   min-width: 0 !important;
-  border: 1px solid #cfe2ec !important;
+  border: 1px solid #dbcfec !important;
   border-radius: 13px !important;
   background: rgba(255,255,255,.97) !important;
-  box-shadow: 0 4px 12px rgba(38,101,132,.045) !important;
+  box-shadow: 0 4px 12px rgba(77, 38, 132, .045) !important;
   transition: border-color .18s ease,box-shadow .18s ease,transform .18s ease !important;
 }
 .input-wrapper:focus-within {
   border-color: #c4b5fd !important;
   background: #fff !important;
-  box-shadow: 0 0 0 4px rgba(76,167,209,.13),0 6px 17px rgba(38,101,132,.08) !important;
+  box-shadow: 0 0 0 4px rgba(131, 76, 209, .13),0 6px 17px rgba(77, 38, 132, .08) !important;
   transform: translateY(-1px);
 }
 .input-wrapper input,
@@ -606,8 +606,8 @@ html body .login-wrapper .login-panel .input-wrapper input#password {
   border-radius: 12px !important;
   outline: 0 !important;
   background: transparent !important;
-  color: #1b4058 !important;
-  -webkit-text-fill-color: #1b4058 !important;
+  color: #341b58 !important;
+  -webkit-text-fill-color: #341b58 !important;
   caret-color: #c4b5fd !important;
   color-scheme: light !important;
   box-shadow: none !important;
@@ -617,14 +617,14 @@ html body .login-wrapper .login-panel .input-wrapper input#password {
 .input-wrapper input::placeholder,
 html body .login-wrapper .login-panel .input-wrapper input#studentId::placeholder,
 html body .login-wrapper .login-panel .input-wrapper input#password::placeholder {
-  color: #8aa2b1 !important;
-  -webkit-text-fill-color: #8aa2b1 !important;
+  color: #9a8ab1 !important;
+  -webkit-text-fill-color: #9a8ab1 !important;
   opacity: 1 !important;
 }
 .input-wrapper input:-webkit-autofill,
 .input-wrapper input:-webkit-autofill:hover,
 .input-wrapper input:-webkit-autofill:focus {
-  -webkit-text-fill-color: #1b4058 !important;
+  -webkit-text-fill-color: #341b58 !important;
   caret-color: #c4b5fd !important;
   -webkit-box-shadow: 0 0 0 1000px #f7fcfe inset !important;
   box-shadow: 0 0 0 1000px #f7fcfe inset !important;
@@ -634,7 +634,7 @@ html body .login-wrapper .login-panel .input-wrapper input#password::placeholder
 .input-icon { color: #c4b5fd !important; filter: none !important; }
 .toggle-password {
   border-radius: 9px !important;
-  color: #5b849a !important;
+  color: #755b9a !important;
   background: transparent !important;
 }
 .toggle-password:hover { background: #eaf6fb !important; }
@@ -646,25 +646,25 @@ html body .login-wrapper .login-panel .input-wrapper input#password::placeholder
   border-radius: 13px !important;
   background: linear-gradient(110deg,#c4b5fd,#c4b5fd) !important;
   color: #fff !important;
-  box-shadow: 0 10px 23px rgba(42,139,186,.22) !important;
+  box-shadow: 0 10px 23px rgba(102, 42, 186, .22) !important;
   font-size: 12px !important;
   font-weight: 900 !important;
   transition: transform .18s ease,box-shadow .18s ease,filter .18s ease !important;
 }
 .login-btn:hover,#loginBtn.login-btn:hover {
   transform: translateY(-2px) !important;
-  box-shadow: 0 15px 29px rgba(42,139,186,.28) !important;
+  box-shadow: 0 15px 29px rgba(102, 42, 186, .28) !important;
   filter: brightness(1.03);
 }
 .login-btn:active,#loginBtn.login-btn:active { transform: translateY(0) !important; }
-.login-arrow { color: #e5f8ff !important; }
+.login-arrow { color: #f0e5ff !important; }
 .recovery-reset-trigger {
   display: block !important;
   margin: 12px auto 0 !important;
   padding: 6px 8px !important;
   border: 0 !important;
   background: transparent !important;
-  color: #58839c !important;
+  color: #74589c !important;
   font-size: 10px !important;
   font-weight: 650 !important;
   box-shadow: none !important;
@@ -680,24 +680,24 @@ html body .login-wrapper .login-panel .input-wrapper input#password::placeholder
   border: 1px solid #dcecf3 !important;
   border-radius: 15px !important;
   background: linear-gradient(145deg,#fff,#f1f9fc) !important;
-  color: #274b62 !important;
-  box-shadow: 0 7px 18px rgba(44,110,138,.06) !important;
+  color: #402762 !important;
+  box-shadow: 0 7px 18px rgba(83, 44, 138, .06) !important;
 }
 .support-icon,.note-icon {
   flex: 0 0 36px !important;
   width: 36px !important;
   height: 36px !important;
-  border: 1px solid #d2eaf3 !important;
+  border: 1px solid #e0d2f3 !important;
   border-radius: 11px !important;
   background: #e5f5fb !important;
-  color: #378fb6 !important;
+  color: #6c37b6 !important;
 }
-.support-content strong,.note-header { color: #23475e !important; font-size: 10px !important; }
-.support-content span,.login-note p { color: #728c9c !important; font-size: 9px !important; line-height: 1.5 !important; }
+.support-content strong,.note-header { color: #3c235e !important; font-size: 10px !important; }
+.support-content span,.login-note p { color: #84729c !important; font-size: 9px !important; line-height: 1.5 !important; }
 .open-whatsapp-help {
   margin-top: 7px !important;
   padding: 7px 9px !important;
-  border: 1px solid #c9e6f1 !important;
+  border: 1px solid #dac9f1 !important;
   border-radius: 9px !important;
   background: #eaf7fb !important;
   color: #c4b5fd !important;
@@ -709,43 +709,43 @@ html body .login-wrapper .login-panel .input-wrapper input#password::placeholder
   margin-top: 17px !important;
   padding-top: 12px !important;
   border-color: #e3edf2 !important;
-  color: #8aa0ad !important;
+  color: #998aad !important;
   font-size: 8px !important;
 }
 .whatsapp-widget {
   border: 1px solid rgba(255,255,255,.95) !important;
   border-radius: 19px !important;
   background: rgba(248,253,255,.97) !important;
-  color: #244b63 !important;
-  box-shadow: 0 18px 48px rgba(33,94,122,.2) !important;
+  color: #3e2463 !important;
+  box-shadow: 0 18px 48px rgba(70, 33, 122, .2) !important;
   -webkit-backdrop-filter: blur(20px) !important;
   backdrop-filter: blur(20px) !important;
 }
 .whatsapp-widget-header { border-color: #dcecf3 !important; }
-.whatsapp-brand strong { color: #23485f !important; }
+.whatsapp-brand strong { color: #3c235f !important; }
 .whatsapp-brand span { color: #c4b5fd !important; }
 .whatsapp-welcome {
-  border-color: #cfe8f1 !important;
-  background: linear-gradient(135deg,#e9f7fc,#d9eff7) !important;
+  border-color: #ddcff1 !important;
+  background: linear-gradient(135deg,#e9f7fc,#e6d9f7) !important;
 }
-.whatsapp-welcome h3,.whatsapp-team h3 { color: #21465e !important; }
-.whatsapp-welcome p,.whatsapp-status { color: #668397 !important; }
+.whatsapp-welcome h3,.whatsapp-team h3 { color: #3a215e !important; }
+.whatsapp-welcome p,.whatsapp-status { color: #7a6697 !important; }
 .whatsapp-agent {
   border: 1px solid #dcecf3 !important;
   border-radius: 13px !important;
   background: #f7fbfd !important;
 }
-.agent-info strong { color: #294d64 !important; }
-.agent-info span { color: #7691a2 !important; }
+.agent-info strong { color: #422964 !important; }
+.agent-info span { color: #8876a2 !important; }
 .whatsapp-widget-footer {
   border-color: #dcecf3 !important;
   background: #eaf6fb !important;
 }
-.whatsapp-widget-footer span { color: #4f7d94 !important; }
-.whatsapp-widget-footer span:first-child { background: rgba(65,158,196,.12) !important; }
+.whatsapp-widget-footer span { color: #6c4f94 !important; }
+.whatsapp-widget-footer span:first-child { background: rgba(120, 65, 196, .12) !important; }
 .whatsapp-fab {
   border: 2px solid rgba(255,255,255,.9) !important;
-  box-shadow: 0 11px 27px rgba(21,85,111,.24) !important;
+  box-shadow: 0 11px 27px rgba(59, 21, 111, .24) !important;
 }
 @media(max-width:850px) {
   .login-wrapper {
@@ -783,7 +783,7 @@ html body .login-wrapper .login-panel .input-wrapper input#password::placeholder
     margin: 10px auto 0 !important;
     border: 1px solid rgba(255,255,255,.96) !important;
     border-radius: 21px !important;
-    box-shadow: 0 17px 38px rgba(39,104,136,.12) !important;
+    box-shadow: 0 17px 38px rgba(79, 39, 136, .12) !important;
   }
   .brand-panel { padding: 20px 18px 18px !important; }
   .brand-panel:after { inset: 8px !important; border-radius: 14px !important; }
@@ -823,9 +823,9 @@ html body .login-wrapper .login-panel .input-wrapper input#password::placeholder
     padding: 0 11px !important;
     border: 1px solid rgba(255,255,255,.9) !important;
     border-radius: 12px !important;
-    background: linear-gradient(135deg,#e9f7fc,#ccebf5) !important;
-    color: #276781 !important;
-    box-shadow: 0 7px 18px rgba(36,110,144,.16) !important;
+    background: linear-gradient(135deg,#e9f7fc,#ddccf5) !important;
+    color: #4d2781 !important;
+    box-shadow: 0 7px 18px rgba(81, 36, 144, .16) !important;
     font-size: 9px !important;
   }
   .pwa-install-icon { font-size: 14px !important; }
@@ -874,7 +874,7 @@ html.installed-lms-app body {
     padding: 0 !important;
     overflow: hidden !important;
     background:
-      radial-gradient(circle at 96% 2%,rgba(104,190,227,.16),transparent 35%),
+      radial-gradient(circle at 96% 2%,rgba(155, 104, 227, .16),transparent 35%),
       linear-gradient(150deg,#edf8fd 0%,#f8fcfe 58%,#eaf6fc 100%) !important;
   }
 
@@ -917,7 +917,7 @@ html.installed-lms-app body {
     background:
       radial-gradient(circle at 94% 8%,rgba(255,255,255,.24),transparent 26%),
       linear-gradient(125deg,#7c3aed 0%,#7c3aed 56%,#c4b5fd 100%) !important;
-    box-shadow: 0 10px 25px rgba(24,103,151,.17) !important;
+    box-shadow: 0 10px 25px rgba(77, 24, 151, .17) !important;
   }
 
   html.installed-lms-app body .brand-panel::before {
@@ -957,7 +957,7 @@ html.installed-lms-app body {
     border: 1px solid rgba(255,255,255,.8) !important;
     border-radius: 13px !important;
     background: rgba(255,255,255,.94) !important;
-    box-shadow: 0 6px 16px rgba(3,48,83,.2) !important;
+    box-shadow: 0 6px 16px rgba(36, 3, 83, .2) !important;
     font-size: 0 !important;
   }
 
@@ -990,12 +990,12 @@ html.installed-lms-app body {
     font-weight: 900 !important;
     letter-spacing: -.45px !important;
     line-height: 1.14 !important;
-    text-shadow: 0 1px 10px rgba(0,42,77,.13) !important;
+    text-shadow: 0 1px 10px rgba(32, 0, 77, .13) !important;
   }
 
   html.installed-lms-app body .brand-content h1 span {
     display: inline !important;
-    color: #dff5ff !important;
+    color: #ecdfff !important;
   }
 
   html.installed-lms-app body .brand-description,
@@ -1058,7 +1058,7 @@ html.installed-lms-app body {
 
   html.installed-lms-app body .login-header h2 {
     margin: 0 !important;
-    color: #153650 !important;
+    color: #2e1550 !important;
     font-size: clamp(23px,6vw,27px) !important;
     font-weight: 950 !important;
     letter-spacing: -.9px !important;
@@ -1067,7 +1067,7 @@ html.installed-lms-app body {
 
   html.installed-lms-app body .login-header p {
     margin: 5px 0 0 !important;
-    color: #6d8799 !important;
+    color: #7f6d99 !important;
     font-size: 10px !important;
     line-height: 1.45 !important;
   }
@@ -1079,7 +1079,7 @@ html.installed-lms-app body {
 
   html.installed-lms-app body .form-group label,
   html.installed-lms-app body .password-label-row label {
-    color: #355d75 !important;
+    color: #503575 !important;
     font-size: 9px !important;
     font-weight: 850 !important;
   }
@@ -1092,17 +1092,17 @@ html.installed-lms-app body {
     min-height: 45px !important;
     margin-top: 5px !important;
     padding: 0 11px !important;
-    border: 1px solid #d4e5ee !important;
+    border: 1px solid #dfd4ee !important;
     border-radius: 12px !important;
     background: linear-gradient(145deg,#ffffff,#f7fbfd) !important;
-    box-shadow: 0 4px 12px rgba(35,100,131,.045) !important;
+    box-shadow: 0 4px 12px rgba(75, 35, 131, .045) !important;
   }
 
   html.installed-lms-app body .input-icon {
     flex: 0 0 22px !important;
     width: 22px !important;
     margin-right: 7px !important;
-    color: #5a95b3 !important;
+    color: #7f5ab3 !important;
     font-size: 15px !important;
     text-align: center !important;
     filter: none !important;
@@ -1120,22 +1120,22 @@ html.installed-lms-app body {
     border-radius: 0 !important;
     outline: 0 !important;
     background: transparent !important;
-    color: #1b4058 !important;
-    -webkit-text-fill-color: #1b4058 !important;
+    color: #341b58 !important;
+    -webkit-text-fill-color: #341b58 !important;
     caret-color: #c4b5fd !important;
     font-size: 12px !important;
     box-shadow: none !important;
   }
 
   html.installed-lms-app body .input-wrapper input::placeholder {
-    color: #8ba1b0 !important;
-    -webkit-text-fill-color: #8ba1b0 !important;
+    color: #9a8bb0 !important;
+    -webkit-text-fill-color: #9a8bb0 !important;
     opacity: 1 !important;
   }
 
   html.installed-lms-app body .input-wrapper:focus-within {
     border-color: #c4b5fd !important;
-    box-shadow: 0 0 0 3px rgba(66,163,205,.12) !important;
+    box-shadow: 0 0 0 3px rgba(124, 66, 205, .12) !important;
     transform: none !important;
   }
 
@@ -1147,7 +1147,7 @@ html.installed-lms-app body {
     border: 0 !important;
     border-radius: 9px !important;
     background: transparent !important;
-    color: #54819a !important;
+    color: #71549a !important;
     font-size: 15px !important;
   }
 
@@ -1167,7 +1167,7 @@ html.installed-lms-app body {
     color: #ffffff !important;
     font-size: 12px !important;
     font-weight: 900 !important;
-    box-shadow: 0 9px 20px rgba(31,132,196,.2) !important;
+    box-shadow: 0 9px 20px rgba(100, 31, 196, .2) !important;
     animation: lms-login-button-glow 3.6s ease-in-out infinite !important;
   }
 
@@ -1187,7 +1187,7 @@ html.installed-lms-app body {
     padding: 6px 3px !important;
     border: 0 !important;
     background: transparent !important;
-    color: #66849a !important;
+    color: #7c669a !important;
     font-size: 9px !important;
     line-height: 1.4 !important;
     text-align: center !important;
@@ -1231,7 +1231,7 @@ html.installed-lms-app body {
     flex: 0 0 32px !important;
     width: 32px !important;
     height: 32px !important;
-    border: 1px solid #d4e9f2 !important;
+    border: 1px solid #e1d4f2 !important;
     border-radius: 10px !important;
     background: #e3f4fa !important;
     color: #c4b5fd !important;
@@ -1247,13 +1247,13 @@ html.installed-lms-app body {
   }
 
   html.installed-lms-app body .support-content strong {
-    color: #244a62 !important;
+    color: #3e2462 !important;
     font-size: 9px !important;
     font-weight: 900 !important;
   }
 
   html.installed-lms-app body .support-content span {
-    color: #718a9a !important;
+    color: #82719a !important;
     font-size: 8px !important;
     line-height: 1.3 !important;
   }
@@ -1263,10 +1263,10 @@ html.installed-lms-app body {
     min-height: 28px !important;
     margin: 2px 0 0 !important;
     padding: 0 9px !important;
-    border: 1px solid #c8e5f0 !important;
+    border: 1px solid #d9c8f0 !important;
     border-radius: 9px !important;
     background: #e9f7fc !important;
-    color: #277fa6 !important;
+    color: #5c27a6 !important;
     font-size: 8px !important;
     font-weight: 850 !important;
     box-shadow: none !important;
@@ -1282,7 +1282,7 @@ html.installed-lms-app body {
     margin: 8px 0 0 !important;
     padding: 7px 0 0 !important;
     border-top: 1px solid #e5eff4 !important;
-    color: #8aa0ad !important;
+    color: #998aad !important;
     font-size: 7px !important;
     line-height: 1.3 !important;
   }
@@ -1297,7 +1297,7 @@ html.installed-lms-app body {
     width: 39px !important;
     height: 39px !important;
     border: 2px solid rgba(255,255,255,.94) !important;
-    box-shadow: 0 7px 18px rgba(21,85,111,.2) !important;
+    box-shadow: 0 7px 18px rgba(59, 21, 111, .2) !important;
   }
 
   html.installed-lms-app body .whatsapp-widget {
@@ -1371,8 +1371,8 @@ html.installed-lms-app .lms-app-splash {
   padding: calc(22px + env(safe-area-inset-top)) 24px calc(22px + env(safe-area-inset-bottom)) !important;
   background:
     radial-gradient(circle at 50% 42%,rgba(255,255,255,.94),transparent 34%),
-    radial-gradient(circle at 5% 7%,rgba(83,178,226,.25),transparent 34%),
-    linear-gradient(150deg,#eaf7ff 0%,#d9efff 52%,#f1f9ff 100%) !important;
+    radial-gradient(circle at 5% 7%,rgba(143, 83, 226, .25),transparent 34%),
+    linear-gradient(150deg,#eaf7ff 0%,#e9d9ff 52%,#f1f9ff 100%) !important;
   opacity: 1;
   visibility: visible;
   transition: opacity .38s ease,visibility .38s ease !important;
@@ -1388,7 +1388,7 @@ html.installed-lms-app .lms-app-splash.is-leaving {
   position: absolute;
   width: min(72vw,290px);
   aspect-ratio: 1;
-  border: 1px solid rgba(75,166,213,.14);
+  border: 1px solid rgba(133, 75, 213, .14);
   border-radius: 50%;
   animation: lms-splash-orbit 12s linear infinite;
 }
@@ -1397,7 +1397,7 @@ html.installed-lms-app .lms-app-splash.is-leaving {
 .lms-splash-orbit::after {
   content: "";
   position: absolute;
-  border: 1px solid rgba(59,168,224,.22);
+  border: 1px solid rgba(128, 59, 224, .22);
   border-radius: 50%;
 }
 
@@ -1407,7 +1407,7 @@ html.installed-lms-app .lms-app-splash.is-leaving {
 
 .lms-splash-orbit::after {
   inset: 39px;
-  border-color: rgba(80,181,231,.16);
+  border-color: rgba(143, 80, 231, .16);
 }
 
 .lms-splash-content {
@@ -1435,9 +1435,9 @@ html.installed-lms-app .lms-app-splash.is-leaving {
   content: "";
   position: absolute;
   inset: 0;
-  border: 3px solid rgba(70,174,224,.16);
-  border-top-color: #20a5e7;
-  border-right-color: #75d4ef;
+  border: 3px solid rgba(134, 70, 224, .16);
+  border-top-color: #7320e7;
+  border-right-color: #a875ef;
   border-radius: 50%;
   animation: lms-splash-spin 1.7s linear infinite;
 }
@@ -1448,7 +1448,7 @@ html.installed-lms-app .lms-app-splash.is-leaving {
   inset: 10px;
   border: 1px solid rgba(255,255,255,.94);
   border-radius: 50%;
-  box-shadow: 0 0 25px rgba(67,165,213,.16);
+  box-shadow: 0 0 25px rgba(128, 67, 213, .16);
 }
 
 .lms-splash-logo {
@@ -1461,13 +1461,13 @@ html.installed-lms-app .lms-app-splash.is-leaving {
   border: 3px solid rgba(255,255,255,.95);
   border-radius: 23px;
   background: #ffffff;
-  box-shadow: 0 12px 32px rgba(34,116,164,.2);
+  box-shadow: 0 12px 32px rgba(88, 34, 164, .2);
   animation: lms-splash-logo-float 2.8s ease-in-out infinite;
 }
 
 .lms-splash-title {
   margin: 0;
-  color: #153b5b;
+  color: #32155b;
   font-size: clamp(24px,6vw,30px);
   font-weight: 950;
   letter-spacing: -1.05px;
@@ -1476,7 +1476,7 @@ html.installed-lms-app .lms-app-splash.is-leaving {
 
 .lms-splash-subtitle {
   margin-top: 8px;
-  color: #348bb9;
+  color: #6b34b9;
   font-size: 10px;
   font-weight: 950;
   letter-spacing: 3px;
@@ -1484,7 +1484,7 @@ html.installed-lms-app .lms-app-splash.is-leaving {
 
 .lms-splash-status {
   margin: 43px 0 13px;
-  color: #557991;
+  color: #6e5591;
   font-size: 12px;
   font-weight: 750;
   letter-spacing: .1px;
@@ -1498,7 +1498,7 @@ html.installed-lms-app .lms-app-splash.is-leaving {
   border: 1px solid rgba(255,255,255,.94);
   border-radius: 20px;
   background: rgba(255,255,255,.72);
-  box-shadow: 0 4px 14px rgba(61,133,171,.08);
+  box-shadow: 0 4px 14px rgba(107, 61, 171, .08);
 }
 
 .lms-splash-track::before {
@@ -1507,8 +1507,8 @@ html.installed-lms-app .lms-app-splash.is-leaving {
   inset: 0 auto 0 0;
   width: 36%;
   border-radius: inherit;
-  background: linear-gradient(90deg,#36b8ef,#167fd3);
-  box-shadow: 0 0 12px rgba(44,158,216,.3);
+  background: linear-gradient(90deg,#8336ef,#6516d3);
+  box-shadow: 0 0 12px rgba(116, 44, 216, .3);
   animation: lms-splash-progress 1.8s ease-in-out infinite;
 }
 
@@ -1522,7 +1522,7 @@ html.installed-lms-app .lms-app-splash.is-leaving {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #9bcff0;
+  background: #be9bf0;
   animation: lms-splash-dot 1s ease-in-out infinite;
 }
 
@@ -1553,8 +1553,8 @@ html.installed-lms-app .lms-app-splash.is-leaving {
   30% { opacity: 1; transform: translateY(-5px); }
 }
 @keyframes lms-login-button-glow {
-  0%,100% { box-shadow: 0 9px 20px rgba(31,132,196,.18); }
-  50% { box-shadow: 0 11px 25px rgba(31,132,196,.27),0 0 0 3px rgba(64,164,214,.08); }
+  0%,100% { box-shadow: 0 9px 20px rgba(100, 31, 196, .18); }
+  50% { box-shadow: 0 11px 25px rgba(100, 31, 196, .27),0 0 0 3px rgba(127, 64, 214, .08); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1657,7 +1657,7 @@ html.installed-lms-app .lms-app-splash.is-leaving {
     overflow: hidden !important;
     border: 1px solid rgba(255,255,255,.78) !important;
     border-radius: 13px !important;
-    background: linear-gradient(105deg,#2698cf 0%,#247fc0 55%,#276fb5 100%) !important;
+    background: linear-gradient(105deg,#6c26cf 0%,#6524c0 55%,#6227b5 100%) !important;
     color: #ffffff !important;
     font-family: inherit !important;
     font-size: 13px !important;
@@ -1665,7 +1665,7 @@ html.installed-lms-app .lms-app-splash.is-leaving {
     letter-spacing: .12px !important;
     line-height: 1 !important;
     text-align: center !important;
-    box-shadow: 0 7px 17px rgba(34,112,170,.19),inset 0 1px 0 rgba(255,255,255,.2) !important;
+    box-shadow: 0 7px 17px rgba(91, 34, 170, .19),inset 0 1px 0 rgba(255,255,255,.2) !important;
     transition: transform .16s ease,box-shadow .2s ease,filter .2s ease,opacity .2s ease !important;
     animation: none !important;
     -webkit-tap-highlight-color: transparent !important;
@@ -1697,12 +1697,12 @@ html.installed-lms-app .lms-app-splash.is-leaving {
   html.installed-lms-app body .login-btn:not(:disabled):active,
   html.installed-lms-app body #loginBtn.login-btn:not(:disabled):active {
     transform: scale(.987) !important;
-    box-shadow: 0 3px 9px rgba(34,112,170,.16) !important;
+    box-shadow: 0 3px 9px rgba(91, 34, 170, .16) !important;
   }
 
   html.installed-lms-app body .login-btn:focus-visible,
   html.installed-lms-app body #loginBtn.login-btn:focus-visible {
-    outline: 3px solid rgba(48,151,201,.25) !important;
+    outline: 3px solid rgba(112, 48, 201, .25) !important;
     outline-offset: 3px !important;
   }
 
@@ -1710,8 +1710,8 @@ html.installed-lms-app .lms-app-splash.is-leaving {
   html.installed-lms-app body #loginBtn.login-btn:disabled {
     cursor: wait !important;
     opacity: .96 !important;
-    background: linear-gradient(105deg,#2789bf,#246fae) !important;
-    box-shadow: 0 5px 13px rgba(34,112,170,.14) !important;
+    background: linear-gradient(105deg,#6627bf,#5e24ae) !important;
+    box-shadow: 0 5px 13px rgba(91, 34, 170, .14) !important;
     animation: none !important;
   }
 
@@ -1876,9 +1876,9 @@ html.installed-lms-app .lms-app-splash.is-leaving {
     overflow: hidden !important;
     border: 1px solid rgba(255,255,255,.68) !important;
     border-radius: 16px !important;
-    background: linear-gradient(145deg,rgba(255,255,255,.97),rgba(222,242,251,.91)) !important;
-    box-shadow: 0 9px 23px rgba(18,72,110,.16),inset 0 1px 0 #fff !important;
-    color: #2b83aa !important;
+    background: linear-gradient(145deg,rgba(255,255,255,.97),rgba(234, 222, 251, .91)) !important;
+    box-shadow: 0 9px 23px rgba(56, 18, 110, .16),inset 0 1px 0 #fff !important;
+    color: #602baa !important;
     font-size: initial !important;
   }
 
@@ -1891,7 +1891,7 @@ html.installed-lms-app .lms-app-splash.is-leaving {
     place-items: center !important;
     width: 31px !important;
     height: 31px !important;
-    color: #328bb3 !important;
+    color: #6832b3 !important;
   }
 
   html body .brand-panel .brand-content > .brand-logo > .brand-logo-desktop-mark svg {
