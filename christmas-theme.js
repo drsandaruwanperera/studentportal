@@ -14,6 +14,27 @@ import { db, doc, onSnapshot } from "./firebase.js";
   let currentSignature = "";
   let nextTimer = null;
 
+  const brandStylesheetUrl = new URL("./brand-glass-theme.css?v=1", import.meta.url).href;
+
+  function ensureBrandStylesheet() {
+    document.documentElement.classList.add("lms-brand-glass");
+    let link = document.getElementById("lms-brand-glass-theme-stylesheet");
+    if (!link) {
+      link = document.createElement("link");
+      link.id = "lms-brand-glass-theme-stylesheet";
+      link.rel = "stylesheet";
+      document.head.appendChild(link);
+    }
+    link.href = brandStylesheetUrl;
+  }
+
+  function isAutomaticChristmasSeason(now = new Date()) {
+    const month = now.getMonth();
+    const day = now.getDate();
+    // Seasonal snowfall runs automatically from 20 November through 5 January.
+    return (month === 10 && day >= 20) || month === 11 || (month === 0 && day <= 5);
+  }
+
   function addStylesheet() {
     let baseLink = document.getElementById("christmas-theme-stylesheet");
     if (!baseLink) {
@@ -51,6 +72,7 @@ import { db, doc, onSnapshot } from "./firebase.js";
       }
       unifiedPortalLink.href = unifiedPortalStylesheetUrl;
     }
+    ensureBrandStylesheet();
   }
 
   function selectedEmojiSet(active) {
@@ -172,12 +194,13 @@ import { db, doc, onSnapshot } from "./firebase.js";
 
   function applyCurrentTheme() {
     const active = activeSiteSession();
-    const isChristmas = Boolean(active && active.themeKey === "christmas");
+    const automaticChristmas = !active && isAutomaticChristmasSeason();
+    const isChristmas = active ? active.themeKey === "christmas" : automaticChristmas;
     const signature = active
       ? [active.id, active.themeKey, active.title, active.decorations !== false,
           active.accentColour || "", active.backgroundColour || "",
           JSON.stringify(active.decorationEmojis ?? null)].join("|")
-      : "default";
+      : (automaticChristmas ? "automatic-christmas-season" : "default");
     if (signature === currentSignature) return;
     currentSignature = signature;
 
@@ -198,19 +221,22 @@ import { db, doc, onSnapshot } from "./firebase.js";
       return;
     }
 
-    const accent = /^#[0-9a-f]{6}$/i.test(active.accentColour || "") ? active.accentColour : "#a91f31";
-    const background = /^#[0-9a-f]{6}$/i.test(active.backgroundColour || "") ? active.backgroundColour : "#07162d";
+    const accent = active && /^#[0-9a-f]{6}$/i.test(active.accentColour || "") ? active.accentColour : "#a6ff2e";
+    const background = active && /^#[0-9a-f]{6}$/i.test(active.backgroundColour || "") ? active.backgroundColour : "#0b1020";
     document.documentElement.style.setProperty("--season-accent", accent);
     document.documentElement.style.setProperty("--season-bg", background);
     document.documentElement.classList.add("christmas-theme-active");
     if (document.body) document.body.classList.add("christmas-theme-active");
 
     addStylesheet();
-    if (active.decorations !== false) {
+    if (active && active.decorations !== false) {
       addGarland();
       addSnowfall();
       addEmojiDecorations(active);
       addSanta();
+    } else if (automaticChristmas) {
+      // Default seasonal mode: subtle snow only, without additional floating badges.
+      addSnowfall();
     }
   }
 
@@ -232,6 +258,8 @@ import { db, doc, onSnapshot } from "./firebase.js";
     applyCurrentTheme();
     scheduleNextBoundary();
   }
+
+  ensureBrandStylesheet();
 
   try {
     onSnapshot(
