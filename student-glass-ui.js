@@ -5,6 +5,25 @@
   root.classList.add("student-glass-ui");
 
   const page = (window.location.pathname.split("/").pop() || "dashboard.html").toLowerCase();
+  const standaloneApp =
+    (typeof window.matchMedia === "function" && window.matchMedia("(display-mode: standalone)").matches) ||
+    navigator.standalone === true;
+  const appProtectedPages = new Set([
+    "dashboard.html", "dashboard-grade10.html", "dashboard-grade11.html",
+    "my-program.html", "study.html", "progress.html", "results.html",
+    "announcements.html", "support.html", "profile.html", "student-model-answers.html"
+  ]);
+  if (appProtectedPages.has(page)) {
+    if (sessionStorage.getItem("loggedIn") !== "true") {
+      window.location.replace("index.html");
+      return;
+    }
+    if (!standaloneApp) {
+      window.location.replace("app-required.html");
+      return;
+    }
+  }
+
   // Some hosting routes and home-screen shortcuts serve the dashboard from "/" or an alias.
   // Detect the actual dashboard markup as well as the filename so the mobile navigation
   // and the teacher portrait are present on the page students are really viewing.
