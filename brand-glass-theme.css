@@ -335,3 +335,265 @@ html.lms-brand-glass body #christmas-garland{
   html.lms-brand-glass body #christmas-snowfall .xmas-snowflake{animation:none!important}
   html.lms-brand-glass body *,html.lms-brand-glass body *::before,html.lms-brand-glass body *::after{transition:none!important}
 }
+
+
+/* ==========================================================
+   FINAL BRAND LOCK — DARK PURPLE + #A6FF2E GREEN
+   This section intentionally has higher specificity than
+   legacy Ice Blue / Winter CSS. Keep it at the end.
+========================================================== */
+html.lms-brand-glass.student-glass-ui,
+html.lms-brand-glass.student-glass-ui body{
+  color-scheme:dark!important;
+  --student-glass-bg:#0b1020!important;
+  --student-glass-bg-2:#11182b!important;
+  --student-glass-ink:#f4f7ff!important;
+  --student-glass-muted:#aeb8ce!important;
+  --student-glass-teal:#a6ff2e!important;
+  --student-glass-teal-dark:#7cc51f!important;
+  --student-glass-teal-soft:rgba(166,255,46,.12)!important;
+  --student-glass-line:rgba(186,174,255,.24)!important;
+  --student-glass-card:rgba(19,24,48,.70)!important;
+  --student-glass-shadow:0 18px 48px rgba(0,0,0,.28)!important;
+  background:
+    radial-gradient(ellipse at 8% 0%,rgba(91,75,255,.28),transparent 35%),
+    radial-gradient(ellipse at 96% 80%,rgba(124,58,237,.20),transparent 34%),
+    linear-gradient(145deg,#0b1020 0%,#10152b 58%,#0b1020 100%)!important;
+  color:#f4f7ff!important;
+}
+html.lms-brand-glass.student-glass-ui body :is(h1,h2,h3,h4,h5,h6,strong,b,label,legend),
+html.lms-brand-glass.student-glass-ui body :is(.lms-header-title h1,.top h1,.profile-page-heading h1){
+  color:#f4f7ff!important;
+}
+html.lms-brand-glass.student-glass-ui body :is(p,small,.muted,.subtitle,.description,.hint,.meta,.eyebrow,.card-subtitle){
+  color:#aeb8ce!important;
+}
+html.lms-brand-glass.student-glass-ui body a{color:#c4baff!important}
+html.lms-brand-glass.student-glass-ui body a:hover{color:#a6ff2e!important}
+html.lms-brand-glass.student-glass-ui body :is(input,select,textarea){
+  color:#f4f7ff!important;
+  background:rgba(8,13,27,.78)!important;
+  border:1px solid rgba(186,174,255,.28)!important;
+  color-scheme:dark!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.05)!important;
+}
+html.lms-brand-glass.student-glass-ui body :is(input,select,textarea)::placeholder{color:#7885a1!important}
+html.lms-brand-glass.student-glass-ui body :is(a,button,input,select,textarea,[tabindex]):focus-visible{
+  outline:2px solid #a6ff2e!important;
+  outline-offset:3px!important;
+}
+
+/* Remove every winter-blue active surface, not the page layout. */
+html.lms-brand-glass.student-glass-ui body :is(.app,.main-content,.main,#main,.lms-dashboard,.lms-main-column,.results,.announcement-list,.support-grid,.profile-grid){
+  color:#f4f7ff!important;
+  background:transparent!important;
+}
+html.lms-brand-glass.student-glass-ui body :is(.sidebar,.side,#studentSidebar,#sectionSidebar){
+  color:#f4f7ff!important;
+  background:linear-gradient(180deg,rgba(11,16,32,.97),rgba(17,24,43,.92))!important;
+  border-color:rgba(186,174,255,.22)!important;
+  border-right:1px solid rgba(186,174,255,.22)!important;
+  box-shadow:16px 0 48px rgba(0,0,0,.28)!important;
+  -webkit-backdrop-filter:blur(22px) saturate(150%)!important;
+  backdrop-filter:blur(22px) saturate(150%)!important;
+}
+html.lms-brand-glass.student-glass-ui body :is(.sidebar-brand,.brand,.student-account,.professional-profile,.side-profile,.side-bottom){
+  border-color:rgba(186,174,255,.18)!important;
+}
+html.lms-brand-glass.student-glass-ui body :is(.brand-logo,.logo,.section-brand-mark){
+  background:linear-gradient(140deg,#5b4bff,#7c3aed 68%,#a6ff2e)!important;
+  color:#fff!important;
+  border-color:rgba(186,174,255,.28)!important;
+  box-shadow:0 10px 28px rgba(91,75,255,.34)!important;
+}
+html.lms-brand-glass.student-glass-ui body :is(.brand-text strong,.brand b,.brand-text span,.brand span,.student-account-info strong,.student-account-info span,.side-profile strong,.side-profile span){
+  color:#eaf0ff!important;
+}
+html.lms-brand-glass.student-glass-ui body .sidebar-section-title{color:#8d9abb!important}
+html.lms-brand-glass.student-glass-ui body .sidebar-nav .sidebar-link,
+html.lms-brand-glass.student-glass-ui body .side nav a{
+  color:#aeb8ce!important;
+  background:rgba(255,255,255,.025)!important;
+  border-color:transparent!important;
+}
+html.lms-brand-glass.student-glass-ui body .sidebar-nav .sidebar-link:hover,
+html.lms-brand-glass.student-glass-ui body .side nav a:hover{
+  color:#fff!important;
+  background:rgba(124,58,237,.20)!important;
+  border-color:rgba(186,174,255,.22)!important;
+}
+html.lms-brand-glass.student-glass-ui body .sidebar-nav .sidebar-link.active,
+html.lms-brand-glass.student-glass-ui body .side nav a.active,
+html.lms-brand-glass.student-glass-ui body #studentSidebar .sidebar-link.active{
+  color:#11182b!important;
+  background:linear-gradient(110deg,#a6ff2e,#d1ff75)!important;
+  border:1px solid rgba(220,255,170,.72)!important;
+  border-left:3px solid #a6ff2e!important;
+  box-shadow:0 9px 24px rgba(166,255,46,.18),inset 0 1px rgba(255,255,255,.35)!important;
+}
+html.lms-brand-glass.student-glass-ui body .sidebar-nav .sidebar-link.active .nav-icon,
+html.lms-brand-glass.student-glass-ui body .side nav a.active .nav-icon,
+html.lms-brand-glass.student-glass-ui body #studentSidebar .sidebar-link.active .nav-icon{
+  color:#11182b!important;
+}
+html.lms-brand-glass.student-glass-ui body :is(.sidebar-link .nav-icon,.side nav a .nav-icon){
+  color:#a99cff!important;
+}
+html.lms-brand-glass.student-glass-ui body :is(.student-avatar,.side-avatar,.lms-avatar,.mobile-avatar){
+  background:linear-gradient(145deg,#5b4bff,#7c3aed)!important;
+  color:#fff!important;
+  box-shadow:0 8px 22px rgba(91,75,255,.27)!important;
+}
+html.lms-brand-glass.student-glass-ui body :is(.sidebar-logout,.logout){
+  color:#fff!important;
+  background:linear-gradient(110deg,#b91c35,#e33e50)!important;
+  border:1px solid rgba(255,130,145,.34)!important;
+}
+
+/* Frosted headers and glass cards */
+html.lms-brand-glass.student-glass-ui body :is(.lms-header,.top,.mobile-lms-header,.section-mobile-header,.shared-mobile-header,.header){
+  color:#f4f7ff!important;
+  background:rgba(11,16,32,.78)!important;
+  border-color:rgba(186,174,255,.22)!important;
+  box-shadow:0 12px 34px rgba(0,0,0,.24),inset 0 1px rgba(255,255,255,.07)!important;
+  -webkit-backdrop-filter:blur(22px) saturate(155%)!important;
+  backdrop-filter:blur(22px) saturate(155%)!important;
+}
+html.lms-brand-glass.student-glass-ui body :is(.lms-header-title h1,.top h1,.profile-page-heading h1,.lms-user strong,.mobile-lms-title b){
+  color:#f4f7ff!important;
+}
+html.lms-brand-glass.student-glass-ui body :is(.lms-header-title p,.top p,.lms-user span,.mobile-lms-title span){
+  color:#aeb8ce!important;
+}
+html.lms-brand-glass.student-glass-ui body :is(.lms-search,.lms-notification,.back,.profile-back,.mobile-menu-btn,.section-menu-toggle){
+  color:#eaf0ff!important;
+  background:rgba(255,255,255,.055)!important;
+  border:1px solid rgba(186,174,255,.25)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.06),0 8px 22px rgba(0,0,0,.14)!important;
+  -webkit-backdrop-filter:blur(16px)!important;
+  backdrop-filter:blur(16px)!important;
+}
+html.lms-brand-glass.student-glass-ui body :is(
+ .dashboard-learning-banner,.dashboard-analytics-hero,.hero-card,.hero.performance-hero,
+ .portal-program-card,.portal-support-card,.dashboard-summary-card,.lms-stat-card,
+ .announcement-panel,.lms-widget,.quick-nav-card,.hero,.panel,.stat,.result,.notice,
+ .support-card,.chat,.profile-hero,.profile-card,.profile-data-item,.profile-app-row,
+ .card,.paper-card,.answer-row,.answers-heading,.answers-group,.answers-empty,
+ .exam-focus,.timer-unit,.study-buddy-panel,.study-buddy-launcher
+){
+  background:linear-gradient(145deg,rgba(34,39,79,.76),rgba(13,19,39,.74))!important;
+  border:1px solid rgba(186,174,255,.25)!important;
+  border-radius:18px!important;
+  color:#f4f7ff!important;
+  box-shadow:0 16px 42px rgba(0,0,0,.25),inset 0 1px rgba(255,255,255,.075)!important;
+  -webkit-backdrop-filter:blur(20px) saturate(145%)!important;
+  backdrop-filter:blur(20px) saturate(145%)!important;
+}
+html.lms-brand-glass.student-glass-ui body :is(.dashboard-learning-banner,.dashboard-analytics-hero,.hero-card,.hero.performance-hero,.profile-hero,.hero){
+  background:
+    radial-gradient(circle at 88% 10%,rgba(166,255,46,.10),transparent 24%),
+    radial-gradient(circle at 12% 94%,rgba(124,58,237,.28),transparent 38%),
+    linear-gradient(118deg,rgba(30,20,75,.96),rgba(58,36,132,.86) 54%,rgba(14,45,65,.90))!important;
+  border-color:rgba(166,255,46,.25)!important;
+  box-shadow:0 22px 54px rgba(0,0,0,.29),inset 0 1px rgba(255,255,255,.10)!important;
+}
+html.lms-brand-glass.student-glass-ui body :is(.hero-continue-btn,.profile-btn.primary,.answer-link.primary,.button.primary,.primary-action,.btn-primary,.primary-btn,.action-btn,.save-btn){
+  color:#11182b!important;
+  background:linear-gradient(105deg,#a6ff2e,#d1ff75)!important;
+  border:1px solid rgba(220,255,170,.70)!important;
+  font-weight:850!important;
+  box-shadow:0 9px 26px rgba(166,255,46,.19),inset 0 1px rgba(255,255,255,.35)!important;
+}
+html.lms-brand-glass.student-glass-ui body :is(.hero-continue-btn,.profile-btn.primary,.answer-link.primary,.button.primary,.primary-action,.btn-primary,.primary-btn,.action-btn,.save-btn) *{
+  color:#11182b!important;
+}
+html.lms-brand-glass.student-glass-ui body :is(.dashboard-announcement-tabs,.tabs,.tab-list,.paper-switch){
+  background:rgba(255,255,255,.055)!important;
+  border:1px solid rgba(186,174,255,.24)!important;
+  border-radius:16px!important;
+  -webkit-backdrop-filter:blur(18px)!important;
+  backdrop-filter:blur(18px)!important;
+}
+html.lms-brand-glass.student-glass-ui body :is(.dashboard-announcement-tab,.tab,.paper-switch button){
+  color:#aeb8ce!important;background:transparent!important;border-color:transparent!important;
+}
+html.lms-brand-glass.student-glass-ui body :is(.dashboard-announcement-tab.active,.tab.active,.tab[aria-selected="true"],.paper-switch button.active){
+  color:#11182b!important;
+  background:linear-gradient(110deg,#a6ff2e,#d1ff75)!important;
+  border:1px solid rgba(220,255,170,.70)!important;
+  box-shadow:0 7px 20px rgba(166,255,46,.17)!important;
+}
+html.lms-brand-glass.student-glass-ui body :is(.dashboard-announcement-summary,.dashboard-summary-empty,.dashboard-summary-loading,.dashboard-announcement-empty,.portal-empty,.announcement-empty,.empty,.answers-empty){
+  color:#aeb8ce!important;
+  background:linear-gradient(145deg,rgba(45,48,95,.74),rgba(15,22,42,.74))!important;
+  border:1px solid rgba(186,174,255,.25)!important;
+  border-radius:16px!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.07),0 10px 26px rgba(0,0,0,.17)!important;
+}
+html.lms-brand-glass.student-glass-ui body :is(.portal-kicker,.portal-section-link,.portal-card-arrow,.material-link,.lms-section-heading>a,.lms-section-heading a,.exam-link,.quick-nav-card>b,.dashboard-summary-number,.dashboard-summary-meta b,.dashboard-summary-meta span){
+  color:#a6ff2e!important;
+}
+html.lms-brand-glass.student-glass-ui body :is(.lms-stat-icon,.quick-nav-icon,.portal-program-icon,.dashboard-summary-icon,.stat-icon,.result-icon,.support-icon,.ico){
+  color:#b9adff!important;
+  border-color:rgba(186,174,255,.25)!important;
+  background:rgba(91,75,255,.20)!important;
+}
+html.lms-brand-glass.student-glass-ui body :is(.fill,.mini-track i,.bar-track span,.result-progress span){
+  background:linear-gradient(90deg,#5b4bff,#a6ff2e)!important;
+}
+html.lms-brand-glass.student-glass-ui body :is(.timer-unit,.exam-focus){
+  border-color:rgba(186,174,255,.27)!important;
+}
+
+/* Profile, support, login and paper-resource details */
+html.lms-brand-glass.student-glass-ui body :is(.profile-data-item,.profile-app-row,.answer-row,.notice,.result,.chat,.support-card,.profile-card){
+  color:#f4f7ff!important;
+  background:linear-gradient(145deg,rgba(34,39,79,.76),rgba(13,19,39,.74))!important;
+  border-color:rgba(186,174,255,.25)!important;
+}
+html.lms-brand-glass.student-glass-ui body :is(.profile-data-item small,.profile-field label,.recovery-status small,.recovery-note,.answers-note,.chat span,.notice-message){
+  color:#aeb8ce!important;
+}
+html.lms-brand-glass.student-glass-ui body :is(.profile-data-item strong,.recovery-status strong,.profile-hero-copy h2){
+  color:#f4f7ff!important;
+}
+
+/* Mobile glass navigation — dark, translucent, same accent. */
+@media(max-width:800px){
+  html.lms-brand-glass.student-glass-ui body :is(.dashboard-mobile-nav,.shared-bottom-nav,.mobile-nav){
+    background:rgba(11,16,32,.84)!important;
+    border:1px solid rgba(186,174,255,.28)!important;
+    box-shadow:0 16px 40px rgba(0,0,0,.40),inset 0 1px rgba(255,255,255,.08)!important;
+    -webkit-backdrop-filter:blur(24px) saturate(160%)!important;
+    backdrop-filter:blur(24px) saturate(160%)!important;
+  }
+  html.lms-brand-glass.student-glass-ui body :is(.dashboard-mobile-nav a,.shared-bottom-nav>a,.shared-more-menu>summary,.mobile-nav a){
+    color:#aeb8ce!important;
+  }
+  html.lms-brand-glass.student-glass-ui body :is(.dashboard-mobile-nav a.active,.shared-bottom-nav>a.active,.shared-more-menu.is-current>summary,.mobile-nav a.active){
+    color:#11182b!important;
+    background:linear-gradient(110deg,#a6ff2e,#d1ff75)!important;
+    box-shadow:inset 0 0 0 1px rgba(220,255,170,.55)!important;
+  }
+}
+
+/* Re-enable seasonal snowfall after the old glass stylesheet hid it. */
+html.lms-brand-glass.student-glass-ui body #christmas-snowfall{
+  display:block!important;
+  position:fixed!important;
+  inset:0!important;
+  z-index:45!important;
+  opacity:.52!important;
+  pointer-events:none!important;
+}
+html.lms-brand-glass.student-glass-ui body #christmas-garland{
+  display:block!important;
+  opacity:.6!important;
+}
+html.lms-brand-glass.student-glass-ui body #christmas-santa-badge{
+  display:flex!important;
+}
+
+@media(prefers-reduced-motion:reduce){
+  html.lms-brand-glass.student-glass-ui body #christmas-snowfall .xmas-snowflake{animation:none!important}
+}
