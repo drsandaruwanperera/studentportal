@@ -538,6 +538,17 @@ body{background:radial-gradient(circle at 76% 10%,rgba(103,60,255,.10),transpare
     <link rel="apple-touch-icon" sizes="192x192" href="./icons/dr-sandaruwan-lms-192.png?v=approved-2026-11-21">
 
     <link rel="stylesheet" href="./student-glass-ui.css?v=19">
+<style id="dashboard-single-column-after-progress-removal">
+  .lms-dashboard-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    width: 100% !important;
+  }
+  .lms-dashboard-grid > .lms-main-column {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+</style>
 </head>
 
 
@@ -858,27 +869,7 @@ body{background:radial-gradient(circle at 76% 10%,rgba(103,60,255,.10),transpare
                     </div>
                 </div>
 
-                <aside class="lms-side-column">
-                    <section class="lms-widget progress-widget">
-                        <div class="widget-heading">
-                            <h2>Overall progress</h2>
-                        </div>
-                        <p class="widget-subtitle">Papers completed</p>
-                        <div class="overall-progress">
-                            <div class="progress-ring" id="dashboardProgressRing">
-                                <div>
-                                    <strong id="dashboardProgressPercent">0%</strong>
-                                    <span>complete</span>
-                                </div>
-                            </div>
-                            <div class="progress-legend">
-                                <div><i class="legend-dot passed"></i><span id="dashboardViewedLabel">0 completed</span></div>
-                                <div><i class="legend-dot pending"></i><span id="dashboardPendingLabel">0 remaining</span></div>
-                                <div><i class="legend-dot total"></i><span id="dashboardTotalLabel">0 total</span></div>
-                            </div>
-                        </div>
-                    </section>
-                </aside>
+                
             </section>
 
             
@@ -1424,29 +1415,6 @@ document.addEventListener(
 </div>
 
 <script>
-(function(){
-  const p=document.getElementById("progressValue");
-  const ring=document.getElementById("dashboardProgressRing");
-  const pct=document.getElementById("dashboardProgressPercent");
-  const viewed=document.getElementById("viewedPapers");
-  const total=document.getElementById("totalPapers");
-  const viewedLabel=document.getElementById("dashboardViewedLabel");
-  const pendingLabel=document.getElementById("dashboardPendingLabel");
-  const totalLabel=document.getElementById("dashboardTotalLabel");
-  function sync(){
-    const value=Math.max(0,Math.min(100,parseInt((p?.textContent||"0").replace("%",""),10)||0));
-    const v=parseInt(viewed?.textContent||"0",10)||0;
-    const t=parseInt(total?.textContent||"0",10)||0;
-    if(pct)pct.textContent=value+"%";
-    if(ring)ring.style.background="conic-gradient(#477c91 "+(value*3.6)+"deg,#e6edf0 0deg)";
-    if(viewedLabel)viewedLabel.textContent=v+" completed";
-    if(pendingLabel)pendingLabel.textContent=Math.max(t-v,0)+" remaining";
-    if(totalLabel)totalLabel.textContent=t+" total";
-  }
-  sync();
-  [p,viewed,total].filter(Boolean).forEach(el=>new MutationObserver(sync).observe(el,{childList:true,characterData:true,subtree:true}));
-})();
-</script><script>
 (function(){
   function syncDashboardProfile(){
     const nameKey=sessionStorage.getItem("studentName");
