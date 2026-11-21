@@ -63,7 +63,7 @@ html,body{background:#080d1b!important;color:#f5f7ff!important}
 <link id="christmas-theme-stylesheet" rel="stylesheet" href="./christmas-theme.css?v=20261120-winter-refresh1">
 <link id="winter-dashboard-theme-stylesheet" rel="stylesheet" href="./winter-dashboard-theme.css?v=20261120-winter-refresh1">
 <script src="./winter-theme-preload.js?v=2"></script>
-    <link rel="stylesheet" href="./student-glass-ui.css?v=6">
+    <link rel="stylesheet" href="./student-glass-ui.css?v=13">
 </head><body>
 <header class="shared-mobile-header" aria-label="Student portal header">
   <a class="shared-header-brand" href="dashboard.html" aria-label="Dr. Sandaruwan LMS home">
@@ -83,7 +83,8 @@ html,body{background:#080d1b!important;color:#f5f7ff!important}
    <summary aria-label="More student pages" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg><span>More</span></summary>
    <div class="shared-more-panel">
     <a href="announcements.html"><span aria-hidden="true">◉</span> Announcements</a>
-    <a href="support.html"><span aria-hidden="true">✚</span> Support</a>
+    <a href="support.html"><span aria-hidden="true">✚</span> Support Team</a>
+    <a href="profile.html"><span aria-hidden="true">◎</span> Profile</a>
    </div>
   </details>
  </nav><header class="section-mobile-header" role="banner"><a class="section-mobile-brand" href="dashboard.html" aria-label="Dr. Sandaruwan LMS home"><span class="section-brand-mark">🎓</span><span><strong>Dr. Sandaruwan</strong><small>LMS · Student Portal</small></span></a><button class="section-menu-toggle" id="sectionMenuToggle" type="button" aria-label="Open navigation menu" aria-controls="sectionSidebar" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5h16M4 12h16M4 17.5h16"/></svg></button></header><div class="section-sidebar-backdrop" id="sectionSidebarBackdrop" aria-hidden="true"></div><aside class="side"><div class="brand"><div class="logo">🎓</div><div><b>Dr. Sandaruwan</b><span>LMS • Student Portal</span></div></div><div class="sidebar-section-title">STUDENT PORTAL</div><nav>
@@ -91,7 +92,7 @@ html,body{background:#080d1b!important;color:#f5f7ff!important}
 <a href="my-program.html" data-nav="program"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h6v6H5zM13 5h6v6h-6zM5 13h6v6H5zM13 13h6v6h-6z"/></svg></span><span>My Program</span></a>
 <a href="progress.html" data-nav="results"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18.5 9 13l3 3 7-8"/><path d="M16 8h3v3"/></svg></span><span>Results</span></a>
 <a href="announcements.html" data-nav="announcements"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></span><span>Announcements</span></a>
-<a href="support.html" data-nav="support"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M8 12h8M12 8v8"/></svg></span><span>Support</span></a></nav>
+<a href="support.html" data-nav="support"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M8 12h8M12 8v8"/></svg></span><span>Support Team</span></a><a href="profile.html" data-nav="profile"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg></span><span>Profile</span></a></nav>
 <div class="side-bottom"><div class="side-profile"><div class="side-avatar" id="sideAvatar">S</div><div><strong id="sideName">Student</strong><span id="sideGrade">Student</span></div></div><a class="logout" href="index.html">Logout</a></div></aside><main class="main"><div class="top"><div><h1>Announcements</h1><p>Important information and updates for students.</p></div><a class="back" href="dashboard.html">← Dashboard</a></div><div id="announcementList" class="announcement-list">
 <div id="firestoreAnnouncementList"></div>
 </div></main><script>if(sessionStorage.getItem("loggedIn")!=="true")location.replace("index.html");document.body.classList.add("dark-mode");localStorage.setItem("lmsTheme","dark");</script><script>
@@ -156,5 +157,5 @@ onSnapshot(collection(db,"announcements"),snap=>{
 },()=>{});
 </script><script id="section-mobile-menu-behavior">(()=>{const sidebar=document.querySelector('.side'),toggle=document.getElementById('sectionMenuToggle'),backdrop=document.getElementById('sectionSidebarBackdrop');if(!sidebar||!toggle||!backdrop)return;sidebar.id='sectionSidebar';const open=()=>{sidebar.classList.add('section-sidebar-open');backdrop.classList.add('section-backdrop-open');document.body.classList.add('section-menu-open');toggle.setAttribute('aria-expanded','true');toggle.setAttribute('aria-label','Close navigation menu');backdrop.setAttribute('aria-hidden','false')};const close=()=>{sidebar.classList.remove('section-sidebar-open');backdrop.classList.remove('section-backdrop-open');document.body.classList.remove('section-menu-open');toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Open navigation menu');backdrop.setAttribute('aria-hidden','true')};toggle.addEventListener('click',()=>sidebar.classList.contains('section-sidebar-open')?close():open());backdrop.addEventListener('click',close);sidebar.querySelectorAll('nav a,.logout').forEach(a=>a.addEventListener('click',close));document.addEventListener('keydown',e=>{if(e.key==='Escape')close()})})();</script><script type="module" src="./christmas-theme.js?v=20261120-winter-refresh2"></script>
 <script type="module" src="./student-pop-notices.js?v=3"></script>
-    <script defer src="./student-glass-ui.js?v=5"></script>
+    <script defer src="./student-glass-ui.js?v=6"></script>
 </body></html>
