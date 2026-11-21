@@ -40,9 +40,9 @@ import {db,doc,getDoc} from "./firebase.js";
       label: "Grade 10",
       model: "grade10-model-papers.html",
       past: null,
-      modelTitle: "Model Papers",
+      modelTitle: "Term Test Model Papers",
       pastTitle: "Past Papers",
-      modelDescription: "Grade 10 model papers and practice resources",
+      modelDescription: "Grade 10 term test model papers and model paper answers",
       pastDescription: "Grade 10 past papers"
     },
     grade11: {
