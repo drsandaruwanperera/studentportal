@@ -194,8 +194,8 @@ import { db, doc, onSnapshot } from "./firebase.js";
 
   function applyCurrentTheme() {
     const active = activeSiteSession();
-    const automaticChristmas = !active && isAutomaticChristmasSeason();
-    const isChristmas = active ? active.themeKey === "christmas" : automaticChristmas;
+    const automaticChristmas = isAutomaticChristmasSeason();
+    const isChristmas = Boolean((active && active.themeKey === "christmas") || automaticChristmas);
     const signature = active
       ? [active.id, active.themeKey, active.title, active.decorations !== false,
           active.accentColour || "", active.backgroundColour || "",
