@@ -308,6 +308,13 @@
     safeText(document.getElementById("programHeading"), "Study");
     const programLink = document.querySelector(".portal-program-section .portal-section-link");
     if (programLink) programLink.innerHTML = 'Open Study <span aria-hidden="true">↗</span>';
+    const quickProgram = Array.from(document.querySelectorAll(".quick-nav-card")).find(link =>
+      /my program/i.test(link.textContent || "")
+    );
+    const quickProgramTitle = quickProgram?.querySelector("strong");
+    if (quickProgramTitle) quickProgramTitle.textContent = "Study";
+    const continueStudy = document.querySelector(".hero-continue-btn");
+    if (continueStudy) continueStudy.innerHTML = 'Open Study <strong aria-hidden="true">→</strong>';
 
     safeText(document.querySelector(".dashboard-announcements-heading h2"), "Important Announcement");
     const announcementsLink = document.querySelector(".dashboard-announcements-heading a");
@@ -471,11 +478,13 @@
 
     const tagCards = () => {
       host.querySelectorAll(".notice").forEach(card => {
-        const content = (card.textContent || "").toLowerCase();
-        const category = /exam|examination|timetable|test|assessment|paper result/.test(content)
-          ? "exam"
-          : /important|urgent|action required|deadline/.test(content)
-            ? "important"
+        const title = card.querySelector("h3")?.textContent || "";
+        const message = card.querySelector(".notice-message")?.textContent || "";
+        const content = (title + " " + message).toLowerCase();
+        const category = /important|urgent|action required|deadline/.test(content)
+          ? "important"
+          : /exam|examination|timetable|test|assessment|paper result/.test(content)
+            ? "exam"
             : "general";
         card.dataset.sharedAnnouncementCategory = category;
       });
