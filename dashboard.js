@@ -129,7 +129,9 @@ function getGradeType(value) {
         grade === "a/l" ||
         grade === "advanced" ||
         grade === "advancedlevel" ||
-        grade === "advanced level"
+        grade === "advanced level" ||
+        /^a\/l\s*20?(27|28|29)$/.test(grade) ||
+        /^advanced\s*level\s*20?(27|28|29)$/.test(grade)
     ) {
         return "al";
     }
