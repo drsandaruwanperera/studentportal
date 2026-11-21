@@ -267,13 +267,32 @@
 
     const hub = byId("portalProgramHub"), model = byId("modelPapersCard"), past = byId("pastPapersCard");
     const programProgress = byId("programProgressCard"), smartBook = byId("smartBookAnswersCard"), schoolPapers = byId("schoolPaperAnswersCard");
+
+    // This is the single allow-list for Study cards. Hide every card first,
+    // then reveal only the resources assigned to the resolved student cohort.
+    const cohortCardAllowList = {
+      portalProgramHub: key === "grade10",
+      modelPapersCard: true,
+      pastPapersCard: false,
+      programProgressCard: key === "grade10" || key === "grade11",
+      smartBookAnswersCard: key === "al2028",
+      schoolPaperAnswersCard: key === "al2028"
+    };
+    Object.entries(cohortCardAllowList).forEach(([id, visible]) => {
+      const card = byId(id);
+      if (!card) return;
+      card.hidden = !visible;
+      card.setAttribute("aria-hidden", String(!visible));
+      card.dataset.cohortVisible = String(visible);
+    });
+
     if (hub) {
-      hub.hidden = !cohort.hub;
+      hub.hidden = !cohortCardAllowList.portalProgramHub;
       byId("portalProgramHubTitle").textContent = cohort.hubTitle || "Learning Resources";
       byId("portalProgramHubDescription").textContent = cohort.hubDescription || "Open the notes and materials selected for your grade.";
     }
     if (model) {
-      model.hidden = false;
+      model.hidden = !cohortCardAllowList.modelPapersCard;
       model.href = cohort.model;
       byId("modelPapersTitle").textContent = cohort.modelTitle;
       byId("modelPapersDescription").textContent = cohort.modelDescription;
@@ -281,16 +300,16 @@
       if (action) action.firstChild.textContent = key === "al2028" ? "Open Theory Examination " : "Explore papers ";
     }
     if (past) {
-      past.hidden = !cohort.past;
+      past.hidden = !cohortCardAllowList.pastPapersCard;
       if (cohort.past) {
         past.href = cohort.past;
         byId("pastPapersTitle").textContent = cohort.pastTitle;
         byId("pastPapersDescription").textContent = cohort.pastDescription;
       }
     }
-    if (programProgress) programProgress.hidden = !cohort.progress;
-    if (smartBook) smartBook.hidden = !cohort.smartBook;
-    if (schoolPapers) schoolPapers.hidden = !cohort.schoolPapers;
+    if (programProgress) programProgress.hidden = !cohortCardAllowList.programProgressCard;
+    if (smartBook) smartBook.hidden = !cohortCardAllowList.smartBookAnswersCard;
+    if (schoolPapers) schoolPapers.hidden = !cohortCardAllowList.schoolPaperAnswersCard;
     renderExam(cohort.exam);
   };
 
