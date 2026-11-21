@@ -60,7 +60,15 @@
   }
 
   function buildMobileHeader() {
-    if (document.querySelector(".shared-mobile-header")) return;
+    const existing = document.querySelector(".shared-mobile-header");
+    if (existing) {
+      const avatar = existing.querySelector(".shared-header-student");
+      if (avatar) {
+        avatar.textContent = studentInitial;
+        avatar.setAttribute("aria-label", studentName);
+      }
+      return;
+    }
 
     const header = document.createElement("header");
     header.className = "shared-mobile-header";
@@ -196,7 +204,17 @@
   }
 
   function buildMobileNavigation(moreLinks) {
-    if (document.querySelector(".shared-bottom-nav")) return;
+    const existing = document.querySelector(".shared-bottom-nav");
+    if (existing) {
+      const moreMenu = existing.querySelector(".shared-more-menu");
+      if (moreMenu) {
+        moreMenu.addEventListener("toggle", () => {
+          const trigger = moreMenu.querySelector("summary");
+          if (trigger) trigger.setAttribute("aria-expanded", String(moreMenu.open));
+        });
+      }
+      return;
+    }
 
     const nav = document.createElement("nav");
     nav.className = "shared-bottom-nav";

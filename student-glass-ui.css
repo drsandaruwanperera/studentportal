@@ -2832,3 +2832,86 @@ html.student-glass-ui body .study-buddy-launcher small {
     padding-right: 8px !important;
   }
 }
+
+
+/* STATIC MOBILE SHELL: rendered from HTML, no JS injection dependency */
+@media (max-width: 800px) {
+  html.student-glass-ui body .shared-mobile-header {
+    display:flex!important; position:fixed!important; top:env(safe-area-inset-top,0px)!important;
+    left:50%!important; right:auto!important; transform:translateX(-50%)!important;
+    width:min(calc(100vw - 16px),620px)!important; max-width:620px!important;
+    min-height:64px!important; margin:0!important; padding:8px 12px!important;
+    align-items:center!important; z-index:8000!important; visibility:visible!important; opacity:1!important;
+    background:rgba(249,253,255,.97)!important; border:1px solid rgba(255,255,255,.94)!important;
+    border-radius:0 0 20px 20px!important; box-shadow:0 8px 24px rgba(31,83,108,.13)!important;
+    -webkit-backdrop-filter:blur(22px) saturate(1.25)!important; backdrop-filter:blur(22px) saturate(1.25)!important;
+  }
+  html.student-glass-ui body .shared-bottom-nav {
+    position:fixed!important; display:grid!important; visibility:visible!important; opacity:1!important; pointer-events:auto!important;
+    left:50%!important; right:auto!important; bottom:calc(7px + env(safe-area-inset-bottom,0px))!important;
+    transform:translateX(-50%)!important; width:min(calc(100vw - 20px),560px)!important; max-width:560px!important;
+    min-height:70px!important; grid-template-columns:repeat(5,minmax(0,1fr))!important; align-items:center!important;
+    gap:3px!important; padding:6px!important; margin:0!important; z-index:8100!important;
+    border:1px solid rgba(255,255,255,.96)!important; border-radius:23px!important;
+    background:rgba(249,253,255,.97)!important; box-shadow:0 13px 34px rgba(26,81,107,.2)!important;
+    -webkit-backdrop-filter:blur(22px) saturate(1.25)!important; backdrop-filter:blur(22px) saturate(1.25)!important;
+  }
+  html.student-glass-ui body .shared-bottom-nav > a:not(.shared-floating-teacher),
+  html.student-glass-ui body .shared-bottom-nav > details > summary {
+    display:flex!important; min-width:0!important; min-height:55px!important; width:100%!important;
+    flex-direction:column!important; align-items:center!important; justify-content:center!important; gap:5px!important;
+    padding:5px 1px!important; margin:0!important; border:0!important; border-radius:15px!important;
+    background:transparent!important; color:#17314b!important; text-decoration:none!important;
+    font:800 9px/1.1 Inter,system-ui,sans-serif!important; white-space:nowrap!important; box-shadow:none!important;
+    cursor:pointer!important; list-style:none!important; -webkit-tap-highlight-color:transparent!important;
+  }
+  html.student-glass-ui body .shared-bottom-nav > a.active,
+  html.student-glass-ui body .shared-bottom-nav > details[open] > summary {
+    background:linear-gradient(145deg,#0c8997,#075e6b)!important; color:#fff!important;
+    box-shadow:0 7px 17px rgba(7,103,119,.2)!important;
+  }
+  html.student-glass-ui body .shared-bottom-nav > a:not(.shared-floating-teacher) svg,
+  html.student-glass-ui body .shared-bottom-nav > details > summary svg {
+    display:block!important; width:21px!important; height:21px!important; flex:0 0 21px!important;
+    fill:none!important; stroke:currentColor!important; stroke-width:1.9!important;
+    stroke-linecap:round!important; stroke-linejoin:round!important;
+  }
+  html.student-glass-ui body .shared-bottom-nav > .shared-floating-teacher {
+    display:flex!important; position:relative!important; grid-column:3!important; justify-self:center!important;
+    align-self:start!important; width:62px!important; height:62px!important; min-height:62px!important;
+    padding:3px!important; margin:-23px 0 0!important; border:3px solid #fff!important; border-radius:50%!important;
+    background:linear-gradient(145deg,#eaf8fc,#d1edf4)!important; box-shadow:0 9px 22px rgba(20,81,106,.25)!important;
+    pointer-events:auto!important; z-index:2!important; overflow:hidden!important;
+  }
+  html.student-glass-ui body .shared-bottom-nav > .shared-floating-teacher img {
+    display:block!important; width:100%!important; height:100%!important; max-height:100%!important;
+    border-radius:50%!important; object-fit:cover!important; object-position:center 12%!important;
+  }
+  html.student-glass-ui body .shared-bottom-nav > details { position:relative!important; display:block!important; min-width:0!important; width:100%!important; }
+  html.student-glass-ui body .shared-bottom-nav > details > summary::-webkit-details-marker { display:none!important; }
+  html.student-glass-ui body .shared-bottom-nav > details > .shared-more-panel {
+    position:fixed!important; left:50%!important; right:auto!important; bottom:calc(83px + env(safe-area-inset-bottom,0px))!important;
+    transform:translateX(-50%)!important; display:none!important; width:min(calc(100vw - 24px),420px)!important;
+    max-width:420px!important; padding:12px!important; border:1px solid #d6e7ee!important; border-radius:18px!important;
+    background:rgba(249,253,255,.98)!important; box-shadow:0 14px 38px rgba(26,81,107,.2)!important; z-index:8200!important;
+  }
+  html.student-glass-ui body .shared-bottom-nav > details[open] > .shared-more-panel { display:grid!important; }
+  html.student-glass-ui body .shared-bottom-nav > details > .shared-more-panel a {
+    display:flex!important; min-height:44px!important; align-items:center!important; gap:10px!important;
+    padding:10px 12px!important; border:1px solid #dcebf1!important; border-radius:12px!important;
+    background:#fff!important; color:#24435d!important; font-size:12px!important; font-weight:800!important; text-decoration:none!important;
+  }
+  html.student-glass-ui body .lms-dashboard,
+  html.student-glass-ui body .main,
+  html.student-glass-ui body .main-content {
+    padding-bottom:calc(104px + env(safe-area-inset-bottom,0px))!important;
+  }
+  html.student-glass-ui body .lms-dashboard { margin-top:calc(69px + env(safe-area-inset-top,0px))!important; }
+  html.student-glass-ui body .main { margin-top:calc(69px + env(safe-area-inset-top,0px))!important; }
+}
+@media (max-width: 380px) {
+  html.student-glass-ui body .shared-bottom-nav { width:calc(100vw - 12px)!important; padding-left:3px!important; padding-right:3px!important; }
+  html.student-glass-ui body .shared-mobile-header { width:calc(100vw - 10px)!important; padding-left:8px!important; padding-right:8px!important; }
+  html.student-glass-ui body .shared-header-action,
+  html.student-glass-ui body .shared-header-student { width:32px!important; height:32px!important; flex-basis:32px!important; }
+}
