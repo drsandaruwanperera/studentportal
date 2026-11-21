@@ -28,19 +28,18 @@
   }
 
   function ensureSnowfall() {
-    const alreadyScheduled = Boolean(document.getElementById("christmas-snowfall"));
+    const existingLayer = document.getElementById("christmas-snowfall");
+    const automaticLayer = document.querySelector("#christmas-snowfall[data-lms-auto-snow='true']");
     const scheduledTheme = document.documentElement.classList.contains("christmas-theme-active");
-    const shouldSnow = inAutomaticWinterSeason() || alreadyScheduled || scheduledTheme;
+    const winterSeason = inAutomaticWinterSeason();
     const reduceMotion = window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    if (!shouldSnow || reduceMotion) {
-      const automaticLayer = document.querySelector("#christmas-snowfall[data-lms-auto-snow='true']");
-      if (automaticLayer && !scheduledTheme && !inAutomaticWinterSeason()) automaticLayer.remove();
+    if (!winterSeason && !scheduledTheme) {
+      if (automaticLayer) automaticLayer.remove();
       return;
     }
-
-    if (alreadyScheduled) return;
+    if (reduceMotion || existingLayer) return;
     const layer = document.createElement("div");
     layer.id = "christmas-snowfall";
     layer.dataset.lmsAutoSnow = "true";
@@ -75,7 +74,13 @@
     if (document.visibilityState === "visible") refresh();
   });
 
-  const now = new Date();
-  const nextMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 5);
-  window.setTimeout(ensureSnowfall, Math.max(1000, nextMidnight.getTime() - now.getTime()));
+  function scheduleDailyRefresh() {
+    const now = new Date();
+    const nextMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 5);
+    window.setTimeout(() => {
+      ensureSnowfall();
+      scheduleDailyRefresh();
+    }, Math.max(1000, nextMidnight.getTime() - now.getTime()));
+  }
+  scheduleDailyRefresh();
 })();
