@@ -1,0 +1,337 @@
+/* DR. SANDARUWAN LMS — SHARED PURPLE GLASS BRAND
+   Permanent visual layer for student app, browser, installed PWA and public site.
+   Seasonal snow is controlled separately by christmas-theme.js.
+   Presentation only: no data, routing, authentication or access rules. */
+
+:root{
+  --lms-glass-bg:#0b1020;
+  --lms-glass-panel:rgba(19,24,48,.70);
+  --lms-glass-panel-strong:rgba(17,24,43,.88);
+  --lms-glass-purple:#5b4bff;
+  --lms-glass-violet:#7c3aed;
+  --lms-glass-lime:#a6ff2e;
+  --lms-glass-ink:#f4f7ff;
+  --lms-glass-muted:#aeb8ce;
+  --lms-glass-line:rgba(186,174,255,.25);
+  --lms-glass-shadow:0 18px 48px rgba(0,0,0,.28);
+}
+
+html.lms-brand-glass,
+html.lms-brand-glass body{
+  min-height:100%;
+  color-scheme:dark!important;
+  background:
+    radial-gradient(ellipse at 8% 0%,rgba(91,75,255,.28),transparent 35%),
+    radial-gradient(ellipse at 96% 80%,rgba(124,58,237,.20),transparent 34%),
+    linear-gradient(145deg,#0b1020 0%,#10152b 58%,#0b1020 100%)!important;
+  color:var(--lms-glass-ink)!important;
+}
+html.lms-brand-glass body{
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif!important;
+  background-attachment:fixed!important;
+  -webkit-font-smoothing:antialiased;
+}
+html.lms-brand-glass body :is(h1,h2,h3,h4,h5,h6,strong,b,label,legend,th){
+  color:var(--lms-glass-ink)!important;
+  text-shadow:none!important;
+}
+html.lms-brand-glass body :is(p,small,.muted,.subtitle,.description,.hint,.meta,.eyebrow,.card-subtitle,.sub,.brand-text span){
+  color:var(--lms-glass-muted)!important;
+}
+html.lms-brand-glass body a{color:#c6bcff}
+html.lms-brand-glass body a:hover{color:var(--lms-glass-lime)!important}
+html.lms-brand-glass body :is(input,select,textarea){
+  color:var(--lms-glass-ink)!important;
+  background:rgba(8,13,27,.74)!important;
+  border:1px solid var(--lms-glass-line)!important;
+  border-radius:12px!important;
+  color-scheme:dark!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.05)!important;
+}
+html.lms-brand-glass body :is(input,select,textarea)::placeholder{color:#7785a2!important}
+html.lms-brand-glass body :is(input,select,textarea):focus{
+  border-color:rgba(166,255,46,.66)!important;
+  box-shadow:0 0 0 3px rgba(166,255,46,.10)!important;
+  outline:none!important;
+}
+html.lms-brand-glass body :is(a,button,input,select,textarea,[tabindex]):focus-visible{
+  outline:2px solid rgba(166,255,46,.88)!important;
+  outline-offset:3px!important;
+}
+
+/* App canvas and shared glass headers */
+html.lms-brand-glass body :is(.app,.main-content,.main,.content,#main,.lms-dashboard,.results,.announcement-list,.support-grid,.profile-grid){
+  background:transparent!important;
+  color:var(--lms-glass-ink)!important;
+}
+html.lms-brand-glass body :is(.lms-header,.top,.mobile-lms-header,.section-mobile-header,.shared-mobile-header,.header){
+  background:rgba(11,16,32,.76)!important;
+  color:var(--lms-glass-ink)!important;
+  border-color:var(--lms-glass-line)!important;
+  box-shadow:0 12px 34px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.07)!important;
+  -webkit-backdrop-filter:blur(22px) saturate(155%)!important;
+  backdrop-filter:blur(22px) saturate(155%)!important;
+}
+html.lms-brand-glass body :is(.lms-header-title h1,.top h1,.profile-page-heading h1,.lms-user strong,.mobile-lms-title b,.section-mobile-brand strong){
+  color:#f4f7ff!important;
+}
+html.lms-brand-glass body :is(.lms-header-title p,.top p,.lms-user span,.mobile-lms-title span,.mobile-lms-title strong,.section-mobile-brand small){
+  color:#9eabc5!important;
+}
+html.lms-brand-glass body :is(.lms-search,.lms-notification,.back,.profile-back,.mobile-menu-btn,.section-menu-toggle){
+  background:rgba(255,255,255,.055)!important;
+  border:1px solid var(--lms-glass-line)!important;
+  color:#e8eaff!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.06),0 8px 22px rgba(0,0,0,.14)!important;
+  -webkit-backdrop-filter:blur(16px)!important;
+  backdrop-filter:blur(16px)!important;
+}
+
+/* Sidebar and all navigation variants */
+html.lms-brand-glass body :is(.sidebar,.side,#studentSidebar,#sectionSidebar){
+  background:linear-gradient(180deg,rgba(11,16,32,.96),rgba(17,24,43,.91))!important;
+  color:var(--lms-glass-ink)!important;
+  border-right:1px solid rgba(186,174,255,.21)!important;
+  box-shadow:16px 0 48px rgba(0,0,0,.28)!important;
+  -webkit-backdrop-filter:blur(22px) saturate(145%)!important;
+  backdrop-filter:blur(22px) saturate(145%)!important;
+}
+html.lms-brand-glass body :is(.sidebar-brand,.brand,.student-account,.professional-profile,.side-profile,.side-bottom){
+  border-color:rgba(186,174,255,.18)!important;
+}
+html.lms-brand-glass body :is(.brand-logo,.logo,.section-brand-mark){
+  background:linear-gradient(140deg,#5b4bff,#7c3aed 68%,#a6ff2e)!important;
+  color:#fff!important;
+  box-shadow:0 10px 28px rgba(91,75,255,.34)!important;
+}
+html.lms-brand-glass body :is(.brand-text strong,.brand b,.brand-text span,.brand span,.student-account-info strong,.student-account-info span,.side-profile strong,.side-profile span){
+  color:#eaf0ff!important;
+}
+html.lms-brand-glass body .sidebar-section-title{color:#8d9abb!important}
+html.lms-brand-glass body :is(.sidebar-link,.side nav a,.shared-sidebar-more-trigger,.mobile-nav a){
+  color:#aeb8ce!important;
+  background:transparent!important;
+  border-color:transparent!important;
+}
+html.lms-brand-glass body :is(.sidebar-link:hover,.side nav a:hover,.shared-sidebar-more-trigger:hover,.mobile-nav a:hover){
+  color:#fff!important;
+  background:rgba(124,58,237,.17)!important;
+  border-color:rgba(186,174,255,.16)!important;
+}
+html.lms-brand-glass body :is(.sidebar-link.active,.side nav a.active,.shared-sidebar-more-trigger.is-current,.mobile-nav a.active){
+  color:#11182b!important;
+  background:linear-gradient(110deg,#a6ff2e,#d1ff75)!important;
+  border-color:rgba(220,255,170,.72)!important;
+  box-shadow:0 10px 27px rgba(166,255,46,.17),inset 0 1px rgba(255,255,255,.4)!important;
+}
+html.lms-brand-glass body :is(.student-avatar,.side-avatar,.lms-avatar,.mobile-avatar){
+  color:#fff!important;
+  background:linear-gradient(145deg,#5b4bff,#7c3aed)!important;
+  box-shadow:0 8px 22px rgba(91,75,255,.27)!important;
+}
+html.lms-brand-glass body :is(.sidebar-logout,.logout){
+  color:#fff!important;
+  background:linear-gradient(110deg,#b91c35,#e33e50)!important;
+  border:1px solid rgba(255,130,145,.34)!important;
+  box-shadow:0 9px 22px rgba(185,28,53,.20)!important;
+}
+
+/* Frosted-glass cards shared by dashboard, study, results, resources and support */
+html.lms-brand-glass body :is(
+  .dashboard-learning-banner,.dashboard-analytics-hero,.hero-card,.hero.performance-hero,
+  .portal-program-card,.portal-support-card,.dashboard-summary-card,.lms-stat-card,
+  .announcement-panel,.lms-widget,.quick-nav-card,.hero,.panel,.stat,.result,.notice,
+  .support-card,.chat,.profile-hero,.profile-card,.profile-data-item,.profile-app-row,
+  .card,.paper-card,.answer-row,.answers-heading,.answers-group,.answers-empty,
+  .exam-focus,.timer-unit,.study-buddy-panel,.study-buddy-launcher,.about-card,
+  .program-card,.why-card,.schedule-card,.resource-card,.gallery-card,.rankbox,
+  .course,.review,.teacher-profile-main,.teacher-proof,.parent-card,.story-request-card,
+  .faq-item,.facebook-fallback-card,.facebook-card,.video-frame,.login-tutorial,
+  .educator-intro,.program,.resource,.qual,.win,.grade-support-card
+){
+  background:linear-gradient(145deg,rgba(34,39,79,.75),rgba(13,19,39,.73))!important;
+  border:1px solid rgba(186,174,255,.25)!important;
+  border-radius:18px!important;
+  color:var(--lms-glass-ink)!important;
+  box-shadow:0 16px 42px rgba(0,0,0,.24),inset 0 1px rgba(255,255,255,.075)!important;
+  -webkit-backdrop-filter:blur(20px) saturate(145%)!important;
+  backdrop-filter:blur(20px) saturate(145%)!important;
+}
+html.lms-brand-glass body :is(.dashboard-learning-banner,.dashboard-analytics-hero,.hero-card,.hero.performance-hero,.profile-hero,.hero){
+  background:
+    radial-gradient(circle at 88% 10%,rgba(166,255,46,.10),transparent 24%),
+    radial-gradient(circle at 12% 94%,rgba(124,58,237,.27),transparent 38%),
+    linear-gradient(118deg,rgba(30,20,75,.95),rgba(58,36,132,.84) 54%,rgba(14,45,65,.90))!important;
+  border-color:rgba(166,255,46,.24)!important;
+  box-shadow:0 22px 54px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.10)!important;
+}
+html.lms-brand-glass body :is(.section h2,.section-head h2,.about h2,.feedback h2,.gallery h2,.contact h2,.panel-head h2,.results-head h2,.support-card h2,.profile-card h3){
+  color:#f4f7ff!important;
+}
+html.lms-brand-glass body :is(.section-intro,.about-copy>p,.resource p,.course p,.review p,.notice-message,.result-body small,.card-subtitle){
+  color:#aeb8ce!important;
+}
+
+/* Primary actions use the same lime accent as the screenshot */
+html.lms-brand-glass body :is(.hero-continue-btn,.profile-btn.primary,.answer-link.primary,.button.primary,.primary-action,.btn-primary){
+  color:#11182b!important;
+  background:linear-gradient(105deg,#a6ff2e,#d1ff75)!important;
+  border:1px solid rgba(220,255,170,.66)!important;
+  font-weight:850!important;
+  box-shadow:0 9px 26px rgba(166,255,46,.18),inset 0 1px rgba(255,255,255,.35)!important;
+}
+html.lms-brand-glass body :is(.hero-continue-btn,.profile-btn.primary,.answer-link.primary,.button.primary,.primary-action,.btn-primary) *{
+  color:#11182b!important;
+}
+html.lms-brand-glass body :is(.btn,.button,.back,.profile-back,.profile-btn.secondary,.answer-link:not(.primary)){
+  border-radius:12px!important;
+  border:1px solid rgba(186,174,255,.25)!important;
+  background:rgba(255,255,255,.055)!important;
+  color:#edf0ff!important;
+}
+
+/* Announcements, tab filters and empty states */
+html.lms-brand-glass body :is(.lms-section-heading h2,.portal-section-heading h2,.widget-heading h2,.dashboard-announcements-heading h2){
+  color:#f4f7ff!important;
+}
+html.lms-brand-glass body :is(.lms-section-heading p,.announcement-summary-sub,.widget-subtitle){
+  color:#aeb8ce!important;
+}
+html.lms-brand-glass body :is(.lms-section-heading>a,.lms-section-heading a,.widget-heading a,.portal-section-link,.announcement-link,.resource a,.course a){
+  color:#a6ff2e!important;
+}
+html.lms-brand-glass body :is(.dashboard-announcement-tabs,.tabs){
+  background:rgba(255,255,255,.055)!important;
+  border:1px solid rgba(186,174,255,.23)!important;
+  border-radius:16px!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.06)!important;
+  -webkit-backdrop-filter:blur(18px)!important;
+  backdrop-filter:blur(18px)!important;
+}
+html.lms-brand-glass body :is(.dashboard-announcement-tab,.tab){
+  color:#aeb8ce!important;
+  background:transparent!important;
+  border:1px solid transparent!important;
+}
+html.lms-brand-glass body :is(.dashboard-announcement-tab.active,.tab.active){
+  color:#11182b!important;
+  background:linear-gradient(110deg,#a6ff2e,#d1ff75)!important;
+  border-color:rgba(220,255,170,.7)!important;
+  box-shadow:0 7px 20px rgba(166,255,46,.16)!important;
+}
+html.lms-brand-glass body :is(.dashboard-announcement-summary,.dashboard-summary-empty,.dashboard-summary-loading,.dashboard-announcement-empty,.portal-empty,.announcement-empty,.empty,.answers-empty){
+  background:linear-gradient(145deg,rgba(45,48,95,.72),rgba(15,22,42,.72))!important;
+  border:1px solid rgba(186,174,255,.25)!important;
+  border-radius:16px!important;
+  color:#aeb8ce!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.07),0 10px 26px rgba(0,0,0,.16)!important;
+}
+html.lms-brand-glass body :is(.dashboard-summary-number,.dashboard-summary-meta b,.dashboard-summary-meta span,.quick-nav-card>b,.portal-card-arrow,.portal-kicker,.eyebrow,.kicker){
+  color:#a6ff2e!important;
+}
+
+/* Public website sections: same deep-purple palette and frosted card finish */
+html.lms-brand-glass body .frame{
+  background:
+    radial-gradient(ellipse at 78% 12%,rgba(91,75,255,.18),transparent 37%),
+    linear-gradient(125deg,#0b1020,#11182b 58%,#15152f)!important;
+  color:#f4f7ff!important;
+}
+html.lms-brand-glass body :is(.frame,.section,.about,.wins,.res,.results,.courses,.feedback,.gallery,.contact,.facebook-updates,.site-footer,.foot,.footer){
+  color:#f4f7ff!important;
+}
+html.lms-brand-glass body :is(.top,.header,.site-header){
+  background:rgba(11,16,32,.80)!important;
+  border-color:rgba(186,174,255,.22)!important;
+  box-shadow:0 12px 34px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.06)!important;
+  -webkit-backdrop-filter:blur(22px) saturate(155%)!important;
+  backdrop-filter:blur(22px) saturate(155%)!important;
+}
+html.lms-brand-glass body :is(.section,.about,.wins,.res,.results,.courses,.feedback,.gallery,.contact,.facebook-updates){
+  background:linear-gradient(180deg,rgba(13,20,38,.96),rgba(11,16,32,.98))!important;
+  border-color:rgba(186,174,255,.12)!important;
+}
+html.lms-brand-glass body :is(.programs,.stats-band){
+  background:rgba(17,24,43,.76)!important;
+  border-color:rgba(186,174,255,.25)!important;
+  border-radius:18px!important;
+  box-shadow:var(--lms-glass-shadow)!important;
+  -webkit-backdrop-filter:blur(20px) saturate(145%)!important;
+  backdrop-filter:blur(20px) saturate(145%)!important;
+}
+html.lms-brand-glass body :is(.program,.resource,.course,.qual,.win,.review,.rankbox,.gallery-tile,.why-item,.grade-support-card,.facebook-fallback-card){
+  background:linear-gradient(145deg,rgba(34,39,79,.70),rgba(13,19,39,.74))!important;
+  border:1px solid rgba(186,174,255,.23)!important;
+  color:#f4f7ff!important;
+  box-shadow:0 14px 36px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.06)!important;
+}
+html.lms-brand-glass body :is(.program b,.resource h3,.course h3,.qual b,.win b,.review b,.section h2,.section-head h2,.contact h2){
+  color:#f4f7ff!important;
+}
+html.lms-brand-glass body :is(.program small,.prog-arrow,.resource a,.course a,.stat b,.stat-big b,.kicker,.eyebrow){
+  color:#a6ff2e!important;
+}
+html.lms-brand-glass body :is(.hero h1,.copy h1,.section h2,.section-head h2,.contact h2){
+  color:#f4f7ff!important;
+}
+html.lms-brand-glass body :is(.hero h1 span,.copy h1 span){
+  color:#a6ff2e!important;
+}
+html.lms-brand-glass body :is(.copy>p,.section-intro,.about-copy>p,.resource p,.course p,.review p,.sub,.site-footer p){
+  color:#aeb8ce!important;
+}
+html.lms-brand-glass body .site-footer,
+html.lms-brand-glass body .foot{
+  background:#080d19!important;
+  border-top:1px solid rgba(186,174,255,.18)!important;
+}
+html.lms-brand-glass body .portal{
+  background:linear-gradient(125deg,#4037c9,#7c3aed)!important;
+  border:1px solid rgba(186,174,255,.28)!important;
+  color:#fff!important;
+  border-radius:12px!important;
+}
+html.lms-brand-glass body .button.primary{
+  background:linear-gradient(115deg,#a6ff2e,#d1ff75)!important;
+  color:#11182b!important;
+}
+
+/* Seasonal snow stays behind controls and never intercepts taps/clicks. */
+html.lms-brand-glass body #christmas-snowfall{
+  display:block!important;
+  position:fixed!important;
+  inset:0!important;
+  z-index:45!important;
+  opacity:.46!important;
+  pointer-events:none!important;
+}
+html.lms-brand-glass body #christmas-snowfall .xmas-snowflake{
+  color:#f7fbff!important;
+  text-shadow:0 0 8px rgba(224,241,255,.65)!important;
+}
+html.lms-brand-glass body #christmas-garland{
+  opacity:.65!important;
+}
+
+@media(max-width:800px){
+  html.lms-brand-glass body :is(.dashboard-mobile-nav,.shared-bottom-nav,.mobile-nav){
+    background:rgba(11,16,32,.82)!important;
+    border:1px solid rgba(186,174,255,.27)!important;
+    box-shadow:0 16px 40px rgba(0,0,0,.38),inset 0 1px rgba(255,255,255,.08)!important;
+    -webkit-backdrop-filter:blur(24px) saturate(160%)!important;
+    backdrop-filter:blur(24px) saturate(160%)!important;
+  }
+  html.lms-brand-glass body :is(.dashboard-mobile-nav a,.shared-bottom-nav>a,.shared-more-menu>summary,.mobile-nav a){
+    color:#aeb8ce!important;
+  }
+  html.lms-brand-glass body :is(.dashboard-mobile-nav a.active,.shared-bottom-nav>a.active,.shared-more-menu.is-current>summary,.mobile-nav a.active){
+    background:linear-gradient(135deg,rgba(91,75,255,.42),rgba(124,58,237,.28))!important;
+    color:#fff!important;
+    box-shadow:inset 0 0 0 1px rgba(194,183,255,.24)!important;
+  }
+  html.lms-brand-glass body :is(.main,.main-content,.lms-dashboard){background:transparent!important}
+}
+@media(prefers-reduced-motion:reduce){
+  html.lms-brand-glass body #christmas-snowfall .xmas-snowflake{animation:none!important}
+  html.lms-brand-glass body *,html.lms-brand-glass body *::before,html.lms-brand-glass body *::after{transition:none!important}
+}
