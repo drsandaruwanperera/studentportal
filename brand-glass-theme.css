@@ -597,3 +597,201 @@ html.lms-brand-glass.student-glass-ui body #christmas-santa-badge{
 @media(prefers-reduced-motion:reduce){
   html.lms-brand-glass.student-glass-ui body #christmas-snowfall .xmas-snowflake{animation:none!important}
 }
+
+
+/* ==========================================================
+   ACCESSIBILITY + GLOBAL BRAND CONTRAST LOCK
+   Final layer: dark purple glass with #A6FF2E lime.
+   WCAG AA-friendly text pairs: white/muted/lavender on dark,
+   and dark navy text on lime primary actions.
+========================================================== */
+html.lms-brand-glass,
+html.lms-brand-glass body{
+  color-scheme:dark!important;
+  --brand-bg:#0b1020!important;
+  --brand-panel:#11182b!important;
+  --brand-panel-2:#17153d!important;
+  --brand-purple:#5b4bff!important;
+  --brand-violet:#7c3aed!important;
+  --brand-lime:#a6ff2e!important;
+  --brand-text:#f4f7ff!important;
+  --brand-muted:#aeb8ce!important;
+  --brand-line:rgba(186,174,255,.24)!important;
+  --portal-bg:#0b1020!important;
+  --portal-surface:#11182b!important;
+  --portal-surface-2:#17153d!important;
+  --portal-purple:#5b4bff!important;
+  --portal-purple-bright:#5b4bff!important;
+  --portal-violet:#7c3aed!important;
+  --portal-lime:#a6ff2e!important;
+  --portal-text:#f4f7ff!important;
+  --portal-muted:#aeb8ce!important;
+  background:
+    radial-gradient(ellipse at 10% 0%,rgba(91,75,255,.22),transparent 36%),
+    radial-gradient(ellipse at 92% 82%,rgba(124,58,237,.17),transparent 34%),
+    linear-gradient(145deg,#0b1020 0%,#11182b 55%,#0b1020 100%)!important;
+  color:#f4f7ff!important;
+}
+
+html.lms-brand-glass body :is(h1,h2,h3,h4,h5,h6,strong,b,label,legend,th),
+html.lms-brand-glass body :is(.lms-header-title h1,.section-heading h2,.panel-head h2){
+  color:#f4f7ff!important;
+  text-shadow:none!important;
+}
+html.lms-brand-glass body :is(p,small,.muted,.subtitle,.description,.hint,.meta,.eyebrow,.card-subtitle,.sub,.brand-text span){
+  color:#aeb8ce!important;
+}
+html.lms-brand-glass body a,
+html.lms-brand-glass body :is(.text-btn,.resource-card a,.course a,.portal-section-link,.lms-section-heading a){
+  color:#c4b5fd!important;
+}
+html.lms-brand-glass body a:hover,
+html.lms-brand-glass body :is(.text-btn:hover,.resource-card a:hover,.course a:hover){
+  color:#a6ff2e!important;
+}
+
+/* Common cards and all tab types use one frosted-purple surface. */
+html.lms-brand-glass body :is(
+  .card,.panel,.stat,.result,.notice,.support-card,.announcement-card,
+  .announcement-panel,.info-card,.material-card,.part-card,.paper-card,.pdf-card,
+  .profile-card,.profile-data-item,.profile-app-row,.quick-nav-card,.lms-stat-card,
+  .lms-widget,.portal-program-card,.portal-support-card,.dashboard-summary-card,
+  .answer-row,.answers-heading,.answers-group,.trend-panel,.insight-panel,
+  .chat,.chat-list,.rankbox,.resource,.course,.qual,.win,.review,.why-item,
+  .schedule-card,.gallery-card,.grade-support-card,.teacher-proof,.parent-card,
+  .story-request-card,.faq-item,.facebook-fallback-card
+){
+  color:#f4f7ff!important;
+  background:linear-gradient(145deg,rgba(34,29,78,.82),rgba(13,19,39,.86))!important;
+  border:1px solid rgba(186,174,255,.24)!important;
+  box-shadow:0 16px 42px rgba(0,0,0,.26),inset 0 1px rgba(255,255,255,.07)!important;
+  -webkit-backdrop-filter:blur(20px) saturate(145%)!important;
+  backdrop-filter:blur(20px) saturate(145%)!important;
+}
+html.lms-brand-glass body :is(.card,.panel,.stat,.result,.notice,.support-card,.announcement-card,.announcement-panel,.info-card,.material-card,.paper-card,.profile-card,.lms-widget,.portal-program-card,.portal-support-card,.dashboard-summary-card,.answer-row,.resource,.course,.qual,.win,.review,.faq-item) :is(h1,h2,h3,h4,h5,h6,b,strong,.title,.value,.number,.score){
+  color:#f4f7ff!important;
+}
+html.lms-brand-glass body :is(.card,.panel,.stat,.result,.notice,.support-card,.announcement-card,.announcement-panel,.info-card,.material-card,.paper-card,.profile-card,.lms-widget,.portal-program-card,.portal-support-card,.dashboard-summary-card,.answer-row,.resource,.course,.qual,.win,.review,.faq-item) :is(p,small,span,.description,.meta,.hint,.muted){
+  color:#aeb8ce!important;
+}
+
+/* Accent text and success states: one exact green brand colour. */
+html.lms-brand-glass body :is(
+  .eyebrow,.kicker,.portal-kicker,.brand-label,.welcome-label,
+  .program-label,.win-year,.win-rank,.grade-support-label,
+  .dashboard-summary-number,.dashboard-summary-meta b,
+  .dashboard-summary-meta span,.quick-nav-card>b,
+  .learning-banner-copy h2 b,.learning-banner-copy h2 span,
+  .exam-kicker,.stat-number,.big-stat-number,.results-count,
+  .success,.success-text,.status-success,.status-active,.published,.available
+){
+  color:#a6ff2e!important;
+}
+html.lms-brand-glass body :is(.success-badge,.status-success,.published,.available,.win-badge){
+  color:#a6ff2e!important;
+  background:rgba(166,255,46,.12)!important;
+  border-color:rgba(166,255,46,.28)!important;
+}
+
+/* Primary actions are lime with dark text; secondary actions stay purple glass. */
+html.lms-brand-glass body :is(
+  .button.primary,.btn-primary,.primary-btn,.primary-action,.action-btn,
+  .save-btn,.hero-continue-btn,.profile-btn.primary,.answer-link.primary,
+  .login-btn,#loginBtn,.submit-btn,.portal
+){
+  color:#0b1020!important;
+  background:linear-gradient(110deg,#a6ff2e,#d1ff75)!important;
+  border:1px solid rgba(220,255,170,.78)!important;
+  box-shadow:0 10px 26px rgba(166,255,46,.18),inset 0 1px rgba(255,255,255,.35)!important;
+  font-weight:850!important;
+}
+html.lms-brand-glass body :is(
+  .button.primary,.btn-primary,.primary-btn,.primary-action,.action-btn,
+  .save-btn,.hero-continue-btn,.profile-btn.primary,.answer-link.primary,
+  .login-btn,#loginBtn,.submit-btn,.portal
+) *{color:#0b1020!important}
+html.lms-brand-glass body :is(.btn,.button,.back,.profile-back,.profile-btn.secondary,.answer-link:not(.primary),.btn-outline,.outline){
+  color:#e9e4ff!important;
+  background:rgba(255,255,255,.055)!important;
+  border:1px solid rgba(186,174,255,.28)!important;
+}
+html.lms-brand-glass body :is(.sidebar-link.active,.side nav a.active,.tab.active,.tab[aria-selected="true"],.dashboard-announcement-tab.active,.mobile-nav a.active,.dashboard-mobile-nav a.active,.shared-bottom-nav>a.active){
+  color:#0b1020!important;
+  background:linear-gradient(110deg,#a6ff2e,#d1ff75)!important;
+  border-color:rgba(220,255,170,.72)!important;
+  box-shadow:0 8px 22px rgba(166,255,46,.17)!important;
+}
+html.lms-brand-glass body :is(.sidebar-link.active,.side nav a.active,.tab.active,.dashboard-announcement-tab.active,.mobile-nav a.active,.dashboard-mobile-nav a.active) *{
+  color:#0b1020!important;
+}
+
+/* Errors remain distinguishable, but no pure-red low-contrast text. */
+html.lms-brand-glass body :is(.error,.danger,.invalid,.form-error,.field-error,.alert-error,.status-error,.text-danger){
+  color:#ff9ba8!important;
+}
+html.lms-brand-glass body :is(.warning,.alert-warning,.text-warning){
+  color:#d1ff75!important;
+}
+
+/* Dashboard, homepage, login, results, and all section canvases. */
+html.lms-brand-glass body :is(.frame,.hero,.main,.main-content,.content,#main,.lms-dashboard,.section,.about,.wins,.res,.results,.courses,.grade-support,.feedback,.gallery,.contact,.facebook-updates,.site-footer,.foot,.footer){
+  color:#f4f7ff!important;
+  background:
+    radial-gradient(ellipse at 86% 5%,rgba(91,75,255,.15),transparent 35%),
+    linear-gradient(145deg,#0b1020,#11182b 58%,#0b1020)!important;
+}
+html.lms-brand-glass body :is(.top,.header,.site-header,.lms-header,.mobile-lms-header,.section-mobile-header){
+  color:#f4f7ff!important;
+  background:rgba(11,16,32,.82)!important;
+  border-color:rgba(186,174,255,.23)!important;
+  box-shadow:0 12px 34px rgba(0,0,0,.24),inset 0 1px rgba(255,255,255,.06)!important;
+  -webkit-backdrop-filter:blur(22px) saturate(155%)!important;
+  backdrop-filter:blur(22px) saturate(155%)!important;
+}
+html.lms-brand-glass body :is(.sidebar,.side,#studentSidebar,#sectionSidebar){
+  color:#f4f7ff!important;
+  background:linear-gradient(180deg,rgba(11,16,32,.97),rgba(17,24,43,.93))!important;
+  border-color:rgba(186,174,255,.22)!important;
+  box-shadow:16px 0 48px rgba(0,0,0,.28)!important;
+}
+
+/* Inputs and controls use dark surfaces and readable focus rings. */
+html.lms-brand-glass body :is(input,select,textarea){
+  color:#f4f7ff!important;
+  background:rgba(8,13,27,.84)!important;
+  border:1px solid rgba(186,174,255,.28)!important;
+  color-scheme:dark!important;
+}
+html.lms-brand-glass body :is(input,select,textarea)::placeholder{color:#aeb8ce!important}
+html.lms-brand-glass body :is(input,select,textarea):focus{
+  border-color:#a6ff2e!important;
+  box-shadow:0 0 0 3px rgba(166,255,46,.14)!important;
+}
+html.lms-brand-glass body :is(a,button,input,select,textarea,[tabindex]):focus-visible{
+  outline:2px solid #a6ff2e!important;outline-offset:3px!important;
+}
+
+/* Specific dark-glass treatment for the paper hub and answer-library page. */
+html.lms-brand-glass body.answers-hub-page,
+html.lms-brand-glass body.student-model-answers-page{
+  color:#f4f7ff!important;
+  background:linear-gradient(145deg,#0b1020,#17153d 58%,#0b1020)!important;
+}
+html.lms-brand-glass body :is(.answers-empty,.answers-heading,.answers-group,.answer-row){
+  color:#f4f7ff!important;
+  background:linear-gradient(145deg,rgba(34,29,78,.82),rgba(13,19,39,.86))!important;
+  border-color:rgba(186,174,255,.24)!important;
+}
+
+/* Snow remains visible, decorative, and never blocks interactions. */
+html.lms-brand-glass body #christmas-snowfall{
+  display:block!important;position:fixed!important;inset:0!important;
+  z-index:45!important;opacity:.48!important;pointer-events:none!important;
+}
+html.lms-brand-glass body #christmas-snowfall .xmas-snowflake{
+  color:#f4f7ff!important;text-shadow:0 0 8px rgba(196,181,253,.72)!important;
+}
+html.lms-brand-glass body #christmas-garland{display:block!important;opacity:.62!important}
+@media(prefers-reduced-motion:reduce){
+  html.lms-brand-glass body #christmas-snowfall .xmas-snowflake{animation:none!important}
+}
