@@ -2118,12 +2118,6 @@ html.student-glass-ui body *::after {
     font-size: 16px !important;
     box-shadow: none !important;
   }
-  @media(max-width:360px) {
-    html.student-glass-ui body .lms-stat-grid { gap: 6px !important; }
-    html.student-glass-ui body .lms-stat-grid .lms-stat-card { padding: 10px 8px !important; }
-    html.student-glass-ui body .lms-stat-grid .lms-stat-card span { font-size: 9px !important; }
-  }
-
   /* Full-width resource cards retain the labels and actions from each programme. */
   html.student-glass-ui body .portal-program-grid {
     grid-template-columns: minmax(0,1fr) !important;
@@ -2225,7 +2219,7 @@ html.student-glass-ui body .shared-floating-teacher {
   align-items: center !important;
   justify-content: center !important;
   width: 62px !important;
-  height: 68px !important;
+  height: 62px !important;
   flex: 0 0 62px !important;
   padding: 3px 3px 0 !important;
   margin: -23px 0 0 !important;
@@ -2545,3 +2539,9 @@ html.student-glass-ui body .study-buddy-launcher small {
   font-size: 9px !important;
 }
 
+
+@media (max-width: 360px) {
+  html.student-glass-ui body .lms-stat-grid { gap: 6px !important; }
+  html.student-glass-ui body .lms-stat-grid .lms-stat-card { padding: 10px 8px !important; }
+  html.student-glass-ui body .lms-stat-grid .lms-stat-card span { font-size: 9px !important; }
+}
