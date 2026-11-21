@@ -76,6 +76,9 @@
     panel.classList.toggle("is-open", open);
     panel.setAttribute("aria-hidden", String(!open));
     launcher.setAttribute("aria-expanded", String(open));
+    document.querySelectorAll(".shared-floating-teacher").forEach(button => {
+      button.setAttribute("aria-expanded", String(open));
+    });
     if (open) byId("studyBuddyInput")?.focus();
     else launcher.focus();
   }
