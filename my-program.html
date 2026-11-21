@@ -168,7 +168,7 @@ document.body.classList.add("dark-mode");localStorage.setItem("lmsTheme","dark")
   } else {
     const isAL = ["al","alevel","advanced","advancedlevel"].includes(studentType) ||
       studentType.includes("advancedlevel") || studentGrade.includes("advancedlevel") ||
-      studentGrade.startsWith("al") || /advanced|a\s*\\/\s*l|alevel/i.test(context) ||
+      studentGrade.startsWith("al") || /advanced|alevel/i.test(context) || context.toLowerCase().includes("a/l") ||
       /^A2[789]\d{3}$/.test(studentId) || /^(?:27|28|29)[CN]/.test(studentId) ||
       Boolean(savedYear || contextYear || idYear);
     if (isAL) cohort = "al";
