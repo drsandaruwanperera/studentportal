@@ -31,6 +31,24 @@
   const help = wrapper.querySelector(".pwa-install-help");
   let deferredPrompt = null;
 
+  // iPadOS can present a desktop-style Safari user agent, so also
+  // recognise iPads by their touch-capable Mac platform identifier.
+  const userAgent = navigator.userAgent || "";
+  const platform = navigator.platform || "";
+  const isAppleMobile =
+    /iphone|ipad|ipod/i.test(userAgent) ||
+    (platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  const isMac = !isAppleMobile && /macintosh|mac os x/i.test(userAgent);
+  const getManualInstallHelp = () => {
+    if (isAppleMobile) {
+      return "In Safari, tap Share → Add to Home Screen → Add. If “Open as Web App” appears, leave it turned on.";
+    }
+    if (isMac) {
+      return "In Safari on macOS Sonoma 14 or later, choose Share → Add to Dock (or File → Add to Dock).";
+    }
+    return "Open your browser menu and choose Install app or Add to Home screen.";
+  };
+
   const style = document.createElement("style");
   style.textContent = `
     .pwa-install-widget {
@@ -100,10 +118,7 @@
   button.addEventListener("click", async () => {
     help.classList.remove("visible");
     if (!deferredPrompt) {
-      const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-      help.textContent = isIOS
-        ? "Tap Share, then choose Add to Home Screen."
-        : "Open Chrome menu ⋮ and choose Install app or Add to Home screen.";
+      help.textContent = getManualInstallHelp();
       help.classList.add("visible");
       return;
     }
@@ -121,7 +136,7 @@
     } catch (error) {
       console.warn("The LMS app installation prompt was unavailable.", error);
       button.disabled = false;
-      help.textContent = "Open Chrome menu ⋮ and choose Install app or Add to Home screen.";
+      help.textContent = getManualInstallHelp();
       help.classList.add("visible");
     }
   });
