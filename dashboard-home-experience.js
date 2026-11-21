@@ -5,7 +5,9 @@
       title: "Build confidence.<br><b>Make every lesson count.</b>",
       description: "Your Grade 10 papers, learning resources and progress — organized in one place to help you keep moving forward.",
       badge: "GRADE 10 PATHWAY", model: "grade10-model-papers.html", modelTitle: "Term Test Model Papers",
-      modelDescription: "Grade 10 term test papers and model answers for practice.", past: null,
+      modelDescription: "Grade 10 term test papers for practice.",
+      modelAnswers: "student-model-answers.html", modelAnswersTitle: "Model Paper Answers",
+      modelAnswersDescription: "Official answer schemes and MCQ answers for Grade 10 model papers.", past: null,
       exam: { kicker: "YOUR NEXT BIG MILESTONE", title: "Your O/L exams are getting closer.",
         copy: "Official examination window: 07–17 December 2027 · Countdown to the first exam day.",
         startsAt: "2027-12-07T00:00:00+05:30", endsAt: "2027-12-18T00:00:00+05:30" },
@@ -17,7 +19,9 @@
       title: "Prepare with purpose.<br><b>Build exam confidence.</b>",
       description: "Your Grade 11 papers, learning resources and progress — organized in one place to help you keep moving forward.",
       badge: "GRADE 11 PATHWAY", model: "grade11-model-papers.html", modelTitle: "TOP Ranking Papers",
-      modelDescription: "Grade 11 TOP Ranking papers and model paper answers.", past: null, hub: false, progress: true,
+      modelDescription: "Grade 11 TOP Ranking papers for practice.",
+      modelAnswers: "student-model-answers.html", modelAnswersTitle: "Model Paper Answers",
+      modelAnswersDescription: "Official Part A and Part B answers for Grade 11 TOP Ranking papers.", past: null, hub: false, progress: false,
       smartBook: false, schoolPapers: false,
       exam: { kicker: "YOUR NEXT BIG MILESTONE", title: "Your O/L exams are getting closer.",
         copy: "Official examination window: 08–17 December 2026 · Countdown to the first exam day.",
@@ -48,24 +52,27 @@
 
   const studyCardRules = {
     grade10: {
-      portalProgramHub: true,
+      portalProgramHub: false,
       modelPapersCard: true,
+      modelPaperAnswersCard: true,
       pastPapersCard: false,
-      programProgressCard: true,
+      programProgressCard: false,
       smartBookAnswersCard: false,
       schoolPaperAnswersCard: false
     },
     grade11: {
       portalProgramHub: false,
       modelPapersCard: true,
+      modelPaperAnswersCard: true,
       pastPapersCard: false,
-      programProgressCard: true,
+      programProgressCard: false,
       smartBookAnswersCard: false,
       schoolPaperAnswersCard: false
     },
     al2027: {
       portalProgramHub: false,
       modelPapersCard: true,
+      modelPaperAnswersCard: false,
       pastPapersCard: false,
       programProgressCard: false,
       smartBookAnswersCard: false,
@@ -74,6 +81,7 @@
     al2028: {
       portalProgramHub: false,
       modelPapersCard: true,
+      modelPaperAnswersCard: false,
       pastPapersCard: false,
       programProgressCard: false,
       smartBookAnswersCard: true,
@@ -393,7 +401,7 @@
     if (badge) badge.textContent = cohort.badge;
     if (subtitle) subtitle.textContent = "Resources selected for your " + label + " learning program.";
 
-    const hub = byId("portalProgramHub"), model = byId("modelPapersCard"), past = byId("pastPapersCard");
+    const hub = byId("portalProgramHub"), model = byId("modelPapersCard"), answers = byId("modelPaperAnswersCard"), past = byId("pastPapersCard");
     const programProgress = byId("programProgressCard"), smartBook = byId("smartBookAnswersCard"), schoolPapers = byId("schoolPaperAnswersCard");
 
     const cohortCardAllowList = studyCardRules[key];
@@ -410,6 +418,17 @@
       byId("modelPapersDescription").textContent = cohort.modelDescription;
       const action = model.querySelector(".material-link");
       if (action) action.firstChild.textContent = key === "al2028" ? "Open Theory Examination " : "Explore papers ";
+    }
+    if (answers) {
+      answers.hidden = !cohortCardAllowList.modelPaperAnswersCard;
+      if (cohort.modelAnswers) {
+        answers.href = cohort.modelAnswers;
+        answers.setAttribute("aria-label", cohort.modelAnswersTitle || "Model Paper Answers");
+        const answerTitle = answers.querySelector("#modelPaperAnswersTitle");
+        const answerDescription = answers.querySelector("#modelPaperAnswersDescription");
+        if (answerTitle) answerTitle.textContent = cohort.modelAnswersTitle || "Model Paper Answers";
+        if (answerDescription) answerDescription.textContent = cohort.modelAnswersDescription || "";
+      }
     }
     if (past) {
       past.hidden = !cohortCardAllowList.pastPapersCard;
