@@ -612,6 +612,28 @@ function clearPasswordChangeSession() {
 }
 
 
+function isInstalledLmsApp() {
+    return (
+        (typeof window.matchMedia === "function" &&
+            window.matchMedia("(display-mode: standalone)").matches) ||
+        navigator.standalone === true
+    );
+}
+
+function redirectWebsiteLoginToAppInstall() {
+    if (isInstalledLmsApp()) return false;
+
+    showMessage(
+        "Your Recovery Code is saved. Install and open the Dr. Sandaruwan LMS app to continue.",
+        "info"
+    );
+    window.setTimeout(() => {
+        window.location.replace("app-required.html");
+    }, 450);
+    return true;
+}
+
+
 // =====================================================
 // INSTALLED LMS APP USAGE TRACKING
 // =====================================================
@@ -621,12 +643,7 @@ function clearPasswordChangeSession() {
 // =====================================================
 
 function getInstalledAppUsageFields(studentData, studentType) {
-    const standaloneDisplay =
-        typeof window.matchMedia === "function" &&
-        window.matchMedia("(display-mode: standalone)").matches;
-
-    const isStandaloneApp =
-        standaloneDisplay || navigator.standalone === true;
+    const isStandaloneApp = isInstalledLmsApp();
 
     if (!isStandaloneApp) {
         return {};
@@ -865,8 +882,21 @@ async function loginStudent() {
 
         const loginStudentData = verifiedLogin.data || data;
 
-        // Recovery code setup remains mandatory before onboarding or dashboard access.
-        await requireRecoveryCodeSetup(studentRef, studentId, loginStudentData);
+        // Website logins get a one-time Recovery Code handoff before the app-install gate.
+        // Existing keys are hash-only, so legacy users receive a replacement once.
+        const runningInInstalledApp = isInstalledLmsApp();
+        const hasWebsiteRecoveryHandoff = String(loginStudentData?.recoveryCodeDeliveryMethod || "")
+            .toLowerCase()
+            .startsWith("website-");
+        const recoveryHashIsValid = /^[a-f0-9]{64}$/i.test(String(loginStudentData?.recoveryCodeHash || "").trim());
+        const websiteHandoffRequired = !runningInInstalledApp && !hasWebsiteRecoveryHandoff;
+
+        await requireRecoveryCodeSetup(studentRef, studentId, loginStudentData, {
+            forceRegenerate: websiteHandoffRequired &&
+                loginStudentData?.recoveryCodeSetupComplete === true &&
+                recoveryHashIsValid,
+            websiteHandoff: websiteHandoffRequired
+        });
 
         saveStudentSession(
             studentId,
@@ -971,6 +1001,7 @@ async function loginStudent() {
 
             clearPasswordChangeSession();
 
+            if (redirectWebsiteLoginToAppInstall()) return;
 
             showMessage(
                 "Login successful. Redirecting...",
@@ -1057,6 +1088,7 @@ async function loginStudent() {
 
             clearPasswordChangeSession();
 
+            if (redirectWebsiteLoginToAppInstall()) return;
 
             showMessage(
                 "Login successful. Redirecting...",
@@ -1087,6 +1119,7 @@ async function loginStudent() {
 
         clearPasswordChangeSession();
 
+        if (redirectWebsiteLoginToAppInstall()) return;
 
         showMessage(
             "Login successful. Redirecting...",
