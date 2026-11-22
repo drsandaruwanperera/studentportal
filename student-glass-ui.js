@@ -62,7 +62,7 @@
     study: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 1 4 17.5z"/><path d="M4 17.5A2.5 2.5 0 0 1 6.5 15H20M8 7h8M8 10.5h8"/></svg>',
     results: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5V12M10 19.5V5M16 19.5V9M22 19.5V3.5"/><path d="M3 20.5h18"/></svg>',
     more: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="19" cy="12" r="1.4"/></svg>',
-    bell: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>',
+    announcements: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10v4h3l10 4V6L6 10H3Z"/><path d="M6 14l2.5 5H12l-2-4.2M19 9l2-2M19 15l2 2"/></svg>',
     logout: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg>'
   };
 
@@ -86,6 +86,13 @@
       if (avatar) {
         avatar.textContent = studentInitial;
         avatar.setAttribute("aria-label", studentName);
+      }
+      const announcementLink = existing.querySelector('.shared-header-action[href="announcements.html"]');
+      if (announcementLink) {
+        announcementLink.classList.add("shared-header-announcements");
+        announcementLink.setAttribute("aria-label", "Announcements");
+        announcementLink.setAttribute("title", "Announcements");
+        announcementLink.innerHTML = icons.announcements + '<span class="shared-header-announcement-dot" aria-hidden="true"></span>';
       }
       return;
     }
@@ -113,7 +120,9 @@
     announcements.className = "shared-header-action";
     announcements.href = "announcements.html";
     announcements.setAttribute("aria-label", "Announcements");
-    announcements.innerHTML = icons.bell;
+    announcements.classList.add("shared-header-announcements");
+    announcements.title = "Announcements";
+    announcements.innerHTML = icons.announcements + '<span class="shared-header-announcement-dot" aria-hidden="true"></span>';
 
     const avatar = document.createElement("span");
     avatar.className = "shared-header-student";
