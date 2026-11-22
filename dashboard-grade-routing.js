@@ -82,11 +82,11 @@ import {db,doc,getDoc} from "./firebase.js";
     const config = type === "al" && alYear === "2028"
       ? {
           ...routes.al,
-          model: "theory-examination.html",
+          model: "model-papers.html",
           past: null,
-          modelTitle: "Theory Examination",
+          modelTitle: "Monthly TOP Ranking Papers",
           pastTitle: "Past Papers",
-          modelDescription: "A/L 2028 theory and examination preparation",
+          modelDescription: "A/L 2028 monthly TOP Ranking papers with 1st- and 2nd-paper answers",
           pastDescription: ""
         }
       : routes[type];
