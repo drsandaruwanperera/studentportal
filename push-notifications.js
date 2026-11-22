@@ -406,9 +406,37 @@ import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/fireb
   document.body.appendChild(overlay);
 
   const button = overlay.querySelector(".lms-push-gate-card > button:not(.lms-push-continue)");
-  const continueButton = overlay.querySelector(".lms-push-continue");
-  const status = overlay.querySelector(".lms-push-gate-status");
   const card = overlay.querySelector(".lms-push-gate-card");
+  let continueButton = overlay.querySelector(".lms-push-continue");
+  if (!continueButton) {
+    continueButton = document.createElement("button");
+    continueButton.type = "button";
+    continueButton.className = "lms-push-continue";
+    card.insertBefore(continueButton, card.querySelector(".lms-push-gate-note"));
+  }
+  continueButton.textContent = "Later — Continue to LMS";
+  continueButton.setAttribute("aria-label", "Continue to LMS and enable notifications later");
+  // Inline !important styles make this action visible even if an older
+  // installed PWA stylesheet has stale button rules cached.
+  const laterStyles = {
+    display: "block",
+    visibility: "visible",
+    opacity: "1",
+    position: "relative",
+    width: "100%",
+    minHeight: "46px",
+    marginTop: "10px",
+    padding: "10px 14px",
+    border: "1px solid rgba(196,181,253,.42)",
+    borderRadius: "12px",
+    background: "rgba(255,255,255,.10)",
+    color: "#f8fafc",
+    font: "800 12px Inter,system-ui,sans-serif",
+    boxShadow: "none",
+    cursor: "pointer"
+  };
+  Object.entries(laterStyles).forEach(([name,value]) => continueButton.style.setProperty(name,value,"important"));
+  const status = overlay.querySelector(".lms-push-gate-status");
   const originalOverflow = document.body.style.overflow;
   document.body.style.overflow = "hidden";
 
