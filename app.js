@@ -119,7 +119,7 @@ function showLoginSuccessAndRedirect(
     msg?.classList.add("is-login-transition-message");
 
     // Brief success state before the existing destination is opened.
-    const target = nextPage === "dashboard.html" ? "./dashboard.html?lms-ui=20261122-announcement-megaphone" : destination;
+    const target = nextPage === "dashboard.html" ? "./dashboard.html?lms-ui=20261122-approved-mobile-dashboard" : destination;
     window.setTimeout(() => window.location.replace(target), 900);
 }
 
