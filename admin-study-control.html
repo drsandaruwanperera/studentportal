@@ -27,10 +27,11 @@
 </main></div>
 <script type="module">
 import {db,doc,setDoc,deleteDoc,onSnapshot,collection} from "./firebase.js";
-const role=(sessionStorage.getItem("adminRole")||"").toLowerCase();
+
+const role=(sessionStorage.getItem("adminRole")||"").trim().toLowerCase().replace(/[\\s_-]+/g,"");
 if(sessionStorage.getItem("adminLoggedIn")!=="true"){location.replace("admin-login.html");}
 if(!["full","superadmin"].includes(role)){alert("Super Admin only.");location.replace("admin.html");}
-const cohorts={grade10:"Grade 10",grade11:"Grade 11",al2027:"A/L 2027",al2028:"A/L 2028"};
+
 const cards=[
 {id:"modelPapersCard",title:"Term Test / TOP Ranking / Monthly TOP Ranking Papers",desc:"Main cohort paper collection",allowed:["grade10","grade11","al2027"]},
 {id:"modelPaperAnswersCard",title:"Model Paper Answers",desc:"Answer library for Grade 10 and Grade 11",allowed:["grade10","grade11"]},
@@ -38,41 +39,83 @@ const cards=[
 {id:"smartBookAnswersCard",title:"Smart Book Answers",desc:"A/L 2028 Smart Book solutions",allowed:["al2028"]},
 {id:"schoolPaperAnswersCard",title:"School Paper Answers",desc:"A/L 2028 school paper solutions",allowed:["al2028"]}
 ];
-const cohortEl=document.getElementById("cohort"), existing=document.getElementById("existingCards"), status=document.getElementById("status");
-let settings={}, custom=[];
+
+const cohortEl=document.getElementById("cohort");
+const existing=document.getElementById("existingCards");
+const status=document.getElementById("status");
+let settings={},custom=[];
+let writeBusy=false;
 const key=(cohort,id)=>cohort+"_"+id;
+const escapeHtml=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function errorMessage(error){
+ console.error("Study control Firestore error:",error);
+ const code=error?.code||"unknown";
+ if(code==="permission-denied") return "Firestore permission denied. The currently published Firestore Rules do not authorize this admin write.";
+ if(code==="unauthenticated") return "Firebase Authentication session is missing. The current admin login uses sessionStorage only.";
+ if(code==="unavailable") return "Firestore is temporarily unavailable. Check your network and try again.";
+ return "Could not save the study card ("+code+"). Check the browser console for details.";
+}
 function render(){
  const cohort=cohortEl.value;
  const rows=cards.filter(x=>x.allowed.includes(cohort)).map(x=>{
   const active=settings[key(cohort,x.id)]?.active!==false;
   return '<article class="item"><div class="item-copy"><strong>'+x.title+'</strong><small>'+x.desc+'</small></div><em>'+(active?"ACTIVE":"HIDDEN")+'</em><button class="switch '+(active?"":"off")+'" data-card="'+x.id+'">'+(active?"Hide":"Show")+'</button></article>';
  });
- const extras=custom.filter(x=>x.cohort===cohort).map(x=>'<article class="item"><div class="item-copy"><strong>'+escapeHtml(x.title)+'</strong><small>'+escapeHtml(x.description||"Custom study card")+'</small></div><em> CUSTOM </em><button class="delete" data-delete="'+x.id+'">Remove</button></article>');
+ const extras=custom.filter(x=>x.cohort===cohort).map(x=>'<article class="item"><div class="item-copy"><strong>'+escapeHtml(x.title)+'</strong><small>'+escapeHtml(x.description||"Custom study card")+'</small></div><em>CUSTOM</em><button class="delete" data-delete="'+escapeHtml(x.id)+'">Remove</button></article>');
  existing.innerHTML=rows.concat(extras).join("")||'<p class="muted">No study cards assigned to this cohort yet.</p>';
+
  existing.querySelectorAll("[data-card]").forEach(btn=>btn.addEventListener("click",async()=>{
-  btn.disabled=true;const id=btn.dataset.card;const k=key(cohort,id);const active=settings[k]?.active!==false;
-  try{await setDoc(doc(db,"dashboardStudyContent",k),{cohort,cardId:id,active:!active,updatedAt:new Date().toISOString()},{merge:true});}catch(e){console.error(e);alert("Could not update card. Check Firestore permissions.");}finally{btn.disabled=false;}
+  if(writeBusy)return;
+  const cohortAtClick=cohortEl.value;
+  const id=btn.dataset.card;
+  const k=key(cohortAtClick,id);
+  const active=settings[k]?.active!==false;
+  writeBusy=true;btn.disabled=true;status.textContent="Saving change…";
+  try{
+   await setDoc(doc(db,"dashboardStudyContent",k),{cohort:cohortAtClick,cardId:id,active:!active,updatedAt:new Date().toISOString()},{merge:true});
+   status.textContent="Save accepted; waiting for live sync…";
+  }catch(error){status.textContent="Save failed";alert(errorMessage(error));}
+  finally{writeBusy=false;btn.disabled=false;}
  }));
+
  existing.querySelectorAll("[data-delete]").forEach(btn=>btn.addEventListener("click",async()=>{
-  if(!confirm("Remove this custom study card from the dashboard?"))return;
-  btn.disabled=true;try{await deleteDoc(doc(db,"dashboardStudyContent",btn.dataset.delete));}catch(e){console.error(e);alert("Could not remove card.");}finally{btn.disabled=false;}
+  if(!confirm("Remove this custom study card from the dashboard?")||writeBusy)return;
+  writeBusy=true;btn.disabled=true;status.textContent="Removing card…";
+  try{await deleteDoc(doc(db,"dashboardStudyContent",btn.dataset.delete));status.textContent="Remove accepted; syncing…";}
+  catch(error){status.textContent="Remove failed";alert(errorMessage(error));}
+  finally{writeBusy=false;btn.disabled=false;}
  }));
 }
-function escapeHtml(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 cohortEl.addEventListener("change",render);
+
 onSnapshot(collection(db,"dashboardStudyContent"),snap=>{
  settings={};custom=[];
  snap.forEach(d=>{const v={id:d.id,...d.data()};if(v.cardId)settings[v.id]=v;else if(v.custom===true)custom.push(v);});
  status.textContent="● Live sync connected";
  render();
-},err=>{console.error(err);status.textContent="Could not connect";});
+},err=>{
+ console.error("Study control listener error:",err);
+ status.textContent=err?.code==="permission-denied"?"Firestore read permission denied":"Could not connect";
+});
+
 document.getElementById("addForm").addEventListener("submit",async e=>{
- e.preventDefault();const btn=document.getElementById("addButton");btn.disabled=true;btn.textContent="Adding…";
- const title=document.getElementById("newTitle").value.trim(),description=document.getElementById("newDescription").value.trim(),url=document.getElementById("newUrl").value.trim(),cohort=document.getElementById("newCohort").value;
- if(!/^(https?:\/\/|\.\/|[a-zA-Z0-9_-]+\.html(?:[?#].*)?$)/.test(url)){alert("Enter a valid page URL or local .html page.");btn.disabled=false;btn.textContent="＋ Add study card";return;}
+ e.preventDefault();
+ if(writeBusy)return;
+ const btn=document.getElementById("addButton");
+ btn.disabled=true;btn.textContent="Adding…";writeBusy=true;
+ const title=document.getElementById("newTitle").value.trim();
+ const description=document.getElementById("newDescription").value.trim();
+ const url=document.getElementById("newUrl").value.trim();
+ const cohort=document.getElementById("newCohort").value;
+ if(!/^(https?:\\/\\/|\\.\\/|[a-zA-Z0-9_-]+\\.html(?:[?#].*)?$)/.test(url)){
+  alert("Enter a valid page URL or local .html page.");
+  btn.disabled=false;btn.textContent="＋ Add study card";writeBusy=false;return;
+ }
  const id="custom_"+Date.now().toString(36);
- try{await setDoc(doc(db,"dashboardStudyContent",id),{custom:true,cohort,title,description,url,active:true,createdAt:new Date().toISOString()});e.target.reset();document.getElementById("newCohort").value=cohort;cohortEl.value=cohort;render();}
- catch(error){console.error(error);alert("Could not add card. Check Firestore permissions.");}
- finally{btn.disabled=false;btn.textContent="＋ Add study card";}
+ try{
+  await setDoc(doc(db,"dashboardStudyContent",id),{custom:true,cohort,title,description,url,active:true,createdAt:new Date().toISOString()});
+  e.target.reset();cohortEl.value=cohort;status.textContent="Card added; waiting for live sync…";
+ }catch(error){alert(errorMessage(error));status.textContent="Add failed";}
+ finally{writeBusy=false;btn.disabled=false;btn.textContent="＋ Add study card";}
 });
 </script></body></html>
