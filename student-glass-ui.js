@@ -55,7 +55,7 @@
 
   const studentInitial = Array.from(studentName)[0]?.toUpperCase() || "S";
   const appIcon = "./icons/dr-sandaruwan-lms-192.png?v=approved-2026-11-21";
-  const teacherPhoto = "https://raw.githubusercontent.com/drsandaruwanperera/drsandaruwanperera.github.io/main/assets/sir-photo.png";
+  const teacherPhoto = "https://raw.githubusercontent.com/drsandaruwanperera/drsandaruwanperera.github.io/main/assets/sir-photo.png?v=20261122-portrait-fit";
 
   const icons = {
     dashboard: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg>',
@@ -236,6 +236,9 @@
     const portrait = document.createElement("button");
     portrait.type = "button";
     portrait.className = "shared-floating-teacher";
+    portrait.style.setProperty("border", "3px solid #a6ff2e", "important");
+    portrait.style.setProperty("background", "#a6ff2e", "important");
+    portrait.style.setProperty("box-shadow", "0 0 0 4px rgba(166,255,46,.15), 0 9px 24px rgba(0,0,0,.34), 0 0 19px rgba(166,255,46,.28)", "important");
     portrait.setAttribute("aria-label", "Open AI Study Buddy with Dr. Sandaruwan");
     portrait.setAttribute("aria-controls", "studyBuddyPanel");
     portrait.setAttribute("aria-expanded", "false");
@@ -244,6 +247,7 @@
     photo.src = teacherPhoto;
     photo.alt = "Dr. Sandaruwan";
     photo.loading = "eager";
+    photo.decoding = "async";
     photo.onerror = () => {
       photo.onerror = null;
       photo.src = appIcon;
@@ -374,6 +378,7 @@
       image.src = teacherPhoto;
       image.alt = "Dr. Sandaruwan";
       image.loading = "eager";
+      image.decoding = "async";
       image.onerror = () => {
         image.onerror = null;
         image.src = appIcon;
