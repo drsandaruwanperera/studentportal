@@ -243,7 +243,7 @@ document.addEventListener(
         const studentData =
             await getStudentData();
 
-        if (sessionStorage.getItem("alYear") !== "2028") {
+        if (sessionStorage.getItem("alYear") !== "2027") {
             window.location.replace("dashboard.html");
             return;
         }
