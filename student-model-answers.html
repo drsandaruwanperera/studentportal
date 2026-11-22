@@ -107,7 +107,7 @@
     else if (value >= 26000 && value <= 26999) cohort = "grade11";
   }
   const alYear = String(sessionStorage.getItem("alYear") || "").trim();
-  if (alYear === "2028" || /^A28\\d{3}$/.test(studentId) || /^28[CN]/.test(studentId)) cohort = "al2028";
+  if (alYear === "2028" || /^A28\d{3}$/.test(studentId) || /^28[CN]/.test(studentId)) cohort = "al2028";
 
   if (cohort !== "grade10" && cohort !== "grade11" && cohort !== "al2028") {
     window.location.replace("dashboard.html");
