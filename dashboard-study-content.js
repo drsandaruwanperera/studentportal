@@ -5,7 +5,7 @@ import {db,collection,onSnapshot} from "./firebase.js";
     grade10: new Set(["modelPapersCard","modelPaperAnswersCard"]),
     grade11: new Set(["modelPapersCard","modelPaperAnswersCard"]),
     al2027: new Set(["modelPapersCard"]),
-    al2028: new Set(["theoryExaminationCard","smartBookAnswersCard","schoolPaperAnswersCard"])
+    al2028: new Set(["theoryExaminationCard","modelPaperAnswersCard","smartBookAnswersCard","schoolPaperAnswersCard"])
   };
   const labels = {grade10:"Grade 10",grade11:"Grade 11",al2027:"A/L 2027",al2028:"A/L 2028"};
   const dashboardGrid = document.querySelector("#learningProgram .portal-program-grid");
