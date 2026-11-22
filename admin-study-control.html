@@ -28,7 +28,7 @@
 <script type="module">
 import {db,doc,setDoc,deleteDoc,onSnapshot,collection} from "./firebase.js";
 
-const role=(sessionStorage.getItem("adminRole")||"").trim().toLowerCase().replace(/[\\s_-]+/g,"");
+const role=(sessionStorage.getItem("adminRole")||"").trim().toLowerCase().replace(/[\s_-]+/g,"");
 if(sessionStorage.getItem("adminLoggedIn")!=="true"){location.replace("admin-login.html");}
 if(!["full","superadmin"].includes(role)){alert("Super Admin only.");location.replace("admin.html");}
 
