@@ -247,22 +247,17 @@ async function recordFailedLoginAttempt(studentRef, enteredPassword) {
 }
 
 async function verifySuccessfulLogin(studentRef, enteredPassword) {
-    return runTransaction(db, async transaction => {
-        const latestSnapshot = await transaction.get(studentRef);
-        if (!latestSnapshot.exists()) return { ok: false, locked: false };
-        const latestData = latestSnapshot.data() || {};
-        if (isStudentAccountLocked(latestData)) return { ok: false, locked: true };
-        if (String(latestData.password ?? "").trim() !== enteredPassword) {
-            return { ok: false, locked: false };
-        }
-        transaction.update(studentRef, {
-            failedLoginAttempts: 0,
-            accountLocked: false,
-            accountLockedAt: null,
-            lastSuccessfulLoginAt: Date.now()
-        });
-        return { ok: true, locked: false, data: latestData };
-    });
+    // Re-read the student record to catch a password change or account lock
+    // that happened after the initial lookup. Do not require a Firestore write
+    // transaction to authenticate: some student roles are read-only by rules.
+    const latestSnapshot = await getStudentDocumentWithTimeout(studentRef, 12000);
+    if (!latestSnapshot.exists()) return { ok: false, locked: false };
+    const latestData = latestSnapshot.data() || {};
+    if (isStudentAccountLocked(latestData)) return { ok: false, locked: true };
+    if (String(latestData.password ?? "").trim() !== enteredPassword) {
+        return { ok: false, locked: false };
+    }
+    return { ok: true, locked: false, data: latestData };
 }
 
 // =====================================================
@@ -989,9 +984,13 @@ async function loginStudent() {
         // The dashboard updates lastActiveAt as soon as it loads.
         void updateDoc(studentRef, {
             lastActiveAt: Date.now(),
+            failedLoginAttempts: 0,
+            lastSuccessfulLoginAt: Date.now(),
             ...getInstalledAppUsageFields(loginStudentData, studentType)
         }).catch((activeError) => {
-            console.warn("Last active update failed:", activeError);
+            // Login must continue even when activity metadata is read-only for
+            // this student role. Authentication has already been verified.
+            console.warn("Optional login activity update failed:", activeError?.code || activeError);
         });
 
 
@@ -1182,8 +1181,11 @@ async function loginStudent() {
             showMessage("The connection is taking too long. Check your mobile data or Wi-Fi, then try again.");
         } else if (navigator.onLine === false) {
             showMessage("You appear to be offline. Check your mobile data or Wi-Fi and try again.");
+        } else if (errorCode === "permission-denied") {
+            showMessage("Your login details could not be verified because the student database denied access. Please contact the administrator and share error code: permission-denied.");
         } else {
-            showMessage("Unable to sign in. Please try again. If this keeps happening, contact the administrator.");
+            console.error("Student login failure details:", { code: errorCode || "unknown", message: String(error?.message || "No error message") });
+            showMessage("Unable to sign in (" + (errorCode || "unknown error") + "). Please check your Student ID and password, then contact the administrator if it continues.");
         }
 
     }
