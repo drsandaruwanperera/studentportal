@@ -118,8 +118,14 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
     });
   };
 
+
   const checkHealth = async () => {
-    const response = await fetch(apiUrl + "/health", { cache: "no-store" });
+    const response = await fetchWithTimeout(
+      apiUrl + "/health",
+      {},
+      12000,
+      "The notification server timed out. Check the internet connection and tap Retry Connection."
+    );
     const health = await response.json().catch(() => ({}));
     if (!response.ok || !health.configured) {
       throw new Error(health.error || "The notification service is not ready. Please try again.");
@@ -129,42 +135,78 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
     return messaging;
   };
 
-  const sendSubscription = async token => {
-    const response = await fetch(apiUrl + "/subscribe", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({
-        studentId,
-        grade,
-        token,
-        platform: isAppleMobile ? "ios-web-app" : "web"
-      })
-    });
+  const sendSubscription = async (token, report = () => {}) => {
+    report("Saving this phone's notification registration…");
+    const response = await fetchWithTimeout(
+      apiUrl + "/subscribe",
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          studentId,
+          grade,
+          token,
+          platform: isAppleMobile ? "ios-web-app" : "web"
+        })
+      },
+      15000,
+      "The server did not save this phone's registration. Check your connection and tap Try Again."
+    );
     const result = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(result.error || "Could not save notification settings.");
     return result;
   };
 
-  const registerCurrentDevice = async () => {
+  const registerCurrentDevice = async (report = () => {}) => {
     if (!("Notification" in window) || Notification.permission !== "granted") return false;
-    if (!(await isSupported())) return false;
+    report("Checking notification support on this phone…");
+    if (!(await withTimeout(
+      isSupported(),
+      8000,
+      "This browser did not finish checking notification support. Update Chrome and try again."
+    ))) return false;
     if (isAppleMobile && !isStandaloneApp) return false;
 
+    report("Connecting to the notification server…");
     const instance = await checkHealth();
-    const registration = await navigator.serviceWorker.register("./service-worker.js?v=20261122-app-badge", {
-      scope: "./",
-      updateViaCache: "none"
-    });
-    await navigator.serviceWorker.ready;
 
-    const token = await getToken(instance, {
-      vapidKey,
-      serviceWorkerRegistration: registration
-    });
-    if (!token) throw new Error("This device did not create a notification token.");
+    report("Installing the notification service on this phone…");
+    const registration = await withTimeout(
+      navigator.serviceWorker.register("./service-worker.js?v=20261122-app-badge", {
+        scope: "./",
+        updateViaCache: "none"
+      }),
+      15000,
+      "The notification service could not be installed. Check your connection, reopen the LMS app and tap Try Again."
+    );
 
-    await sendSubscription(token);
+    report("Activating the notification service…");
+    const readyRegistration = await withTimeout(
+      navigator.serviceWorker.ready,
+      15000,
+      "The notification service is still not active. Close other LMS tabs, reopen the installed app and try again."
+    );
+    const activeRegistration = readyRegistration.active ? readyRegistration : registration;
+    if (!activeRegistration.active) {
+      throw new Error("The notification service did not become active. Update Chrome, reopen the LMS app and try again.");
+    }
+
+    report("Creating this phone's secure notification token…");
+    const token = await withTimeout(
+      getToken(instance, {
+        vapidKey,
+        serviceWorkerRegistration: activeRegistration
+      }),
+      25000,
+      "Firebase took too long to create this phone's notification token. Check that Google Play services and Chrome are up to date, then tap Try Again."
+    );
+    if (!token) {
+      throw new Error("This phone did not create a notification token. Check Chrome and Google Play services, then try again.");
+    }
+
+    await sendSubscription(token, report);
     rememberEnabledOnThisDevice();
+    report("Notifications enabled. Opening your LMS…");
     return true;
   };
 
