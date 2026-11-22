@@ -74,6 +74,7 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
   let serviceReady = false;
   let foregroundListenerReady = false;
   let unlocked = false;
+  let unsupported = false;
 
   const setStatus = message => {
     if (status) status.textContent = message || "";
@@ -88,6 +89,7 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
   };
 
   const showUnsupportedFallback = () => {
+    unsupported = true;
     setStatus("This browser or device does not support web push notifications. You can continue, but notifications will not be available on this device.");
     button.disabled = false;
     button.textContent = "Continue to LMS";
@@ -140,6 +142,14 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
   };
 
   const enable = async () => {
+    if (unsupported) {
+      unlock();
+      return;
+    }
+    if (isAppleMobile && !isStandaloneApp) {
+      window.location.href = "./app-required.html";
+      return;
+    }
     if (!serviceReady) {
       button.disabled = true;
       button.textContent = "Checking…";
@@ -221,7 +231,7 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
         link.textContent = "View app installation instructions";
         card.appendChild(link);
         button.disabled = false;
-        button.textContent = "Check Again";
+        button.textContent = "Open App Instructions";
         return;
       }
 
