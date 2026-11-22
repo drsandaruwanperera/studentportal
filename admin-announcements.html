@@ -181,7 +181,7 @@ pushModalPassword.addEventListener("keydown",event=>{if(event.key==="Enter")push
 pushModalSend.addEventListener("click",async()=>{
   if(!pendingPushItem)return;
   const cfg=window.LMS_PUSH_CONFIG||{};
-  const apiUrl=String(cfg.apiUrl||"").replace(/\\/+$/,"");
+  let apiUrl=String(cfg.apiUrl||""); if(apiUrl.endsWith("/")) apiUrl=apiUrl.slice(0,-1);
   const username=sessionStorage.getItem("adminUsername")||"";
   const password=pushModalPassword.value;
   if(!apiUrl){pushModalStatus.textContent="Push API URL has not been configured.";return;}
