@@ -3,9 +3,9 @@ import { db, doc, getDoc } from "./firebase.js";
 (() => {
   "use strict";
 
-  const RELEASE_ID = "al2028-november-top-ranking-paper-answer-v1";
-  const POPUP_ID = "al2028-answer-release-popup";
-  const STYLE_ID = "al2028-answer-release-popup-styles";
+  const RELEASE_ID = "al2027-november-top-ranking-paper-answer-v1";
+  const POPUP_ID = "al2027-answer-release-popup";
+  const STYLE_ID = "al2027-answer-release-popup-styles";
   const DESTINATION = "al-top-ranking-paper.html?paper=01&month=november&year=2026&focus=answers";
   const ANSWER_FILES = [
     "answers/al-top-ranking/november/paper-01-1st-answer.pdf",
@@ -16,7 +16,7 @@ import { db, doc, getDoc } from "./firebase.js";
     "11074 11094 12705 13959 14069 14319 14334 14368 14369 14421 14723 14800 15189 15483 15508 15585 15690 15854 15960 16365 16889 16890 16891 16892 16895 16896 16898 16899 16900 16902 16903 16906 16907 16908 16909 16910 16913 16914 16915 16920 16923 16924 16941 16947 16966 16967 16975 16978 16979 16980 16986 16987 16988 16991 16995 17038 17039 17052 17054 17064 17071 17080 17093 17125 17172 17187 17188 17190 17191 17197 17205 17206 17207 17208 17209 17210 17212 17213 17218 17220 17225 17226 17240 17241 17242 17243 17244 17246 17247 17249 17254 17256 17269 17279 17280 17287 17288 17296 17306 17307 17317 17326 17327 17364 17366 17368 17386 17387 17427 17450".split(/\s+/)
   );
 
-  if (window.__al2028AnswerReleasePopupLoaded) return;
+  if (window.__al2027AnswerReleasePopupLoaded) return;
   window.__al2027AnswerReleasePopupLoaded = true;
 
   const normalize = value => String(value ?? "").trim().toLowerCase().replace(/[\s_-]+/g, "");
@@ -118,8 +118,8 @@ import { db, doc, getDoc } from "./firebase.js";
 
         <div class="al27-release-content">
           <span class="al27-release-badge"><span aria-hidden="true">&#128276;</span> New Answer Release</span>
-          <p class="al27-release-grade">A/L 2028 STUDENT ANNOUNCEMENT</p>
-          <h2 id="al27-release-title">A/L 2028 <span>November</span></h2>
+          <p class="al27-release-grade">A/L 2027 STUDENT ANNOUNCEMENT</p>
+          <h2 id="al27-release-title">A/L 2027 <span>November</span></h2>
           <h3>TOP Ranking Paper Answer Out!</h3>
           <p id="al27-release-description">
             November Top Ranking Paper 01 answer sheets are now available.
@@ -187,12 +187,12 @@ import { db, doc, getDoc } from "./firebase.js";
         sessionStorage.getItem("studentGrade")
       ];
       if (!profileTypeValues.some(isAlValue)) return;
-      if (getAlYear(profile, studentId) !== "2028") return;
+      if (getAlYear(profile, studentId) !== "2027") return;
       if (!(await verifyAnswerFiles())) return;
 
       window.setTimeout(() => showPopup(studentId), 550);
     } catch (error) {
-      console.error("A/L 2028 answer announcement could not be checked:", error);
+      console.error("A/L 2027 answer announcement could not be checked:", error);
     }
   }
 
