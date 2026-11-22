@@ -63,7 +63,7 @@ html,body{background:#080d1b!important;color:#f5f7ff!important}
 </style><link rel="stylesheet" href="portal-unified-theme.css?v=20261120-unified1">
 <link id="christmas-theme-stylesheet" rel="stylesheet" href="./christmas-theme.css?v=20261121-purple-glass5">
 <script src="./winter-theme-preload.js?v=2"></script>
-    <link rel="stylesheet" href="./student-glass-ui.css?v=25">
+    <link rel="stylesheet" href="./student-glass-ui.css?v=26">
 <script id="lms-app-access-guard">
 (function(){
   const standalone =
@@ -168,11 +168,11 @@ onSnapshot(collection(db,"announcements"),snap=>{
    return `<article class="notice"><i>${icon}</i><div style="flex:1"><div class="notice-top"><div><div style="font-size:8px;letter-spacing:1.1px;font-weight:850;color:#7f8ba4;margin-bottom:5px">IMPORTANT PORTAL UPDATE</div><h3>${safeTitle}</h3></div><time>${label}</time></div><p class="notice-message">${safeMessage}</p><span class="tag">ANNOUNCEMENT</span></div></article>`;
   }).join(""):'<div class="empty">No announcements available right now.</div>';
 },()=>{});
-</script><script id="section-mobile-menu-behavior">(()=>{const sidebar=document.querySelector('.side'),toggle=document.getElementById('sectionMenuToggle'),backdrop=document.getElementById('sectionSidebarBackdrop');if(!sidebar||!toggle||!backdrop)return;sidebar.id='sectionSidebar';const open=()=>{sidebar.classList.add('section-sidebar-open');backdrop.classList.add('section-backdrop-open');document.body.classList.add('section-menu-open');toggle.setAttribute('aria-expanded','true');toggle.setAttribute('aria-label','Close navigation menu');backdrop.setAttribute('aria-hidden','false')};const close=()=>{sidebar.classList.remove('section-sidebar-open');backdrop.classList.remove('section-backdrop-open');document.body.classList.remove('section-menu-open');toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Open navigation menu');backdrop.setAttribute('aria-hidden','true')};toggle.addEventListener('click',()=>sidebar.classList.contains('section-sidebar-open')?close():open());backdrop.addEventListener('click',close);sidebar.querySelectorAll('nav a,.logout').forEach(a=>a.addEventListener('click',close));document.addEventListener('keydown',e=>{if(e.key==='Escape')close()})})();</script><script type="module" src="./christmas-theme.js?v=20261121-dashboard-contrast7"></script>
+</script><script id="section-mobile-menu-behavior">(()=>{const sidebar=document.querySelector('.side'),toggle=document.getElementById('sectionMenuToggle'),backdrop=document.getElementById('sectionSidebarBackdrop');if(!sidebar||!toggle||!backdrop)return;sidebar.id='sectionSidebar';const open=()=>{sidebar.classList.add('section-sidebar-open');backdrop.classList.add('section-backdrop-open');document.body.classList.add('section-menu-open');toggle.setAttribute('aria-expanded','true');toggle.setAttribute('aria-label','Close navigation menu');backdrop.setAttribute('aria-hidden','false')};const close=()=>{sidebar.classList.remove('section-sidebar-open');backdrop.classList.remove('section-backdrop-open');document.body.classList.remove('section-menu-open');toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Open navigation menu');backdrop.setAttribute('aria-hidden','true')};toggle.addEventListener('click',()=>sidebar.classList.contains('section-sidebar-open')?close():open());backdrop.addEventListener('click',close);sidebar.querySelectorAll('nav a,.logout').forEach(a=>a.addEventListener('click',close));document.addEventListener('keydown',e=>{if(e.key==='Escape')close()})})();</script><script type="module" src="./christmas-theme.js?v=20261122-announcement-format"></script>
 <script type="module" src="./student-pop-notices.js?v=4"></script>
     <script defer src="./student-glass-ui.js?v=8"></script>
-<script defer src="./brand-glass-runtime.js?v=8"></script>
-<script defer src="./brand-glass-runtime.js?v=8"></script>
+<script defer src="./brand-glass-runtime.js?v=9"></script>
+<script defer src="./brand-glass-runtime.js?v=9"></script>
 
 <script src="./push-config.js?v=1"></script>
 <script type="module" src="./push-notifications.js?v=7"></script>
