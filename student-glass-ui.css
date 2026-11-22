@@ -5309,3 +5309,32 @@ html.student-glass-ui.lms-brand-glass body .exam-kicker,
 html.student-glass-ui.lms-brand-glass body .timer-sep{
   color:#a6ff2e!important;
 }
+
+
+/* Approved mobile header announcement megaphone indicator. */
+html.student-glass-ui body .shared-header-action.shared-header-announcements {
+  position: relative !important;
+  overflow: visible !important;
+}
+html.student-glass-ui body .shared-header-action.shared-header-announcements svg {
+  width: 21px !important;
+  height: 21px !important;
+  display: block !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 1.8 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+html.student-glass-ui body .shared-header-announcement-dot {
+  position: absolute !important;
+  top: 1px !important;
+  right: 0 !important;
+  width: 10px !important;
+  height: 10px !important;
+  border: 2px solid #11152b !important;
+  border-radius: 50% !important;
+  background: #b7ff3c !important;
+  box-shadow: 0 0 9px rgba(183,255,60,.62) !important;
+  pointer-events: none !important;
+}
