@@ -309,6 +309,7 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
     card.appendChild(link);
   };
 
+
   const enable = async () => {
     if (isAppleMobile && !isStandaloneApp) {
       window.location.href = "./app-required.html";
@@ -320,12 +321,16 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
     try {
       let permission = Notification.permission;
       if (permission === "default") {
-        // Permission prompts must be opened directly from this user click.
-        permission = await Notification.requestPermission();
+        setStatus("Waiting for you to allow notifications…");
+        permission = await withTimeout(
+          Notification.requestPermission(),
+          25000,
+          "The browser permission prompt did not finish. Check whether a permission dialog is open, then tap Try Again."
+        );
       }
       if (permission !== "granted") {
         if (permission === "denied") {
-          setStatus("Notifications are blocked for this app. This setup is required. Open iPhone Settings → Notifications → Dr. Sandaruwan LMS → Allow Notifications, then return here and press Check Again.");
+          setStatus("Notifications are blocked for this app. Open Android Settings → Apps → Chrome (or the installed LMS app) → Notifications, allow notifications, then return and tap Check Again.");
           button.textContent = "Check Again";
         } else {
           setStatus("Notification permission was not granted. Press Enable Notifications and choose Allow to continue.");
@@ -334,9 +339,13 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
         return;
       }
 
-      const registered = await registerCurrentDevice();
+      const registered = await withTimeout(
+        registerCurrentDevice(setStatus),
+        65000,
+        "Notification setup took too long. Close extra LMS tabs, check your internet connection and tap Try Again. Your login is safe."
+      );
       if (!registered) {
-        throw new Error("This device could not complete notification registration. Keep this setup open and check the app installation, notification permission and internet connection.");
+        throw new Error("This phone/browser cannot complete Web Push setup. Open the installed LMS app in an updated version of Chrome and try again.");
       }
       setStatus("Notifications are enabled for this device. Opening your LMS…");
       button.textContent = "Notifications Enabled ✓";
@@ -379,6 +388,7 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
         return;
       }
 
+      setStatus("Checking the notification server…");
       await checkHealth();
       setStatus(Notification.permission === "denied"
         ? "Notifications are currently blocked. Allow them in this site's browser settings, then press Check Again."
