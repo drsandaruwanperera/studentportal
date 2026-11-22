@@ -163,7 +163,7 @@ import {db,doc,getDoc} from "./firebase.js";
     document.querySelectorAll('a[href="model-papers.html"]').forEach(a => a.href = config.model);
     const answersCard = document.getElementById("modelPaperAnswersCard");
     if (answersCard) {
-      const showModelAnswers = type === "grade10" || type === "grade11";
+      const showModelAnswers = type === "grade10" || type === "grade11" || (type === "al" && alYear === "2028");
       answersCard.hidden = !showModelAnswers;
       answersCard.setAttribute("aria-hidden", String(!showModelAnswers));
       if (showModelAnswers) {
