@@ -291,6 +291,45 @@ onSnapshot(collection(db,"lmsProgramContent"),apply,()=>{
 <script type="module" src="./student-pop-notices.js?v=4"></script>
     <script defer src="./student-glass-ui.js?v=8"></script>
 <script defer src="./brand-glass-runtime.js?v=8"></script>
-<script type="module" src="./dashboard-study-content.js?v=4"></script>
+<script type="module" src="./dashboard-study-content.js?v=5"></script><script id="program-cohort-visibility-guard">
+(() => {
+  const allowed = {
+    grade10: new Set(["modelPapers","modelPaperAnswers"]),
+    grade11: new Set(["modelPapers","modelPaperAnswers"]),
+    al2027: new Set(["modelPapers"]),
+    al2028: new Set(["theoryExamination","modelPaperAnswers","smartBookAnswers","schoolPaperAnswers"])
+  };
+  function cohortKey() {
+    const p = window.__lmsProgramCohort;
+    if (p && allowed[p.key]) return p.key;
+    const type = String(sessionStorage.getItem("studentType") || "").toLowerCase();
+    const grade = String(sessionStorage.getItem("studentGrade") || "").toLowerCase();
+    const year = String(sessionStorage.getItem("alYear") || (type + " " + grade)).match(/2027|2028/)?.[0] || "2027";
+    if (type.includes("grade10") || grade.includes("grade10") || grade === "10") return "grade10";
+    if (type.includes("grade11") || grade.includes("grade11") || grade === "11") return "grade11";
+    if (type.includes("al") || type.includes("advanced") || grade.includes("a/l") || grade.includes("advanced")) return "al" + year;
+    return "";
+  }
+  function enforce() {
+    const key = cohortKey();
+    const list = allowed[key];
+    if (!list) return;
+    document.querySelectorAll("main .grid [data-content-id]").forEach(card => {
+      if (list.has(card.dataset.contentId)) return;
+      if (!card.hidden) card.hidden = true;
+      if (card.getAttribute("aria-hidden") !== "true") card.setAttribute("aria-hidden","true");
+      if (card.style.getPropertyValue("display") !== "none" || card.style.getPropertyPriority("display") !== "important") {
+        card.style.setProperty("display","none","important");
+      }
+    });
+  }
+  enforce();
+  const root = document.querySelector("main .grid") || document.querySelector("main") || document.body;
+  if (root && "MutationObserver" in window) {
+    new MutationObserver(enforce).observe(root,{subtree:true,childList:true,attributes:true,attributeFilter:["style","hidden","aria-hidden"]});
+  }
+  window.addEventListener("pageshow",enforce);
+})();
+</script>
 </body></html>
 
