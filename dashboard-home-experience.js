@@ -53,8 +53,8 @@
     grade10: {
       portalProgramHub: false,
       modelPapersCard: true,
-      theoryExaminationCard: true,
-      modelPaperAnswersCard: false,
+      theoryExaminationCard: false,
+      modelPaperAnswersCard: true,
       pastPapersCard: false,
       programProgressCard: false,
       smartBookAnswersCard: false,
@@ -82,8 +82,8 @@
     al2028: {
       portalProgramHub: false,
       modelPapersCard: false,
-      theoryExaminationCard: false,
-      modelPaperAnswersCard: true,
+      theoryExaminationCard: true,
+      modelPaperAnswersCard: false,
       pastPapersCard: false,
       programProgressCard: false,
       smartBookAnswersCard: true,
