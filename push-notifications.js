@@ -288,6 +288,9 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
 
   const setStatus = message => {
     if (status) status.textContent = message || "";
+    if (button && button.disabled && /^(Enabling|Working)…$/.test(button.textContent)) {
+      button.textContent = "Working…";
+    }
   };
 
   const unlock = () => {
@@ -341,7 +344,7 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
 
       const registered = await withTimeout(
         registerCurrentDevice(setStatus),
-        65000,
+        95000,
         "Notification setup took too long. Close extra LMS tabs, check your internet connection and tap Try Again. Your login is safe."
       );
       if (!registered) {
