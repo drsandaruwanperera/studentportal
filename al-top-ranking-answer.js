@@ -76,7 +76,7 @@ async function verifyALAccess() {
         const profileYear = String(profile.alYear || "");
         const studentCode = String(studentId || "").trim().toUpperCase();
         const isA2028Student = storedYear === "2028" || profileYear === "2028" ||
-            /^A28\\d{3}$/.test(studentCode) || /^(?:28[CN])/.test(studentCode);
+            /^A28\d{3}$/.test(studentCode) || /^(?:28[CN])/.test(studentCode);
         return isALStudent(profile) && isA2028Student;
     } catch (error) {
         console.error("PDF viewer access check failed:", error);
