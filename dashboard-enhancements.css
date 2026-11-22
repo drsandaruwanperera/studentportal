@@ -613,3 +613,16 @@ body{
   .dashboard-analytics-hero{min-height:290px!important;padding:24px 20px!important}
   .dashboard-journey-chart{width:100%!important;height:112px!important;margin-top:18px}
 }
+
+
+/* Desktop learning-program grid: balanced, readable cards across wide screens */
+@media (min-width: 801px){
+  .portal-program-grid,#learningProgram .material-grid{grid-template-columns:repeat(auto-fit,minmax(245px,1fr))!important;gap:18px!important;align-items:stretch!important}
+  .portal-program-card,#learningProgram .material-card{min-width:0!important;min-height:190px!important;height:100%!important;box-sizing:border-box!important}
+  .portal-program-copy{min-width:0!important;overflow-wrap:anywhere}
+  .lms-dashboard{width:100%!important;max-width:1600px!important;margin-inline:auto!important;padding-inline:clamp(24px,3vw,48px)!important;box-sizing:border-box!important}
+  .lms-dashboard-grid{grid-template-columns:minmax(0,1fr) minmax(300px,340px)!important;gap:24px!important}
+}
+@media (min-width:1200px){
+  .portal-program-grid,#learningProgram .material-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}
