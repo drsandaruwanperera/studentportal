@@ -2331,3 +2331,24 @@ html.lms-brand-glass.student-glass-ui body #firestoreAnnouncementList .notice .t
     box-shadow:0 0 0 4px rgba(166,255,46,.15),0 9px 24px rgba(0,0,0,.34),0 0 19px rgba(166,255,46,.28) !important;
   }
 }
+
+
+/* Dashboard viewport clearance: keep the first hero below the fixed iOS
+   header and leave enough scroll room above the fixed bottom navigation. */
+@media (max-width:800px) {
+  html.lms-brand-glass.student-glass-ui body.dashboard-page .lms-dashboard {
+    margin:calc(76px + env(safe-area-inset-top,0px)) auto 0 !important;
+    padding-top:14px !important;
+    padding-bottom:calc(230px + env(safe-area-inset-bottom,0px)) !important;
+    scroll-margin-top:calc(76px + env(safe-area-inset-top,0px)) !important;
+  }
+  html.lms-brand-glass.student-glass-ui body.dashboard-page .main-content {
+    padding-top:0 !important;
+    padding-bottom:calc(230px + env(safe-area-inset-bottom,0px)) !important;
+  }
+  html.lms-brand-glass.student-glass-ui body.dashboard-page #learningProgram,
+  html.lms-brand-glass.student-glass-ui body.dashboard-page .shared-exam-stack,
+  html.lms-brand-glass.student-glass-ui body.dashboard-page .portal-program-card {
+    scroll-margin-bottom:calc(190px + env(safe-area-inset-bottom,0px)) !important;
+  }
+}
