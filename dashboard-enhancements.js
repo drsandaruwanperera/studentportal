@@ -20,7 +20,7 @@ function injectStyle() {
     if (document.querySelector('link[data-dashboard-enhancements="1"]')) return;
     const link = document.createElement("link");
     link.rel = "stylesheet";
-    link.href = "dashboard-enhancements.css?v=2";
+    link.href = "dashboard-enhancements.css?v=3";
     link.dataset.dashboardEnhancements = "1";
     document.head.appendChild(link);
 }
