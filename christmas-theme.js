@@ -12,7 +12,7 @@ import { db, doc, onSnapshot } from "./firebase.js";
   let currentSignature = "";
   let nextTimer = null;
 
-  const brandStylesheetUrl = new URL("./brand-glass-theme.css?v=7", import.meta.url).href;
+  const brandStylesheetUrl = new URL("./brand-glass-theme.css?v=8", import.meta.url).href;
   const loginStylesheetUrl = new URL("./login-professional-theme.css?v=approved-purple-glass-4", import.meta.url).href;
 
   function removeLegacyWinterBlueStyles() {
