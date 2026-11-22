@@ -21,6 +21,12 @@ if (
 const studentId =
     sessionStorage.getItem("studentId");
 
+const isAssignedAl2028 = sessionStorage.getItem("alYear") === "2028";
+if (!isAssignedAl2028) {
+    document.body.style.display = "none";
+    window.location.replace("dashboard.html");
+}
+
 const paperCards = [
     {
         number: "01",
@@ -287,6 +293,7 @@ const monthNames = {
 };
 
 function renderMonthlyPaperSections(items) {
+    if (!isAssignedAl2028) return;
     const main = document.querySelector("main");
     const coming = document.querySelector(".coming-section");
     if (!main) return;
