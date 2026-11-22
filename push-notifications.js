@@ -44,31 +44,59 @@ import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/fireb
   };
 
 
-  const requestNotificationPermission = () => {
-    // Modern Chrome, Samsung Internet and Safari implement the Promise form.
-    // Call it without arguments directly from the Enable button's click handler.
-    try {
-      const result = Notification.requestPermission();
-      if (result && typeof result.then === "function") return result;
-      if (typeof result === "string") return Promise.resolve(result);
-
-      // Compatibility fallback for older callback-only browsers.
-      return new Promise((resolve, reject) => {
-        try {
-          const callbackResult = Notification.requestPermission(permission => resolve(permission));
-          if (callbackResult && typeof callbackResult.then === "function") {
-            callbackResult.then(resolve, reject);
-          } else if (typeof callbackResult === "string") {
-            resolve(callbackResult);
-          }
-        } catch (error) {
-          reject(error);
-        }
-      });
-    } catch (error) {
-      return Promise.reject(error);
+  const readNotificationPermission = async () => {
+    let permission = ("Notification" in window) ? Notification.permission : "denied";
+    // Some Android browsers expose the persisted site permission through the
+    // Permissions API before Notification.permission catches up.
+    if (permission === "default" && navigator.permissions?.query) {
+      try {
+        const state = await navigator.permissions.query({ name: "notifications" });
+        if (state.state === "granted" || state.state === "denied") permission = state.state;
+      } catch (_) {}
     }
+    return permission;
   };
+
+  const requestNotificationPermission = () => new Promise((resolve, reject) => {
+    let settled = false;
+    let pollId = null;
+    const finish = permission => {
+      if (settled || !permission || permission === "default") return;
+      settled = true;
+      if (pollId !== null) window.clearInterval(pollId);
+      resolve(permission);
+    };
+    const fail = error => {
+      if (settled) return;
+      settled = true;
+      if (pollId !== null) window.clearInterval(pollId);
+      reject(error);
+    };
+
+    // Check the persisted site permission while the browser prompt is open.
+    // This also handles Samsung Internet builds that update the permission
+    // state but do not reliably invoke the legacy callback.
+    pollId = window.setInterval(() => {
+      try { finish(Notification.permission); } catch (_) {}
+    }, 250);
+
+    try {
+      // Invoke the permission request exactly once, synchronously from the
+      // real button click. The callback form is supported by older engines;
+      // modern engines may also return a Promise from this same invocation.
+      const result = Notification.requestPermission(finish);
+      if (result && typeof result.then === "function") {
+        result.then(finish, fail);
+      } else if (typeof result === "string") {
+        finish(result);
+      } else {
+        const current = Notification.permission;
+        if (current !== "default") finish(current);
+      }
+    } catch (error) {
+      fail(error);
+    }
+  });
 
   const browserFamily = (() => {
     const ua = navigator.userAgent || "";
@@ -423,7 +451,7 @@ import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/fireb
     button.textContent = "Enabling…";
 
     try {
-      let permission = Notification.permission;
+      let permission = await readNotificationPermission();
       if (permission === "default") {
         setStatus("Waiting for you to allow notifications…");
         permission = await withTimeout(
@@ -515,12 +543,15 @@ import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/fireb
 
       setStatus("Checking the notification server…");
       await checkHealth();
-      setStatus(Notification.permission === "denied"
+      const currentPermission = await readNotificationPermission();
+      setStatus(currentPermission === "denied"
         ? "Notifications are blocked for this website. Follow the browser-specific instructions below, allow notifications, then tap Check Again."
-        : "Notification setup is required. Press Enable Notifications and choose Allow to register this device.");
+        : currentPermission === "granted"
+          ? "Notifications are already allowed in this browser. Press Enable Notifications to finish registering this device."
+          : "Notification setup is required. Press Enable Notifications and choose Allow to register this device.");
       button.disabled = false;
-      button.textContent = Notification.permission === "denied" ? "Check Again" : "Enable Notifications";
-      if (Notification.permission === "denied") showBrowserPermissionHelp();
+      button.textContent = currentPermission === "denied" ? "Check Again" : "Enable Notifications";
+      if (currentPermission === "denied") showBrowserPermissionHelp();
     } catch (error) {
       console.warn("LMS push service is not ready:", error);
       setStatus(error?.message || "The notification service is temporarily unavailable. Please retry.");
