@@ -2352,3 +2352,80 @@ html.lms-brand-glass.student-glass-ui body #firestoreAnnouncementList .notice .t
     scroll-margin-bottom:calc(190px + env(safe-area-inset-bottom,0px)) !important;
   }
 }
+
+
+/* Learning-space illustration animation: gentle, low-distraction motion. */
+@keyframes lms-learning-cap-float {
+  0%,100% { transform:translateY(0) rotate(0deg); }
+  50% { transform:translateY(-4px) rotate(-1.4deg); }
+}
+@keyframes lms-learning-book-breathe {
+  0%,100% { transform:translateY(0) scaleY(1); }
+  50% { transform:translateY(1.5px) scaleY(1.025); }
+}
+@keyframes lms-learning-tassel-sway {
+  0%,100% { transform:rotate(-5deg); }
+  50% { transform:rotate(7deg); }
+}
+@keyframes lms-learning-orbit-flow {
+  0% { stroke-dashoffset:0; }
+  100% { stroke-dashoffset:-280; }
+}
+@keyframes lms-learning-star-twinkle {
+  0%,100% { opacity:.72; transform:scale(.92); }
+  50% { opacity:1; transform:scale(1.13); }
+}
+@keyframes lms-learning-text-glow {
+  0%,100% { text-shadow:0 0 5px rgba(196,181,253,.14); }
+  50% { text-shadow:0 0 12px rgba(196,181,253,.34); }
+}
+
+html.lms-brand-glass.student-glass-ui body.dashboard-page .shared-learning-visual {
+  isolation:isolate !important;
+}
+html.lms-brand-glass.student-glass-ui body.dashboard-page .shared-learning-visual-art svg {
+  overflow:visible !important;
+}
+html.lms-brand-glass.student-glass-ui body.dashboard-page .shared-learning-cap {
+  transform-box:fill-box !important;
+  transform-origin:center !important;
+  animation:lms-learning-cap-float 4.2s ease-in-out infinite !important;
+}
+html.lms-brand-glass.student-glass-ui body.dashboard-page .shared-learning-book {
+  transform-box:fill-box !important;
+  transform-origin:center bottom !important;
+  animation:lms-learning-book-breathe 3.8s ease-in-out infinite !important;
+}
+html.lms-brand-glass.student-glass-ui body.dashboard-page .shared-learning-tassel {
+  transform-box:view-box !important;
+  transform-origin:177px 92px !important;
+  animation:lms-learning-tassel-sway 2.8s ease-in-out infinite !important;
+}
+html.lms-brand-glass.student-glass-ui body.dashboard-page .shared-learning-orbit {
+  stroke-dasharray:95 34 !important;
+  animation:
+    shared-learning-orbit-drift 7s ease-in-out infinite,
+    shared-learning-orbit-glow 4.5s ease-in-out infinite,
+    lms-learning-orbit-flow 8s linear infinite !important;
+}
+html.lms-brand-glass.student-glass-ui body.dashboard-page .shared-learning-orbit-green {
+  animation-delay:-2s,.5s,-3s !important;
+}
+html.lms-brand-glass.student-glass-ui body.dashboard-page .shared-learning-sparkles {
+  transform-box:fill-box !important;
+  transform-origin:center !important;
+  animation:lms-learning-star-twinkle 2.6s ease-in-out infinite !important;
+}
+html.lms-brand-glass.student-glass-ui body.dashboard-page .shared-learning-visual > strong {
+  animation:lms-learning-text-glow 4.5s ease-in-out infinite !important;
+}
+@media (prefers-reduced-motion:reduce) {
+  html.lms-brand-glass.student-glass-ui body.dashboard-page .shared-learning-cap,
+  html.lms-brand-glass.student-glass-ui body.dashboard-page .shared-learning-book,
+  html.lms-brand-glass.student-glass-ui body.dashboard-page .shared-learning-tassel,
+  html.lms-brand-glass.student-glass-ui body.dashboard-page .shared-learning-orbit,
+  html.lms-brand-glass.student-glass-ui body.dashboard-page .shared-learning-sparkles,
+  html.lms-brand-glass.student-glass-ui body.dashboard-page .shared-learning-visual > strong {
+    animation:none !important;
+  }
+}
