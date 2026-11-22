@@ -12,10 +12,34 @@
     document.documentElement.dataset.lmsDisplayMode = "standalone";
   }
 
+  // Opening the installed LMS clears its Home Screen unread badge.
+  // The service worker also clears the persisted unread IDs so new pushes
+  // can start a fresh badge count after the student returns to the app.
+  const clearLmsHomeScreenBadge = () => {
+    if (!isStandalone()) return;
+    try {
+      if (typeof navigator.clearAppBadge === "function") {
+        navigator.clearAppBadge().catch(() => {});
+      }
+    } catch (_) {}
+
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.ready.then((registration) => {
+        const worker = registration.active || registration.waiting;
+        worker?.postMessage({ type: "LMS_CLEAR_APP_BADGE" });
+      }).catch(() => {});
+    }
+  };
+
+  clearLmsHomeScreenBadge();
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") clearLmsHomeScreenBadge();
+  });
+
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
       navigator.serviceWorker
-        .register("./service-worker.js?v=20261121-app-visibility", { scope: "./", updateViaCache: "none" })
+        .register("./service-worker.js?v=20261122-app-badge", { scope: "./", updateViaCache: "none" })
         .catch((error) => {
           console.warn("LMS app setup could not register its service worker.", error);
         });
