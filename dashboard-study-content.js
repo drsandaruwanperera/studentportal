@@ -82,5 +82,9 @@ import {db,collection,onSnapshot} from "./firebase.js";
   observer.observe(document.documentElement,{attributes:true,attributeFilter:["data-student-type"]});
   window.addEventListener("pageshow",apply);
   window.addEventListener("storage",apply);
+  if (programGrid) {
+    const programObserver = new MutationObserver(apply);
+    programObserver.observe(programGrid,{subtree:true,attributes:true,attributeFilter:["style","hidden"]});
+  }
   setTimeout(apply,900);
 })();
