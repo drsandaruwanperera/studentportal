@@ -634,9 +634,8 @@ function renderNotificationItems(items) {
 
 function loadLatestMonthlyPaper(studentData = {}) {
     const cohort = resolveDashboardCohort(studentData);
-    // The November 2026 TOP Ranking paper set is now assigned to A/L 2028.
-    // Keep this live paper shortcut exclusive to the A/L 2028 cohort.
-    if (cohort.key !== "al2028") return;
+    // Monthly TOP Ranking Papers are assigned to the A/L 2027 cohort only.
+    if (cohort.key !== "al2027") return;
     try {
         onSnapshot(collection(db, "monthlyTopRankingPapers"), snapshot => {
             const items = snapshot.docs
