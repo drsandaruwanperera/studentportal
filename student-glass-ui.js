@@ -379,7 +379,12 @@
         image.src = appIcon;
       };
       portrait.appendChild(image);
-      copy.parentElement?.appendChild(portrait);
+      // On mobile, place the teacher photo in the same compact row as the
+      // date tile and greeting. Desktop keeps its original banner placement.
+      const portraitHost = window.matchMedia("(max-width: 800px)").matches
+        ? (document.querySelector(".dashboard-mobile-overview-top") || copy.parentElement)
+        : copy.parentElement;
+      portraitHost?.appendChild(portrait);
     }
 
     const journey = document.querySelector(".learning-orbit");
@@ -419,12 +424,50 @@
         '<button type="button" data-calendar-next aria-label="Next month">›</button>' +
       '</div><div class="shared-calendar-grid" data-calendar-grid></div>';
 
+    const learningVisual = document.createElement("aside");
+    learningVisual.className = "shared-learning-visual";
+    learningVisual.setAttribute("aria-label", "Your learning space");
+    learningVisual.innerHTML = `
+      <div class="shared-learning-visual-art" aria-hidden="true">
+        <svg viewBox="0 0 240 156" role="presentation" focusable="false">
+          <defs>
+            <linearGradient id="lmsCapGlow" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#f4eaff"/>
+              <stop offset=".52" stop-color="#a78bfa"/>
+              <stop offset="1" stop-color="#7c3aed"/>
+            </linearGradient>
+            <linearGradient id="lmsBookGlow" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#ffffff"/>
+              <stop offset="1" stop-color="#c4b5fd"/>
+            </linearGradient>
+          </defs>
+          <path class="shared-learning-orbit shared-learning-orbit-purple" d="M20 100C35 30 89 14 143 34s82 63 65 92-76 16-116 2S35 146 20 100Z"/>
+          <path class="shared-learning-orbit shared-learning-orbit-green" d="M34 117C56 145 108 141 151 102s46-77 11-84"/>
+          <path d="m64 92 56-20 57 20-57 23-56-23Z" fill="url(#lmsCapGlow)" stroke="#f3e8ff" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M84 101v20c21 14 55 14 76 0v-20" fill="none" stroke="#c4b5fd" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M177 92v30" stroke="#a6ff2e" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="177" cy="126" r="4" fill="#a6ff2e"/>
+          <path d="M52 130c18-13 36-13 58 1 22-14 42-14 63-1v19c-21-14-41-14-63 0-22-14-40-14-58 0v-19Z" fill="url(#lmsBookGlow)" stroke="#d9c8ff" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M110 132v17M68 135c13-6 25-5 39 3M125 138c14-8 27-9 41-3" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/>
+          <path d="m35 46 3 8 8 3-8 3-3 8-3-8-8-3 8-3 3-8ZM199 49l2.5 6 6 2.5-6 2.5-2.5 6-2.5-6-6-2.5 6-2.5 2.5-6Z" fill="#f4eaff"/>
+        </svg>
+      </div>
+      <strong>YOUR LEARNING SPACE</strong>
+      <span>Keep moving forward</span>
+    `;
+
     const placeholder = document.createElement("div");
     placeholder.className = "shared-next-event-placeholder";
     placeholder.innerHTML = "<strong>Next exam</strong><span>No examination date has been published for your programme yet. Details will appear here when scheduled.</span>";
 
-    agenda.append(calendar, exam, placeholder);
+    const examStack = document.createElement("section");
+    examStack.className = "shared-exam-stack";
+    examStack.setAttribute("aria-label", "Upcoming milestone and exam information");
+    examStack.append(exam, placeholder);
+
+    agenda.append(calendar, learningVisual);
     banner.insertAdjacentElement("afterend", agenda);
+    agenda.insertAdjacentElement("afterend", examStack);
 
     const today = getColomboToday();
     let viewYear = today.year;
