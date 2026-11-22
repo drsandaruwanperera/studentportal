@@ -393,9 +393,19 @@ import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/fireb
   };
 
   const showUnsupportedFallback = () => {
-    setStatus("Notifications are required to use the LMS on this device, but this browser does not support Web Push. On iPhone or iPad, install the LMS from Safari using Share → Add to Home Screen, then open the installed app. On other devices, use a supported browser.");
+    let message = "This browser version does not provide all APIs required for Web Push. Update the browser and operating system, then reopen the LMS.";
+    if (browserFamily === "ios") {
+      message = "iPhone/iPad Web Push requires iOS/iPadOS 16.4 or later and the LMS installed from the Home Screen. Update the device and open the installed LMS app.";
+    } else if (browserFamily === "samsung") {
+      message = "Update Samsung Internet to the latest version. Then open the LMS website in Samsung Internet and allow notifications for this site.";
+    } else if (browserFamily === "chrome" || browserFamily === "chrome-android") {
+      message = "Update Google Chrome to the latest version, enable site notifications for drsandaruwanperera.lk, and reopen the LMS.";
+    } else if (browserFamily === "safari") {
+      message = "Web Push on Mac requires Safari 16 or later on macOS 13 or later. Update Safari/macOS and allow this website under Safari → Settings → Websites → Notifications.";
+    }
+    setStatus(message);
     button.disabled = true;
-    button.textContent = "Notifications Not Supported";
+    button.textContent = "Update Browser to Enable";
     const link = document.createElement("a");
     link.className = "lms-push-gate-link";
     link.href = "./app-required.html";
@@ -506,12 +516,11 @@ import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/fireb
       setStatus("Checking the notification server…");
       await checkHealth();
       setStatus(Notification.permission === "denied"
-        ? (/android/i.test(navigator.userAgent)
-            ? "Notifications are blocked for this website. Allow them in your browser and device settings, then tap Check Again."
-            : "Notifications are blocked for this website. Allow them in your browser and device settings, then press Check Again.")
+        ? "Notifications are blocked for this website. Follow the browser-specific instructions below, allow notifications, then tap Check Again."
         : "Notification setup is required. Press Enable Notifications and choose Allow to register this device.");
       button.disabled = false;
       button.textContent = Notification.permission === "denied" ? "Check Again" : "Enable Notifications";
+      if (Notification.permission === "denied") showBrowserPermissionHelp();
     } catch (error) {
       console.warn("LMS push service is not ready:", error);
       setStatus(error?.message || "The notification service is temporarily unavailable. Please retry.");
