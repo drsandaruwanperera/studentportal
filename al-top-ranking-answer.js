@@ -70,7 +70,14 @@ async function verifyALAccess() {
     try {
         const { db, doc, getDoc } = await import("./firebase.js");
         const snap = await getDoc(doc(db, "students", studentId));
-        return snap.exists() && isALStudent(snap.data() || {});
+        if (!snap.exists()) return false;
+        const profile = snap.data() || {};
+        const storedYear = String(sessionStorage.getItem("alYear") || "");
+        const profileYear = String(profile.alYear || "");
+        const studentCode = String(studentId || "").trim().toUpperCase();
+        const isA2028Student = storedYear === "2028" || profileYear === "2028" ||
+            /^A28\\d{3}$/.test(studentCode) || /^(?:28[CN])/.test(studentCode);
+        return isALStudent(profile) && isA2028Student;
     } catch (error) {
         console.error("PDF viewer access check failed:", error);
         return false;
