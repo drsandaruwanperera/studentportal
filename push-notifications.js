@@ -26,6 +26,123 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
   const host = document.querySelector("main.main-content, main.main, .main-content, main");
   if (!host) return;
 
+  const enabledStorageKey = "drsLmsPushEnabledV1:" + encodeURIComponent(studentId);
+  const refreshSessionKey = "drsLmsPushRefreshAttemptedV1:" + encodeURIComponent(studentId);
+  const isAppleMobile = /iphone|ipad|ipod/i.test(navigator.userAgent) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  const isStandaloneApp = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
+    navigator.standalone === true;
+
+  const wasEnabledOnThisDevice = () => {
+    try {
+      return localStorage.getItem(enabledStorageKey) === "yes";
+    } catch (_) {
+      return false;
+    }
+  };
+
+  const rememberEnabledOnThisDevice = () => {
+    try {
+      localStorage.setItem(enabledStorageKey, "yes");
+      sessionStorage.setItem(refreshSessionKey, "yes");
+    } catch (error) {
+      console.warn("Could not save this device's notification preference.", error);
+    }
+  };
+
+  let messaging = null;
+  let foregroundListenerReady = false;
+
+  const attachForegroundListener = instance => {
+    if (foregroundListenerReady) return;
+    foregroundListenerReady = true;
+    onMessage(instance, payload => {
+      const title = payload?.notification?.title || "Dr. Sandaruwan LMS";
+      const body = payload?.notification?.body || "You have a new LMS update.";
+      if (Notification.permission === "granted") {
+        new Notification(title, {
+          body,
+          icon: "./icons/dr-sandaruwan-lms-192.png",
+          data: { url: payload?.data?.url || "./announcements.html" }
+        });
+      }
+    });
+  };
+
+  const checkHealth = async () => {
+    const response = await fetch(apiUrl + "/health", { cache: "no-store" });
+    const health = await response.json().catch(() => ({}));
+    if (!response.ok || !health.configured) {
+      throw new Error(health.error || "The notification service is not ready. Please try again.");
+    }
+    if (!messaging) messaging = getMessaging(app);
+    attachForegroundListener(messaging);
+    return messaging;
+  };
+
+  const sendSubscription = async token => {
+    const response = await fetch(apiUrl + "/subscribe", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        studentId,
+        grade,
+        token,
+        platform: isAppleMobile ? "ios-web-app" : "web"
+      })
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(result.error || "Could not save notification settings.");
+    return result;
+  };
+
+  const registerCurrentDevice = async () => {
+    if (!("Notification" in window) || Notification.permission !== "granted") return false;
+    if (!(await isSupported())) return false;
+    if (isAppleMobile && !isStandaloneApp) return false;
+
+    const instance = await checkHealth();
+    const registration = await navigator.serviceWorker.register("./service-worker.js", {
+      scope: "./",
+      updateViaCache: "none"
+    });
+    await navigator.serviceWorker.ready;
+
+    const token = await getToken(instance, {
+      vapidKey,
+      serviceWorkerRegistration: registration
+    });
+    if (!token) throw new Error("This device did not create a notification token.");
+
+    await sendSubscription(token);
+    rememberEnabledOnThisDevice();
+    return true;
+  };
+
+  // Previously enabled devices (including students who enabled push before
+  // this one-time prompt was introduced) never see the prompt again.
+  // Refresh their FCM token quietly once per app session.
+  const alreadyEnabled = wasEnabledOnThisDevice();
+  const permissionAlreadyGranted = "Notification" in window && Notification.permission === "granted";
+
+  if (alreadyEnabled || permissionAlreadyGranted) {
+    if (permissionAlreadyGranted) {
+      let attemptedThisSession = false;
+      try {
+        attemptedThisSession = sessionStorage.getItem(refreshSessionKey) === "yes";
+        if (!attemptedThisSession) sessionStorage.setItem(refreshSessionKey, "yes");
+      } catch (_) {}
+
+      if (!attemptedThisSession) {
+        registerCurrentDevice().catch(error => {
+          console.warn("Silent LMS push subscription refresh failed; it will retry on the next app launch.", error);
+          try { sessionStorage.removeItem(refreshSessionKey); } catch (_) {}
+        });
+      }
+    }
+    return;
+  }
+
   const style = document.createElement("style");
   style.textContent = [
     ".lms-push-gate{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;box-sizing:border-box;padding:22px;background:rgba(5,9,22,.82);backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px)}",
@@ -55,12 +172,12 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
   overlay.innerHTML =
     '<section class="lms-push-gate-card">' +
       '<div class="lms-push-gate-icon" aria-hidden="true">🔔</div>' +
-      '<p class="lms-push-gate-kicker">Required login step</p>' +
+      '<p class="lms-push-gate-kicker">One-time setup</p>' +
       '<h1 id="lmsPushGateTitle">Enable Notifications</h1>' +
-      '<p class="lms-push-gate-copy" id="lmsPushGateDescription">Stay informed about important announcements, exam updates, results and student notices. Please enable notifications to continue to your LMS dashboard.</p>' +
+      '<p class="lms-push-gate-copy" id="lmsPushGateDescription">Stay informed about important announcements, exam updates, results and student notices. Enable notifications once on this device to continue to your LMS dashboard.</p>' +
       '<div class="lms-push-gate-status" role="status" aria-live="polite">Checking notification service…</div>' +
       '<button type="button" disabled>Checking…</button>' +
-      '<small class="lms-push-gate-note">This confirmation appears after each login. If notifications were already allowed on this device, this step refreshes its registration without asking you again.</small>' +
+      '<small class="lms-push-gate-note">You only need to complete this setup once on this device. After successful registration, this step will not appear again.</small>' +
     '</section>';
   document.body.appendChild(overlay);
 
@@ -70,9 +187,7 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
   const originalOverflow = document.body.style.overflow;
   document.body.style.overflow = "hidden";
 
-  let messaging = null;
   let serviceReady = false;
-  let foregroundListenerReady = false;
   let unlocked = false;
   let unsupported = false;
 
@@ -93,52 +208,6 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
     setStatus("This browser or device does not support web push notifications. You can continue, but notifications will not be available on this device.");
     button.disabled = false;
     button.textContent = "Continue to LMS";
-    button.addEventListener("click", unlock, { once: true });
-  };
-
-  const isAppleMobile = /iphone|ipad|ipod/i.test(navigator.userAgent) ||
-    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-  const isStandaloneApp = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
-    navigator.standalone === true;
-
-  const checkHealth = async () => {
-    const response = await fetch(apiUrl + "/health", { cache: "no-store" });
-    const health = await response.json().catch(() => ({}));
-    if (!response.ok || !health.configured) {
-      throw new Error(health.error || "The notification service is not ready. Please try again.");
-    }
-    serviceReady = true;
-    if (!messaging) messaging = getMessaging(app);
-    if (!foregroundListenerReady) {
-      foregroundListenerReady = true;
-      onMessage(messaging, payload => {
-        const title = payload?.notification?.title || "Dr. Sandaruwan LMS";
-        const body = payload?.notification?.body || "You have a new LMS update.";
-        if (Notification.permission === "granted") {
-          new Notification(title, {
-            body,
-            icon: "./icons/dr-sandaruwan-lms-192.png",
-            data: { url: payload?.data?.url || "./announcements.html" }
-          });
-        }
-      });
-    }
-  };
-
-  const sendSubscription = async token => {
-    const response = await fetch(apiUrl + "/subscribe", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({
-        studentId,
-        grade,
-        token,
-        platform: isAppleMobile ? "ios-web-app" : "web"
-      })
-    });
-    const result = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(result.error || "Could not save notification settings.");
-    return result;
   };
 
   const enable = async () => {
@@ -150,35 +219,24 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
       window.location.href = "./app-required.html";
       return;
     }
-    if (!serviceReady) {
-      button.disabled = true;
-      button.textContent = "Checking…";
-      setStatus("Checking the notification service. Please wait.");
-      try {
-        await checkHealth();
-        setStatus("The notification service is ready. Press Enable Notifications to continue.");
-        button.textContent = "Enable Notifications";
-      } catch (error) {
-        setStatus(error?.message || "The notification service is temporarily unavailable.");
-        button.textContent = "Retry Connection";
-      } finally {
-        button.disabled = false;
-      }
-      return;
-    }
-
     button.disabled = true;
     button.textContent = "Enabling…";
 
     try {
+      if (!serviceReady) {
+        setStatus("Checking the notification service. Please wait.");
+        await checkHealth();
+        serviceReady = true;
+      }
+
       let permission = Notification.permission;
       if (permission === "default") {
-        // Keep the permission request directly inside the button's click gesture.
+        // Permission prompts must be opened directly from this user click.
         permission = await Notification.requestPermission();
       }
       if (permission !== "granted") {
         if (permission === "denied") {
-          setStatus("Notifications are blocked for this site. Open your browser or device Site Settings, allow Notifications, then press Check Again here.");
+          setStatus("Notifications are blocked for this site. Open your browser or device Site Settings, allow them, then press Check Again.");
           button.textContent = "Check Again";
         } else {
           setStatus("Notification permission was not granted. Press Enable Notifications and choose Allow to continue.");
@@ -187,21 +245,8 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
         return;
       }
 
-      const registration = await navigator.serviceWorker.register("./service-worker.js", {
-        scope: "./",
-        updateViaCache: "none"
-      });
-      await navigator.serviceWorker.ready;
-
-      if (!messaging) messaging = getMessaging(app);
-      const token = await getToken(messaging, {
-        vapidKey,
-        serviceWorkerRegistration: registration
-      });
-      if (!token) throw new Error("This device did not create a notification token. Please try again.");
-
-      await sendSubscription(token);
-      setStatus("Notifications are enabled and this device is registered. Opening your LMS…");
+      await registerCurrentDevice();
+      setStatus("Notifications are enabled for this device. Opening your LMS…");
       button.textContent = "Notifications Enabled ✓";
       window.setTimeout(unlock, 450);
     } catch (error) {
@@ -217,14 +262,18 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
 
   (async () => {
     try {
-      const supported = await isSupported();
-      if (!supported || !("Notification" in window) || !("serviceWorker" in navigator) || !("PushManager" in window)) {
+      if (
+        !(await isSupported()) ||
+        !("Notification" in window) ||
+        !("serviceWorker" in navigator) ||
+        !("PushManager" in window)
+      ) {
         showUnsupportedFallback();
         return;
       }
 
       if (isAppleMobile && !isStandaloneApp) {
-        setStatus("On iPhone or iPad, open the installed LMS from your Home Screen to enable notifications. Add the LMS to your Home Screen first if you have not installed it.");
+        setStatus("On iPhone or iPad, open the installed LMS from your Home Screen to enable notifications. Add it to your Home Screen first if you have not installed it.");
         const link = document.createElement("a");
         link.className = "lms-push-gate-link";
         link.href = "./app-required.html";
@@ -236,9 +285,10 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
       }
 
       await checkHealth();
+      serviceReady = true;
       setStatus(Notification.permission === "denied"
         ? "Notifications are currently blocked. Allow them in this site's browser settings, then press Check Again."
-        : "Press Enable Notifications to register this device and continue.");
+        : "Press Enable Notifications once to register this device.");
       button.disabled = false;
       button.textContent = Notification.permission === "denied" ? "Check Again" : "Enable Notifications";
     } catch (error) {
