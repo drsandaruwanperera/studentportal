@@ -89,6 +89,37 @@ import {db,doc,getDoc} from "./firebase.js";
     }
   };
 
+  // Enforce the exact A/L resource set after the student profile has been resolved.
+  // Inline !important hides prevent dashboard theme CSS from exposing cards for another cohort.
+  function enforceCohortStudyCards(type, alYear = "") {
+    const visibleIds = type === "al"
+      ? (alYear === "2028"
+          ? new Set(["theoryExaminationCard","modelPaperAnswersCard","smartBookAnswersCard","schoolPaperAnswersCard"])
+          : new Set(["modelPapersCard"]))
+      : type === "grade10" || type === "grade11"
+        ? new Set(["modelPapersCard","modelPaperAnswersCard"])
+        : new Set();
+
+    [
+      "modelPapersCard",
+      "theoryExaminationCard",
+      "modelPaperAnswersCard",
+      "smartBookAnswersCard",
+      "schoolPaperAnswersCard"
+    ].forEach(cardId => {
+      const card = document.getElementById(cardId);
+      if (!card) return;
+      const visible = visibleIds.has(cardId);
+      card.hidden = !visible;
+      card.setAttribute("aria-hidden", String(!visible));
+      if (visible) {
+        card.style.removeProperty("display");
+      } else {
+        card.style.setProperty("display", "none", "important");
+      }
+    });
+  }
+
   function applyGrade(type, data = {}) {
     const alYear = type === "al" ? getAlYear(data) : "";
     if (type === "al") sessionStorage.setItem("alYear", alYear);
@@ -189,6 +220,7 @@ import {db,doc,getDoc} from "./firebase.js";
       if (sub) sub.textContent = config.label + " learning resources";
     }
     window.renderDashboardHome?.(type === "al" ? "al" + alYear : type, alYear);
+    enforceCohortStudyCards(type, alYear);
   }
 
   async function init() {
