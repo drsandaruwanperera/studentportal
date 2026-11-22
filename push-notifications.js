@@ -43,6 +43,49 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
     }
   };
 
+
+  const requestNotificationPermission = () => new Promise((resolve, reject) => {
+    let settled = false;
+    const finish = permission => {
+      if (settled) return;
+      settled = true;
+      resolve(permission);
+    };
+    let result;
+    try {
+      // The callback form supports older Android WebView/Chromium builds;
+      // the returned Promise is used on current Chrome versions.
+      result = Notification.requestPermission(finish);
+    } catch (error) {
+      try {
+        result = Notification.requestPermission();
+      } catch (retryError) {
+        reject(retryError || error);
+        return;
+      }
+    }
+    if (result && typeof result.then === "function") {
+      result.then(finish, reject);
+    } else if (typeof result === "string") {
+      finish(result);
+    }
+  });
+
+  const showAndroidPermissionHelp = () => {
+    if (!/android/i.test(navigator.userAgent)) return;
+    const existing = card.querySelector(".lms-push-android-help");
+    if (existing) return;
+    const help = document.createElement("div");
+    help.className = "lms-push-android-help";
+    help.innerHTML =
+      '<strong>Android did not show the Allow popup?</strong>' +
+      '<span>1. Open this LMS website in Google Chrome (not the installed app).<br>' +
+      '2. Tap the icon beside the website address → Permissions → Notifications → Allow.<br>' +
+      '3. Return to the LMS app and tap Try Again.</span>' +
+      '<span class="lms-push-android-system">Also check Android Settings → Apps → Chrome → Notifications → Allow notifications.</span>';
+    card.insertBefore(help, button);
+  };
+
   const getAudience = () => {
     const type = String(sessionStorage.getItem("studentType") || sessionStorage.getItem("studentGrade") || "").toLowerCase();
     if (type.includes("10")) return "grade10";
@@ -255,6 +298,10 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
     ".lms-push-gate button:disabled{opacity:.65;cursor:wait;transform:none}",
     ".lms-push-gate-note{display:block;margin:14px 0 0;color:#929db4;font-size:10px;line-height:1.6}",
     ".lms-push-gate-link{display:inline-block;margin-top:12px;color:#c4b5fd;font-size:11px;font-weight:750;text-decoration:underline;text-underline-offset:3px}",
+    ".lms-push-android-help{display:grid;gap:9px;margin:12px 0;padding:13px;border:1px solid rgba(166,255,46,.28);border-radius:13px;background:rgba(166,255,46,.07);text-align:left}",
+    ".lms-push-android-help strong{color:#d7ff9e;font-size:11px;font-weight:850;line-height:1.4}",
+    ".lms-push-android-help span{color:#e2e8f0;font-size:10px;line-height:1.65}",
+    ".lms-push-android-help .lms-push-android-system{color:#bec9dd}",
     "@media(max-width:480px){.lms-push-gate{padding:16px}.lms-push-gate-card{border-radius:21px}.lms-push-gate-copy{font-size:12px}}",
     "@media(prefers-reduced-motion:reduce){.lms-push-gate button{transition:none}}"
   ].join("");
@@ -326,9 +373,9 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
       if (permission === "default") {
         setStatus("Waiting for you to allow notifications…");
         permission = await withTimeout(
-          Notification.requestPermission(),
+          requestNotificationPermission(),
           25000,
-          "The browser permission prompt did not finish. Check whether a permission dialog is open, then tap Try Again."
+          "Android did not display the notification permission popup. Chrome may be hiding quiet permission prompts. Follow the Android steps below, then tap Try Again."
         );
       }
       if (permission !== "granted") {
@@ -356,6 +403,9 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
     } catch (error) {
       console.error("LMS push notification setup failed:", error);
       setStatus(error?.message || "Could not enable notifications. Please try again.");
+      if (/android/i.test(navigator.userAgent) && /permission popup|quiet permission/i.test(String(error?.message || ""))) {
+        showAndroidPermissionHelp();
+      }
       button.textContent = "Try Again";
     } finally {
       if (!unlocked) button.disabled = false;
@@ -394,7 +444,9 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
       setStatus("Checking the notification server…");
       await checkHealth();
       setStatus(Notification.permission === "denied"
-        ? "Notifications are currently blocked. Allow them in this site's browser settings, then press Check Again."
+        ? (/android/i.test(navigator.userAgent)
+            ? "Notifications are blocked. Open Android Settings → Apps → Chrome → Notifications and allow them. Also allow Notifications for this website in Chrome → Site settings → Notifications, then tap Check Again."
+            : "Notifications are currently blocked. Allow them in this site's browser settings, then press Check Again.")
         : "Notification setup is required. Press Enable Notifications and choose Allow to register this device.");
       button.disabled = false;
       button.textContent = Notification.permission === "denied" ? "Check Again" : "Enable Notifications";
