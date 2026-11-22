@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#070D1F">
+  <title>Dashboard Design Preview | Dr. Sandaruwan Perera</title>
+  <style>
+    :root{color-scheme:dark;--bg:#070d1f;--panel:#0f1a33;--line:#263656;--text:#e6ebf7;--muted:#9ba8c7;--accent:#6ff636}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+    .wrap{max-width:1120px;margin:auto;padding:24px}.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 20px;background:var(--panel);border:1px solid var(--line);border-radius:16px}.brand{font-weight:800}.tag{font-size:12px;color:var(--accent);border:1px solid #6ff63655;border-radius:99px;padding:5px 10px}
+    h1{font-size:clamp(30px,5vw,46px);line-height:1.1;letter-spacing:-.04em;margin:28px 0 8px}.muted{color:var(--muted)}.notice{padding:14px 16px;border:1px solid #6ff63655;background:#6ff63612;border-radius:12px;margin:18px 0 24px}
+    .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;min-width:0}.label{font-size:13px;color:var(--muted)}.value{font-size:30px;font-weight:800;margin-top:10px}.accent{color:var(--accent)}.section{margin-top:20px}.row{display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:1px solid var(--line);padding:14px 0}.row:last-child{border:0}.button{display:inline-block;text-decoration:none;color:#0a1228;background:var(--accent);padding:10px 14px;border-radius:10px;font-weight:800}
+    @media(max-width:700px){.wrap{padding:12px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.card{padding:15px}.value{font-size:25px}.nav{align-items:flex-start;flex-direction:column}}
+  </style>
+</head>
+<body><main class="wrap">
+  <header class="nav"><div class="brand">Dr. Sandaruwan Perera · LMS</div><span class="tag">DESIGN PREVIEW ONLY</span></header>
+  <h1>Student Dashboard <span class="accent">Preview</span></h1>
+  <p class="muted">A visual mockup of the proposed dashboard theme.</p>
+  <div class="notice"><strong>Preview data only.</strong> This page does not load real student records, marks, papers, or production Firebase data.</div>
+  <section class="stats" aria-label="Sample dashboard cards">
+    <article class="card"><div class="label">Enrolled Courses</div><div class="value">—</div><div class="muted">Connected after secure integration</div></article>
+    <article class="card"><div class="label">Available Papers</div><div class="value">—</div><div class="muted">Real student access not connected</div></article>
+    <article class="card"><div class="label">Results & Marks</div><div class="value">—</div><div class="muted">No live data loaded</div></article>
+    <article class="card"><div class="label">Progress</div><div class="value accent">Preview</div><div class="muted">Visual styling review only</div></article>
+  </section>
+  <section class="card section"><h2>Recent Activity</h2><div class="row"><span>Dashboard theme preview</span><span class="tag">Design</span></div><div class="row"><span>Authentication smoke test</span><span class="tag">Passed</span></div><div class="row"><span>Student data integration</span><span class="muted">Not connected</span></div></section>
+  <p style="margin-top:24px"><a class="button" href="./portal.html">Back to staging login</a></p>
+</main></body></html>

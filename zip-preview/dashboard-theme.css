@@ -1,0 +1,52 @@
+/* ZIP-inspired theme overlay. Targets classes present in the existing dashboard.
+   Intentionally changes presentation only; HTML, scripts, data hooks and routing remain intact. */
+:root{
+  --primary:#6ff636;--primary-dark:#4dc51c;--navy:#070d1f;--navy-2:#0f1a33;
+  --background:#070d1f;--card:#0f1a33;--text:#e6ebf7;--muted:#9ba8c7;
+  --border:#243353;--success:#6ff636;--shadow:0 14px 36px rgba(0,0,0,.22);--radius:18px
+}
+html,body{background:#070d1f!important;color:#e6ebf7}
+.app{background:#070d1f!important}
+.sidebar{background:linear-gradient(180deg,#080f23 0%,#0d1830 100%)!important;border-right:1px solid #1d2a4a!important;box-shadow:8px 0 30px rgba(0,0,0,.18)}
+.sidebar-brand{border-color:#1d2a4a!important}
+.brand-logo{background:linear-gradient(135deg,#6ff636,#3caa19)!important;color:#07111f!important;box-shadow:0 8px 18px rgba(111,246,54,.15)}
+.sidebar-section-title{color:#7182a7!important}
+.sidebar-link{color:#b8c5e0!important}
+.sidebar-link.active{background:linear-gradient(90deg,#6ff636,#83ff53)!important;color:#07111f!important;box-shadow:0 7px 18px rgba(111,246,54,.16)}
+.sidebar-link:hover{background:#17233f!important;color:#fff!important}
+.student-account,.professional-profile{background:#0f1a33!important;border-color:#243353!important;color:#e6ebf7!important}
+.main-content{background:#070d1f!important;color:#e6ebf7}
+.lms-header,.mobile-lms-header{background:#0b1530!important;color:#e6ebf7!important;border-color:#1d2a4a!important}
+.lms-header-title,.lms-user,.lms-header-actions{color:#e6ebf7!important}
+.lms-search{background:#101d39!important;border-color:#2a3a60!important;color:#e6ebf7!important}
+.lms-search input{color:#e6ebf7!important}
+.lms-notification,.notification-bell-icon,.mobile-notification{background:#14213d!important;border-color:#2a3a60!important;color:#e6ebf7!important}
+.premium-notification-card,.dashboard-learning-banner,.dashboard-analytics-hero,.lms-stat-card,.lms-widget,.quick-nav-card,.dashboard-summary-card,.dashboard-announcement-summary{
+  background:#0f1a33!important;color:#e6ebf7!important;border-color:#243353!important;box-shadow:0 14px 36px rgba(0,0,0,.2)!important
+}
+.dashboard-learning-banner,.dashboard-analytics-hero{background:radial-gradient(ellipse at 90% 15%,#1b3552 0,transparent 48%),linear-gradient(135deg,#101d39,#0b1530)!important}
+.learning-banner-copy h1,.learning-banner-copy h2,.lms-section-heading,.dashboard-announcements-heading,.widget-heading,.dashboard-summary-number,.dashboard-summary-copy,.lms-stat-card h2,.lms-stat-card h3{color:#f1f5ff!important}
+.learning-banner-copy p,.widget-subtitle,.announcement-summary-sub,.dashboard-summary-meta,.dashboard-summary-copy p{color:#9ba8c7!important}
+.hero-continue-btn,.dashboard-announcement-tab.active,.quick-nav-card:hover{background:#6ff636!important;color:#07111f!important;border-color:#6ff636!important}
+.dashboard-announcement-tab{color:#b8c5e0!important;border-color:#243353!important}
+.lms-stat-icon.green,.lms-stat-icon.blue,.lms-stat-icon.purple{background:#142b20!important;color:#6ff636!important}
+.progress-widget,.overall-progress{color:#e6ebf7!important}
+.progress-ring{filter:drop-shadow(0 0 8px rgba(111,246,54,.14))}
+.legend-dot.passed{background:#6ff636!important}
+button,a,input,select,textarea{accent-color:#6ff636}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #6ff636!important;outline-offset:3px}
+input,select,textarea{background:#0b1530!important;color:#e6ebf7!important;border-color:#2a3a60!important}
+a{color:inherit}
+a:hover{color:#6ff636}
+.mobile-lms-header{background:#0b1530!important}
+.mobile-menu-btn{background:#14213d!important}
+.mobile-menu-btn span{background:#e6ebf7!important}
+.mobile-lms-title span,.mobile-lms-title strong{color:#9ba8c7!important}
+.mobile-lms-title b{color:#e6ebf7!important}
+.mobile-sidebar-backdrop{background:rgba(0,0,0,.65)!important}
+.dashboard-mobile-nav{background:#0b1530!important;border-color:#1d2a4a!important}
+@media(max-width:800px){
+  html,body,.app,.main-content{background:#070d1f!important}
+  .sidebar{box-shadow:12px 0 36px rgba(0,0,0,.35)!important}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
