@@ -42,8 +42,8 @@
       label: "A/L 2028", eyebrow: "YOUR LEARNING JOURNEY",
       title: "Build strong foundations.<br><b>Be ready for what is next.</b>",
       description: "Explore the A/L 2028 program, build your subject knowledge and make steady progress.",
-      badge: "A/L 2028 PATHWAY", model: "theory-examination.html", modelTitle: "Theory Examination",
-      modelDescription: "A/L 2028 theory and examination preparation.", past: null, exam: null,
+      badge: "A/L 2028 PATHWAY", model: "model-papers.html", modelTitle: "Monthly TOP Ranking Papers",
+      modelDescription: "A/L 2028 monthly TOP Ranking papers with 1st- and 2nd-paper answers.", past: null, exam: null,
       modelAnswers: "student-model-answers.html", modelAnswersTitle: "Model Paper Answers",
       modelAnswersDescription: "Official answers for A/L 2028 model papers.",
       hub: false, progress: false, smartBook: true, schoolPapers: true
@@ -56,6 +56,7 @@
     grade10: {
       portalProgramHub: false,
       modelPapersCard: true,
+      theoryExaminationCard: false,
       modelPaperAnswersCard: true,
       pastPapersCard: false,
       programProgressCard: false,
@@ -73,7 +74,8 @@
     },
     al2027: {
       portalProgramHub: false,
-      modelPapersCard: true,
+      modelPapersCard: false,
+      theoryExaminationCard: false,
       modelPaperAnswersCard: false,
       pastPapersCard: false,
       programProgressCard: false,
@@ -82,7 +84,8 @@
     },
     al2028: {
       portalProgramHub: false,
-      modelPapersCard: false,
+      modelPapersCard: true,
+      theoryExaminationCard: true,
       modelPaperAnswersCard: true,
       pastPapersCard: false,
       programProgressCard: false,
