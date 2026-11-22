@@ -69,11 +69,37 @@ function setLoginProcessingState() {
     msg?.classList.add("is-login-processing-message");
 }
 
+function persistInstalledLmsStudentSession() {
+    if (!isInstalledLmsApp() || sessionStorage.getItem("loggedIn") !== "true") return;
+
+    const studentId = String(sessionStorage.getItem("studentId") || "").trim();
+    if (!studentId) return;
+
+    const record = {
+        version: 1,
+        studentId,
+        studentType: String(sessionStorage.getItem("studentType") || ""),
+        studentGrade: String(sessionStorage.getItem("studentGrade") || ""),
+        studentName: String(sessionStorage.getItem("studentName") || studentId),
+        alYear: String(sessionStorage.getItem("alYear") || "")
+    };
+
+    try {
+        // Store session metadata only. Never persist passwords or NIC numbers.
+        localStorage.setItem("drsandaruwanLmsInstalledSessionV1", JSON.stringify(record));
+    } catch (error) {
+        console.warn("Could not preserve the installed LMS app session on this device.", error);
+    }
+}
+
 function showLoginSuccessAndRedirect(
     destination,
     buttonLabel = "Success!",
     statusMessage = "Welcome back! Redirecting to your dashboard..."
 ) {
+    const nextPage = String(destination || "").split(/[?#]/)[0].replace(/^\.\//, "");
+    if (nextPage === "dashboard.html") persistInstalledLmsStudentSession();
+
     loginRedirecting = true;
 
     if (loginBtn) {
