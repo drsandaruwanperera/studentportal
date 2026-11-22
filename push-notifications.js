@@ -56,15 +56,25 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
   const attachForegroundListener = instance => {
     if (foregroundListenerReady) return;
     foregroundListenerReady = true;
-    onMessage(instance, payload => {
-      const title = payload?.notification?.title || "Dr. Sandaruwan LMS";
-      const body = payload?.notification?.body || "You have a new LMS update.";
-      if (Notification.permission === "granted") {
-        new Notification(title, {
+    onMessage(instance, async payload => {
+      const title = payload?.notification?.title || payload?.data?.title || "Dr. Sandaruwan LMS";
+      const body = payload?.notification?.body || payload?.data?.body || "You have a new LMS update.";
+      if (Notification.permission !== "granted" || !("serviceWorker" in navigator)) return;
+
+      try {
+        // iOS Home Screen web apps display notifications via the service-worker
+        // registration; the Notification constructor is not supported there.
+        const registration = await navigator.serviceWorker.ready;
+        await registration.showNotification(title, {
           body,
           icon: "./icons/dr-sandaruwan-lms-192.png",
+          badge: "./icons/dr-sandaruwan-lms-192.png",
+          tag: "dr-sandaruwan-lms-" + String(payload?.data?.announcementId || Date.now()),
+          renotify: false,
           data: { url: payload?.data?.url || "./announcements.html" }
         });
+      } catch (error) {
+        console.warn("Could not display the foreground LMS notification.", error);
       }
     });
   };
