@@ -65,6 +65,11 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
         // iOS Home Screen web apps display notifications via the service-worker
         // registration; the Notification constructor is not supported there.
         const registration = await navigator.serviceWorker.ready;
+        const worker = registration.active || registration.waiting;
+        worker?.postMessage({
+          type: "LMS_ADD_APP_BADGE",
+          announcementId: payload?.data?.announcementId || ("push-" + Date.now())
+        });
         await registration.showNotification(title, {
           body,
           icon: "./icons/dr-sandaruwan-lms-192.png",
@@ -112,7 +117,7 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
     if (isAppleMobile && !isStandaloneApp) return false;
 
     const instance = await checkHealth();
-    const registration = await navigator.serviceWorker.register("./service-worker.js", {
+    const registration = await navigator.serviceWorker.register("./service-worker.js?v=20261122-app-badge", {
       scope: "./",
       updateViaCache: "none"
     });
