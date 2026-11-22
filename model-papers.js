@@ -188,6 +188,11 @@ onSnapshot(collection(db, 'monthlyTopRankingAccess'), snapshot => {
 }, error => { console.error('Monthly access status could not be loaded:', error); updateMonthlyLockButtons(); });
 async function openPaper(paperNumber, paperButton, paperCard) {
 
+    if (sessionStorage.getItem("alYear") !== "2028") {
+        window.location.replace("dashboard.html");
+        return;
+    }
+
     if (!paperButton) {
         return;
     }
@@ -231,6 +236,11 @@ document.addEventListener(
 
         const studentData =
             await getStudentData();
+
+        if (sessionStorage.getItem("alYear") !== "2028") {
+            window.location.replace("dashboard.html");
+            return;
+        }
 
         paperCards.forEach(
             function(item) {
@@ -284,21 +294,20 @@ function renderMonthlyPaperSections(items) {
     document.querySelectorAll("[data-monthly-paper-section]").forEach(el => el.remove());
 
     const groups = {};
-    const isA27000Batch = sessionStorage.getItem("alYear") === "2027";
+    const isA28000Batch = sessionStorage.getItem("alYear") === "2028";
     const visibleItems = items.filter(x =>
         x.published !== false &&
-        !(String(x.month).toLowerCase() === "september" && Number(x.year) === 2026) &&
-        (isA27000Batch || !(String(x.month).toLowerCase() === "november" && Number(x.year) === 2026))
+        !(String(x.month).toLowerCase() === "september" && Number(x.year) === 2026)
     );
 
-    // November 2026 Paper 01 belongs to the A27000 / A/L 2027 batch.
-    // It is hosted as 1st- and 2nd-paper PDFs in this repository.
+    // November 2026 Paper 01 is transferred from the A27000 / A/L 2027 batch
+    // to the A28000 / A/L 2028 batch. The repository stores both paper PDFs.
     const hasNovemberPaper01 = visibleItems.some(x =>
         Number(x.year) === 2026 &&
         String(x.month).toLowerCase() === "november" &&
         Number(x.paperNumber) === 1
     );
-    if (isA27000Batch && !hasNovemberPaper01) {
+    if (isA28000Batch && !hasNovemberPaper01) {
         visibleItems.push({
             year: 2026,
             month: "november",
