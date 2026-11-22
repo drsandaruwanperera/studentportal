@@ -460,14 +460,21 @@
     placeholder.className = "shared-next-event-placeholder";
     placeholder.innerHTML = "<strong>Next exam</strong><span>No examination date has been published for your programme yet. Details will appear here when scheduled.</span>";
 
-    const examStack = document.createElement("section");
-    examStack.className = "shared-exam-stack";
-    examStack.setAttribute("aria-label", "Upcoming milestone and exam information");
-    examStack.append(exam, placeholder);
+    const mobileDashboardLayout = window.matchMedia("(max-width: 800px)").matches;
+    if (mobileDashboardLayout) {
+      const examStack = document.createElement("section");
+      examStack.className = "shared-exam-stack";
+      examStack.setAttribute("aria-label", "Upcoming milestone and exam information");
+      examStack.append(exam, placeholder);
 
-    agenda.append(calendar, learningVisual);
-    banner.insertAdjacentElement("afterend", agenda);
-    agenda.insertAdjacentElement("afterend", examStack);
+      agenda.append(calendar, learningVisual);
+      banner.insertAdjacentElement("afterend", agenda);
+      agenda.insertAdjacentElement("afterend", examStack);
+    } else {
+      // Retain the existing desktop calendar + exam layout.
+      agenda.append(calendar, exam, placeholder);
+      banner.insertAdjacentElement("afterend", agenda);
+    }
 
     const today = getColomboToday();
     let viewYear = today.year;
