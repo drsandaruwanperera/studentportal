@@ -187,7 +187,6 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
   const originalOverflow = document.body.style.overflow;
   document.body.style.overflow = "hidden";
 
-  let serviceReady = false;
   let unlocked = false;
   let unsupported = false;
 
@@ -223,12 +222,6 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
     button.textContent = "Enabling…";
 
     try {
-      if (!serviceReady) {
-        setStatus("Checking the notification service. Please wait.");
-        await checkHealth();
-        serviceReady = true;
-      }
-
       let permission = Notification.permission;
       if (permission === "default") {
         // Permission prompts must be opened directly from this user click.
@@ -285,7 +278,6 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
       }
 
       await checkHealth();
-      serviceReady = true;
       setStatus(Notification.permission === "denied"
         ? "Notifications are currently blocked. Allow them in this site's browser settings, then press Check Again."
         : "Press Enable Notifications once to register this device.");
