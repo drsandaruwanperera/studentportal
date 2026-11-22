@@ -38,19 +38,20 @@ import {db,collection,onSnapshot} from "./firebase.js";
     const cohortDocs = docs.filter(x=>x.cohort===cohort);
     const settings = new Map(cohortDocs.filter(x=>x.cardId).map(x=>[x.cardId,x]));
     Object.entries(programIds).forEach(([dashboardId,programId])=>{
-      if (!allowed[cohort].has(dashboardId)) return;
-      const visible = settings.get(dashboardId)?.active !== false;
+      // Always enforce the cohort allow-list, including cards made visible by other page scripts.
+      const cohortAllowed = allowed[cohort].has(dashboardId);
+      const visible = cohortAllowed && settings.get(dashboardId)?.active !== false;
       const dashboardCard = document.getElementById(dashboardId);
       if (dashboardCard) {
         dashboardCard.hidden = !visible;
         dashboardCard.setAttribute("aria-hidden",String(!visible));
-        dashboardCard.style.display = visible ? "" : "none";
+        dashboardCard.style.setProperty("display", visible ? "" : "none", "important");
       }
       const programCard = programGrid?.querySelector('[data-content-id="'+programId+'"]');
       if (programCard) {
         programCard.hidden = !visible;
         programCard.setAttribute("aria-hidden",String(!visible));
-        programCard.style.display = visible ? "flex" : "none";
+        programCard.style.setProperty("display", visible ? "flex" : "none", "important");
       }
     });
 
