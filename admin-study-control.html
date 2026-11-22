@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard Study Control | Dr. Sandaruwan LMS Admin</title>
+<link rel="stylesheet" href="admin.css?v=22">
+<style>
+.page-shell{padding:28px 34px 60px}.hero{padding:26px;border:1px solid #ffffff18;border-radius:22px;background:linear-gradient(130deg,#27205f,#4037c9 58%,#6d28d9);margin-bottom:20px}.hero small{color:#a6ff2e;font-weight:850;letter-spacing:1.2px}.hero h1{color:white;margin:8px 0;font-size:28px}.hero p{color:#ffffffbd;font-size:12px;line-height:1.6}.panel{padding:22px;border:1px solid #ffffff18;border-radius:18px;background:#11182bf2;margin-bottom:18px}.panel h2{color:#f4f7ff;font-size:17px;margin:0 0 5px}.muted{color:#94a3b8;font-size:11px;line-height:1.6}.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:16px 0}.toolbar select,.add-grid input,.add-grid select{height:42px;padding:0 12px;border:1px solid #ffffff20;border-radius:10px;background:#0b1324;color:#f4f7ff;min-width:180px}.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}.item{display:flex;align-items:center;gap:12px;padding:14px;border:1px solid #ffffff12;border-radius:13px;background:#0e192c}.item-copy{flex:1;min-width:0}.item strong{display:block;color:#f4f7ff;font-size:12px}.item small{display:block;color:#8492aa;font-size:10px;margin-top:4px}.item em{font-style:normal;font-size:9px;font-weight:850;color:#86efac}.switch{min-width:78px;height:34px;border:0;border-radius:9px;background:#176c4d;color:#fff;font-size:10px;font-weight:800;cursor:pointer}.switch.off{background:#7f2939}.delete{height:34px;padding:0 10px;border:1px solid #ff6b7a55;border-radius:9px;background:#ff6b7a12;color:#ff9aa5;font-size:10px;font-weight:800;cursor:pointer}.add-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin-top:15px}.add-grid label{display:flex;flex-direction:column;gap:6px;color:#9aa8c0;font-size:10px;font-weight:750}.add-grid input,.add-grid select{width:100%;box-sizing:border-box}.add-grid .wide{grid-column:1/-1}.primary{height:43px;padding:0 18px;border:0;border-radius:10px;background:linear-gradient(135deg,#5b4bff,#7c3aed);color:#fff;font-size:11px;font-weight:850;cursor:pointer}.hint{padding:12px;border-radius:10px;background:#ffffff08;color:#9aa8c0;font-size:10px;line-height:1.6;margin-top:14px}
+@media(max-width:900px){.cards{grid-template-columns:1fr}}@media(max-width:650px){.page-shell{padding:15px}.panel{padding:16px}.hero h1{font-size:23px}.add-grid{grid-template-columns:1fr}.add-grid .wide{grid-column:auto}}
+</style></head><body><div class="admin-layout">
+<aside class="sidebar"><div class="sidebar-brand"><div class="brand-logo">🎓</div><div><h2>Student</h2><span>Assessment Portal</span></div></div><div class="sidebar-label">ADMINISTRATION</div><nav class="sidebar-nav">
+<a href="admin.html" class="nav-item">🏠 <span>Dashboard</span></a><a href="students.html" class="nav-item">👥 <span>Students</span></a><a href="paper-management.html" class="nav-item">📚 <span>Paper Management</span></a><a href="admin-program-control.html" class="nav-item">🎛️ <span>Program Publishing</span></a><a href="admin-study-control.html" class="nav-item active">🧩 <span>Dashboard Study Control</span></a><a href="admin-results.html" class="nav-item">🏆 <span>Results Management</span></a>
+</nav><div class="sidebar-bottom"><a class="logout-btn" href="admin.html">← Back to Admin</a></div></aside>
+<main class="main-content page-shell">
+<section class="hero"><small>LIVE STUDENT DASHBOARD CONTROL</small><h1>Study Materials Manager</h1><p>Choose which study cards are active for each student cohort. Add new dashboard cards or remove custom cards. Changes update student dashboards in realtime.</p></section>
+<section class="panel"><h2>Manage existing study cards</h2><p class="muted">Select a cohort and switch each card on or off. Cards outside that cohort's approved programme remain hidden.</p>
+<div class="toolbar"><select id="cohort"><option value="grade10">Grade 10</option><option value="grade11">Grade 11</option><option value="al2027">A/L 2027</option><option value="al2028">A/L 2028</option></select><span class="muted" id="status">Connecting…</span></div><div id="existingCards" class="cards"></div>
+<div class="hint">Default cohort cards: Grade 10 — Term Test Model Papers + Model Paper Answers; Grade 11 — TOP Ranking Papers + Model Paper Answers; A/L 2027 — Monthly TOP Ranking Papers; A/L 2028 — Theory Examination + Smart Book Answers + School Paper Answers. This manager controls visibility, not paper access permissions.</div>
+</section>
+<section class="panel"><h2>Add a new dashboard study card</h2><p class="muted">New cards can be assigned to one cohort and will appear in that cohort's Study Materials section.</p>
+<form id="addForm" class="add-grid">
+<label>Card title<input id="newTitle" maxlength="60" required placeholder="e.g. Revision Notes"></label>
+<label>Assign cohort<select id="newCohort"><option value="grade10">Grade 10</option><option value="grade11">Grade 11</option><option value="al2027">A/L 2027</option><option value="al2028">A/L 2028</option></select></label>
+<label class="wide">Short description<input id="newDescription" maxlength="140" required placeholder="What will students find here?"></label>
+<label class="wide">Destination URL<input id="newUrl" required placeholder="e.g. revision-notes.html"></label>
+<button class="primary" id="addButton" type="submit">＋ Add study card</button>
+</form></section>
+</main></div>
+<script type="module">
+import {db,doc,setDoc,deleteDoc,onSnapshot,collection} from "./firebase.js";
+const role=(sessionStorage.getItem("adminRole")||"").toLowerCase();
+if(sessionStorage.getItem("adminLoggedIn")!=="true"){location.replace("admin-login.html");}
+if(!["full","superadmin"].includes(role)){alert("Super Admin only.");location.replace("admin.html");}
+const cohorts={grade10:"Grade 10",grade11:"Grade 11",al2027:"A/L 2027",al2028:"A/L 2028"};
+const cards=[
+{id:"modelPapersCard",title:"Term Test / TOP Ranking / Monthly TOP Ranking Papers",desc:"Main cohort paper collection",allowed:["grade10","grade11","al2027"]},
+{id:"modelPaperAnswersCard",title:"Model Paper Answers",desc:"Answer library for Grade 10 and Grade 11",allowed:["grade10","grade11"]},
+{id:"theoryExaminationCard",title:"Theory Examination",desc:"A/L 2028 theory preparation",allowed:["al2028"]},
+{id:"smartBookAnswersCard",title:"Smart Book Answers",desc:"A/L 2028 Smart Book solutions",allowed:["al2028"]},
+{id:"schoolPaperAnswersCard",title:"School Paper Answers",desc:"A/L 2028 school paper solutions",allowed:["al2028"]}
+];
+const cohortEl=document.getElementById("cohort"), existing=document.getElementById("existingCards"), status=document.getElementById("status");
+let settings={}, custom=[];
+const key=(cohort,id)=>cohort+"_"+id;
+function render(){
+ const cohort=cohortEl.value;
+ const rows=cards.filter(x=>x.allowed.includes(cohort)).map(x=>{
+  const active=settings[key(cohort,x.id)]?.active!==false;
+  return '<article class="item"><div class="item-copy"><strong>'+x.title+'</strong><small>'+x.desc+'</small></div><em>'+(active?"ACTIVE":"HIDDEN")+'</em><button class="switch '+(active?"":"off")+'" data-card="'+x.id+'">'+(active?"Hide":"Show")+'</button></article>';
+ });
+ const extras=custom.filter(x=>x.cohort===cohort).map(x=>'<article class="item"><div class="item-copy"><strong>'+escapeHtml(x.title)+'</strong><small>'+escapeHtml(x.description||"Custom study card")+'</small></div><em> CUSTOM </em><button class="delete" data-delete="'+x.id+'">Remove</button></article>');
+ existing.innerHTML=rows.concat(extras).join("")||'<p class="muted">No study cards assigned to this cohort yet.</p>';
+ existing.querySelectorAll("[data-card]").forEach(btn=>btn.addEventListener("click",async()=>{
+  btn.disabled=true;const id=btn.dataset.card;const k=key(cohort,id);const active=settings[k]?.active!==false;
+  try{await setDoc(doc(db,"dashboardStudyContent",k),{cohort,cardId:id,active:!active,updatedAt:new Date().toISOString()},{merge:true});}catch(e){console.error(e);alert("Could not update card. Check Firestore permissions.");}finally{btn.disabled=false;}
+ }));
+ existing.querySelectorAll("[data-delete]").forEach(btn=>btn.addEventListener("click",async()=>{
+  if(!confirm("Remove this custom study card from the dashboard?"))return;
+  btn.disabled=true;try{await deleteDoc(doc(db,"dashboardStudyContent",btn.dataset.delete));}catch(e){console.error(e);alert("Could not remove card.");}finally{btn.disabled=false;}
+ }));
+}
+function escapeHtml(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+cohortEl.addEventListener("change",render);
+onSnapshot(collection(db,"dashboardStudyContent"),snap=>{
+ settings={};custom=[];
+ snap.forEach(d=>{const v={id:d.id,...d.data()};if(v.cardId)settings[v.id]=v;else if(v.custom===true)custom.push(v);});
+ status.textContent="● Live sync connected";
+ render();
+},err=>{console.error(err);status.textContent="Could not connect";});
+document.getElementById("addForm").addEventListener("submit",async e=>{
+ e.preventDefault();const btn=document.getElementById("addButton");btn.disabled=true;btn.textContent="Adding…";
+ const title=document.getElementById("newTitle").value.trim(),description=document.getElementById("newDescription").value.trim(),url=document.getElementById("newUrl").value.trim(),cohort=document.getElementById("newCohort").value;
+ if(!/^(https?:\/\/|\.\/|[a-zA-Z0-9_-]+\.html(?:[?#].*)?$)/.test(url)){alert("Enter a valid page URL or local .html page.");btn.disabled=false;btn.textContent="＋ Add study card";return;}
+ const id="custom_"+Date.now().toString(36);
+ try{await setDoc(doc(db,"dashboardStudyContent",id),{custom:true,cohort,title,description,url,active:true,createdAt:new Date().toISOString()});e.target.reset();document.getElementById("newCohort").value=cohort;cohortEl.value=cohort;render();}
+ catch(error){console.error(error);alert("Could not add card. Check Firestore permissions.");}
+ finally{btn.disabled=false;btn.textContent="＋ Add study card";}
+});
+</script></body></html>
