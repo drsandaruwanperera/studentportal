@@ -134,28 +134,34 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
     return true;
   };
 
-  // Previously enabled devices (including students who enabled push before
-  // this one-time prompt was introduced) never see the prompt again.
-  // Refresh their FCM token quietly once per app session.
+  // The setup gate is mandatory until this student has successfully
+  // registered a push subscription on this device. A previously granted
+  // browser permission alone is NOT proof that the device is registered.
   const alreadyEnabled = wasEnabledOnThisDevice();
   const permissionAlreadyGranted = "Notification" in window && Notification.permission === "granted";
 
-  if (alreadyEnabled || permissionAlreadyGranted) {
-    if (permissionAlreadyGranted) {
-      let attemptedThisSession = false;
-      try {
-        attemptedThisSession = sessionStorage.getItem(refreshSessionKey) === "yes";
-        if (!attemptedThisSession) sessionStorage.setItem(refreshSessionKey, "yes");
-      } catch (_) {}
+  if (alreadyEnabled && permissionAlreadyGranted) {
+    // Existing subscribers never see the setup again. Refresh their FCM token
+    // silently once per app session to keep delivery registrations current.
+    let attemptedThisSession = false;
+    try {
+      attemptedThisSession = sessionStorage.getItem(refreshSessionKey) === "yes";
+      if (!attemptedThisSession) sessionStorage.setItem(refreshSessionKey, "yes");
+    } catch (_) {}
 
-      if (!attemptedThisSession) {
-        registerCurrentDevice().catch(error => {
-          console.warn("Silent LMS push subscription refresh failed; it will retry on the next app launch.", error);
-          try { sessionStorage.removeItem(refreshSessionKey); } catch (_) {}
-        });
-      }
+    if (!attemptedThisSession) {
+      registerCurrentDevice().catch(error => {
+        console.warn("Silent LMS push subscription refresh failed; it will retry on the next app launch.", error);
+        try { sessionStorage.removeItem(refreshSessionKey); } catch (_) {}
+      });
     }
     return;
+  }
+
+  // If notification permission was revoked in iOS/browser settings, require
+  // the student to restore it rather than silently bypassing setup.
+  if (alreadyEnabled && !permissionAlreadyGranted) {
+    try { localStorage.removeItem(enabledStorageKey); } catch (_) {}
   }
 
   const style = document.createElement("style");
@@ -189,7 +195,7 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
       '<div class="lms-push-gate-icon" aria-hidden="true">🔔</div>' +
       '<p class="lms-push-gate-kicker">One-time setup</p>' +
       '<h1 id="lmsPushGateTitle">Enable Notifications</h1>' +
-      '<p class="lms-push-gate-copy" id="lmsPushGateDescription">Stay informed about important announcements, exam updates, results and student notices. Enable notifications once on this device to continue to your LMS dashboard.</p>' +
+      '<p class="lms-push-gate-copy" id="lmsPushGateDescription">Stay informed about important announcements, exam updates, results and student notices. Complete this one-time notification setup to continue to your LMS dashboard. You will not be asked again after successful registration.</p>' +
       '<div class="lms-push-gate-status" role="status" aria-live="polite">Checking notification service…</div>' +
       '<button type="button" disabled>Checking…</button>' +
       '<small class="lms-push-gate-note">You only need to complete this setup once on this device. After successful registration, this step will not appear again.</small>' +
@@ -219,9 +225,14 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
 
   const showUnsupportedFallback = () => {
     unsupported = true;
-    setStatus("This browser or device does not support web push notifications. You can continue, but notifications will not be available on this device.");
-    button.disabled = false;
-    button.textContent = "Continue to LMS";
+    setStatus("Notifications are required to use the LMS on this device, but this browser does not support Web Push. On iPhone or iPad, install the LMS from Safari using Share → Add to Home Screen, then open the installed app. On other devices, use a supported browser.");
+    button.disabled = true;
+    button.textContent = "Notifications Not Supported";
+    const link = document.createElement("a");
+    link.className = "lms-push-gate-link";
+    link.href = "./app-required.html";
+    link.textContent = "View installation instructions";
+    card.appendChild(link);
   };
 
   const enable = async () => {
@@ -244,7 +255,7 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
       }
       if (permission !== "granted") {
         if (permission === "denied") {
-          setStatus("Notifications are blocked for this site. Open your browser or device Site Settings, allow them, then press Check Again.");
+          setStatus("Notifications are blocked for this app. This setup is required. Open iPhone Settings → Notifications → Dr. Sandaruwan LMS → Allow Notifications, then return here and press Check Again.");
           button.textContent = "Check Again";
         } else {
           setStatus("Notification permission was not granted. Press Enable Notifications and choose Allow to continue.");
@@ -253,7 +264,10 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
         return;
       }
 
-      await registerCurrentDevice();
+      const registered = await registerCurrentDevice();
+      if (!registered) {
+        throw new Error("This device could not complete notification registration. Keep this setup open and check the app installation, notification permission and internet connection.");
+      }
       setStatus("Notifications are enabled for this device. Opening your LMS…");
       button.textContent = "Notifications Enabled ✓";
       window.setTimeout(unlock, 450);
@@ -281,21 +295,24 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
       }
 
       if (isAppleMobile && !isStandaloneApp) {
-        setStatus("On iPhone or iPad, open the installed LMS from your Home Screen to enable notifications. Add it to your Home Screen first if you have not installed it.");
+        setStatus("Notification setup is required. On iPhone or iPad, open Dr. Sandaruwan LMS from its Home Screen icon. If it is not installed yet, use Safari → Share → Add to Home Screen.");
         const link = document.createElement("a");
         link.className = "lms-push-gate-link";
         link.href = "./app-required.html";
         link.textContent = "View app installation instructions";
         card.appendChild(link);
-        button.disabled = false;
-        button.textContent = "Open App Instructions";
+        button.disabled = true;
+        button.textContent = "Open the Installed LMS App";
+        link.addEventListener("click", () => {
+          // Instructions only; the mandatory gate is not marked complete.
+        });
         return;
       }
 
       await checkHealth();
       setStatus(Notification.permission === "denied"
         ? "Notifications are currently blocked. Allow them in this site's browser settings, then press Check Again."
-        : "Press Enable Notifications once to register this device.");
+        : "Notification setup is required. Press Enable Notifications and choose Allow to register this device.");
       button.disabled = false;
       button.textContent = Notification.permission === "denied" ? "Check Again" : "Enable Notifications";
     } catch (error) {
