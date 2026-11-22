@@ -106,8 +106,10 @@
     if (value >= 27000 && value <= 27999) cohort = "grade10";
     else if (value >= 26000 && value <= 26999) cohort = "grade11";
   }
+  const alYear = String(sessionStorage.getItem("alYear") || "").trim();
+  if (alYear === "2028" || /^A28\\d{3}$/.test(studentId) || /^28[CN]/.test(studentId)) cohort = "al2028";
 
-  if (cohort !== "grade10" && cohort !== "grade11") {
+  if (cohort !== "grade10" && cohort !== "grade11" && cohort !== "al2028") {
     window.location.replace("dashboard.html");
     return;
   }
@@ -162,6 +164,11 @@
       ]));
     }
     note.textContent = "Only papers with answer files currently published in the LMS are listed.";
+  } else if (cohort === "al2028") {
+    title.textContent = "A/L 2028 Model Paper Answers";
+    description.textContent = "Official model-paper answers for your A/L 2028 study programme.";
+    list.innerHTML = '<div class="answers-empty">A/L 2028 model-paper answer resources will appear here when they are published in the LMS.</div>';
+    note.textContent = "This section is reserved for A/L 2028 model-paper answers.";
   } else {
     title.textContent = "Grade 11 Model Paper Answers";
     description.textContent = "TOP Ranking Paper answers for Grade 11 · Term 3.";
