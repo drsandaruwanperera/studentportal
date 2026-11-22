@@ -448,13 +448,19 @@
           </defs>
           <path class="shared-learning-orbit shared-learning-orbit-purple" d="M20 100C35 30 89 14 143 34s82 63 65 92-76 16-116 2S35 146 20 100Z"/>
           <path class="shared-learning-orbit shared-learning-orbit-green" d="M34 117C56 145 108 141 151 102s46-77 11-84"/>
-          <path d="m64 92 56-20 57 20-57 23-56-23Z" fill="url(#lmsCapGlow)" stroke="#f3e8ff" stroke-width="3" stroke-linejoin="round"/>
-          <path d="M84 101v20c21 14 55 14 76 0v-20" fill="none" stroke="#c4b5fd" stroke-width="3" stroke-linejoin="round"/>
-          <path d="M177 92v30" stroke="#a6ff2e" stroke-width="3" stroke-linecap="round"/>
-          <circle cx="177" cy="126" r="4" fill="#a6ff2e"/>
-          <path d="M52 130c18-13 36-13 58 1 22-14 42-14 63-1v19c-21-14-41-14-63 0-22-14-40-14-58 0v-19Z" fill="url(#lmsBookGlow)" stroke="#d9c8ff" stroke-width="2" stroke-linejoin="round"/>
-          <path d="M110 132v17M68 135c13-6 25-5 39 3M125 138c14-8 27-9 41-3" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/>
-          <path d="m35 46 3 8 8 3-8 3-3 8-3-8-8-3 8-3 3-8ZM199 49l2.5 6 6 2.5-6 2.5-2.5 6-2.5-6-6-2.5 6-2.5 2.5-6Z" fill="#f4eaff"/>
+          <g class="shared-learning-cap">
+            <path d="m64 92 56-20 57 20-57 23-56-23Z" fill="url(#lmsCapGlow)" stroke="#f3e8ff" stroke-width="3" stroke-linejoin="round"/>
+            <path d="M84 101v20c21 14 55 14 76 0v-20" fill="none" stroke="#c4b5fd" stroke-width="3" stroke-linejoin="round"/>
+          </g>
+          <g class="shared-learning-tassel">
+            <path d="M177 92v30" stroke="#a6ff2e" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="177" cy="126" r="4" fill="#a6ff2e"/>
+          </g>
+          <g class="shared-learning-book">
+            <path d="M52 130c18-13 36-13 58 1 22-14 42-14 63-1v19c-21-14-41-14-63 0-22-14-40-14-58 0v-19Z" fill="url(#lmsBookGlow)" stroke="#d9c8ff" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M110 132v17M68 135c13-6 25-5 39 3M125 138c14-8 27-9 41-3" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/>
+          </g>
+          <path class="shared-learning-sparkles" d="m35 46 3 8 8 3-8 3-3 8-3-8-8-3 8-3 3-8ZM199 49l2.5 6 6 2.5-6 2.5-2.5 6-2.5-6-6-2.5 6-2.5 2.5-6Z" fill="#f4eaff"/>
         </svg>
       </div>
       <strong>YOUR LEARNING SPACE</strong>
