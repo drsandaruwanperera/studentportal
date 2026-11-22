@@ -4,7 +4,7 @@
   "short_name": "Dr Sandaruwan",
   "description": "Student learning and assessment portal",
   "lang": "en",
-  "start_url": "./index.html?source=installed-app&ui=20261122-announcement-megaphone",
+  "start_url": "./index.html?source=installed-app&ui=20261122-approved-mobile-dashboard",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
