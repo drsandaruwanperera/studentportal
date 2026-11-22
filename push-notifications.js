@@ -26,7 +26,7 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
   const host = document.querySelector("main.main-content, main.main, .main-content, main");
   if (!host) return;
 
-  const enabledStorageKey = "drsLmsPushEnabledV1:" + encodeURIComponent(studentId);
+  const enabledStorageKey = "drsLmsPushEnabledV2:" + encodeURIComponent(studentId);
   const refreshSessionKey = "drsLmsPushRefreshAttemptedV1:" + encodeURIComponent(studentId);
   const isAppleMobile = /iphone|ipad|ipod/i.test(navigator.userAgent) ||
     (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
@@ -209,7 +209,6 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
   document.body.style.overflow = "hidden";
 
   let unlocked = false;
-  let unsupported = false;
 
   const setStatus = message => {
     if (status) status.textContent = message || "";
@@ -224,7 +223,6 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
   };
 
   const showUnsupportedFallback = () => {
-    unsupported = true;
     setStatus("Notifications are required to use the LMS on this device, but this browser does not support Web Push. On iPhone or iPad, install the LMS from Safari using Share → Add to Home Screen, then open the installed app. On other devices, use a supported browser.");
     button.disabled = true;
     button.textContent = "Notifications Not Supported";
@@ -236,10 +234,6 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
   };
 
   const enable = async () => {
-    if (unsupported) {
-      unlock();
-      return;
-    }
     if (isAppleMobile && !isStandaloneApp) {
       window.location.href = "./app-required.html";
       return;
