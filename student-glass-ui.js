@@ -619,6 +619,25 @@
     tagCards();
   }
 
+  function resetDashboardScrollPosition() {
+    if (!isDashboard || !window.matchMedia("(max-width: 800px)").matches || window.location.hash) return;
+    try {
+      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    } catch (_) {}
+    const reset = () => {
+      if (!window.location.hash) window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    };
+    requestAnimationFrame(() => requestAnimationFrame(reset));
+    window.setTimeout(reset, 100);
+    window.addEventListener("pageshow", event => {
+      if (event.persisted) {
+        reset();
+        requestAnimationFrame(reset);
+        window.setTimeout(reset, 80);
+      }
+    });
+  }
+
   function init() {
     buildMobileHeader();
     const sidebarMore = addMoreNavigation();
@@ -644,6 +663,7 @@
     addDashboardGreetingAndPortrait();
     buildCalendar();
     addAnnouncementFilters();
+    resetDashboardScrollPosition();
   }
 
   if (document.readyState === "loading") {
