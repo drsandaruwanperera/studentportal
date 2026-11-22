@@ -107,7 +107,7 @@ document.getElementById("addForm").addEventListener("submit",async e=>{
  const description=document.getElementById("newDescription").value.trim();
  const url=document.getElementById("newUrl").value.trim();
  const cohort=document.getElementById("newCohort").value;
- if(!/^(https?:\\/\\/|\\.\\/|[a-zA-Z0-9_-]+\\.html(?:[?#].*)?$)/.test(url)){
+ if(!/^(https?:\/\/|\.\/|[a-zA-Z0-9_-]+\.html(?:[?#].*)?$)/.test(url)){
   alert("Enter a valid page URL or local .html page.");
   btn.disabled=false;btn.textContent="＋ Add study card";writeBusy=false;return;
  }
