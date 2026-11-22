@@ -44,6 +44,8 @@
       description: "Explore the A/L 2028 program, build your subject knowledge and make steady progress.",
       badge: "A/L 2028 PATHWAY", model: "theory-examination.html", modelTitle: "Theory Examination",
       modelDescription: "A/L 2028 theory and examination preparation.", past: null, exam: null,
+      modelAnswers: "student-model-answers.html", modelAnswersTitle: "Model Paper Answers",
+      modelAnswersDescription: "Official answers for A/L 2028 model papers.",
       hub: false, progress: false, smartBook: true, schoolPapers: true
     }
   };
@@ -80,8 +82,8 @@
     },
     al2028: {
       portalProgramHub: false,
-      modelPapersCard: true,
-      modelPaperAnswersCard: false,
+      modelPapersCard: false,
+      modelPaperAnswersCard: true,
       pastPapersCard: false,
       programProgressCard: false,
       smartBookAnswersCard: true,
@@ -254,7 +256,7 @@
       const resources = activeCohortKey === "grade10" ? "Grade 10 Term Test Model Papers and Model Paper Answers"
         : activeCohortKey === "grade11" ? "Grade 11 TOP Ranking Papers and Model Paper Answers"
         : activeCohortKey === "al2027" ? "A/L 2027 month-wise TOP Ranking Papers and their answers"
-        : "A/L 2028 Theory Examination, Smart Book Answers and School Paper Answers";
+        : "A/L 2028 Model Paper Answers, Smart Book Answers and School Paper Answers";
       return "For " + cohort.label + ", start here: " + resources + ". Open the matching resource card in Your Learning Program. Try one paper under timed conditions, then review every mistake before moving to the next paper.";
     }
     if (/plan|routine|revision|revise|week|study|prepare|schedule|timetable/.test(q)) {
