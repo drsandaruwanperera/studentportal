@@ -176,4 +176,83 @@ onSnapshot(collection(db,"announcements"),snap=>{
 
 <script src="./push-config.js?v=1"></script>
 <script type="module" src="./push-notifications.js?v=7"></script>
+
+<style id="announcement-copy-contrast-fix">
+/* Final contrast lock for announcement cards on the installed iPhone app.
+   Keep the frosted light card, but use dark readable copy on that surface. */
+html body #firestoreAnnouncementList .notice {
+  background: linear-gradient(145deg,#ffffff 0%,#f2f7fc 100%) !important;
+  border: 1px solid #d8dfea !important;
+  color: #243047 !important;
+}
+html body #firestoreAnnouncementList .notice h3,
+html body #firestoreAnnouncementList .notice .notice-top h3 {
+  color: #211638 !important;
+  -webkit-text-fill-color: #211638 !important;
+  opacity: 1 !important;
+  font-size: 16px !important;
+  font-weight: 900 !important;
+  line-height: 1.45 !important;
+  letter-spacing: .1px !important;
+  text-shadow: none !important;
+}
+html body #firestoreAnnouncementList .notice p,
+html body #firestoreAnnouncementList .notice p.notice-message {
+  color: #344054 !important;
+  -webkit-text-fill-color: #344054 !important;
+  opacity: 1 !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 1.9 !important;
+  letter-spacing: .05px !important;
+  text-align: left !important;
+  text-shadow: none !important;
+  white-space: pre-line !important;
+  overflow-wrap: anywhere !important;
+}
+html body #firestoreAnnouncementList .notice .notice-top > div > div:first-child {
+  color: #5c3b91 !important;
+  -webkit-text-fill-color: #5c3b91 !important;
+  font-size: 10px !important;
+  font-weight: 900 !important;
+  line-height: 1.5 !important;
+  letter-spacing: .9px !important;
+}
+html body #firestoreAnnouncementList .notice time {
+  color: #5b6475 !important;
+  -webkit-text-fill-color: #5b6475 !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+}
+html body #firestoreAnnouncementList .notice .tag {
+  color: #54308a !important;
+  -webkit-text-fill-color: #54308a !important;
+  background: #eee7ff !important;
+  border: 1px solid #d8c8fa !important;
+  font-size: 9px !important;
+}
+@media (max-width: 600px) {
+  html body #firestoreAnnouncementList .notice {
+    gap: 11px !important;
+    padding: 15px !important;
+    border-radius: 17px !important;
+  }
+  html body #firestoreAnnouncementList .notice > i {
+    width: 38px !important;
+    height: 38px !important;
+    flex-basis: 38px !important;
+    font-size: 17px !important;
+  }
+  html body #firestoreAnnouncementList .notice h3 {
+    font-size: 15px !important;
+    line-height: 1.5 !important;
+  }
+  html body #firestoreAnnouncementList .notice p,
+  html body #firestoreAnnouncementList .notice p.notice-message {
+    font-size: 13.5px !important;
+    line-height: 1.85 !important;
+  }
+}
+</style>
+
 </body></html>
