@@ -238,8 +238,8 @@ const cohort=window.__lmsProgramCohort || {type:"unknown",year:"",key:"unknown"}
 const cohortAllowList = {
   grade10: new Set(["modelPapers","modelPaperAnswers"]),
   grade11: new Set(["modelPapers","modelPaperAnswers"]),
-  al2027: new Set([]),
-  al2028: new Set(["modelPapers","theoryExamination","smartBookAnswers","schoolPaperAnswers"])
+  al2027: new Set(["modelPapers"]),
+  al2028: new Set(["modelPaperAnswers","smartBookAnswers","schoolPaperAnswers"])
 };
 
 const allowedContent=cohortAllowList[cohort.key] || new Set();
