@@ -7,12 +7,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <script>
       (() => {
+        const sessionKey = "drsandaruwanLmsInstalledSessionV1";
         try {
           const params = new URLSearchParams(window.location.search);
-          const standalone = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
-            navigator.standalone === true || params.get("source") === "installed-app";
-          if (standalone) document.documentElement.classList.add("installed-lms-app");
-        } catch (_) {}
+          const isStandaloneApp = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
+            navigator.standalone === true;
+          const showInstalledAppShell = isStandaloneApp || params.get("source") === "installed-app";
+          if (showInstalledAppShell) document.documentElement.classList.add("installed-lms-app");
+          if (!isStandaloneApp) return;
+
+          // A normal app launch restores the last student session after the splash screen.
+          // One failed Firestore connection can suppress restoration for this page visit only.
+          const skipRestoreOnce = sessionStorage.getItem("lmsSkipInstalledSessionRestoreOnce") === "true";
+          if (skipRestoreOnce) {
+            sessionStorage.removeItem("lmsSkipInstalledSessionRestoreOnce");
+            return;
+          }
+
+          let record = null;
+          if (sessionStorage.getItem("loggedIn") === "true" && sessionStorage.getItem("studentId")) {
+            const studentId = String(sessionStorage.getItem("studentId") || "").trim();
+            record = {
+              version: 1,
+              studentId,
+              studentType: String(sessionStorage.getItem("studentType") || ""),
+              studentGrade: String(sessionStorage.getItem("studentGrade") || ""),
+              studentName: String(sessionStorage.getItem("studentName") || studentId),
+              alYear: String(sessionStorage.getItem("alYear") || "")
+            };
+          } else {
+            const saved = localStorage.getItem(sessionKey);
+            record = saved ? JSON.parse(saved) : null;
+            if (record && record.version === 1 && String(record.studentId || "").trim()) {
+              sessionStorage.setItem("loggedIn", "true");
+              sessionStorage.setItem("studentId", String(record.studentId).trim());
+              sessionStorage.setItem("studentType", String(record.studentType || ""));
+              sessionStorage.setItem("studentGrade", String(record.studentGrade || ""));
+              sessionStorage.setItem("studentName", String(record.studentName || record.studentId));
+              if (record.alYear) sessionStorage.setItem("alYear", String(record.alYear));
+              else sessionStorage.removeItem("alYear");
+            } else {
+              record = null;
+              localStorage.removeItem(sessionKey);
+            }
+          }
+
+          if (record && record.studentId) {
+            localStorage.setItem(sessionKey, JSON.stringify(record));
+            document.documentElement.dataset.lmsInstalledSessionRestored = "true";
+          }
+        } catch (error) {
+          console.warn("Could not restore the installed LMS app session.", error);
+        }
       })();
     </script>
     <meta name="description" content="Student Assessment Portal - Secure Student Login">
@@ -78,7 +124,15 @@
       const wait = Math.max(0, minimumVisible - (Date.now() - startedAt));
       window.setTimeout(() => {
         splash.classList.add("is-leaving");
-        window.setTimeout(() => splash.remove(), 420);
+        window.setTimeout(() => {
+          splash.remove();
+          if (
+            document.documentElement.dataset.lmsInstalledSessionRestored === "true" &&
+            sessionStorage.getItem("loggedIn") === "true"
+          ) {
+            window.location.replace("./dashboard.html");
+          }
+        }, 420);
       }, wait);
     };
 
@@ -641,7 +695,7 @@ openWhatsAppHelp?.addEventListener("click", openWhatsAppWidget);
 </script>
 
 
-<script type="module" src="app.js?v=login-animation-1"></script>
+<script type="module" src="app.js?v=installed-session-1"></script>
 
 <script type="module" src="site-theme-runtime.js?v=6"></script>
 <script defer src="./pwa-install.js?v=2"></script>
