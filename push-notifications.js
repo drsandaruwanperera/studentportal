@@ -270,7 +270,7 @@ import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/fireb
       "The server did not save this phone's registration. Check your connection and tap Try Again."
     );
     const result = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(result.error || "Could not save notification settings.");
+    if (!response.ok) { const detail = [result.error, result.code, result.details].filter(Boolean).join(" — "); throw new Error(detail || "Could not save notification settings."); }
     return result;
   };
 
