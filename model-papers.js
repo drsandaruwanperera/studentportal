@@ -21,8 +21,8 @@ if (
 const studentId =
     sessionStorage.getItem("studentId");
 
-const isAssignedAl2028 = sessionStorage.getItem("alYear") === "2028";
-if (!isAssignedAl2028) {
+const isAssignedAl2027 = sessionStorage.getItem("alYear") === "2027";
+if (!isAssignedAl2027) {
     document.body.style.display = "none";
     window.location.replace("dashboard.html");
 }
@@ -194,7 +194,7 @@ onSnapshot(collection(db, 'monthlyTopRankingAccess'), snapshot => {
 }, error => { console.error('Monthly access status could not be loaded:', error); updateMonthlyLockButtons(); });
 async function openPaper(paperNumber, paperButton, paperCard) {
 
-    if (sessionStorage.getItem("alYear") !== "2028") {
+    if (sessionStorage.getItem("alYear") !== "2027") {
         window.location.replace("dashboard.html");
         return;
     }
@@ -293,7 +293,7 @@ const monthNames = {
 };
 
 function renderMonthlyPaperSections(items) {
-    if (!isAssignedAl2028) return;
+    if (!isAssignedAl2027) return;
     const main = document.querySelector("main");
     const coming = document.querySelector(".coming-section");
     if (!main) return;
@@ -301,20 +301,20 @@ function renderMonthlyPaperSections(items) {
     document.querySelectorAll("[data-monthly-paper-section]").forEach(el => el.remove());
 
     const groups = {};
-    const isA28000Batch = sessionStorage.getItem("alYear") === "2028";
+    const isA27000Batch = sessionStorage.getItem("alYear") === "2027";
     const visibleItems = items.filter(x =>
         x.published !== false &&
         !(String(x.month).toLowerCase() === "september" && Number(x.year) === 2026)
     );
 
-    // November 2026 Paper 01 is transferred from the A27000 / A/L 2027 batch
-    // to the A28000 / A/L 2028 batch. The repository stores both paper PDFs.
+    // November 2026 Paper 01 belongs to the A27000 / A/L 2027 batch.
+    // The repository stores the 1st- and 2nd-paper PDFs and matching answers.
     const hasNovemberPaper01 = visibleItems.some(x =>
         Number(x.year) === 2026 &&
         String(x.month).toLowerCase() === "november" &&
         Number(x.paperNumber) === 1
     );
-    if (isA28000Batch && !hasNovemberPaper01) {
+    if (isA27000Batch && !hasNovemberPaper01) {
         visibleItems.push({
             year: 2026,
             month: "november",
