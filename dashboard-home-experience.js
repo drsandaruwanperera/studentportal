@@ -63,6 +63,7 @@
     grade11: {
       portalProgramHub: false,
       modelPapersCard: true,
+      theoryExaminationCard: false,
       modelPaperAnswersCard: true,
       pastPapersCard: false,
       programProgressCard: false,
