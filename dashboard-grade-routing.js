@@ -84,9 +84,9 @@ import {db,doc,getDoc} from "./firebase.js";
           ...routes.al,
           model: "model-papers.html",
           past: null,
-          modelTitle: "Monthly TOP Ranking Papers",
+          modelTitle: "Theory Examination",
           pastTitle: "Past Papers",
-          modelDescription: "A/L 2028 monthly TOP Ranking papers with 1st- and 2nd-paper answers",
+          modelDescription: "A/L 2028 theory and examination preparation",
           pastDescription: ""
         }
       : routes[type];
@@ -112,7 +112,7 @@ import {db,doc,getDoc} from "./firebase.js";
     if (eyebrow) eyebrow.textContent = type === "al" ? "YOUR LEARNING JOURNEY" : "YOUR " + config.label.toUpperCase() + " LEARNING JOURNEY";
     if (description) description.textContent = type === "al"
       ? (alYear === "2028"
-          ? "Access your A/L 2028 model paper, Smart Book and school paper answers."
+          ? "Access your A/L 2028 Theory Examination, Smart Book answers and School Paper answers."
           : "Prepare for your exams with monthly practice papers, one paper at a time.")
       : "Welcome back. Your " + config.label + " papers, learning resources, announcements and progress are organized here for you.";
     if (topType) topType.textContent = type === "al" ? "A/L " + alYear + " Student" : config.label + " Student";
@@ -149,7 +149,7 @@ import {db,doc,getDoc} from "./firebase.js";
     document.querySelectorAll('a[href="model-papers.html"]').forEach(a => a.href = config.model);
     const answersCard = document.getElementById("modelPaperAnswersCard");
     if (answersCard) {
-      const showModelAnswers = type === "grade10" || type === "grade11" || (type === "al" && alYear === "2028");
+      const showModelAnswers = type === "grade10" || type === "grade11";
       answersCard.hidden = !showModelAnswers;
       answersCard.setAttribute("aria-hidden", String(!showModelAnswers));
       if (showModelAnswers) {
