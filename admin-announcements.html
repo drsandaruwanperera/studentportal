@@ -15,7 +15,7 @@
 .push-modal-actions{display:flex;gap:9px;margin-top:15px}.push-modal-actions button{flex:1;min-height:42px;border:0;border-radius:10px;font-size:11px;font-weight:850;cursor:pointer}.push-modal-actions .cancel{background:#27334b;color:#cbd5e1}.push-modal-actions .send{background:linear-gradient(135deg,#a6ff2e,#77d91c);color:#111827}
 .push-modal-actions button:disabled{opacity:.55;cursor:wait}.push-modal-status{min-height:18px;margin-top:10px;color:#c4b5fd;font-size:11px;line-height:1.5;white-space:pre-line}.push-modal-result{display:block;margin-top:13px;padding:14px;border:1px solid rgba(148,163,184,.22);border-radius:12px;background:#0b1325;color:#e5edf9;font-size:11px;line-height:1.6;white-space:pre-line;overflow-wrap:anywhere}.push-modal-result[hidden]{display:none}.push-modal-result.success{border-color:rgba(74,222,128,.38);background:rgba(22,101,52,.13)}.push-modal-result.warning{border-color:rgba(251,191,36,.4);background:rgba(120,83,15,.16)}.push-modal-result.error{border-color:rgba(248,113,113,.4);background:rgba(127,29,29,.16)}.push-result{margin-top:10px;padding:10px 12px;border:1px solid rgba(148,163,184,.2);border-radius:10px;background:rgba(9,16,31,.72);color:#cbd5e1;font-size:10px;line-height:1.55;white-space:pre-line;overflow-wrap:anywhere}.push-result.success{border-color:rgba(74,222,128,.32)}.push-result.warning{border-color:rgba(251,191,36,.34)}.push-result.error{border-color:rgba(248,113,113,.34)}
 .empty{padding:30px;text-align:center;border:1px dashed rgba(255,255,255,.12);border-radius:14px;color:#7f8ba2;font-size:11px}@media(max-width:950px){.layout{grid-template-columns:1fr}}@media(max-width:650px){.page-shell{padding:15px}.hero h1{font-size:24px}.item{padding:13px}.item-top{align-items:flex-start;gap:9px}.item h3{font-size:14px}.item p.item-message{max-width:100%;padding:10px 11px;font-size:12px;line-height:1.8}.item-actions{gap:7px}.small{min-height:36px;padding:8px 12px}}
-</style>
+.field-help{display:block;margin-top:7px;color:#91a0ba;font-size:10px;line-height:1.55}.field textarea#message{min-height:170px;line-height:1.7;white-space:pre-wrap}</style>
 </head>
 <body>
 <div class="admin-layout">
@@ -39,7 +39,7 @@
 <h2 id="formTitle">Create Announcement</h2>
 <form id="announcementForm" class="form-grid">
 <div class="field"><label for="title">TITLE</label><input id="title" required maxlength="120" placeholder="e.g. Top Ranking Results Are Out Now"></div>
-<div class="field"><label for="message">MESSAGE</label><textarea id="message" required maxlength="1000" placeholder="Write the announcement for students..."></textarea></div>
+<div class="field"><label for="message">MESSAGE</label><textarea id="message" required maxlength="1000" placeholder="Write the announcement for students..."></textarea><small class="field-help">Formatting tip: use Enter for a new line and leave one blank line between paragraphs. The student app will display the same line breaks and paragraphs.</small></div>
 <div class="field"><label for="grade">AUDIENCE</label><select id="grade"><option value="all">All Students</option><option value="grade10">Grade 10</option><option value="grade11">Grade 11</option><option value="al">All Advanced Level Students</option><option value="al2027">A/L 2027 Dashboard</option><option value="al2028">A/L 2028 Dashboard</option></select></div>
 <div class="field"><label for="expiresAt">EXPIRY (OPTIONAL)</label><input id="expiresAt" type="datetime-local"></div>
 <div class="checks">
