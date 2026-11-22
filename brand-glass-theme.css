@@ -2273,3 +2273,61 @@ html.lms-brand-glass.student-glass-ui body #firestoreAnnouncementList .notice .t
     animation:none !important;
   }
 }
+
+/* Final dashboard portrait and brand-green teacher ring correction. */
+@media (max-width:800px) {
+  html.lms-brand-glass.student-glass-ui body.dashboard-page .dashboard-mobile-overview-top {
+    grid-template-columns:64px minmax(0,1fr) 80px !important;
+    align-items:center !important;
+    overflow:visible !important;
+  }
+  html.lms-brand-glass.student-glass-ui body.dashboard-page .dashboard-mobile-greeting {
+    min-width:0 !important;
+    max-width:100% !important;
+    overflow:visible !important;
+  }
+  html.lms-brand-glass.student-glass-ui body.dashboard-page .dashboard-mobile-greeting h2 {
+    max-width:100% !important;
+    font-size:clamp(14px,4vw,17px) !important;
+    line-height:1.16 !important;
+    white-space:normal !important;
+    overflow-wrap:anywhere !important;
+    word-break:normal !important;
+  }
+  html.lms-brand-glass.student-glass-ui body.dashboard-page .dashboard-mobile-greeting p {
+    max-width:100% !important;
+    font-size:8px !important;
+    line-height:1.35 !important;
+    white-space:normal !important;
+    overflow-wrap:anywhere !important;
+  }
+  html.lms-brand-glass.student-glass-ui body.dashboard-page .shared-banner-portrait {
+    position:relative !important;
+    inset:auto !important;
+    width:80px !important;
+    height:106px !important;
+    grid-column:3 !important;
+    grid-row:1 !important;
+    justify-self:end !important;
+    align-self:center !important;
+    border:2px solid rgba(255,255,255,.94) !important;
+    background:#17152d !important;
+    overflow:hidden !important;
+  }
+  html.lms-brand-glass.student-glass-ui body.dashboard-page .shared-banner-portrait img {
+    display:block !important;
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover !important;
+    object-position:center 17% !important;
+    transform:none !important;
+  }
+  html.lms-brand-glass.student-glass-ui body.dashboard-page .shared-bottom-nav > .shared-floating-teacher,
+  html.lms-brand-glass.student-glass-ui body.dashboard-page .shared-bottom-nav button.shared-floating-teacher {
+    border:3px solid #a6ff2e !important;
+    outline:2px solid rgba(166,255,46,.30) !important;
+    outline-offset:2px !important;
+    background:#a6ff2e !important;
+    box-shadow:0 0 0 4px rgba(166,255,46,.15),0 9px 24px rgba(0,0,0,.34),0 0 19px rgba(166,255,46,.28) !important;
+  }
+}
