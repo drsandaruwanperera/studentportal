@@ -179,6 +179,10 @@ import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/fireb
 
   const enabledStorageKey = "drsLmsPushEnabledV2:" + encodeURIComponent(studentId);
   const refreshSessionKey = "drsLmsPushRefreshAttemptedV1:" + encodeURIComponent(studentId);
+  const deferredStorageKey = "drsLmsPushDeferredUntilV1:" + encodeURIComponent(studentId);
+  const deferredUntil = Number(localStorage.getItem(deferredStorageKey) || 0);
+  if (deferredUntil > Date.now()) return;
+  if (deferredUntil) { try { localStorage.removeItem(deferredStorageKey); } catch (_) {} }
   const isAppleMobile = /iphone|ipad|ipod/i.test(navigator.userAgent) ||
     (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
   const isStandaloneApp = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
@@ -321,6 +325,7 @@ import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/fireb
 
     await sendSubscription(token, report);
     rememberEnabledOnThisDevice();
+    try { localStorage.removeItem(deferredStorageKey); } catch (_) {}
     report("Notifications enabled. Opening your LMS…");
     return true;
   };
@@ -368,6 +373,8 @@ import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/fireb
     ".lms-push-gate button{width:100%;min-height:50px;padding:0 18px;border:0;border-radius:14px;background:linear-gradient(110deg,#b8ff55,#7fe22b);color:#15210d;font:850 13px Inter,system-ui,sans-serif;box-shadow:0 12px 28px rgba(126,226,43,.2);cursor:pointer;transition:transform .18s ease,filter .18s ease}",
     ".lms-push-gate button:hover{filter:brightness(1.04);transform:translateY(-1px)}",
     ".lms-push-gate button:disabled{opacity:.65;cursor:wait;transform:none}",
+    ".lms-push-continue{display:block!important;width:100%;min-height:44px!important;margin-top:10px!important;padding:9px 14px!important;border:1px solid rgba(196,181,253,.32)!important;border-radius:12px!important;background:rgba(255,255,255,.055)!important;color:#e5e7eb!important;font-size:11px!important;font-weight:800!important;box-shadow:none!important}",
+    ".lms-push-continue:hover{background:rgba(255,255,255,.10)!important;transform:none!important}",
     ".lms-push-gate-note{display:block;margin:14px 0 0;color:#929db4;font-size:10px;line-height:1.6}",
     ".lms-push-gate-link{display:inline-block;margin-top:12px;color:#c4b5fd;font-size:11px;font-weight:750;text-decoration:underline;text-underline-offset:3px}",
     ".lms-push-android-help{display:grid;gap:9px;margin:12px 0;padding:13px;border:1px solid rgba(166,255,46,.28);border-radius:13px;background:rgba(166,255,46,.07);text-align:left}",
@@ -393,11 +400,13 @@ import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/fireb
       '<p class="lms-push-gate-copy" id="lmsPushGateDescription">Stay informed about important announcements, exam updates, results and student notices. Complete this one-time notification setup to continue to your LMS dashboard. You will not be asked again after successful registration.</p>' +
       '<div class="lms-push-gate-status" role="status" aria-live="polite">Checking notification service…</div>' +
       '<button type="button" disabled>Checking…</button>' +
-      '<small class="lms-push-gate-note">You only need to complete this setup once on this device. After successful registration, this step will not appear again.</small>' +
+      '<button type="button" class="lms-push-continue">Continue to LMS — enable notifications later</button>' +
+      '<small class="lms-push-gate-note">Notifications can be enabled later. Your LMS access will not be blocked if notification setup is unavailable.</small>' +
     '</section>';
   document.body.appendChild(overlay);
 
-  const button = overlay.querySelector("button");
+  const button = overlay.querySelector(".lms-push-gate-card > button:not(.lms-push-continue)");
+  const continueButton = overlay.querySelector(".lms-push-continue");
   const status = overlay.querySelector(".lms-push-gate-status");
   const card = overlay.querySelector(".lms-push-gate-card");
   const originalOverflow = document.body.style.overflow;
@@ -494,6 +503,14 @@ import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/fireb
       if (!unlocked) button.disabled = false;
     }
   };
+
+  continueButton.addEventListener("click", () => {
+    // Never lock students out of the LMS because an optional push service or
+    // Firebase quota is unavailable. Defer this device's prompt for 24 hours
+    // and let the student continue to all learning resources immediately.
+    try { localStorage.setItem(deferredStorageKey, String(Date.now() + 24 * 60 * 60 * 1000)); } catch (_) {}
+    unlock();
+  });
 
   button.addEventListener("click", enable);
 
