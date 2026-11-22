@@ -3,9 +3,9 @@ import { db, doc, getDoc } from "./firebase.js";
 (() => {
   "use strict";
 
-  const RELEASE_ID = "al2027-november-top-ranking-paper-answer-v1";
-  const POPUP_ID = "al2027-answer-release-popup";
-  const STYLE_ID = "al2027-answer-release-popup-styles";
+  const RELEASE_ID = "al2028-november-top-ranking-paper-answer-v1";
+  const POPUP_ID = "al2028-answer-release-popup";
+  const STYLE_ID = "al2028-answer-release-popup-styles";
   const DESTINATION = "al-top-ranking-paper.html?paper=01&month=november&year=2026&focus=answers";
   const ANSWER_FILES = [
     "answers/al-top-ranking/november/paper-01-1st-answer.pdf",
@@ -85,7 +85,7 @@ import { db, doc, getDoc } from "./firebase.js";
     const link = document.createElement("link");
     link.id = STYLE_ID;
     link.rel = "stylesheet";
-    link.href = new URL("./al2027-answer-release-popup.css?v=1", import.meta.url).href;
+    link.href = new URL("./al2028-answer-release-popup.css?v=1", import.meta.url).href;
     document.head.appendChild(link);
   }
 
@@ -118,8 +118,8 @@ import { db, doc, getDoc } from "./firebase.js";
 
         <div class="al27-release-content">
           <span class="al27-release-badge"><span aria-hidden="true">&#128276;</span> New Answer Release</span>
-          <p class="al27-release-grade">A/L 2027 STUDENT ANNOUNCEMENT</p>
-          <h2 id="al27-release-title">A/L 2027 <span>November</span></h2>
+          <p class="al27-release-grade">A/L 2028 STUDENT ANNOUNCEMENT</p>
+          <h2 id="al27-release-title">A/L 2028 <span>November</span></h2>
           <h3>TOP Ranking Paper Answer Out!</h3>
           <p id="al27-release-description">
             November Top Ranking Paper 01 answer sheets are now available.
@@ -187,12 +187,12 @@ import { db, doc, getDoc } from "./firebase.js";
         sessionStorage.getItem("studentGrade")
       ];
       if (!profileTypeValues.some(isAlValue)) return;
-      if (getAlYear(profile, studentId) !== "2027") return;
+      if (getAlYear(profile, studentId) !== "2028") return;
       if (!(await verifyAnswerFiles())) return;
 
       window.setTimeout(() => showPopup(studentId), 550);
     } catch (error) {
-      console.error("A/L 2027 answer announcement could not be checked:", error);
+      console.error("A/L 2028 answer announcement could not be checked:", error);
     }
   }
 
