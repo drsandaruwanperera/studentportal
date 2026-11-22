@@ -43,15 +43,22 @@ import {db,collection,onSnapshot} from "./firebase.js";
       const visible = cohortAllowed && settings.get(dashboardId)?.active !== false;
       const dashboardCard = document.getElementById(dashboardId);
       if (dashboardCard) {
-        dashboardCard.hidden = !visible;
-        dashboardCard.setAttribute("aria-hidden",String(!visible));
-        dashboardCard.style.setProperty("display", visible ? "" : "none", "important");
+        if (dashboardCard.hidden !== !visible) dashboardCard.hidden = !visible;
+        if (dashboardCard.getAttribute("aria-hidden") !== String(!visible)) dashboardCard.setAttribute("aria-hidden",String(!visible));
+        const displayValue = visible ? "" : "none";
+        if (dashboardCard.style.getPropertyValue("display") !== displayValue || dashboardCard.style.getPropertyPriority("display") !== (visible ? "" : "important")) {
+          if (visible) dashboardCard.style.removeProperty("display");
+          else dashboardCard.style.setProperty("display","none","important");
+        }
       }
       const programCard = programGrid?.querySelector('[data-content-id="'+programId+'"]');
       if (programCard) {
-        programCard.hidden = !visible;
-        programCard.setAttribute("aria-hidden",String(!visible));
-        programCard.style.setProperty("display", visible ? "flex" : "none", "important");
+        if (programCard.hidden !== !visible) programCard.hidden = !visible;
+        if (programCard.getAttribute("aria-hidden") !== String(!visible)) programCard.setAttribute("aria-hidden",String(!visible));
+        const displayValue = visible ? "flex" : "none";
+        if (programCard.style.getPropertyValue("display") !== displayValue || programCard.style.getPropertyPriority("display") !== "important") {
+          programCard.style.setProperty("display",displayValue,"important");
+        }
       }
     });
 
@@ -83,9 +90,7 @@ import {db,collection,onSnapshot} from "./firebase.js";
   observer.observe(document.documentElement,{attributes:true,attributeFilter:["data-student-type"]});
   window.addEventListener("pageshow",apply);
   window.addEventListener("storage",apply);
-  if (programGrid) {
-    const programObserver = new MutationObserver(apply);
-    programObserver.observe(programGrid,{subtree:true,attributes:true,attributeFilter:["style","hidden"]});
-  }
+  // Do not observe style/hidden changes here: apply() changes those attributes itself,
+  // which would recursively retrigger this observer and freeze the page.
   setTimeout(apply,900);
 })();
