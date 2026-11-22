@@ -78,6 +78,11 @@ function cleanSidebarAndPlaceLogout() {
                 "studentName",
                 "studentNIC"
             ].forEach((key) => sessionStorage.removeItem(key));
+            try {
+                localStorage.removeItem("drsandaruwanLmsInstalledSessionV1");
+            } catch (error) {
+                console.warn("Could not clear the saved installed-app session.", error);
+            }
             window.location.replace("index.html");
         });
     }
