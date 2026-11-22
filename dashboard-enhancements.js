@@ -634,9 +634,9 @@ function renderNotificationItems(items) {
 
 function loadLatestMonthlyPaper(studentData = {}) {
     const cohort = resolveDashboardCohort(studentData);
-    // Monthly TOP Ranking Papers are for A/L 2027 only. Never replace
-    // the A/L 2028 Theory Examination resource with an A/L 2027 paper.
-    if (cohort.key !== "al2027") return;
+    // The November 2026 TOP Ranking paper set is now assigned to A/L 2028.
+    // Keep this live paper shortcut exclusive to the A/L 2028 cohort.
+    if (cohort.key !== "al2028") return;
     try {
         onSnapshot(collection(db, "monthlyTopRankingPapers"), snapshot => {
             const items = snapshot.docs
