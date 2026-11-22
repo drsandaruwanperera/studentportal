@@ -12,6 +12,39 @@ import {
 
 import { isStudentOnboardingComplete } from "./student-onboarding.js";
 
+const INSTALLED_LMS_SESSION_KEY = "drsandaruwanLmsInstalledSessionV1";
+const isInstalledLmsPWA = () =>
+    (typeof window.matchMedia === "function" && window.matchMedia("(display-mode: standalone)").matches) ||
+    navigator.standalone === true;
+
+function clearInstalledLmsSession() {
+    try {
+        localStorage.removeItem(INSTALLED_LMS_SESSION_KEY);
+    } catch (error) {
+        console.warn("Could not clear the saved LMS app session.", error);
+    }
+}
+
+function persistCurrentInstalledLmsSession() {
+    if (!isInstalledLmsPWA() || sessionStorage.getItem("loggedIn") !== "true") return;
+    const id = String(sessionStorage.getItem("studentId") || "").trim();
+    if (!id) return;
+    try {
+        localStorage.setItem(INSTALLED_LMS_SESSION_KEY, JSON.stringify({
+            version: 1,
+            studentId: id,
+            studentType: String(sessionStorage.getItem("studentType") || ""),
+            studentGrade: String(sessionStorage.getItem("studentGrade") || ""),
+            studentName: String(sessionStorage.getItem("studentName") || id),
+            alYear: String(sessionStorage.getItem("alYear") || "")
+        }));
+    } catch (error) {
+        console.warn("Could not preserve the installed LMS app session.", error);
+    }
+}
+
+persistCurrentInstalledLmsSession();
+
 
 // =====================================================
 // LOGIN CHECK
@@ -42,6 +75,7 @@ if (sessionStorage.getItem("loggedIn") === "true") {
     (async () => {
         try {
             if (!studentId) {
+                clearInstalledLmsSession();
                 sessionStorage.removeItem("loggedIn");
                 window.location.replace("index.html");
                 return;
@@ -49,12 +83,14 @@ if (sessionStorage.getItem("loggedIn") === "true") {
 
             const onboardingSnapshot = await getDoc(doc(db, "students", studentId));
             if (!onboardingSnapshot.exists()) {
+                clearInstalledLmsSession();
                 sessionStorage.removeItem("loggedIn");
                 window.location.replace("index.html");
                 return;
             }
 
             if (!isStudentOnboardingComplete(onboardingSnapshot.data())) {
+                clearInstalledLmsSession();
                 window.location.replace("student-registration.html");
                 return;
             }
@@ -63,6 +99,11 @@ if (sessionStorage.getItem("loggedIn") === "true") {
         } catch (error) {
             console.error("Student onboarding check failed:", error);
             document.documentElement.style.visibility = "";
+            if (isInstalledLmsPWA()) {
+                // Do not loop between index and dashboard when Firebase is temporarily offline.
+                sessionStorage.setItem("lmsSkipInstalledSessionRestoreOnce", "true");
+                sessionStorage.removeItem("loggedIn");
+            }
             window.location.replace("index.html");
         }
     })();
@@ -713,7 +754,8 @@ function markActivity() {
 // AUTOMATIC LOGOUT
 // =====================================================
 
-const IDLE_LIMIT = 5 * 60 * 1000;
+// Keep installed-app students signed in until they choose Logout.
+const IDLE_LIMIT = isInstalledLmsPWA() ? Number.POSITIVE_INFINITY : 5 * 60 * 1000;
 
 const idleChecker = setInterval(
     async function() {
