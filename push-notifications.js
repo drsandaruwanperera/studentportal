@@ -9,6 +9,40 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
 
   if (!apiUrl || !vapidKey || sessionStorage.getItem("loggedIn") !== "true" || !studentId) return;
 
+
+  const withTimeout = (promise, timeoutMs, message) => new Promise((resolve, reject) => {
+    let settled = false;
+    const timer = window.setTimeout(() => {
+      if (settled) return;
+      settled = true;
+      reject(new Error(message));
+    }, timeoutMs);
+    Promise.resolve(promise).then(value => {
+      if (settled) return;
+      settled = true;
+      window.clearTimeout(timer);
+      resolve(value);
+    }, error => {
+      if (settled) return;
+      settled = true;
+      window.clearTimeout(timer);
+      reject(error);
+    });
+  });
+
+  const fetchWithTimeout = async (url, options = {}, timeoutMs = 12000, message = "The notification server did not respond. Check your connection and try again.") => {
+    const controller = new AbortController();
+    const timer = window.setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      return await fetch(url, { ...options, signal: controller.signal, cache: "no-store" });
+    } catch (error) {
+      if (error?.name === "AbortError") throw new Error(message);
+      throw error;
+    } finally {
+      window.clearTimeout(timer);
+    }
+  };
+
   const getAudience = () => {
     const type = String(sessionStorage.getItem("studentType") || sessionStorage.getItem("studentGrade") || "").toLowerCase();
     if (type.includes("10")) return "grade10";
