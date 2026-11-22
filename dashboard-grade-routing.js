@@ -29,16 +29,30 @@ import {db,doc,getDoc} from "./firebase.js";
 
   const getAlYear = data => {
     if (al2028NumericIds.has(id)) return "2028";
-    if ([2027, 2028, 2029].includes(Number(data?.alYear))) return String(data.alYear);
-    const savedYear = String(sessionStorage.getItem("alYear") || "").match(/^20(27|28|29)$/);
+
+    // Prefer the current Firebase student profile over any stale browser session.
+    const profileYear = [
+      data?.alYear,
+      data?.academicYear,
+      data?.examYear,
+      data?.year,
+      data?.batch,
+      data?.cohort,
+      data?.studentGrade,
+      data?.grade,
+      data?.studentType
+    ].map(value => String(value ?? "")).join(" ").match(/20(27|28|29)/);
+    if (profileYear) return "20" + profileYear[1];
+
+    const savedYear = String(sessionStorage.getItem("alYear") || "").match(/20(27|28|29)/);
     if (savedYear) return savedYear[0];
-    const contextYear = (
-      String(data?.studentGrade || data?.grade || "") + " " +
-      String(data?.studentType || "") + " " +
+
+    const sessionYear = (
       String(sessionStorage.getItem("studentGrade") || "") + " " +
       String(sessionStorage.getItem("studentType") || "")
     ).match(/20(27|28|29)/);
-    if (contextYear) return "20" + contextYear[1];
+    if (sessionYear) return "20" + sessionYear[1];
+
     const match = id.match(/^(?:A)?(27|28|29)/) || id.match(/^(27|28|29)[CN]/);
     if (!match) return "2027";
     return "20" + match[1];
