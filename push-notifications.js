@@ -1,5 +1,5 @@
 import { app } from "./firebase.js";
-import { isSupported, getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-messaging.js";
+import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-messaging.js";
 
 (() => {
   const config = window.LMS_PUSH_CONFIG || {};
@@ -73,7 +73,7 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
   const browserFamily = (() => {
     const ua = navigator.userAgent || "";
     if (/SamsungBrowser/i.test(ua)) return "samsung";
-    if (isAppleMobile) return "ios";
+    if (/iphone|ipad|ipod/i.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)) return "ios";
     if (/Android/i.test(ua) && /Chrome|CriOS/i.test(ua)) return "chrome-android";
     if (/Android/i.test(ua)) return "android-other";
     if (/Safari/i.test(ua) && !/Chrome|Chromium|Edg|OPR|Firefox/i.test(ua)) return "safari";
@@ -418,13 +418,14 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
         setStatus("Waiting for you to allow notifications…");
         permission = await withTimeout(
           requestNotificationPermission(),
-          25000,
-          "Android did not display the notification permission popup. Chrome may be hiding quiet permission prompts. Follow the Android steps below, then tap Try Again."
+          45000,
+          "The browser did not finish the notification permission request. Follow the browser-specific steps below, then tap Try Again."
         );
       }
       if (permission !== "granted") {
         if (permission === "denied") {
-          setStatus("Notifications are blocked for this website in this browser. Allow them in the browser's site settings and device notification settings, then tap Check Again.");\n          showBrowserPermissionHelp();
+          setStatus("Notifications are blocked for this website in this browser. Allow them in the browser's site settings and device notification settings, then tap Check Again.");
+          showBrowserPermissionHelp();
           button.textContent = "Check Again";
         } else {
           setStatus("Notification permission was not granted. Press Enable Notifications and choose Allow to continue.");
@@ -447,8 +448,8 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
     } catch (error) {
       console.error("LMS push notification setup failed:", error);
       setStatus(error?.message || "Could not enable notifications. Please try again.");
-      if (/android/i.test(navigator.userAgent) && /permission popup|quiet permission/i.test(String(error?.message || ""))) {
-        showAndroidPermissionHelp();
+      if (/permission|timeout|timed out|did not finish/i.test(String(error?.message || ""))) {
+        showBrowserPermissionHelp();
       }
       button.textContent = "Try Again";
     } finally {
@@ -474,7 +475,7 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
         return;
       }
       if (isAppleMobile) {
-        const iosVersion = (navigator.userAgent.match(/OS (\\d+)[._](\\d+)/i) || []);
+        const iosVersion = (navigator.userAgent.match(/OS (\d+)[._](\d+)/i) || []);
         if (iosVersion.length >= 3) {
           const major = Number(iosVersion[1]);
           const minor = Number(iosVersion[2]);
@@ -506,7 +507,7 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
       await checkHealth();
       setStatus(Notification.permission === "denied"
         ? (/android/i.test(navigator.userAgent)
-            ? "Notifications are blocked. Open Android Settings → Apps → Chrome → Notifications and allow them. Also allow Notifications for this website in Chrome → Site settings → Notifications, then tap Check Again."
+            ? "Notifications are blocked for this website. Allow them in your browser and device settings, then tap Check Again."
             : "Notifications are blocked for this website. Allow them in your browser and device settings, then press Check Again.")
         : "Notification setup is required. Press Enable Notifications and choose Allow to register this device.");
       button.disabled = false;
