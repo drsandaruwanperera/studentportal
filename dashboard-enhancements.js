@@ -490,8 +490,8 @@ function ensureNotificationUI() {
     if (!bell) return;
 
     bell.innerHTML = `
-        <span class="notification-bell-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg></span>
-        <span class="notification-card-copy"><strong>Updates</strong><small>Notifications</small></span>
+        <span class="notification-bell-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 10v4h4l10 5V5L7 10H3Z"></path><path d="M7 14l2 6h4l-2.5-5.25M20 9l2-1M20 15l2 1"></path></svg></span>
+        <span class="notification-card-copy"><strong>Announcements</strong><small>Latest notices</small></span>
         <i class="notification-dot"></i>
         <b class="notification-count" id="notificationCount">0</b>
     `;
@@ -531,15 +531,18 @@ function ensureNotificationUI() {
     `;
     document.body.appendChild(modal);
 
-    bell.addEventListener("click", (event) => {
+    const toggleAnnouncementsPopover = (event) => {
         event.stopPropagation();
         const isOpening = !popover.classList.contains("open");
         popover.classList.toggle("open");
         if (isOpening) markNotificationsRead();
-    });
+    };
+    bell.addEventListener("click", toggleAnnouncementsPopover);
+    const mobileAnnouncementButton = document.querySelector(".mobile-notification");
+    if (mobileAnnouncementButton) mobileAnnouncementButton.addEventListener("click", toggleAnnouncementsPopover);
     document.getElementById("closeNotificationPopover")?.addEventListener("click", () => popover.classList.remove("open"));
     document.addEventListener("click", (event) => {
-        if (!popover.contains(event.target) && !bell.contains(event.target)) popover.classList.remove("open");
+        if (!popover.contains(event.target) && !bell.contains(event.target) && !document.querySelector(".mobile-notification")?.contains(event.target)) popover.classList.remove("open");
     });
     modal.querySelectorAll("[data-close-announcement]").forEach((el) => {
         el.addEventListener("click", () => modal.classList.remove("open"));
