@@ -44,45 +44,91 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
   };
 
 
-  const requestNotificationPermission = () => new Promise((resolve, reject) => {
-    let settled = false;
-    const finish = permission => {
-      if (settled) return;
-      settled = true;
-      resolve(permission);
-    };
-    let result;
+  const requestNotificationPermission = () => {
+    // Modern Chrome, Samsung Internet and Safari implement the Promise form.
+    // Call it without arguments directly from the Enable button's click handler.
     try {
-      // The callback form supports older Android WebView/Chromium builds;
-      // the returned Promise is used on current Chrome versions.
-      result = Notification.requestPermission(finish);
-    } catch (error) {
-      try {
-        result = Notification.requestPermission();
-      } catch (retryError) {
-        reject(retryError || error);
-        return;
-      }
-    }
-    if (result && typeof result.then === "function") {
-      result.then(finish, reject);
-    } else if (typeof result === "string") {
-      finish(result);
-    }
-  });
+      const result = Notification.requestPermission();
+      if (result && typeof result.then === "function") return result;
+      if (typeof result === "string") return Promise.resolve(result);
 
-  const showAndroidPermissionHelp = () => {
-    if (!/android/i.test(navigator.userAgent)) return;
+      // Compatibility fallback for older callback-only browsers.
+      return new Promise((resolve, reject) => {
+        try {
+          const callbackResult = Notification.requestPermission(permission => resolve(permission));
+          if (callbackResult && typeof callbackResult.then === "function") {
+            callbackResult.then(resolve, reject);
+          } else if (typeof callbackResult === "string") {
+            resolve(callbackResult);
+          }
+        } catch (error) {
+          reject(error);
+        }
+      });
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  };
+
+  const browserFamily = (() => {
+    const ua = navigator.userAgent || "";
+    if (/SamsungBrowser/i.test(ua)) return "samsung";
+    if (isAppleMobile) return "ios";
+    if (/Android/i.test(ua) && /Chrome|CriOS/i.test(ua)) return "chrome-android";
+    if (/Android/i.test(ua)) return "android-other";
+    if (/Safari/i.test(ua) && !/Chrome|Chromium|Edg|OPR|Firefox/i.test(ua)) return "safari";
+    if (/Edg/i.test(ua)) return "edge";
+    if (/Firefox/i.test(ua)) return "firefox";
+    if (/Chrome|Chromium/i.test(ua)) return "chrome";
+    return "other";
+  })();
+
+  const getBrowserPermissionHelp = () => {
+    if (browserFamily === "ios") {
+      return {
+        title: "Allow notifications on iPhone / iPad",
+        steps: "1. iOS/iPadOS 16.4 or later is required for Web Push.<br>2. Add Dr. Sandaruwan LMS to the Home Screen from the browser Share menu.<br>3. Open the LMS using its Home Screen icon, then allow notifications when asked.",
+        system: "Check Settings → Notifications → Dr. Sandaruwan LMS → Allow Notifications."
+      };
+    }
+    if (browserFamily === "safari") {
+      return {
+        title: "Allow notifications in Safari",
+        steps: "1. Open Safari → Settings → Websites → Notifications.<br>2. Find drsandaruwanperera.lk and set it to Allow.<br>3. Return to the LMS and press Try Again.",
+        system: "Also check macOS System Settings → Notifications → Safari."
+      };
+    }
+    if (browserFamily === "samsung") {
+      return {
+        title: "Allow notifications in Samsung Internet",
+        steps: "1. Open Samsung Internet → Menu → Settings → Sites and downloads → Notifications.<br>2. Allow notifications for drsandaruwanperera.lk.<br>3. Return to the LMS and press Try Again.",
+        system: "Also check Android Settings → Apps → Samsung Internet → Notifications → Allow."
+      };
+    }
+    if (browserFamily === "chrome-android" || browserFamily === "android-other") {
+      return {
+        title: "Allow notifications in your Android browser",
+        steps: "1. Open the browser menu → Settings → Site settings → Notifications.<br>2. Allow notifications for drsandaruwanperera.lk.<br>3. Return to the LMS and press Try Again.",
+        system: "Also check Android Settings → Apps → your browser → Notifications → Allow."
+      };
+    }
+    return {
+      title: "Allow notifications in your browser",
+      steps: "1. Open this website's site controls beside the address bar.<br>2. Set Notifications to Allow for drsandaruwanperera.lk.<br>3. Return to the LMS and press Try Again.",
+      system: "Check that the browser and operating system are up to date."
+    };
+  };
+
+  const showBrowserPermissionHelp = () => {
     const existing = card.querySelector(".lms-push-android-help");
     if (existing) return;
+    const details = getBrowserPermissionHelp();
     const help = document.createElement("div");
     help.className = "lms-push-android-help";
     help.innerHTML =
-      '<strong>Android did not show the Allow popup?</strong>' +
-      '<span>1. Open this LMS website in Google Chrome (not the installed app).<br>' +
-      '2. Tap the icon beside the website address → Permissions → Notifications → Allow.<br>' +
-      '3. Return to the LMS app and tap Try Again.</span>' +
-      '<span class="lms-push-android-system">Also check Android Settings → Apps → Chrome → Notifications → Allow notifications.</span>';
+      '<strong>' + details.title + '</strong>' +
+      '<span>' + details.steps + '</span>' +
+      '<span class="lms-push-android-system">' + details.system + '</span>';
     card.insertBefore(help, button);
   };
 
@@ -189,7 +235,7 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
           studentId,
           grade,
           token,
-          platform: isAppleMobile ? "ios-web-app" : "web"
+          platform: isAppleMobile ? "ios-web-app" : browserFamily === "samsung" ? "samsung-internet" : browserFamily === "chrome-android" ? "chrome-android" : browserFamily === "safari" ? "safari-macos" : "web"
         })
       },
       15000,
@@ -203,11 +249,9 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
   const registerCurrentDevice = async (report = () => {}) => {
     if (!("Notification" in window) || Notification.permission !== "granted") return false;
     report("Checking notification support on this phone…");
-    if (!(await withTimeout(
-      isSupported(),
-      8000,
-      "This browser did not finish checking notification support. Update Chrome and try again."
-    ))) return false;
+    if (!window.isSecureContext || !("serviceWorker" in navigator) || !("PushManager" in window) || !window.crypto?.subtle) {
+      throw new Error("This browser does not expose the Web Push APIs required by the LMS. Update the browser or use Chrome, Samsung Internet, or a supported Safari version.");
+    }
     if (isAppleMobile && !isStandaloneApp) return false;
 
     report("Connecting to the notification server…");
@@ -241,10 +285,10 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
         serviceWorkerRegistration: activeRegistration
       }),
       25000,
-      "Firebase took too long to create this phone's notification token. Check that Google Play services and Chrome are up to date, then tap Try Again."
+      "Firebase took too long to create this browser's notification token. Check the browser version and internet connection, then tap Try Again."
     );
     if (!token) {
-      throw new Error("This phone did not create a notification token. Check Chrome and Google Play services, then try again.");
+      throw new Error("This browser did not create a notification token. Check its Web Push support, allow notifications for this website, and try again.");
     }
 
     await sendSubscription(token, report);
@@ -380,7 +424,7 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
       }
       if (permission !== "granted") {
         if (permission === "denied") {
-          setStatus("Notifications are blocked for this app. Open Android Settings → Apps → Chrome (or the installed LMS app) → Notifications, allow notifications, then return and tap Check Again.");
+          setStatus("Notifications are blocked for this website in this browser. Allow them in the browser's site settings and device notification settings, then tap Check Again.");\n          showBrowserPermissionHelp();
           button.textContent = "Check Again";
         } else {
           setStatus("Notification permission was not granted. Press Enable Notifications and choose Allow to continue.");
@@ -395,7 +439,7 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
         "Notification setup took too long. Close extra LMS tabs, check your internet connection and tap Try Again. Your login is safe."
       );
       if (!registered) {
-        throw new Error("This phone/browser cannot complete Web Push setup. Open the installed LMS app in an updated version of Chrome and try again.");
+        throw new Error("This browser could not finish Web Push setup. Update the browser, allow notifications for this site, and try again.");
       }
       setStatus("Notifications are enabled for this device. Opening your LMS…");
       button.textContent = "Notifications Enabled ✓";
@@ -416,14 +460,31 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
 
   (async () => {
     try {
-      if (
-        !(await isSupported()) ||
-        !("Notification" in window) ||
-        !("serviceWorker" in navigator) ||
-        !("PushManager" in window)
-      ) {
+      const browserHasWebPushApis =
+        window.isSecureContext &&
+        "Notification" in window &&
+        "serviceWorker" in navigator &&
+        "PushManager" in window &&
+        "indexedDB" in window &&
+        "fetch" in window &&
+        "crypto" in window &&
+        Boolean(window.crypto?.subtle);
+      if (!browserHasWebPushApis) {
         showUnsupportedFallback();
         return;
+      }
+      if (isAppleMobile) {
+        const iosVersion = (navigator.userAgent.match(/OS (\\d+)[._](\\d+)/i) || []);
+        if (iosVersion.length >= 3) {
+          const major = Number(iosVersion[1]);
+          const minor = Number(iosVersion[2]);
+          if (major < 16 || (major === 16 && minor < 4)) {
+            setStatus("This iPhone/iPad needs iOS/iPadOS 16.4 or later for Web Push. Update the device, add the LMS to the Home Screen, and open it from that icon.");
+            button.disabled = true;
+            button.textContent = "Update iOS to Enable";
+            return;
+          }
+        }
       }
 
       if (isAppleMobile && !isStandaloneApp) {
@@ -446,7 +507,7 @@ import { isSupported, getMessaging, getToken, onMessage } from "https://www.gsta
       setStatus(Notification.permission === "denied"
         ? (/android/i.test(navigator.userAgent)
             ? "Notifications are blocked. Open Android Settings → Apps → Chrome → Notifications and allow them. Also allow Notifications for this website in Chrome → Site settings → Notifications, then tap Check Again."
-            : "Notifications are currently blocked. Allow them in this site's browser settings, then press Check Again.")
+            : "Notifications are blocked for this website. Allow them in your browser and device settings, then press Check Again.")
         : "Notification setup is required. Press Enable Notifications and choose Allow to register this device.");
       button.disabled = false;
       button.textContent = Notification.permission === "denied" ? "Check Again" : "Enable Notifications";
