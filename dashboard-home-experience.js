@@ -84,7 +84,7 @@
       portalProgramHub: false,
       modelPapersCard: false,
       theoryExaminationCard: true,
-      modelPaperAnswersCard: false,
+      modelPaperAnswersCard: true,
       pastPapersCard: false,
       programProgressCard: false,
       smartBookAnswersCard: true,
@@ -131,7 +131,7 @@
     const rules = studyCardRules[activeCohortKey];
     if (!rules) return;
     Object.entries(rules).forEach(([id, visible]) => {
-      if (visible) return; // Keep administrator publishing controls in charge of allowed cards.
+      if (visible) return; // Cohort allow-list always hides cards outside this programme.
       const card = byId(id);
       if (!card) return;
       if (!card.hidden) card.hidden = true;
