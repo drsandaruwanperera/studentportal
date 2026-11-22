@@ -9,10 +9,17 @@ Implemented components
 - Background delivery: service-worker.js
 - Student pages: dashboard.html and announcements.html
 - Admin send control: admin-announcements.html ("Send Push" on published announcements)
-- Subscriber records: Firestore collection pushSubscriptions
+- Subscriber records: Cloudflare D1 database dr-sandaruwan-push-subscriptions (table push_subscriptions)
+- Delivery provider: Firebase Cloud Messaging (FCM), no-cost
+- Firestore is no longer used for student push-subscription reads or writes
 
-The feature is deployed in code, but cannot send notifications until the
-Firebase keys below are configured. Do NOT commit a Firebase service-account
+The feature uses Firebase Cloud Messaging for delivery and Cloudflare D1 for
+subscription storage. The D1 database is bound to the Worker as PUSH_DB.
+Student opt-in no longer reads or writes Firestore, avoiding Firestore daily
+quota exhaustion during notification registration.
+
+The feature still requires the Firebase service-account secret for FCM delivery
+and the existing Firebase Web Push public VAPID key in push-config.js. Do NOT commit a Firebase service-account
 JSON file or private key to GitHub.
 
 STEP 1 — Generate the Firebase Web Push public key
@@ -81,9 +88,11 @@ Important
 - Only students who enabled notifications will receive push messages.
 - Students who have not opted in will still see announcements inside the LMS.
 - Browser permissions can be blocked by device/browser settings.
-- FCM delivery and Cloudflare Worker Free usage are subject to each provider's
-  current free-tier limits and policies. This is not an unlimited SLA.
+- FCM is a no-cost Firebase product. Cloudflare Workers and D1 remain subject to
+  their current Free-plan daily request, row-read and row-write limits. This is
+  not an unlimited SLA.
 - The Worker reads the existing Firestore admin record to re-check Super Admin
-  credentials. The password is sent over HTTPS for this send request and is
-  not stored by the Worker.
+  credentials when sending. The password is sent over HTTPS for this send
+  request and is not stored by the Worker. Student push subscriptions are stored
+  separately in Cloudflare D1, not in Firestore.
 - Service-account private keys must remain in Cloudflare Secrets only.
