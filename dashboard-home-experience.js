@@ -74,7 +74,7 @@
     },
     al2027: {
       portalProgramHub: false,
-      modelPapersCard: false,
+      modelPapersCard: true,
       theoryExaminationCard: false,
       modelPaperAnswersCard: false,
       pastPapersCard: false,
@@ -84,8 +84,8 @@
     },
     al2028: {
       portalProgramHub: false,
-      modelPapersCard: true,
-      theoryExaminationCard: true,
+      modelPapersCard: false,
+      theoryExaminationCard: false,
       modelPaperAnswersCard: true,
       pastPapersCard: false,
       programProgressCard: false,
