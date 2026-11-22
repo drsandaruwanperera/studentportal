@@ -1510,3 +1510,69 @@ html.lms-brand-glass.student-glass-ui body :is(.profile-btn.primary,.profile-act
     font-size:11px!important;
   }
 }
+
+
+/* Final announcement reading layout for the iPhone / installed LMS app.
+   This block deliberately comes after the shared generic glass rules so
+   the announcement copy keeps the Admin-entered line breaks and contrast. */
+html.lms-brand-glass.student-glass-ui body #firestoreAnnouncementList .notice {
+  background: linear-gradient(145deg,#ffffff 0%,#f2f7fc 100%) !important;
+  border: 1px solid #d8dfea !important;
+  color: #243047 !important;
+}
+html.lms-brand-glass.student-glass-ui body #firestoreAnnouncementList .notice h3 {
+  color: #211638 !important;
+  -webkit-text-fill-color: #211638 !important;
+  opacity: 1 !important;
+  font-size: 16px !important;
+  font-weight: 900 !important;
+  line-height: 1.5 !important;
+  text-shadow: none !important;
+}
+html.lms-brand-glass.student-glass-ui body #firestoreAnnouncementList .notice p.notice-message {
+  color: #263449 !important;
+  -webkit-text-fill-color: #263449 !important;
+  opacity: 1 !important;
+  display: block !important;
+  max-height: none !important;
+  overflow: visible !important;
+  font-size: 13.5px !important;
+  font-weight: 550 !important;
+  line-height: 1.9 !important;
+  letter-spacing: .02px !important;
+  text-align: left !important;
+  text-shadow: none !important;
+  white-space: pre-wrap !important;
+  overflow-wrap: break-word !important;
+  word-break: normal !important;
+  -webkit-line-clamp: unset !important;
+}
+html.lms-brand-glass.student-glass-ui body #firestoreAnnouncementList .notice .notice-top > div > div:first-child {
+  color: #5c3b91 !important;
+  -webkit-text-fill-color: #5c3b91 !important;
+  font-size: 10px !important;
+}
+html.lms-brand-glass.student-glass-ui body #firestoreAnnouncementList .notice time {
+  color: #5b6475 !important;
+  -webkit-text-fill-color: #5b6475 !important;
+}
+html.lms-brand-glass.student-glass-ui body #firestoreAnnouncementList .notice .tag {
+  color: #54308a !important;
+  -webkit-text-fill-color: #54308a !important;
+  background: #eee7ff !important;
+  border-color: #d8c8fa !important;
+}
+@media (max-width: 600px) {
+  html.lms-brand-glass.student-glass-ui body #firestoreAnnouncementList .notice {
+    gap: 11px !important;
+    padding: 15px !important;
+  }
+  html.lms-brand-glass.student-glass-ui body #firestoreAnnouncementList .notice h3 {
+    font-size: 15px !important;
+    line-height: 1.5 !important;
+  }
+  html.lms-brand-glass.student-glass-ui body #firestoreAnnouncementList .notice p.notice-message {
+    font-size: 13px !important;
+    line-height: 1.85 !important;
+  }
+}
