@@ -13,7 +13,7 @@
 .push-modal-card h2{margin:0 0 8px;color:#f4f7ff;font-size:19px}.push-modal-card p{color:#aeb8ce;font-size:12px;line-height:1.6}.push-modal-card label{display:block;margin:15px 0 6px;color:#c4b5fd;font-size:10px;font-weight:850}
 .push-modal-card input{width:100%;min-height:44px;padding:10px 12px;border:1px solid rgba(255,255,255,.14);border-radius:10px;background:#0b1020;color:#fff;font:inherit}
 .push-modal-actions{display:flex;gap:9px;margin-top:15px}.push-modal-actions button{flex:1;min-height:42px;border:0;border-radius:10px;font-size:11px;font-weight:850;cursor:pointer}.push-modal-actions .cancel{background:#27334b;color:#cbd5e1}.push-modal-actions .send{background:linear-gradient(135deg,#a6ff2e,#77d91c);color:#111827}
-.push-modal-actions button:disabled{opacity:.55;cursor:wait}.push-modal-status{min-height:18px;margin-top:10px;color:#c4b5fd;font-size:10px;line-height:1.5;white-space:pre-line}
+.push-modal-actions button:disabled{opacity:.55;cursor:wait}.push-modal-status{min-height:18px;margin-top:10px;color:#c4b5fd;font-size:11px;line-height:1.5;white-space:pre-line}.push-modal-result{display:block;margin-top:13px;padding:14px;border:1px solid rgba(148,163,184,.22);border-radius:12px;background:#0b1325;color:#e5edf9;font-size:11px;line-height:1.6;white-space:pre-line;overflow-wrap:anywhere}.push-modal-result[hidden]{display:none}.push-modal-result.success{border-color:rgba(74,222,128,.38);background:rgba(22,101,52,.13)}.push-modal-result.warning{border-color:rgba(251,191,36,.4);background:rgba(120,83,15,.16)}.push-modal-result.error{border-color:rgba(248,113,113,.4);background:rgba(127,29,29,.16)}.push-result{margin-top:10px;padding:10px 12px;border:1px solid rgba(148,163,184,.2);border-radius:10px;background:rgba(9,16,31,.72);color:#cbd5e1;font-size:10px;line-height:1.55;white-space:pre-line;overflow-wrap:anywhere}.push-result.success{border-color:rgba(74,222,128,.32)}.push-result.warning{border-color:rgba(251,191,36,.34)}.push-result.error{border-color:rgba(248,113,113,.34)}
 .empty{padding:30px;text-align:center;border:1px dashed rgba(255,255,255,.12);border-radius:14px;color:#7f8ba2;font-size:11px}@media(max-width:950px){.layout{grid-template-columns:1fr}}@media(max-width:650px){.page-shell{padding:15px}.hero h1{font-size:24px}}
 </style>
 </head>
@@ -61,7 +61,8 @@
     <p id="pushModalSummary">Only students who enabled notifications on their devices will receive this.</p>
     <label for="pushModalPassword">RE-ENTER SUPER ADMIN PASSWORD</label>
     <input id="pushModalPassword" type="password" autocomplete="current-password" placeholder="Super Admin password">
-    <div class="push-modal-status" id="pushModalStatus" role="status" aria-live="polite"></div>
+    <div class="push-modal-status" id="pushModalStatus" role="status" aria-live="polite">Ready. Press Send notification to start.</div>
+    <div class="push-modal-result" id="pushModalResult" role="status" aria-live="polite" hidden></div>
     <div class="push-modal-actions">
       <button type="button" class="cancel" id="pushModalCancel">Cancel</button>
       <button type="button" class="send" id="pushModalSend">Send notification</button>
@@ -135,13 +136,20 @@ document.getElementById("moveALTo2027").addEventListener("click",async()=>{
   finally{button.disabled=false;button.textContent="Move existing A/L announcements to A/L 2027";}
 });
 let latestAnnouncements=[];
+const pushResults=new Map();
+function pushResultHtml(id){
+  const result=pushResults.get(id);
+  if(!result)return "";
+  const details=(result.details||[]).join("\n");
+  return '<div class="push-result '+(result.state||"warning")+'"><strong>'+esc(result.heading||"Last push result")+'</strong>\n'+esc(result.summary||"")+(details?'\n'+esc(details):"")+'</div>';
+}
 function render(items){
   latestAnnouncements=items;
   if(!items.length){list.innerHTML='<div class="empty">No announcements yet.</div>';return;}
   list.innerHTML=items.map(x=>{
     const on=x.enabled!==false && x.active!==false;
     const target=x.grade||"all";
-    return '<article class="item"><div class="item-top"><div><h3>'+esc(x.title||"Untitled")+'</h3><div class="meta">'+esc(target)+" • Created "+esc(date(x.createdAt))+'</div></div><span class="badge '+(on?"on":"off")+'">'+(on?"PUBLISHED":"HIDDEN")+'</span></div><p>'+esc(x.message||"")+'</p><div class="meta">Dashboard: '+(x.showOnDashboard===false?"OFF":"ON")+(x.expiresAt?" • Expires "+esc(date(x.expiresAt)):"")+'</div><div class="item-actions"><button class="small" data-edit="'+esc(x.id)+'">Edit</button><button class="small" data-toggle="'+esc(x.id)+'">'+(on?"Hide":"Publish")+'</button>'+(on?'<button class="small push" data-push="'+esc(x.id)+'">Send Push</button>':'')+'<button class="small red" data-delete="'+esc(x.id)+'">Delete</button></div></article>';
+    return '<article class="item"><div class="item-top"><div><h3>'+esc(x.title||"Untitled")+'</h3><div class="meta">'+esc(target)+" • Created "+esc(date(x.createdAt))+'</div></div><span class="badge '+(on?"on":"off")+'">'+(on?"PUBLISHED":"HIDDEN")+'</span></div><p>'+esc(x.message||"")+'</p><div class="meta">Dashboard: '+(x.showOnDashboard===false?"OFF":"ON")+(x.expiresAt?" • Expires "+esc(date(x.expiresAt)):"")+'</div><div class="item-actions"><button class="small" data-edit="'+esc(x.id)+'">Edit</button><button class="small" data-toggle="'+esc(x.id)+'">'+(on?"Hide":"Publish")+'</button>'+(on?'<button class="small push" data-push="'+esc(x.id)+'">Send Push</button>':'')+'<button class="small red" data-delete="'+esc(x.id)+'">Delete</button></div>'+pushResultHtml(x.id)+'</article>';
   }).join("");
   list.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>editItem(items.find(x=>x.id===b.dataset.edit)));
   list.querySelectorAll("[data-toggle]").forEach(b=>b.onclick=async()=>{
@@ -161,12 +169,32 @@ function render(items){
 const pushModal=document.getElementById("pushModal");
 const pushModalPassword=document.getElementById("pushModalPassword");
 const pushModalStatus=document.getElementById("pushModalStatus");
+const pushModalResult=document.getElementById("pushModalResult");
 const pushModalSend=document.getElementById("pushModalSend");
 let pendingPushItem=null;
+function showPushResult(state,heading,summary,details=[]){
+  const result={state,heading,summary,details};
+  if(pendingPushItem)pushResults.set(pendingPushItem.id,result);
+  pushModalResult.className="push-modal-result "+state;
+  pushModalResult.textContent=heading+"\n"+summary+(details.length?"\n\n"+details.join("\n"):"");
+  pushModalResult.hidden=false;
+  if(pendingPushItem){
+    const button=[...list.querySelectorAll("[data-push]")].find(x=>x.dataset.push===pendingPushItem.id);
+    const card=button?.closest(".item");
+    if(card){
+      let inline=card.querySelector(".push-result");
+      if(!inline){inline=document.createElement("div");card.appendChild(inline);}
+      inline.className="push-result "+state;
+      inline.textContent=heading+"\n"+summary+(details.length?"\n"+details.join("\n"):"");
+    }
+  }
+}
 function openPushModal(item){
   pendingPushItem=item;
   document.getElementById("pushModalSummary").textContent=(item.title||"Announcement")+" • Audience: "+(item.grade||"all")+". Only subscribed devices receive this notification.";
-  pushModalPassword.value="";pushModalStatus.textContent="";
+  pushModalPassword.value="";
+  pushModalStatus.textContent="Ready. Press Send notification to start.";
+  pushModalResult.hidden=true;pushModalResult.textContent="";pushModalResult.className="push-modal-result";
   pushModalSend.disabled=false;pushModalSend.textContent="Send notification";
   pushModal.classList.add("open");pushModal.setAttribute("aria-hidden","false");
   setTimeout(()=>pushModalPassword.focus(),50);
@@ -175,51 +203,77 @@ function closePushModal(){
   pushModal.classList.remove("open");pushModal.setAttribute("aria-hidden","true");
   pushModalPassword.value="";pendingPushItem=null;
 }
+async function fetchPushJson(url,options={},timeoutMs=60000){
+  const controller=new AbortController();
+  const timer=setTimeout(()=>controller.abort(),timeoutMs);
+  try{
+    const response=await fetch(url,{...options,signal:controller.signal,cache:"no-store"});
+    const raw=await response.text();
+    let data={};try{data=raw?JSON.parse(raw):{};}catch{data={raw:raw.slice(0,500)};}
+    return {response,data};
+  }finally{clearTimeout(timer);}
+}
 document.getElementById("pushModalCancel").addEventListener("click",closePushModal);
 pushModal.addEventListener("click",event=>{if(event.target===pushModal)closePushModal();});
 pushModalPassword.addEventListener("keydown",event=>{if(event.key==="Enter")pushModalSend.click();if(event.key==="Escape")closePushModal();});
 pushModalSend.addEventListener("click",async()=>{
   if(!pendingPushItem)return;
+  const item=pendingPushItem;
   const cfg=window.LMS_PUSH_CONFIG||{};
-  let apiUrl=String(cfg.apiUrl||""); if(apiUrl.endsWith("/")) apiUrl=apiUrl.slice(0,-1);
+  const apiUrl=String(cfg.apiUrl||"").replace(/\/+$/,"");
   const username=sessionStorage.getItem("adminUsername")||"";
   const password=pushModalPassword.value;
-  if(!apiUrl){pushModalStatus.textContent="Push API URL has not been configured.";return;}
+  if(!apiUrl){pushModalStatus.textContent="ERROR: Push API URL has not been configured.";showPushResult("error","Push was not sent","Missing Push API URL.");return;}
   if(!username||!password){pushModalStatus.textContent="Enter your Super Admin password.";pushModalPassword.focus();return;}
   pushModalSend.disabled=true;pushModalSend.textContent="Sending…";
-  let sent=0,failed=0,pageToken=null,pages=0;
+  pushModalStatus.textContent="Connecting to the notification service…";
+  pushModalResult.hidden=true;
+  let sent=0,failed=0,checked=0,matched=0,pageToken=null,pages=0;
+  const gradeCounts={};
+  const failureDetails=[];
   try{
-    const healthResponse=await fetch(apiUrl+"/health",{cache:"no-store"});
-    const health=await healthResponse.json().catch(()=>({}));
-    if(!healthResponse.ok||!health.configured)throw new Error("Push service setup is incomplete. Firebase service-account secret is still required.");
+    const health=await fetchPushJson(apiUrl+"/health",{},30000);
+    if(!health.response.ok||!health.data.configured)throw new Error(health.data.error||"Push service is not configured (HTTP "+health.response.status+").");
+    if(!health.data.ok)throw new Error("Notification service health check did not return OK.");
     do{
-      const response=await fetch(apiUrl+"/send",{
+      pushModalStatus.textContent="Sending page "+(pages+1)+"… Devices checked: "+checked+" • matched: "+matched+" • sent: "+sent+" • failed: "+failed;
+      const call=await fetchPushJson(apiUrl+"/send",{
         method:"POST",headers:{"content-type":"application/json"},
         body:JSON.stringify({
-          username,password,title:pendingPushItem.title,
-          message:pendingPushItem.message,grade:pendingPushItem.grade||"all",
-          announcementId:pendingPushItem.id,pageToken
+          username,password,title:item.title,message:item.message,grade:item.grade||"all",
+          announcementId:item.id,pageToken
         })
-      });
-      const result=await response.json().catch(()=>({}));
-      if(!response.ok)throw new Error(result.error||"Notification send failed.");
+      },90000);
+      const result=call.data;
+      if(!call.response.ok)throw new Error((result.error||"Notification send failed.")+" (HTTP "+call.response.status+")"+(result.details?"\n"+result.details:""));
+      if(result.ok!==true)throw new Error("Notification server returned an unexpected response. "+JSON.stringify(result).slice(0,400));
       sent+=Number(result.sent||0);failed+=Number(result.failed||0);
-      pageToken=result.nextPageToken||null;pages++;
-      pushModalStatus.textContent="Sending notifications… "+sent+" sent, "+failed+" failed.";
-      if(pages>500)throw new Error("Sending stopped after the safety limit. Retry for remaining devices.");
+      checked+=Number(result.checked||0);matched+=Number(result.matched||0);pages++;
+      for(const [key,value] of Object.entries(result.gradeCounts||{}))gradeCounts[key]=(gradeCounts[key]||0)+Number(value||0);
+      for(const failure of (result.failureDetails||[])){
+        if(failureDetails.length<10)failureDetails.push("HTTP "+(failure.httpStatus||"—")+" • "+(failure.code||"UNKNOWN")+": "+(failure.message||"No error message"));
+      }
+      pageToken=result.nextPageToken||null;
+      pushModalStatus.textContent="Sending page "+pages+" complete. Devices checked: "+checked+" • matched: "+matched+" • sent: "+sent+" • failed: "+failed;
+      if(pages>500)throw new Error("Stopped after the 500-page safety limit. Contact support before retrying.");
     }while(pageToken);
-    pushModalStatus.textContent=sent===0&&failed===0
-      ?"No subscribed devices were found for this audience. Students must enable notifications first."
-      :"Completed: "+sent+" notifications sent; "+failed+" failed.";
-    pushModalSend.textContent="Completed";
+    const summary="Audience: "+(item.grade||"all")+"\nSubscriber records checked: "+checked+"\nMatching devices: "+matched+"\nFCM accepted: "+sent+"\nFailed: "+failed+"\nPages processed: "+pages+"\n\nNote: “FCM accepted” confirms Firebase accepted the send request; it does not prove the phone displayed the notification.";
+    const grades=Object.keys(gradeCounts).length?"Registered subscription groups: "+Object.entries(gradeCounts).map(([k,v])=>k+" ("+v+")").join(", "):"No registered subscription records were found.";
+    const details=[grades,...failureDetails];
+    const state=failed>0?"warning":matched===0?"error":"success";
+    const heading=matched===0?"No matching subscribed devices":failed>0?"Push completed with failures":"Push requests accepted by Firebase";
+    pushModalStatus.textContent="Send operation finished. The full report is shown below.";
+    showPushResult(state,heading,summary,details);
+    pushModalSend.textContent="Sent";
     pushModalPassword.value="";
   }catch(error){
     console.error("Push notification send failed:",error);
-    pushModalStatus.textContent=error?.message||"Could not send notifications.";
+    const message=error?.name==="AbortError"?"The notification request timed out. Check the Worker and try again.":(error?.message||"Could not send notifications.");
+    pushModalStatus.textContent="Send operation failed. See the diagnostic report below.";
+    showPushResult("error","Push operation failed",message,["Checked: "+checked+" • matched: "+matched+" • sent: "+sent+" • failed: "+failed]);
     pushModalSend.disabled=false;pushModalSend.textContent="Try again";
   }
 });
-
 onSnapshot(collection(db,"announcements"),snap=>{
   const items=snap.docs.map(d=>({id:d.id,...d.data()})).filter(x=>!["legacy-grade11-top-ranking-results","legacy-al-answer-release-paper01-september2026"].includes(x.id)).sort((a,b)=>ts(b.createdAt)-ts(a.createdAt));
   render(items);
