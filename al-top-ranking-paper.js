@@ -170,6 +170,16 @@ async function checkAnswerResource(linkId, statusId, type) {
 async function initialize() {
     try {
         const studentData = await getStudentData();
+        const storedYear = String(sessionStorage.getItem("alYear") || "");
+        const profileYear = String(studentData?.alYear || "");
+        const studentCode = String(studentId || "").trim().toUpperCase();
+        const isA2028Student = storedYear === "2028" || profileYear === "2028" ||
+            /^A28\\d{3}$/.test(studentCode) || /^(?:28[CN])/.test(studentCode);
+        if (!isA2028Student) {
+            alert("This TOP Ranking paper set is assigned to A/L 2028 students.");
+            window.location.replace("dashboard.html");
+            return;
+        }
         if (!studentData || !hasPaperAccess(studentData)) {
             alert(`Paper ${paperNumber} is not available for your account yet.`);
             window.location.replace("model-papers.html");
