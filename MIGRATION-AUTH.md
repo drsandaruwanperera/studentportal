@@ -5,9 +5,7 @@
 **Branch intended:** `draft/phase2-auth-migration`
 **Status:** Preparation only. No code on `main` was changed, nothing was deployed,
 no live Firebase setting was changed, no password was reset, no live data was deleted.
-Branch creation was **blocked by GitHub MCP rate limiting (HTTP 429)** — see
-“Blockers” at the end. The three draft files in this folder are ready to push to
-that branch when the limit clears.
+Branch `draft/phase2-auth-migration` now exists (created 2026-11-25 after write access was granted; the 429 that blocked preparation has cleared). The three draft files are on that branch in one commit. See “Blockers” at the end for what is still outstanding.
 
 No passwords, keys or secret values are written in this document.
 
@@ -538,15 +536,13 @@ Read the comments at the top of `firestore.rules` before using it. In short:
 
 ## 6. Blockers (as of this preparation)
 
-1. **GitHub MCP rate-limited (HTTP 429)** while reading the repo.
+1. **GitHub MCP rate-limited (HTTP 429) during preparation** while reading the repo.
    The last three `search_code` calls in this preparation all returned
    `MCP request failed with HTTP 429: too many requests`. Per the
-   task’s hard-stop rule, no further GitHub API calls were made, no
-   retry was attempted, and no branch / PR was created. The intended
-   branch `draft/phase2-auth-migration` therefore **does not exist yet**;
-   the three draft files are in `~/workspace/phase2-auth-migration-drafts/`
-   in this workspace, ready to push as a single commit to that branch
-   when the limit clears.
+   task’s hard-stop rule, no further GitHub API calls were made at that
+   time. This is now resolved: write access was granted, the rate limit
+   cleared, and branch `draft/phase2-auth-migration` was created
+   2026-11-25 with the three draft files in one commit.
 2. **Final verification of `student-deletion.js` / the tail of
    `student-deletion.html` was stopped by the same rate limit** (see §1.5).
    Re-verify before relying on the “no gate at all” wording; the Phase 0
