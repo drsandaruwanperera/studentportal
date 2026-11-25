@@ -42,31 +42,39 @@ function isTrue(value) {
 }
 
 function getViewedCount(data, type) {
+    // Fail closed: an unverifiable profile counts as 0 viewed.
+    if (!type || !PAPER_COUNTS[type]) {
+        return 0;
+    }
+
     if (type === "al") {
+        // Count the paper keys actually present in the profile
+        // (paper01, paper02, ...) instead of looping to the
+        // PAPER_COUNTS.al hardcode, so later monthly papers count.
         const modelViews = data?.paperViews?.al?.model || {};
-        let viewed = 0;
-
-        for (let i = 1; i <= PAPER_COUNTS.al; i++) {
-            if (isTrue(modelViews[`paper${String(i).padStart(2, "0")}`])) {
-                viewed++;
-            }
-        }
-
-        return viewed;
+        return Object.keys(modelViews).filter(
+            (key) => /^paper\d+$/.test(key) && isTrue(modelViews[key])
+        ).length;
     }
 
-    let viewed = 0;
-    for (let i = 1; i <= PAPER_COUNTS[type]; i++) {
-        const field = `paper${String(i).padStart(2, "0")}Viewed`;
-        if (isTrue(data?.[field])) viewed++;
-    }
-
-    return viewed;
+    // Count the paperNNViewed flags actually present in the profile
+    // instead of looping to the hardcoded PAPER_COUNTS total.
+    return Object.keys(data || {}).filter(
+        (key) => /^paper\d{2}Viewed$/.test(key) && isTrue(data[key])
+    ).length;
 }
 
 function renderCategoryPaperStats(data) {
     const type = getStudentType(data);
-    const total = PAPER_COUNTS[type] || PAPER_COUNTS.grade11;
+    // Fail closed: an unknown/unverifiable profile shows 0 papers,
+    // never the old Grade 11 fallback (PAPER_COUNTS.grade11 = 15).
+    // NOTE: PAPER_COUNTS.al = 2 is still a hardcode — the A/L total
+    // is the live monthly paper list (Firestore
+    // monthlyTopRankingPapers plus the static September 2026
+    // papers), which this module does not load. Until the total is
+    // wired to that list, viewed is capped at 2 and progress will
+    // understate once more monthly papers publish.
+    const total = PAPER_COUNTS[type] || 0;
     const viewed = Math.min(getViewedCount(data, type), total);
     const progress = total > 0 ? Math.round((viewed / total) * 100) : 0;
 
