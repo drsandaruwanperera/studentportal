@@ -11,7 +11,7 @@ import {
 } from "./firebase.js";
 
 import { requireRecoveryCodeSetup } from "./student-recovery-setup.js?v=website-handoff-2";
-import { initRecoveryPasswordReset } from "./student-recovery-reset.js?v=2";
+import { initRecoveryPasswordReset } from "./student-recovery-reset.js?v=3";
 import { isStudentOnboardingComplete } from "./student-onboarding.js";
 
 

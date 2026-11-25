@@ -33,9 +33,11 @@
 body.recovery-reset-open{overflow:hidden}
 .recovery-reset-dialog{
   position:relative;
+  display:flex;
+  flex-direction:column;
   width:min(470px,100%);
   max-height:min(92vh,820px);
-  overflow-y:auto;
+  overflow:hidden;
   padding:22px 28px;
   border:1px solid rgba(255,255,255,.72);
   border-radius:24px;
@@ -43,6 +45,23 @@ body.recovery-reset-open{overflow:hidden}
   box-shadow:0 28px 90px rgba(3,15,40,.32);
   color:#17233a;
   font-family:Inter,"Segoe UI",Arial,sans-serif;
+}
+/* Round 3 (login design fixes): the dialog is a flex column -- only
+   .rr-scroll scrolls, so the Verify button in .rr-footer, which sits
+   outside the form and outside the scroll area, is always visible even
+   when the dialog is taller than the viewport. */
+.recovery-reset-dialog .rr-scroll{
+  flex:1 1 auto;
+  min-height:0;
+  overflow-y:auto;
+}
+.recovery-reset-dialog .rr-footer{
+  flex:0 0 auto;
+  padding-top:12px;
+}
+.recovery-reset-dialog .rr-footer .rr-submit{
+  width:100%;
+  margin-top:0;
 }
 .recovery-reset-close{
   position:absolute;
