@@ -349,3 +349,25 @@ html.lms-brand-glass body .wow-action-row .pwa-install-help.visible {
   html.lms-brand-glass body .wow-action-row .pwa-install-widget,
   html.lms-brand-glass body .wow-action-row .whatsapp-fab { animation: none !important; }
 }
+
+
+/* Login field text and recovery action: enforce readable white text on dark glass. */
+html.lms-brand-glass body .wow-scene .login-card .input-wrapper input,
+html.lms-brand-glass body .wow-scene .login-card .input-wrapper input:focus,
+html.lms-brand-glass body .wow-scene .login-card .input-wrapper input:-webkit-autofill,
+html.lms-brand-glass body .wow-scene .login-card .input-wrapper input:-webkit-autofill:hover,
+html.lms-brand-glass body .wow-scene .login-card .input-wrapper input:-webkit-autofill:focus {
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+  caret-color:#a6ff2e !important;
+}
+html.lms-brand-glass body .wow-scene .login-card .input-wrapper input::placeholder {
+  color:#cbd5e1 !important;
+  -webkit-text-fill-color:#cbd5e1 !important;
+  opacity:1 !important;
+}
+html.lms-brand-glass body .wow-scene .login-card .recovery-reset-trigger,
+html.lms-brand-glass body .wow-scene .login-card .recovery-reset-trigger strong {
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+}
