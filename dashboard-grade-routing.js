@@ -1,62 +1,6 @@
 import {db,doc,getDoc} from "./firebase.js";
 
 (() => {
-  const normalize = value => String(value || "").trim().toLowerCase().replace(/[\s_-]+/g, "");
-  const id = String(sessionStorage.getItem("studentId") || "").trim().toUpperCase();
-  const al2028NumericIds = new Set("11074 11094 12705 13959 14069 14319 14334 14368 14369 14421 14723 14800 15189 15483 15508 15585 15690 15854 15960 16365 16889 16890 16891 16892 16895 16896 16898 16899 16900 16902 16903 16906 16907 16908 16909 16910 16913 16914 16915 16920 16923 16924 16941 16947 16966 16967 16975 16978 16979 16980 16986 16987 16988 16991 16995 17038 17039 17052 17054 17064 17071 17080 17093 17125 17172 17187 17188 17190 17191 17197 17205 17206 17207 17208 17209 17210 17212 17213 17218 17220 17225 17226 17240 17241 17242 17243 17244 17246 17247 17249 17254 17256 17269 17279 17280 17287 17288 17296 17306 17307 17317 17326 17327 17364 17366 17368 17386 17387 17427 17450".split(/\s+/));
-  const typeFromValue = value => {
-    const v = normalize(value);
-    if (["grade10","10","g10"].includes(v) || v.includes("grade10") || v.includes("g10")) return "grade10";
-    if (["grade11","11","g11"].includes(v) || v.includes("grade11") || v.includes("g11")) return "grade11";
-    // Accept cohort labels written as "A/L 2027", "A/L 2028" or "Advanced Level 2028".
-    if (["al","alevel","advancedlevel","advanced"].includes(v) ||
-        v.includes("advancedlevel") ||
-        /^a\/?l(?:20)?(?:2027|2028|2029|27|28|29)$/.test(v) ||
-        /^advanced(?:level)?(?:20)?(?:2027|2028|2029|27|28|29)$/.test(v)) return "al";
-    return "";
-  };
-  const inferFromId = () => {
-    if (al2028NumericIds.has(id)) return "al";
-    // A/L admission IDs: A27000/A28000/A29000 and 27C/28C/29C or 27N/28N/29N series.
-    if (/^A2[789]\d{3}$/.test(id) || /^(?:27|28|29)[CN]/.test(id)) return "al";
-    if (/^\d{5}$/.test(id)) {
-      const n = Number(id);
-      if (n >= 26000 && n <= 26999) return "grade11";
-      if (n >= 27000 && n <= 27999) return "grade10";
-    }
-    return "";
-  };
-
-  const getAlYear = data => {
-    if (al2028NumericIds.has(id)) return "2028";
-
-    // Prefer the current Firebase student profile over any stale browser session.
-    const profileYear = [
-      data?.alYear,
-      data?.academicYear,
-      data?.examYear,
-      data?.year,
-      data?.batch,
-      data?.cohort,
-      data?.studentGrade,
-      data?.grade,
-      data?.studentType
-    ].map(value => String(value ?? "")).join(" ").match(/20(27|28|29)/);
-    if (profileYear) return "20" + profileYear[1];
-
-    const savedYear = String(sessionStorage.getItem("alYear") || "").match(/20(27|28|29)/);
-    if (savedYear) return savedYear[0];
-
-    const sessionYear = (
-      String(sessionStorage.getItem("studentGrade") || "") + " " +
-      String(sessionStorage.getItem("studentType") || "")
-    ).match(/20(27|28|29)/);
-    if (sessionYear) return "20" + sessionYear[1];
-
-    const match = id.match(/^(?:A)?(27|28|29)/) || id.match(/^(27|28|29)[CN]/);
-    if (!match) return "2027";
-    return "20" + match[1];
-  };
   const routes = {
     grade10: {
       label: "Grade 10",
@@ -89,39 +33,22 @@ import {db,doc,getDoc} from "./firebase.js";
     }
   };
 
-  // Enforce the exact A/L resource set after the student profile has been resolved.
-  // Inline !important hides prevent dashboard theme CSS from exposing cards for another cohort.
-  function enforceCohortStudyCards(type, alYear = "") {
-    const visibleIds = type === "al"
-      ? (alYear === "2028"
-          ? new Set(["theoryExaminationCard","modelPaperAnswersCard","smartBookAnswersCard","schoolPaperAnswersCard"])
-          : new Set(["modelPapersCard"]))
-      : type === "grade10" || type === "grade11"
-        ? new Set(["modelPapersCard","modelPaperAnswersCard"])
-        : new Set();
-
-    [
-      "modelPapersCard",
-      "theoryExaminationCard",
-      "modelPaperAnswersCard",
-      "smartBookAnswersCard",
-      "schoolPaperAnswersCard"
-    ].forEach(cardId => {
-      const card = document.getElementById(cardId);
-      if (!card) return;
-      const visible = visibleIds.has(cardId);
-      card.hidden = !visible;
-      card.setAttribute("aria-hidden", String(!visible));
-      if (visible) {
-        card.style.removeProperty("display");
-      } else {
-        card.style.setProperty("display", "none", "important");
-      }
-    });
-  }
-
   function applyGrade(type, data = {}) {
-    const alYear = type === "al" ? getAlYear(data) : "";
+    // Resolve the year through the shared module — no "2027" default.
+    // An A/L student with no year anywhere is "unknown" and fails closed.
+    const session = {
+      studentId: sessionStorage.getItem("studentId"),
+      studentType: sessionStorage.getItem("studentType"),
+      studentGrade: sessionStorage.getItem("studentGrade"),
+      alYear: sessionStorage.getItem("alYear")
+    };
+    const alYear = type === "al" ? window.LmsCohort.resolveYear(data, session) : "";
+    if (type === "al" && !alYear) {
+      window.LmsCohort.showUnknownCohort();
+      const title = document.querySelector(".learning-banner-copy h2");
+      if (title) title.innerHTML = "Your Learning Journey<br><b>Starts Here</b>";
+      return;
+    }
     if (type === "al") sessionStorage.setItem("alYear", alYear);
     else sessionStorage.removeItem("alYear");
     const config = type === "al" && alYear === "2028"
@@ -135,12 +62,16 @@ import {db,doc,getDoc} from "./firebase.js";
           pastDescription: ""
         }
       : routes[type];
-    document.documentElement.dataset.studentType = type || "unknown";
     if (!config) {
+      // Fail closed: hide every study card and show "cohort not set —
+      // contact admin" instead of returning with the default-visible
+      // cards still on screen.
+      window.LmsCohort.showUnknownCohort();
       const title = document.querySelector(".learning-banner-copy h2");
       if (title) title.innerHTML = "Your Learning Journey<br><b>Starts Here</b>";
       return;
     }
+    document.documentElement.dataset.studentType = type || "unknown";
     sessionStorage.setItem("studentType", type);
     sessionStorage.setItem("studentGrade", config.label);
 
@@ -220,32 +151,33 @@ import {db,doc,getDoc} from "./firebase.js";
       if (sub) sub.textContent = config.label + " learning resources";
     }
     window.renderDashboardHome?.(type === "al" ? "al" + alYear : type, alYear);
-    enforceCohortStudyCards(type, alYear);
+    window.LmsCohort.applyCohortVisibility(type === "al" ? "al" + alYear : type);
   }
 
   async function init() {
     if (sessionStorage.getItem("loggedIn") !== "true") return;
-    let type = al2028NumericIds.has(id) ? "al" : "";
+    const session = {
+      studentId: sessionStorage.getItem("studentId"),
+      studentType: sessionStorage.getItem("studentType"),
+      studentGrade: sessionStorage.getItem("studentGrade"),
+      alYear: sessionStorage.getItem("alYear")
+    };
     let studentData = {};
-    if (id) {
+    if (session.studentId) {
       try {
-        const snap = await getDoc(doc(db, "students", id));
+        const snap = await getDoc(doc(db, "students", session.studentId));
         if (snap.exists()) {
           studentData = snap.data() || {};
-          if (!al2028NumericIds.has(id)) {
-            type = typeFromValue(studentData.studentType) || typeFromValue(studentData.grade);
-          }
         }
       } catch (error) {
         console.warn("Could not refresh student grade from profile; using saved login grade.", error);
       }
     }
-    // The Firebase profile is authoritative; if its category is missing,
-    // infer from the admission ID before falling back to potentially stale session values.
-    type = type || inferFromId() ||
-      typeFromValue(sessionStorage.getItem("studentType")) ||
-      typeFromValue(sessionStorage.getItem("studentGrade"));
-    applyGrade(type, studentData);
+    // The Firebase profile is authoritative; resolve the cohort once
+    // via the shared module (no year/cohort defaults — unknown fails
+    // closed in applyGrade).
+    const resolved = window.LmsCohort.resolveCohort(studentData, session);
+    applyGrade(resolved.type, studentData);
   }
 
   if (document.readyState === "loading") {
