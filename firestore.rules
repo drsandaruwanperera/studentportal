@@ -1,0 +1,157 @@
+rules_version = '2';
+
+// ============================================================================
+// Dr. Sandaruwan LMS — DRAFT Firestore Rules
+// Status: DRAFT ONLY. DO NOT DEPLOY YET. DO NOT MERGE YET.
+//
+// Why not yet:
+//   The login, password change, recovery reset, dashboard, registration,
+//   import and admin pages on main (HEAD fed2445) all read and write
+//   Firestore as ANONYMOUS clients. They compare passwords in the browser,
+//   take a student ID from ?id=, and write failed-login counters and new
+//   passwords directly. Deploying these rules today would break login for
+//   every student, because request.auth would be null for all of them.
+//   Deploy only after the server-side login in MIGRATION-AUTH.md sections
+//   2.3-2.7 is complete and tested in the Firebase emulator, in this order:
+//     1. Deploy the Cloud Function (studentIdLogin / adminLogin /
+//        changePassword / resetPasswordWithRecoveryCode / deleteStudent).
+//     2. Wire every client to signInWithCustomToken and to request.auth.uid.
+//     3. Test all four cohorts + both admin roles in the emulator.
+//     4. Only then: firebase deploy --only firestore:rules
+//
+// What these rules do (once deployed):
+//   - Default deny everything. Anonymous reads/writes are denied for every
+//     collection, including students and admins.
+//   - A student may read ONLY their own students/{ownId} document, and may
+//     write ONLY their own recoveryCodeHash / recoveryCodeSetupComplete.
+//   - Admins are identified ONLY by the custom claims set server-side on
+//     their Firebase Auth token (role == "admin", adminRole ==
+//     "superadmin" | "limited"). A sessionStorage flag is never trusted.
+//   - No client may write the admins collection, the _loginRateLimits
+//     collection, or the adminAudit collection. Those are Functions-only
+//     (the Admin SDK bypasses Rules).
+//   - studentResults are per-student: only that student and admins may read.
+//   - Public content (announcements, study content, papers metadata) is
+//     readable only by a SIGNED-IN user in this draft. Tighten per-cohort
+//     (request.auth.token.cohort) in the implementation step, once the
+//     cohort claim is populated on every token.
+//   - NOTE: these Rules cannot protect the PDF files themselves — the PDFs
+//     are in the public GitHub repo. See MIGRATION-AUTH.md section 2.9
+//     before promising students that papers are cohort-restricted.
+//
+// No passwords, keys or secret values are in this file.
+// ============================================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---- helpers -----------------------------------------------------------
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isStudent() {
+      return isSignedIn() && request.auth.token.role == 'student';
+    }
+
+    function isAdmin() {
+      return isSignedIn() && request.auth.token.role == 'admin';
+    }
+
+    function isSuperAdmin() {
+      return isAdmin() && request.auth.token.adminRole == 'superadmin';
+    }
+
+    function isOwnStudentDoc(studentId) {
+      return isStudent() && request.auth.uid == studentId
+        && request.auth.token.studentId == studentId;
+    }
+
+    function hasCohort(cohort) {
+      return isStudent() && request.auth.token.cohort == cohort;
+    }
+
+    // ---- students ----------------------------------------------------------
+    // A student reads only their own profile. An admin reads profiles to
+    // run the admin UI. Nobody writes a student doc directly from a client
+    // except for the two recovery-code fields on their OWN doc (see below).
+    // Password changes, recovery resets and deletion all go through Cloud
+    // Functions, which use the Admin SDK and bypass these rules.
+    match /students/{studentId} {
+      allow read: if isOwnStudentDoc(studentId) || isAdmin();
+      allow create: if false; // registration / import go through Functions
+      allow update: if isOwnStudentDoc(studentId)
+        && request.resource.data.diff(resource.data).affectedKeys()
+             .hasOnly(['recoveryCodeHash', 'recoveryCodeSetupComplete']);
+      allow delete: if false; // deletion is a super-admin Function only
+    }
+
+    // ---- admins ------------------------------------------------------------
+    // No client may read or write admin credentials. Admins are verified
+    // server-side in the adminLogin callable; the token claims are the
+    // only thing Rules trust. (A super-admin read is allowed here only so
+    // a signed-in super-admin can list admin accounts in the admin UI;
+    // remove it if that UI does not need it.)
+    match /admins/{adminId} {
+      allow read: if isSuperAdmin();
+      allow write: if false;
+    }
+
+    // ---- results -----------------------------------------------------------
+    // Per-student results. The bundled results files in the public repo
+    // must be removed separately (MIGRATION-AUTH.md section 2.10) — Rules
+    // cannot un-publish a file that is already public.
+    match /studentResults/{studentId} {
+      allow read: if isOwnStudentDoc(studentId) || isAdmin();
+      allow write: if false; // results are written by Functions / admin import only
+    }
+
+    // ---- content: readable by any signed-in user, writable by admins only --
+    // TODO (implementation step): restrict the paper/content collections
+    // per cohort using request.auth.token.cohort once every token carries it.
+    // Until then, do not treat "signed-in" as "entitled to this cohort's papers".
+    match /dashboardStudyContent/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+    match /announcements/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+    match /popNotices/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+    match /monthlyTopRankingPapers/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+    match /monthlyTopRankingAccess/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+    // Generic lmsProgramContent (admin program control) — same pattern.
+    match /lmsProgramContent/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // ---- server-only collections -------------------------------------------
+    // _loginRateLimits: written by Cloud Functions only (rate limiting).
+    // adminAudit: written by Cloud Functions only (deletion / admin actions).
+    // No client — student or admin — may read or write either collection.
+    match /_loginRateLimits/{docId} {
+      allow read, write: if false;
+    }
+    match /adminAudit/{docId} {
+      allow read: if isSuperAdmin();
+      allow write: if false;
+    }
+
+    // ---- everything else: deny ---------------------------------------------
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
