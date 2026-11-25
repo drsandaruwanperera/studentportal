@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#101a32"/><stop offset=".58" stop-color="#080d1c"/><stop offset="1" stop-color="#17153d"/></linearGradient>
+ <linearGradient id="lime" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d4ff72"/><stop offset=".55" stop-color="#a6ff2e"/><stop offset="1" stop-color="#70d900"/></linearGradient>
+ <filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="512" height="512" rx="112" fill="url(#bg)"/>
+<rect x="8" y="8" width="496" height="496" rx="104" fill="none" stroke="url(#lime)" stroke-width="7"/>
+<path d="M35 400 Q150 455 260 440 T477 393 V475 Q256 540 35 475Z" fill="#a6ff2e" opacity=".10"/>
+<g filter="url(#glow)">
+ <path d="M145 155 257 95 370 155 257 216Z" fill="url(#lime)"/>
+ <path d="M184 179v64" stroke="#a6ff2e" stroke-width="9" stroke-linecap="round"/>
+ <circle cx="184" cy="251" r="9" fill="#a6ff2e"/><path d="M175 260h18l8 25h-34Z" fill="#a6ff2e"/>
+ <path d="M215 183v39q42 25 84 0v-39" fill="#a6ff2e"/>
+</g>
+<path d="M207 188V333h48c82 0 126-34 126-99 0-65-44-99-126-99h-48v53h48c47 0 69 15 69 46s-22 46-69 46h-48" fill="#f7f8ff"/>
+<path d="M178 359c128 1 209-31 237-103-7 83-86 134-237 124Z" fill="url(#lime)"/>
+<text x="256" y="419" text-anchor="middle" font-family="Arial,sans-serif" font-size="39" font-weight="700" fill="#fff">Dr. Sandaruwan</text>
+<rect x="191" y="438" width="130" height="48" rx="24" fill="url(#lime)"/>
+<text x="256" y="471" text-anchor="middle" font-family="Arial,sans-serif" font-size="29" font-weight="900" letter-spacing="3" fill="#09111f">LMS</text>
+</svg>
