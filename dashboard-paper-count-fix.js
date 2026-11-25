@@ -10,23 +10,31 @@ const PAPER_COUNTS = {
 };
 
 function getStudentType(data) {
+    // Shared resolver (lms-cohort.js): never default to Grade 11.
+    // Unrecognised input is "unknown". (The PAPER_COUNTS / render
+    // fallback for "unknown" is owned by patch 1.6, not this change.)
+    if (window.LmsCohort) {
+        return window.LmsCohort.typeFromValue(data?.studentType || data?.grade || sessionStorage.getItem("studentGrade") || "") || "unknown";
+    }
+    // Fallback when lms-cohort.js is not loaded on this page:
+    // router-style normalisation, same "unknown" default.
     const type = String(data?.studentType || data?.grade || sessionStorage.getItem("studentGrade") || "")
         .trim()
-        .toLowerCase();
-
-    if (["al", "a/l", "a level", "advanced", "advanced level", "advancedlevel"].includes(type)) {
+        .toLowerCase()
+        .replace(/[\s_-]+/g, "");
+    if (["al", "alevel", "advancedlevel", "advanced"].includes(type) ||
+        type.includes("advancedlevel") ||
+        /^a\/?l(?:20)?(?:2027|2028|2029|27|28|29)$/.test(type) ||
+        /^advanced(?:level)?(?:20)?(?:2027|2028|2029|27|28|29)$/.test(type)) {
         return "al";
     }
-
-    if (["10", "grade10", "grade 10"].includes(type)) {
+    if (["10", "grade10", "g10"].includes(type) || type.includes("grade10")) {
         return "grade10";
     }
-
-    if (["11", "grade11", "grade 11"].includes(type)) {
+    if (["11", "grade11", "g11"].includes(type) || type.includes("grade11")) {
         return "grade11";
     }
-
-    return "grade11";
+    return "unknown";
 }
 
 function isTrue(value) {
