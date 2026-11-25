@@ -239,45 +239,113 @@ html.lms-brand-glass body .wow-track b { color: var(--wow-lime); }
   html.lms-brand-glass body .wow-scene .login-btn::after { animation: none !important; }
 }
 
-/* ---------- Action row: Install (left) / WhatsApp (right) ----------
-   Short viewports (max-height 820px): the two buttons leave their
-   fixed corners and join normal flow BELOW the login card
-   (login-design-fixes.css, PR #36). They used to stack vertically,
-   centred, one under the other. Now they sit in one flex row:
-   Install LMS App on the LEFT, WhatsApp on the RIGHT.
-   The row is a real element because the Install widget is created
-   by pwa-install.js (appended into #wowActionRow) while the
-   WhatsApp fab lives in index.html — both become flex items of
-   this row, so they can never cover the card at any scroll
-   position. At normal heights the row is display:contents, so
-   the buttons keep their fixed bottom-corner positions (Install
-   bottom-left, WhatsApp bottom-right) exactly as before.
-   Widths at 390px: Install pill ~155px + WhatsApp fab 58px +
-   12px gap = ~225px, well inside 390 - 32 = 358px, so the row
-   fits side-by-side on phones with room to spare. */
-.wow-action-row { display: contents; }
-@media (max-height: 820px) {
-  html.lms-brand-glass body .wow-action-row {
-    display: flex !important;
-    flex-direction: row !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    width: min(440px, calc(100vw - 32px)) !important;
-    margin: 18px auto 24px !important;
-    gap: 12px !important;
+/* ---------- Side buttons: Install (left) / WhatsApp (right) ----------
+   User correction (PR #40): the two buttons must sit a BIT UP from
+   the bottom corners, at the height of the empty gap inside the
+   login card -- just below "Forgot Password? Reset with Recovery
+   Code" and just above "Need Assistance?" (the orange-marked spot,
+   ~72vh at load on mobile, ~77vh on desktop) -- on the LEFT and
+   RIGHT sides, and STAY there while scrolling (fixed), on mobile
+   AND desktop. They must never cover login-card text or fields.
+
+   Why fixed at the viewport sides, not inside the card: the gap is
+   an in-flow spot, so buttons placed there would scroll away with
+   the card. Fixed at top: 72vh they stay at exactly that height.
+   At that height the login card (440px, centred) leaves wide clear
+   margins on desktop, so full-size buttons at the viewport edges
+   cover nothing. On a 390px phone the card spans almost the full
+   width, so there is NO clear side space at that height -- the
+   nearest clear position is a compact 44px icon tab docked at the
+   viewport edge: it overlaps only the card's outer border/padding
+   (card content starts ~34px from the edge: 14px page padding +
+   20px card padding; input text starts ~74px, the support icon
+   ~48px), so no text or field is ever covered, on any scroll
+   position. The Install tab keeps its graduation-cap icon and
+   aria-label; its text label is hidden on phones only.
+
+   The row itself is a full-width fixed strip with pointer-events:
+   none, so it can never block clicks on the card behind it; only
+   the two buttons receive pointer events. z-index 950 sits above
+   the card/stage but below the WhatsApp panel (1000) and the
+   recovery modal overlay (12000). The old bottom-corner and
+   below-card behaviours (PR #34-#36, PR #39) are superseded:
+   the buttons no longer return to the corners at any height. */
+html.lms-brand-glass body .wow-action-row {
+  position: fixed !important;
+  top: 72vh !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 950 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 20px !important;
+  transform: translateY(-50%) !important;
+  pointer-events: none !important;
+}
+/* Children are flex items of the fixed row: kill every older
+   fixed-corner / in-flow rule (pwa-install.js injected style,
+   index.html inline .whatsapp-fab, login-design-fixes.css). */
+html.lms-brand-glass body .wow-action-row .pwa-install-widget {
+  position: static !important;
+  order: 1 !important;
+  margin: 0 !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  top: auto !important;
+  flex: 0 0 auto !important;
+  flex-wrap: wrap !important;
+  pointer-events: auto !important;
+  animation: wow-pop-left .55s .15s cubic-bezier(.2, .7, .2, 1) both !important;
+}
+html.lms-brand-glass body .wow-action-row .whatsapp-fab {
+  position: static !important;
+  order: 2 !important;
+  margin: 0 !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  top: auto !important;
+  flex: 0 0 auto !important;
+  pointer-events: auto !important;
+  animation: wow-pop-right .55s .15s cubic-bezier(.2, .7, .2, 1) both !important;
+}
+@keyframes wow-pop-left { from { opacity: 0; transform: translateX(-26px); } to { opacity: 1; transform: none; } }
+@keyframes wow-pop-right { from { opacity: 0; transform: translateX(26px); } to { opacity: 1; transform: none; } }
+/* Install help bubble (shown only after tapping Install with no
+   install prompt): drop it below the button, inside the clear
+   side margin, so it never covers the card. */
+html.lms-brand-glass body .wow-action-row .pwa-install-help.visible {
+  position: absolute !important;
+  top: calc(100% + 8px) !important;
+  left: 0 !important;
+  max-width: min(260px, calc(100vw - 40px)) !important;
+}
+/* ---------- Mobile: compact side tabs docked at the edges ----------
+   Phones have no clear side margin at 72vh, so both buttons shrink
+   to 44px icon-only tabs flush with the viewport edges (rounded on
+   the inner side only). They stay fixed at 72vh while scrolling. */
+@media (max-width: 760px) {
+  html.lms-brand-glass body .wow-action-row { padding: 0 !important; }
+  html.lms-brand-glass body .wow-action-row .pwa-install-button {
+    width: 44px !important;
+    min-height: 44px !important;
+    padding: 0 !important;
+    border-radius: 0 22px 22px 0 !important;
+    justify-content: center !important;
   }
-  /* Install first (left). Overrides the centred auto margins from
-     login-design-fixes.css — wow-login.css loads after it. */
-  html.lms-brand-glass body .wow-action-row .pwa-install-widget {
-    order: 1 !important;
-    margin: 0 !important;
-    flex: 0 0 auto !important;
-    flex-wrap: wrap !important;
-  }
-  /* WhatsApp second (right). */
+  html.lms-brand-glass body .wow-action-row .pwa-install-button span:last-child { display: none !important; }
   html.lms-brand-glass body .wow-action-row .whatsapp-fab {
-    order: 2 !important;
-    margin: 0 !important;
-    flex: 0 0 auto !important;
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 22px 0 0 22px !important;
   }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.lms-brand-glass body .wow-action-row .pwa-install-widget,
+  html.lms-brand-glass body .wow-action-row .whatsapp-fab { animation: none !important; }
 }
