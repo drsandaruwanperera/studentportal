@@ -29,38 +29,35 @@ html.lms-brand-glass body .rr-brand span svg { width: 17px; height: 17px; }
 html.lms-brand-glass body .src-brand-mark svg { width: 19px; height: 19px; display: block; }
 html.lms-brand-glass body .src-btn svg { width: 15px; height: 15px; flex: 0 0 auto; }
 
-/* --- Fix 1: fixed corner buttons must never cover the card ---
-   On short viewports the login card is taller than the window, so
-   the viewport-fixed "Install LMS App" pill and WhatsApp button
-   sat on top of the card (hiding "Better" in Better Preparation).
-   On short viewports they now sit in a reserved strip BELOW the
-   card and scroll with the page instead of floating over it.
-   body is the positioning context for that strip.
-   Round 2 — why the first attempt did not work live: the reserved
-   strip was margin-bottom on .login-wrapper, but that margin
-   COLLAPSES through body (body has no bottom padding/border and
-   the wrapper is effectively the last in-flow child), so it never
-   extended body's box — absolute bottom:18px still landed on the
-   card's bottom edge ("Secure Student Access"). Padding on body
-   cannot collapse, so padding-bottom really reserves the strip. */
-html.lms-brand-glass body { position: relative; }
-
+/* --- Fix 1 (round 3): fixed corner buttons must never cover the card ---
+   Round 1 reserved a strip with margin-bottom on .login-wrapper; that
+   margin COLLAPSED through body, so it never extended the page.
+   Round 2 reserved the strip with padding-bottom on body and positioned
+   the buttons absolute against body -- that still depends on body being
+   the containing block with a content-determined height, and the live
+   check 1-3 min after the round-2 merge still showed the Install pill
+   covering "Secure Student Access" (the live CSS at that moment may
+   also still have been the round-1 file: the host takes ~2 min to sync
+   from main, and a fresh live fetch only confirmed the round-2 file
+   afterwards).
+   Round 3 removes the geometry entirely: on short viewports the two
+   buttons leave fixed/absolute positioning and join normal flow BELOW
+   the card. Both are direct children of <body> placed after the login
+   wrapper in the DOM (the WhatsApp fab sits after the widget markup in
+   index.html; the PWA widget is appended to the end of body by
+   pwa-install.js), so in-flow they can only sit below the card and can
+   never cover it, at any scroll position. The buttons stay visible and
+   usable; normal heights are unchanged. */
 @media (max-height: 820px) {
-  html.lms-brand-glass body {
-    padding-bottom: 120px !important;
-  }
-  html.lms-brand-glass body .login-wrapper {
-    margin-bottom: 24px !important;
-  }
   html.lms-brand-glass body .pwa-install-widget {
-    position: absolute !important;
-    bottom: max(18px, env(safe-area-inset-bottom)) !important;
-    left: 16px !important;
+    position: static !important;
+    width: fit-content !important;
+    max-width: calc(100vw - 32px) !important;
+    margin: 18px auto 6px !important;
   }
   html.lms-brand-glass body .whatsapp-fab {
-    position: absolute !important;
-    bottom: max(18px, env(safe-area-inset-bottom)) !important;
-    right: 24px !important;
+    position: static !important;
+    margin: 10px auto 24px !important;
   }
 }
 
@@ -98,13 +95,16 @@ html.lms-brand-glass body .features {
 }
 html.lms-brand-glass body .brand-footer { margin-top: auto !important; }
 
-/* --- Fix 4 (round 2): recovery modal at short viewport heights ---
-   The dialog is ~490px tall but a 447px-high viewport only gives it
-   max-height: min(92vh, 820px) = ~411px, so the Verify button sat
-   below the fold behind internal scrolling. Tightening alone cannot
-   fit ~490px into ~411px, so the submit button is also made sticky
-   to the dialog's bottom edge: it stays visible while the fields
-   scroll beneath it. At normal heights nothing changes. */
+/* --- Fix 4 (round 3): recovery modal at short viewport heights ---
+   Round 2 made the Verify button `position: sticky; bottom: 0`, but a
+   sticky element that is the LAST child of its parent has no room to
+   stick: the button sat at the very bottom edge of the <form>, so its
+   sticky range was zero and it scrolled away with the form. Round 3
+   restructures the dialog instead (student-recovery-reset.js/.css):
+   the dialog is a flex column, the brand/fields/footnote scroll inside
+   .rr-scroll, and the Verify button lives in a .rr-footer outside the
+   scroll area, so it is always visible. The tightening below is kept;
+   the sticky rule is deleted. */
 @media (max-height: 560px) {
   html.lms-brand-glass body .recovery-reset-overlay { padding: 10px !important; }
   html.lms-brand-glass body .recovery-reset-dialog {
@@ -117,10 +117,4 @@ html.lms-brand-glass body .brand-footer { margin-top: auto !important; }
   html.lms-brand-glass body .recovery-reset-dialog input { min-height: 40px !important; padding: 8px 12px !important; }
   html.lms-brand-glass body .rr-status { margin: 4px 0 0 !important; padding: 6px 10px !important; }
   html.lms-brand-glass body .rr-footnote { margin: 8px 0 0 !important; }
-  html.lms-brand-glass body .recovery-reset-dialog .rr-submit {
-    position: sticky !important;
-    bottom: 0 !important;
-    z-index: 3 !important;
-    box-shadow: 0 -10px 18px rgba(5, 8, 24, .22), 0 10px 25px rgba(166, 255, 46, .17) !important;
-  }
 }

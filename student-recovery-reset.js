@@ -60,6 +60,7 @@ export function initRecoveryPasswordReset() {
   overlay.innerHTML = [
     '<section class="recovery-reset-dialog" role="dialog" aria-modal="true" aria-labelledby="rrTitle" aria-describedby="rrDescription">',
     '  <button type="button" class="recovery-reset-close" id="rrClose" aria-label="Close">×</button>',
+    '  <div class="rr-scroll">',
     '  <div class="rr-brand"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><strong>DR. SANDARUWAN LMS</strong></div>',
     '  <div class="rr-eyebrow">ACCOUNT RECOVERY</div>',
     '  <h2 id="rrTitle">Reset your password</h2>',
@@ -76,9 +77,12 @@ export function initRecoveryPasswordReset() {
     '      <input id="rrConfirmPassword" name="confirmPassword" type="password" autocomplete="new-password" required minlength="8" placeholder="Enter the new password again"></div>',
     '    </div>',
     '    <p class="rr-status" id="rrStatus" role="status" aria-live="polite">Your Recovery Code is private. Never share it with anyone.</p>',
-    '    <button type="submit" class="rr-submit" id="rrSubmit">Verify Code &amp; Reset Password <span aria-hidden="true">→</span></button>',
     '  </form>',
     '  <p class="rr-footnote">After a successful reset, your login lock (if active) will also be cleared. More than 2 resets in one month require an administrator release.</p>',
+    '  </div>',
+    '  <div class="rr-footer">',
+    '    <button type="submit" class="rr-submit" id="rrSubmit" form="rrForm">Verify Code &amp; Reset Password <span aria-hidden="true">→</span></button>',
+    '  </div>',
     '</section>'
   ].join("");
 
