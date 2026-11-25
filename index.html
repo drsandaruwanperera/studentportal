@@ -84,6 +84,10 @@
 <link id="lms-brand-glass-theme-stylesheet" rel="stylesheet" href="./brand-glass-theme.css?v=7">
     <link id="lms-login-glass-theme-stylesheet" rel="stylesheet" href="./login-professional-theme.css?v=approved-purple-glass-4">
     <link rel="stylesheet" href="./login-design-fixes.css?v=3">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+Sinhala:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./wow-login.css?v=1">
 </head>
 
 <body>
@@ -145,69 +149,47 @@
   })();
 </script>
 
-<div class="background-shape shape-one"></div>
-<div class="background-shape shape-two"></div>
+<main class="wow-page">
+    <div class="wow-stage" aria-hidden="true"><div class="wow-grid"></div><div class="wow-orb wow-orb-a"></div><div class="wow-orb wow-orb-b"></div><div class="wow-orb wow-orb-c"></div><div class="wow-noise"></div></div>
 
-<main class="login-wrapper">
-
-    <section class="brand-panel">
-        <div class="brand-content">
-            <div class="brand-logo">
-                <img class="brand-logo-photo" src="./icons/dr-sandaruwan-lms-192.png?v=approved-2026-11-21" alt="Dr. Sandaruwan LMS">
-                <span class="brand-logo-desktop-mark" aria-hidden="true">
-                    <svg viewBox="0 0 48 48" role="presentation" focusable="false">
-                        <path d="M4 17.5 24 7l20 10.5L24 28 4 17.5Z" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round"/>
-                        <path d="M12 22.2v10.1c7.1 5.6 16.9 5.6 24 0V22.2M43.8 18v13" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/>
-                        <circle cx="43.8" cy="34.5" r="2.5" fill="currentColor"/>
-                    </svg>
-                </span>
-            </div>
-            <div class="brand-label">STUDENT PORTAL</div>
-
-            <h1>
-                Dr. Sandaruwan
-                <span>LMS</span>
-            </h1>
-
-            <p class="brand-description">
-                Your learning space for model papers and assessment resources.
-            </p>
-
-            <div class="features">
-                <div class="feature">
-                    <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-                    <div>
-                        <strong>Model Papers</strong>
-                        <span>Practice with structured papers</span>
-                    </div>
-                </div>
-
-                <div class="feature">
-                    <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
-                    <div>
-                        <strong>Answer Schemes</strong>
-                        <span>Review your answers</span>
-                    </div>
-                </div>
-
-                <div class="feature">
-                    <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
-                    <div>
-                        <strong>Better Preparation</strong>
-                        <span>Prepare with confidence</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="brand-footer">
-                <span class="secure-dot"></span>
-                Secure Student Access
-            </div>
+    <header class="wow-topbar">
+        <div class="wow-brand">
+            <div class="wow-brand-mark"><img src="./icons/dr-sandaruwan-lms-192.png?v=approved-2026-11-21" alt="Dr. Sandaruwan LMS"></div>
+            <div><b>Dr. Sandaruwan</b><span>LMS &bull; Student Portal</span></div>
         </div>
+        <nav class="wow-top-links" aria-label="Top">
+            <a class="wow-pill" href="https://drsandaruwanperera.lk/studentportal/" target="_blank" rel="noopener">Live LMS</a>
+            <a class="wow-pill wow-pill-lime" href="#login-card">Student Login</a>
+        </nav>
+    </header>
+
+    <section class="wow-hero">
+        <div class="wow-sinhala">ඔයාගෙ ඉගෙනුම් ගමන, එකම තැනකින්</div>
+        <h1>Learn.<br><em>Rank.</em> <span class="wow-fill">Rise.</span></h1>
     </section>
 
-    <section class="login-panel">
-        <div class="login-card">
+    <div class="wow-scene">
+        <aside class="wow-float-card wow-fc1" aria-hidden="true">
+            <small>Monthly Ranking</small><b>TOP Ranking Paper</b>
+            <div class="wow-fc-row"><span class="wow-fc-note">Your progress</span><span class="wow-badge">82%</span></div>
+            <div class="wow-meter"><i style="width:82%"></i></div>
+        </aside>
+        <aside class="wow-float-card wow-fc2" aria-hidden="true">
+            <small>Theory Examination</small><b>Theory Examination</b>
+            <div class="wow-fc-row"><span class="wow-fc-note">Model answers included</span></div>
+            <div class="wow-meter"><i style="width:64%"></i></div>
+        </aside>
+        <aside class="wow-float-card wow-fc3" aria-hidden="true">
+            <small>Study Library</small><b>Smart Book &amp; School Papers</b>
+            <div class="wow-fc-row"><span class="wow-fc-note">Papers &amp; answers</span></div>
+        </aside>
+        <aside class="wow-float-card wow-fc4" aria-hidden="true">
+            <small>Results</small><b>Check your marks &amp; rank</b>
+            <div class="wow-fc-row"><span class="wow-badge">New</span><span class="wow-fc-note">Updated weekly</span></div>
+        </aside>
+
+        <section class="login-panel">
+<div class="login-card" id="login-card">
 
             <div class="mobile-logo"><svg viewBox="0 0 48 48" role="presentation" focusable="false" aria-hidden="true"><path d="M4 17.5 24 7l20 10.5L24 28 4 17.5Z" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round"/><path d="M12 22.2v10.1c7.1 5.6 16.9 5.6 24 0V22.2M43.8 18v13" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/><circle cx="43.8" cy="34.5" r="2.5" fill="currentColor"/></svg></div>
 
@@ -292,6 +274,11 @@
                 </div>
             </div>
 
+            <div class="wow-secure-note">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+                Secure Student Access &bull; Dashboard opens inside the LMS app after web login
+            </div>
+
             <div class="login-footer">
                 <span>Version 1.0</span>
                 <span>•</span>
@@ -299,9 +286,18 @@
             </div>
 
         </div>
-    </section>
+        </section>
+    </div>
 
+    <div class="wow-marquee" aria-hidden="true">
+        <div class="wow-track">
+            <span>Monthly TOP Ranking Papers <b>&#10022;</b> Theory Examination <b>&#10022;</b> Model Paper Answers <b>&#10022;</b> Smart Book Answers <b>&#10022;</b> School Paper Answers <b>&#10022;</b> Results &amp; Rankings <b>&#10022;</b></span>
+            <span>Monthly TOP Ranking Papers <b>&#10022;</b> Theory Examination <b>&#10022;</b> Model Paper Answers <b>&#10022;</b> Smart Book Answers <b>&#10022;</b> School Paper Answers <b>&#10022;</b> Results &amp; Rankings <b>&#10022;</b></span>
+        </div>
+    </div>
+    <footer class="wow-foot">Dr. Sandaruwan LMS &bull; <a href="https://drsandaruwanperera.lk/studentportal/" target="_blank" rel="noopener">drsandaruwanperera.lk/studentportal</a></footer>
 </main>
+
 
 <!-- WhatsApp support widget -->
 <div class="whatsapp-widget" id="whatsappWidget" aria-live="polite" style="display:none">
