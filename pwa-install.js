@@ -139,7 +139,12 @@
   `;
 
   document.head.appendChild(style);
-  document.body.appendChild(wrapper);
+  // Join the action row below the login card when it exists (WOW layout):
+  // the row lays Install (left) and WhatsApp (right) side by side on
+  // short viewports. Fall back to body for any page without the row.
+  const actionRow = document.getElementById("wowActionRow");
+  if (actionRow) actionRow.appendChild(wrapper);
+  else document.body.appendChild(wrapper);
 
   window.addEventListener("beforeinstallprompt", (event) => {
     event.preventDefault();

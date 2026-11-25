@@ -238,3 +238,46 @@ html.lms-brand-glass body .wow-track b { color: var(--wow-lime); }
   .wow-scene .login-card, .wow-track { animation: none !important; }
   html.lms-brand-glass body .wow-scene .login-btn::after { animation: none !important; }
 }
+
+/* ---------- Action row: Install (left) / WhatsApp (right) ----------
+   Short viewports (max-height 820px): the two buttons leave their
+   fixed corners and join normal flow BELOW the login card
+   (login-design-fixes.css, PR #36). They used to stack vertically,
+   centred, one under the other. Now they sit in one flex row:
+   Install LMS App on the LEFT, WhatsApp on the RIGHT.
+   The row is a real element because the Install widget is created
+   by pwa-install.js (appended into #wowActionRow) while the
+   WhatsApp fab lives in index.html — both become flex items of
+   this row, so they can never cover the card at any scroll
+   position. At normal heights the row is display:contents, so
+   the buttons keep their fixed bottom-corner positions (Install
+   bottom-left, WhatsApp bottom-right) exactly as before.
+   Widths at 390px: Install pill ~155px + WhatsApp fab 58px +
+   12px gap = ~225px, well inside 390 - 32 = 358px, so the row
+   fits side-by-side on phones with room to spare. */
+.wow-action-row { display: contents; }
+@media (max-height: 820px) {
+  html.lms-brand-glass body .wow-action-row {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: min(440px, calc(100vw - 32px)) !important;
+    margin: 18px auto 24px !important;
+    gap: 12px !important;
+  }
+  /* Install first (left). Overrides the centred auto margins from
+     login-design-fixes.css — wow-login.css loads after it. */
+  html.lms-brand-glass body .wow-action-row .pwa-install-widget {
+    order: 1 !important;
+    margin: 0 !important;
+    flex: 0 0 auto !important;
+    flex-wrap: wrap !important;
+  }
+  /* WhatsApp second (right). */
+  html.lms-brand-glass body .wow-action-row .whatsapp-fab {
+    order: 2 !important;
+    margin: 0 !important;
+    flex: 0 0 auto !important;
+  }
+}
