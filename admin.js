@@ -180,12 +180,6 @@ const importStudentsLink =
     );
 
 
-const statisticsLink =
-    document.getElementById(
-        "statisticsLink"
-    );
-
-
 const websiteManagementLink =
     document.getElementById(
         "websiteManagementLink"
@@ -2324,7 +2318,6 @@ function protectCurrentPage() {
 
         "reports.html",
 
-        "statistics.html",
 
         "website-dashboard.html",
         "gallery.html",
