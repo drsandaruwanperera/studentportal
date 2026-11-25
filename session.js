@@ -41,7 +41,6 @@ const superAdminPages = [
     "onboarding-report.html",
     "student-deletion.html",
     "reports.html",
-    "statistics.html",
     "website-dashboard.html",
     "gallery.html",
     "programs.html",
