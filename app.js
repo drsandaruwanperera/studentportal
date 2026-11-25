@@ -422,13 +422,32 @@ function detectStudentType(
     // =================================================
     // FIREBASE STUDENT TYPE
     // =================================================
+    // Normalise exactly like dashboard-grade-routing.js typeFromValue():
+    // strip spaces / underscores / hyphens and lower-case, so labels
+    // written as "A/L 2027", "A/L 2028", "AL 2028" or
+    // "Advanced Level 2028" match. Previously these were exact-matched
+    // only ("al", "a/l", "advanced level", …), fell through to
+    // "unknown", and login was refused — unless the student's ID
+    // happened to be in the numeric A/L sets. The year itself is
+    // resolved later (saveStudentSession, and the router's getAlYear,
+    // which prefer data.alYear); this function only needs to return
+    // "al" here.
+    const normalizeCohortLabel = value =>
+        String(value || "").trim().toLowerCase().replace(/[\s_-]+/g, "");
 
-    const firebaseType =
-        String(
-            data?.studentType || ""
-        )
-            .trim()
-            .toLowerCase();
+    const firebaseType = normalizeCohortLabel(data?.studentType);
+
+    if (
+        firebaseType === "alevel" ||
+        firebaseType === "al2027" ||
+        firebaseType === "al2028" ||
+        firebaseType === "al2029" ||
+        /^a\/?l(?:20)?(?:2027|2028|2029|27|28|29)$/.test(firebaseType) ||
+        /^advanced(?:level)?(?:20)?(?:2027|2028|2029|27|28|29)$/.test(firebaseType) ||
+        firebaseType.includes("advancedlevel")
+    ) {
+        return "al";
+    }
 
 
     if (
@@ -468,12 +487,16 @@ function detectStudentType(
     // FIREBASE GRADE
     // =================================================
 
-    const firebaseGrade =
-        String(
-            data?.grade || ""
-        )
-            .trim()
-            .toLowerCase();
+    const firebaseGrade = normalizeCohortLabel(data?.grade);
+
+    // A grade field may also carry the year, e.g. "A/L 2028".
+    if (
+        /^a\/?l(?:20)?(?:2027|2028|2029|27|28|29)$/.test(firebaseGrade) ||
+        /^advanced(?:level)?(?:20)?(?:2027|2028|2029|27|28|29)$/.test(firebaseGrade) ||
+        firebaseGrade.includes("advancedlevel")
+    ) {
+        return "al";
+    }
 
 
     if (
