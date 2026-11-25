@@ -32,6 +32,12 @@ import {db,collection,onSnapshot} from "./firebase.js";
     return "";
   };
   const escape = value => String(value ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const safeUrl = value => {
+    const raw=String(value ?? "").trim();
+    if(!raw) return "#";
+    try { const parsed=new URL(raw,window.location.href); return parsed.protocol==="http:" || parsed.protocol==="https:" ? raw : "#"; }
+    catch { return "#"; }
+  };
   function apply(){
     const cohort = cohortKey();
     if (!cohort || !allowed[cohort]) return;
@@ -69,7 +75,7 @@ import {db,collection,onSnapshot} from "./firebase.js";
         const card=document.createElement("a");
         card.className="portal-program-card";
         card.dataset.customStudyCard=item.id;
-        card.href=item.url || "#";
+        card.href=safeUrl(item.url);
         card.innerHTML='<span class="portal-program-icon blue" aria-hidden="true">📘</span><span class="portal-program-copy"><small>STUDY MATERIALS · '+escape(labels[cohort])+'</small><strong>'+title+'</strong><span>'+description+'</span><span class="material-link">Open resource <b aria-hidden="true">→</b></span></span><span class="portal-card-arrow" aria-hidden="true">↗</span>';
         dashboardGrid.appendChild(card);
       }
@@ -77,7 +83,7 @@ import {db,collection,onSnapshot} from "./firebase.js";
         const card=document.createElement("article");
         card.className="card";
         card.dataset.customStudyCard=item.id;
-        card.innerHTML='<div class="ico">📘</div><div><h3>'+title+'</h3><p>'+description+'</p><a href="'+escape(item.url || "#")+'">Open resource →</a></div>';
+        card.innerHTML='<div class="ico">📘</div><div><h3>'+title+'</h3><p>'+description+'</p><a href="'+escape(safeUrl(item.url))+'">Open resource →</a></div>';
         programGrid.appendChild(card);
       }
     });
