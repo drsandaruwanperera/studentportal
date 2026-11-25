@@ -49,44 +49,52 @@
 
   const byId = id => document.getElementById(id);
 
+  // Single source of truth for hub / progress visibility: the `cohorts`
+  // object above. Previously studyCardRules hard-coded
+  // portalProgramHub: false and programProgressCard: false for every
+  // cohort, contradicting cohorts.grade10 (hub: true, progress: true)
+  // and hiding the "Learning Resources" hub card for all students.
+  // To show the hub for another cohort, set hub: true (and, if wanted,
+  // progress: true) in that cohort's entry in `cohorts` — do not edit
+  // this table.
   const studyCardRules = {
     grade10: {
-      portalProgramHub: false,
+      portalProgramHub: cohorts.grade10.hub,
       modelPapersCard: true,
       theoryExaminationCard: false,
       modelPaperAnswersCard: true,
       pastPapersCard: false,
-      programProgressCard: false,
+      programProgressCard: cohorts.grade10.progress,
       smartBookAnswersCard: false,
       schoolPaperAnswersCard: false
     },
     grade11: {
-      portalProgramHub: false,
+      portalProgramHub: cohorts.grade11.hub,
       modelPapersCard: true,
       theoryExaminationCard: false,
       modelPaperAnswersCard: true,
       pastPapersCard: false,
-      programProgressCard: false,
+      programProgressCard: cohorts.grade11.progress,
       smartBookAnswersCard: false,
       schoolPaperAnswersCard: false
     },
     al2027: {
-      portalProgramHub: false,
+      portalProgramHub: cohorts.al2027.hub,
       modelPapersCard: true,
       theoryExaminationCard: false,
       modelPaperAnswersCard: false,
       pastPapersCard: false,
-      programProgressCard: false,
+      programProgressCard: cohorts.al2027.progress,
       smartBookAnswersCard: false,
       schoolPaperAnswersCard: false
     },
     al2028: {
-      portalProgramHub: false,
+      portalProgramHub: cohorts.al2028.hub,
       modelPapersCard: false,
       theoryExaminationCard: true,
       modelPaperAnswersCard: true,
       pastPapersCard: false,
-      programProgressCard: false,
+      programProgressCard: cohorts.al2028.progress,
       smartBookAnswersCard: true,
       schoolPaperAnswersCard: true
     }
