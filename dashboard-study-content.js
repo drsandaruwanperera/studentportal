@@ -1,12 +1,6 @@
 import {db,collection,onSnapshot} from "./firebase.js";
 
 (() => {
-  const allowed = {
-    grade10: new Set(["modelPapersCard","modelPaperAnswersCard"]),
-    grade11: new Set(["modelPapersCard","modelPaperAnswersCard"]),
-    al2027: new Set(["modelPapersCard"]),
-    al2028: new Set(["theoryExaminationCard","modelPaperAnswersCard","smartBookAnswersCard","schoolPaperAnswersCard"])
-  };
   const labels = {grade10:"Grade 10",grade11:"Grade 11",al2027:"A/L 2027",al2028:"A/L 2028"};
   const dashboardGrid = document.querySelector("#learningProgram .portal-program-grid");
   const programGrid = document.querySelector("main .grid");
@@ -20,26 +14,18 @@ import {db,collection,onSnapshot} from "./firebase.js";
     schoolPaperAnswersCard:"schoolPaperAnswers"
   };
   let docs = [];
-  const cohortKey = () => {
-    const program = window.__lmsProgramCohort;
-    if (program?.key && allowed[program.key]) return program.key;
-    const type = String(sessionStorage.getItem("studentType") || "").toLowerCase();
-    const grade = String(sessionStorage.getItem("studentGrade") || "").toLowerCase();
-    const year = String(sessionStorage.getItem("alYear") || "").match(/2027|2028/)?.[0] || (grade+type).match(/2027|2028/)?.[0] || "2027";
-    if (type.includes("grade10") || grade.includes("grade10")) return "grade10";
-    if (type.includes("grade11") || grade.includes("grade11")) return "grade11";
-    if (type === "al" || type.includes("advanced") || grade.includes("advanced") || grade.includes("a/l")) return "al"+year;
-    return "";
-  };
   const escape = value => String(value ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   function apply(){
-    const cohort = cohortKey();
-    if (!cohort || !allowed[cohort]) return;
+    const resolved = window.__lmsProgramCohort && window.LmsCohort.STUDY_CARD_ALLOW_LIST[window.__lmsProgramCohort.key]
+      ? window.__lmsProgramCohort.key
+      : window.LmsCohort.resolveSessionCohort().key;
+    const cohort = resolved;
+    if (!cohort || cohort === "unknown") { window.LmsCohort.showUnknownCohort(); return; }
     const cohortDocs = docs.filter(x=>x.cohort===cohort);
     const settings = new Map(cohortDocs.filter(x=>x.cardId).map(x=>[x.cardId,x]));
     Object.entries(programIds).forEach(([dashboardId,programId])=>{
       // Always enforce the cohort allow-list, including cards made visible by other page scripts.
-      const cohortAllowed = allowed[cohort].has(dashboardId);
+      const cohortAllowed = window.LmsCohort.STUDY_CARD_ALLOW_LIST[cohort].has(dashboardId);
       const visible = cohortAllowed && settings.get(dashboardId)?.active !== false;
       const dashboardCard = document.getElementById(dashboardId);
       if (dashboardCard) {
