@@ -1188,6 +1188,36 @@ document.addEventListener(
 
 
         /* -----------------------------------------------
+           Card visibility (fail-closed)
+           Cards are hidden three ways in this codebase:
+           the `hidden` attribute (dashboard-grade-routing.js
+           enforceCohortStudyCards), inline
+           `style.display = "none"` (dashboard.js
+           applyPaperVisibility / setupPastCard), and
+           `display: none !important` (router). Checking only
+           `style.display` misses the other two, and a hidden
+           card's .click() still navigates. A missing card is
+           not visible.
+        ------------------------------------------------ */
+
+        function isCardVisible(card) {
+            if (!card) {
+                return false;
+            }
+            if (card.hidden) {
+                return false;
+            }
+            if (card.getAttribute("aria-hidden") === "true") {
+                return false;
+            }
+            if (card.style.display === "none") {
+                return false;
+            }
+            return window.getComputedStyle(card).display !== "none";
+        }
+
+
+        /* -----------------------------------------------
            Sidebar model papers
         ------------------------------------------------ */
 
@@ -1214,7 +1244,11 @@ document.addEventListener(
 
                     event.preventDefault();
 
-                    modelCard.click();
+                    if (isCardVisible(modelCard)) {
+
+                        modelCard.click();
+
+                    }
 
                 }
             );
@@ -1250,10 +1284,7 @@ document.addEventListener(
 
                     event.preventDefault();
 
-                    if (
-                        pastCard.style.display !==
-                        "none"
-                    ) {
+                    if (isCardVisible(pastCard)) {
 
                         pastCard.click();
 
@@ -1284,7 +1315,7 @@ document.addEventListener(
 
                     event.preventDefault();
 
-                    if (modelCard) {
+                    if (isCardVisible(modelCard)) {
 
                         modelCard.click();
 
@@ -1331,7 +1362,7 @@ document.addEventListener(
                             )
                         ) {
 
-                            if (modelCard) {
+                            if (isCardVisible(modelCard)) {
                                 modelCard.click();
                             }
 
@@ -1346,11 +1377,7 @@ document.addEventListener(
                             )
                         ) {
 
-                            if (
-                                pastCard &&
-                                pastCard.style.display !==
-                                "none"
-                            ) {
+                            if (isCardVisible(pastCard)) {
 
                                 pastCard.click();
 
