@@ -127,36 +127,15 @@ document.body.classList.add("dark-mode");localStorage.setItem("lmsTheme","dark")
  const key=path==="dashboard.html"?"dashboard":path==="my-program.html"?"program":path==="progress.html"?"results":path==="announcements.html"?"announcements":"support";
  document.querySelector('.side nav a[data-nav="'+key+'"]')?.classList.add("active");
 })();
-</script><script>
+</script><script src="lms-cohort.js?v=1"></script>
+<script>
 (function(){
-  const norm = value => String(value || "").trim().toLowerCase().replace(/[\s_-]+/g, "");
-  const studentType = norm(sessionStorage.getItem("studentType"));
-  const studentGrade = norm(sessionStorage.getItem("studentGrade"));
-  const studentId = String(sessionStorage.getItem("studentId") || "").trim().toUpperCase();
-  const savedYear = String(sessionStorage.getItem("alYear") || "").match(/^20(27|28|29)$/)?.[0] || "";
-  const context = String(sessionStorage.getItem("studentGrade") || "") + " " + String(sessionStorage.getItem("studentType") || "");
-  const contextYear = context.match(/20(27|28|29)/);
-  const idYear = studentId.match(/^(?:A)?(27|28|29)\d{3}$/) || studentId.match(/^(27|28|29)[CN]/);
-
-  let cohort = "unknown";
-  if (studentType.includes("grade10") || studentType === "g10" || studentGrade.includes("grade10") || studentGrade === "10") {
-    cohort = "grade10";
-  } else if (studentType.includes("grade11") || studentType === "g11" || studentGrade.includes("grade11") || studentGrade === "11") {
-    cohort = "grade11";
-  } else {
-    const isAL = ["al","alevel","advanced","advancedlevel"].includes(studentType) ||
-      studentType.includes("advancedlevel") || studentGrade.includes("advancedlevel") ||
-      studentGrade.startsWith("al") || /advanced|alevel/i.test(context) || context.toLowerCase().includes("a/l") ||
-      /^A2[789]\d{3}$/.test(studentId) || /^(?:27|28|29)[CN]/.test(studentId) ||
-      Boolean(savedYear || contextYear || idYear);
-    if (isAL) cohort = "al";
-  }
-
-  const year = cohort === "al"
-    ? (savedYear || (contextYear ? "20" + contextYear[1] : "") || (idYear ? "20" + idYear[1] : "") || "2027")
-    : "";
-
-  window.__lmsProgramCohort = { type: cohort, year, key: cohort === "al" ? "al" + year : cohort };
+  // Shared cohort resolver (lms-cohort.js). Unknown cohort is
+  // "unknown" with year "" — never a silent "2027" default.
+  const resolved = window.LmsCohort.resolveSessionCohort();
+  const cohort = resolved.type || "unknown";
+  const year = resolved.year;
+  window.__lmsProgramCohort = resolved;
 
   const programTitle = document.getElementById("programTitle");
   const tab = document.querySelector(".tabs .tab");
@@ -200,12 +179,7 @@ const cards=[...document.querySelectorAll("[data-content-id]")];
 const defaults=Object.fromEntries(cards.map(card=>[card.dataset.contentId,true]));
 const cohort=window.__lmsProgramCohort || {type:"unknown",year:"",key:"unknown"};
 
-const cohortAllowList = {
-  grade10: new Set(["modelPapers","modelPaperAnswers"]),
-  grade11: new Set(["modelPapers","modelPaperAnswers"]),
-  al2027: new Set(["modelPapers"]),
-  al2028: new Set(["theoryExamination","modelPaperAnswers","smartBookAnswers","schoolPaperAnswers"])
-};
+const cohortAllowList = window.LmsCohort.PROGRAM_CARD_ALLOW_LIST;
 
 const allowedContent=cohortAllowList[cohort.key] || new Set();
 
@@ -275,27 +249,16 @@ body.study-page a,body.study-page button,body.study-page summary{touch-action:ma
 })();
 </script><script id="program-cohort-visibility-guard">
 (() => {
-  const allowed = {
-    grade10: new Set(["modelPapers","modelPaperAnswers"]),
-    grade11: new Set(["modelPapers","modelPaperAnswers"]),
-    al2027: new Set(["modelPapers"]),
-    al2028: new Set(["theoryExamination","modelPaperAnswers","smartBookAnswers","schoolPaperAnswers"])
-  };
   function cohortKey() {
     const p = window.__lmsProgramCohort;
-    if (p && allowed[p.key]) return p.key;
-    const type = String(sessionStorage.getItem("studentType") || "").toLowerCase();
-    const grade = String(sessionStorage.getItem("studentGrade") || "").toLowerCase();
-    const year = String(sessionStorage.getItem("alYear") || (type + " " + grade)).match(/2027|2028/)?.[0] || "2027";
-    if (type.includes("grade10") || grade.includes("grade10") || grade === "10") return "grade10";
-    if (type.includes("grade11") || grade.includes("grade11") || grade === "11") return "grade11";
-    if (type.includes("al") || type.includes("advanced") || grade.includes("a/l") || grade.includes("advanced")) return "al" + year;
-    return "";
+    if (p && window.LmsCohort.PROGRAM_CARD_ALLOW_LIST[p.key]) return p.key;
+    return window.LmsCohort.resolveSessionCohort().key;
   }
   function enforce() {
     const key = cohortKey();
-    const list = allowed[key];
-    if (!list) return;
+    // Fail closed: unknown cohort has no allow-list, so every program
+    // card below is hidden instead of returning with them visible.
+    const list = window.LmsCohort.PROGRAM_CARD_ALLOW_LIST[key] || new Set();
     document.querySelectorAll("main .grid [data-content-id]").forEach(card => {
       if (list.has(card.dataset.contentId)) return;
       if (!card.hidden) card.hidden = true;

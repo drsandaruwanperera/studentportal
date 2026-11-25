@@ -10,6 +10,18 @@ main{max-width:1000px;margin:auto;padding:30px clamp(14px,3vw,32px) 50px}.intro{
 </style>
 <script src="./winter-theme-preload.js?v=1"></script>
 </head><body>
+<script>
+/* A/L 2028 session + profile gate — same pattern as model-papers.js
+   (loggedIn check, then alYear cohort check), adapted to A/L 2028. */
+if (sessionStorage.getItem("loggedIn") !== "true") {
+    window.location.replace("index.html");
+}
+const isAssignedAl2028 = sessionStorage.getItem("alYear") === "2028";
+if (!isAssignedAl2028) {
+    document.body.style.display = "none";
+    window.location.replace("dashboard.html");
+}
+</script>
 <header><div><h1>School Paper Answer</h1><p>A/L 2028 · Select a paper</p></div><a class="back" href="my-program.html">← My Program</a></header>
 <main><p class="intro">Choose a school paper to open its answers inside the LMS viewer.</p>
 <section class="paper-list" aria-label="School paper answers">

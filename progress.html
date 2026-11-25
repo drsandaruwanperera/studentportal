@@ -249,8 +249,6 @@ html,body{background:#080d1b!important;color:#f5f7ff!important}
 </main>
 <script type="module">
 import {db,doc,getDoc,collection,query,where,getDocs} from "./firebase.js";
-import {GRADE11_RESULTS} from "./grade11-results-data.js";
-import {TOP_RANKING_EXAM_02} from "./grade11-results-exam02.js";
 if(sessionStorage.getItem("loggedIn")!=="true")location.replace("index.html");
 document.body.classList.add("dark-mode");localStorage.setItem("lmsTheme","dark");
 
@@ -299,10 +297,9 @@ async function loadResults(){
     snap.forEach(d=>{const r=d.data();if(r.published!==false)rows.push(r)});
     if(rows.length){renderRows(rows);return;}
   }catch(e){console.error("Dynamic results load failed",e)}
-  const all={...GRADE11_RESULTS,"Top Ranking Exam 02":TOP_RANKING_EXAM_02};
-  const rows=Object.entries(all).flatMap(([exam,list])=>{const r=list.find(x=>String(x.id).toUpperCase()===id);return r?[{exam,studentName:r.name,grade:"Grade 11",score:r.score,maxScore:100}]:[]});
-  if(rows.length&&type.includes("11"))renderRows(rows);
-  else renderRows([]);
+  // No hardcoded fallback: only results published in Firestore render here.
+  // With no published Firestore rows, the empty state below shows.
+  renderRows([]);
 }
 loadResults();
 

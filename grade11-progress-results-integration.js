@@ -1,6 +1,4 @@
 import { db, collection, query, where, getDocs } from "./firebase.js";
-import { GRADE11_RESULTS } from "./grade11-results-data.js";
-import { TOP_RANKING_EXAM_02 } from "./grade11-results-exam02.js";
 import { TOP_RANKING_2026_OL_RESULTS } from "./grade11-top-ranking-2026-ol-data.js";
 
 (() => {
@@ -161,22 +159,6 @@ import { TOP_RANKING_2026_OL_RESULTS } from "./grade11-top-ranking-2026-ol-data.
     if (scoreBars.innerHTML !== nextHTML) scoreBars.innerHTML = nextHTML;
   }
 
-  function getLegacyRows() {
-    const all = { ...GRADE11_RESULTS, "Top Ranking Exam 02": TOP_RANKING_EXAM_02 };
-    return Object.entries(all).flatMap(([exam, list]) => {
-      const match = Array.isArray(list)
-        ? list.find(item => String(item.id).trim().toUpperCase() === studentId)
-        : null;
-      return match ? [{
-        exam,
-        studentName: match.name,
-        grade: "Grade 11",
-        score: match.score,
-        maxScore: match.maxScore || 100
-      }] : [];
-    });
-  }
-
   async function getPublishedRows() {
     try {
       const snapshot = await getDocs(query(
@@ -192,7 +174,9 @@ import { TOP_RANKING_2026_OL_RESULTS } from "./grade11-top-ranking-2026-ol-data.
     } catch (error) {
       console.warn("Grade 11 result integration: Firestore results could not be loaded.", error);
     }
-    return getLegacyRows();
+    // No hardcoded fallback: no published Firestore rows (or a load
+    // error) means no individual rows.
+    return [];
   }
 
   function setProgressText(id, value) {
@@ -328,7 +312,7 @@ import { TOP_RANKING_2026_OL_RESULTS } from "./grade11-top-ranking-2026-ol-data.
     apply(individualRows);
   }).catch(error => {
     console.error("Grade 11 common results could not be rendered.", error);
-    individualRows = getLegacyRows();
+    individualRows = [];
     ready = true;
     apply(individualRows);
   });

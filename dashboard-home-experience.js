@@ -49,83 +49,58 @@
 
   const byId = id => document.getElementById(id);
 
+  // Single source of truth for hub / progress visibility: the `cohorts`
+  // object above. Previously studyCardRules hard-coded
+  // portalProgramHub: false and programProgressCard: false for every
+  // cohort, contradicting cohorts.grade10 (hub: true, progress: true)
+  // and hiding the "Learning Resources" hub card for all students.
+  // To show the hub for another cohort, set hub: true (and, if wanted,
+  // progress: true) in that cohort's entry in `cohorts` — do not edit
+  // this table.
   const studyCardRules = {
     grade10: {
-      portalProgramHub: false,
+      portalProgramHub: cohorts.grade10.hub,
       modelPapersCard: true,
       theoryExaminationCard: false,
       modelPaperAnswersCard: true,
       pastPapersCard: false,
-      programProgressCard: false,
+      programProgressCard: cohorts.grade10.progress,
       smartBookAnswersCard: false,
       schoolPaperAnswersCard: false
     },
     grade11: {
-      portalProgramHub: false,
+      portalProgramHub: cohorts.grade11.hub,
       modelPapersCard: true,
       theoryExaminationCard: false,
       modelPaperAnswersCard: true,
       pastPapersCard: false,
-      programProgressCard: false,
+      programProgressCard: cohorts.grade11.progress,
       smartBookAnswersCard: false,
       schoolPaperAnswersCard: false
     },
     al2027: {
-      portalProgramHub: false,
+      portalProgramHub: cohorts.al2027.hub,
       modelPapersCard: true,
       theoryExaminationCard: false,
       modelPaperAnswersCard: false,
       pastPapersCard: false,
-      programProgressCard: false,
+      programProgressCard: cohorts.al2027.progress,
       smartBookAnswersCard: false,
       schoolPaperAnswersCard: false
     },
     al2028: {
-      portalProgramHub: false,
+      portalProgramHub: cohorts.al2028.hub,
       modelPapersCard: false,
       theoryExaminationCard: true,
       modelPaperAnswersCard: true,
       pastPapersCard: false,
-      programProgressCard: false,
+      programProgressCard: cohorts.al2028.progress,
       smartBookAnswersCard: true,
       schoolPaperAnswersCard: true
     }
   };
 
   let studyCardObserver = null;
-
-  function resolveSessionCohort() {
-    const typeValue = String(sessionStorage.getItem("studentType") || "").trim().toLowerCase().replace(/[\s_-]+/g, "");
-    const gradeValue = String(sessionStorage.getItem("studentGrade") || "").trim().toLowerCase().replace(/[\s_-]+/g, "");
-    const id = String(sessionStorage.getItem("studentId") || "").trim().toUpperCase();
-
-    if (typeValue.includes("grade10") || gradeValue.includes("grade10") || typeValue === "g10") {
-      return { key: "grade10", year: "" };
-    }
-    if (typeValue.includes("grade11") || gradeValue.includes("grade11") || typeValue === "g11") {
-      return { key: "grade11", year: "" };
-    }
-
-    const isAl = ["al", "a/l", "alevel", "advanced", "advancedlevel"].includes(typeValue) ||
-      typeValue.includes("advancedlevel") || gradeValue.includes("advancedlevel") ||
-      /^al(?:20)?(?:2027|2028|2029|27|28|29)$/.test(gradeValue) ||
-      /^a\/l(?:20)?(?:2027|2028|2029|27|28|29)$/.test(gradeValue);
-
-    if (isAl || /^A2[789]\d{3}$/.test(id) || /^(?:27|28|29)[CN]/.test(id)) {
-      let year = String(sessionStorage.getItem("alYear") || "").match(/^20(27|28|29)$/)?.[0] || "";
-      if (!year) {
-        const match = (gradeValue + " " + typeValue).match(/20(27|28|29)/);
-        if (match) year = "20" + match[1];
-      }
-      if (!year) {
-        const match = id.match(/^(?:A)?(27|28|29)\d{3}$/) || id.match(/^(27|28|29)[CN]/);
-        if (match) year = "20" + match[1];
-      }
-      return { key: year === "2028" ? "al2028" : "al2027", year: year || "2027" };
-    }
-
-    return null;
-  }
 
   function enforceHiddenStudyCards() {
     const rules = studyCardRules[activeCohortKey];
@@ -450,11 +425,11 @@
   // The installed app can reopen a fresh standalone window. Resolve the saved
   // login cohort immediately, before the Firestore routing module finishes.
   // The Firestore profile remains authoritative and can replace this on load.
-  const initialSessionCohort = resolveSessionCohort();
-  if (initialSessionCohort) {
-    window.renderDashboardHome(initialSessionCohort.key, initialSessionCohort.year);
+  const initialSessionCohort = window.LmsCohort.resolveSessionCohort();
+  if (initialSessionCohort.key === "unknown") {
+    window.LmsCohort.showUnknownCohort();
   } else {
-    document.body.classList.add("dashboard-cohort-pending");
+    window.renderDashboardHome(initialSessionCohort.key, initialSessionCohort.year);
   }
 
   // The centre portrait can open the assistant from any student page via this hash.

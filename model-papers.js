@@ -114,12 +114,17 @@ function hasPaperAccess(studentData) {
         return true;
     }
 
+    // Fail closed: an unverifiable profile, or a profile with no
+    // paper01 flag at all, has no paper access. (openPaper() already
+    // alerts and returns when studentData is null, and the
+    // DOMContentLoaded handler returns early in that case, so this
+    // only closes the hole if those guards are ever bypassed.)
     if (!studentData) {
-        return true;
+        return false;
     }
 
     if (!Object.prototype.hasOwnProperty.call(studentData, "paper01")) {
-        return true;
+        return false;
     }
 
     const value = studentData.paper01;
@@ -301,29 +306,14 @@ function renderMonthlyPaperSections(items) {
     document.querySelectorAll("[data-monthly-paper-section]").forEach(el => el.remove());
 
     const groups = {};
-    const isA27000Batch = sessionStorage.getItem("alYear") === "2027";
     const visibleItems = items.filter(x =>
         x.published !== false &&
         !(String(x.month).toLowerCase() === "september" && Number(x.year) === 2026)
     );
 
-    // November 2026 Paper 01 belongs to the A27000 / A/L 2027 batch.
-    // The repository stores the 1st- and 2nd-paper PDFs and matching answers.
-    const hasNovemberPaper01 = visibleItems.some(x =>
-        Number(x.year) === 2026 &&
-        String(x.month).toLowerCase() === "november" &&
-        Number(x.paperNumber) === 1
-    );
-    if (isA27000Batch && !hasNovemberPaper01) {
-        visibleItems.push({
-            year: 2026,
-            month: "november",
-            paperNumber: "01",
-            title: "Paper 01",
-            published: true,
-            source: "repository"
-        });
-    }
+    // Only papers actually published in Firestore render here.
+    // November 2026 Paper 01 is no longer synthesised: it appears
+    // only if a matching monthlyTopRankingPapers document exists.
 
     visibleItems.forEach(x => {
         const key = `${x.year}-${String(x.month).toLowerCase()}`;
