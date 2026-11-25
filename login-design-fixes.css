@@ -26,6 +26,8 @@ html.lms-brand-glass body .open-whatsapp-help svg { width: 14px; height: 14px; }
 html.lms-brand-glass body .agent-avatar { color: #1d4ed8 !important; }
 html.lms-brand-glass body .agent-avatar svg { width: 22px; height: 22px; }
 html.lms-brand-glass body .rr-brand span svg { width: 17px; height: 17px; }
+html.lms-brand-glass body .src-brand-mark svg { width: 19px; height: 19px; display: block; }
+html.lms-brand-glass body .src-btn svg { width: 15px; height: 15px; flex: 0 0 auto; }
 
 /* --- Fix 1: fixed corner buttons must never cover the card ---
    On short viewports the login card is taller than the window, so
@@ -33,12 +35,22 @@ html.lms-brand-glass body .rr-brand span svg { width: 17px; height: 17px; }
    sat on top of the card (hiding "Better" in Better Preparation).
    On short viewports they now sit in a reserved strip BELOW the
    card and scroll with the page instead of floating over it.
-   body is the positioning context for that strip. */
+   body is the positioning context for that strip.
+   Round 2 — why the first attempt did not work live: the reserved
+   strip was margin-bottom on .login-wrapper, but that margin
+   COLLAPSES through body (body has no bottom padding/border and
+   the wrapper is effectively the last in-flow child), so it never
+   extended body's box — absolute bottom:18px still landed on the
+   card's bottom edge ("Secure Student Access"). Padding on body
+   cannot collapse, so padding-bottom really reserves the strip. */
 html.lms-brand-glass body { position: relative; }
 
 @media (max-height: 820px) {
+  html.lms-brand-glass body {
+    padding-bottom: 120px !important;
+  }
   html.lms-brand-glass body .login-wrapper {
-    margin-bottom: 120px !important;
+    margin-bottom: 24px !important;
   }
   html.lms-brand-glass body .pwa-install-widget {
     position: absolute !important;
@@ -85,3 +97,30 @@ html.lms-brand-glass body .features {
   margin-bottom: auto !important;
 }
 html.lms-brand-glass body .brand-footer { margin-top: auto !important; }
+
+/* --- Fix 4 (round 2): recovery modal at short viewport heights ---
+   The dialog is ~490px tall but a 447px-high viewport only gives it
+   max-height: min(92vh, 820px) = ~411px, so the Verify button sat
+   below the fold behind internal scrolling. Tightening alone cannot
+   fit ~490px into ~411px, so the submit button is also made sticky
+   to the dialog's bottom edge: it stays visible while the fields
+   scroll beneath it. At normal heights nothing changes. */
+@media (max-height: 560px) {
+  html.lms-brand-glass body .recovery-reset-overlay { padding: 10px !important; }
+  html.lms-brand-glass body .recovery-reset-dialog {
+    padding: 14px 20px !important;
+    max-height: calc(100dvh - 20px) !important;
+  }
+  html.lms-brand-glass body .recovery-reset-dialog h2 { font-size: 20px !important; margin: 4px 0 !important; }
+  html.lms-brand-glass body .rr-description { margin: 0 0 8px !important; }
+  html.lms-brand-glass body .recovery-reset-dialog label { margin-top: 2px !important; }
+  html.lms-brand-glass body .recovery-reset-dialog input { min-height: 40px !important; padding: 8px 12px !important; }
+  html.lms-brand-glass body .rr-status { margin: 4px 0 0 !important; padding: 6px 10px !important; }
+  html.lms-brand-glass body .rr-footnote { margin: 8px 0 0 !important; }
+  html.lms-brand-glass body .recovery-reset-dialog .rr-submit {
+    position: sticky !important;
+    bottom: 0 !important;
+    z-index: 3 !important;
+    box-shadow: 0 -10px 18px rgba(5, 8, 24, .22), 0 10px 25px rgba(166, 255, 46, .17) !important;
+  }
+}
