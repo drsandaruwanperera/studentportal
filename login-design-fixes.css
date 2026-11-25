@@ -1,0 +1,87 @@
+/* ============================================================
+   LOGIN DESIGN FIXES — desktop review fixes (PR #33)
+   Presentation only. No auth, password, Firestore or login
+   logic is touched here. Loaded last in index.html so these
+   rules win over the stacked login theme stylesheets.
+   ============================================================ */
+
+/* --- Shared: inline SVG icons use the surrounding text color --- */
+html.lms-brand-glass body .feature-icon svg,
+html.lms-brand-glass body .input-icon svg,
+html.lms-brand-glass body .toggle-password svg,
+html.lms-brand-glass body .mobile-logo svg,
+html.lms-brand-glass body .support-icon svg,
+html.lms-brand-glass body .open-whatsapp-help svg,
+html.lms-brand-glass body .agent-avatar svg,
+html.lms-brand-glass body .rr-brand span svg {
+  display: block;
+  flex: 0 0 auto;
+}
+html.lms-brand-glass body .feature-icon svg { width: 22px; height: 22px; }
+html.lms-brand-glass body .input-icon svg { width: 18px; height: 18px; }
+html.lms-brand-glass body .toggle-password svg { width: 20px; height: 20px; }
+html.lms-brand-glass body .mobile-logo svg { width: 30px; height: 30px; }
+html.lms-brand-glass body .support-icon svg { width: 20px; height: 20px; }
+html.lms-brand-glass body .open-whatsapp-help svg { width: 14px; height: 14px; }
+html.lms-brand-glass body .agent-avatar { color: #1d4ed8 !important; }
+html.lms-brand-glass body .agent-avatar svg { width: 22px; height: 22px; }
+html.lms-brand-glass body .rr-brand span svg { width: 17px; height: 17px; }
+
+/* --- Fix 1: fixed corner buttons must never cover the card ---
+   On short viewports the login card is taller than the window, so
+   the viewport-fixed "Install LMS App" pill and WhatsApp button
+   sat on top of the card (hiding "Better" in Better Preparation).
+   On short viewports they now sit in a reserved strip BELOW the
+   card and scroll with the page instead of floating over it.
+   body is the positioning context for that strip. */
+html.lms-brand-glass body { position: relative; }
+
+@media (max-height: 820px) {
+  html.lms-brand-glass body .login-wrapper {
+    margin-bottom: 120px !important;
+  }
+  html.lms-brand-glass body .pwa-install-widget {
+    position: absolute !important;
+    bottom: max(18px, env(safe-area-inset-bottom)) !important;
+    left: 16px !important;
+  }
+  html.lms-brand-glass body .whatsapp-fab {
+    position: absolute !important;
+    bottom: max(18px, env(safe-area-inset-bottom)) !important;
+    right: 24px !important;
+  }
+}
+
+/* --- Fix 3a: feature grid — no blank cell, no orphan wrap ---
+   portal-theme.css made .features a 2-column grid, so the 3rd
+   card ("Better Preparation") sat alone with a blank cell beside
+   it, and its narrow column wrapped "Practice with structured
+   papers" leaving the orphan "papers". Desktop is a single
+   column again (as style.css originally had it); the small
+   tablet 3-across layout keeps balanced wrapping. */
+@media (min-width: 851px) {
+  html.lms-brand-glass body .features {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+  }
+}
+html.lms-brand-glass body .feature span { text-wrap: balance; }
+
+/* --- Fix 3b: balance the brand panel ---
+   The panel is taller than its content, which left a large empty
+   purple area below "Secure Student Access". The content now
+   stretches the full panel height: logo/title at the top, the
+   feature list centred in the middle, "Secure Student Access"
+   pinned to the bottom. */
+html.lms-brand-glass body .brand-panel { align-items: stretch !important; }
+html.lms-brand-glass body .brand-content {
+  display: flex !important;
+  flex-direction: column !important;
+  align-self: stretch;
+  width: 100%;
+}
+html.lms-brand-glass body .features {
+  margin-top: auto !important;
+  margin-bottom: auto !important;
+}
+html.lms-brand-glass body .brand-footer { margin-top: auto !important; }

@@ -52,7 +52,7 @@
   wrapper.className = "pwa-install-widget";
   wrapper.innerHTML = `
     <button class="pwa-install-button" type="button" aria-label="Install Dr. Sandaruwan LMS">
-      <span class="pwa-install-icon" aria-hidden="true">🎓</span>
+      <span class="pwa-install-icon" aria-hidden="true"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M4 17.5 24 7l20 10.5L24 28 4 17.5Z" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linejoin="round"/><path d="M12 22.2v10.1c7.1 5.6 16.9 5.6 24 0V22.2M43.8 18v13" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/><circle cx="43.8" cy="34.5" r="2.5" fill="currentColor"/></svg></span>
       <span>Install LMS App</span>
     </button>
     <span class="pwa-install-help" role="status" aria-live="polite"></span>
@@ -113,7 +113,8 @@
       outline: 3px solid #f2c56d;
       outline-offset: 3px;
     }
-    .pwa-install-icon { font-size: 17px; line-height: 1; }
+    .pwa-install-icon { display: grid; place-items: center; line-height: 1; }
+    .pwa-install-icon svg { width: 19px; height: 19px; display: block; }
     .pwa-install-help {
       display: none;
       max-width: min(280px, calc(100vw - 48px));
