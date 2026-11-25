@@ -112,7 +112,7 @@ export async function requireRecoveryCodeSetup(studentRef, studentId, studentDat
     overlay.setAttribute("role", "presentation");
     overlay.innerHTML = `
       <section class="src-dialog" role="dialog" aria-modal="true" aria-labelledby="src-title" aria-describedby="src-description">
-        <div class="src-brand"><span class="src-brand-mark">🔐</span><span>DR. SANDARUWAN LMS</span></div>
+        <div class="src-brand"><span class="src-brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><span>DR. SANDARUWAN LMS</span></div>
         <div class="src-step">${forceRegenerate ? "SECURITY UPDATE" : "ONE-TIME ACCOUNT SETUP"}</div>
         <h1 id="src-title">${forceRegenerate ? "Create a new Recovery Code" : "Save your Recovery Code"}</h1>
         <p id="src-description" class="src-description">${forceRegenerate ? "Your previous Recovery Code will stop working after this update. Save the new code safely before installing the LMS app." : websiteHandoff ? "Save this one-time Recovery Code first. The LMS app must be installed before you can open your student dashboard." : "Before entering your dashboard, save this code by printing it or downloading a copy. You will need it if you forget your password."}</p>
@@ -126,8 +126,8 @@ export async function requireRecoveryCodeSetup(studentRef, studentId, studentDat
         </div>
 
         <div class="src-actions">
-          <button type="button" class="src-btn src-btn-print" id="srcPrintBtn">🖨️ Print / Save as PDF</button>
-          <button type="button" class="src-btn src-btn-download" id="srcDownloadBtn">⬇️ Download Code</button>
+          <button type="button" class="src-btn src-btn-print" id="srcPrintBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg> Print / Save as PDF</button>
+          <button type="button" class="src-btn src-btn-download" id="srcDownloadBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download Code</button>
         </div>
 
         <label class="src-confirm">
