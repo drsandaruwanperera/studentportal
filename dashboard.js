@@ -147,37 +147,9 @@ if (studentId) {
 // =====================================================
 
 function getGradeType(value) {
-    const grade = String(value || "").toLowerCase().trim();
-
-    if (
-        grade === "10" ||
-        grade === "grade10" ||
-        grade === "grade 10"
-    ) {
-        return "grade10";
-    }
-
-    if (
-        grade === "11" ||
-        grade === "grade11" ||
-        grade === "grade 11"
-    ) {
-        return "grade11";
-    }
-
-    if (
-        grade === "al" ||
-        grade === "a/l" ||
-        grade === "advanced" ||
-        grade === "advancedlevel" ||
-        grade === "advanced level" ||
-        /^a\/l\s*20?(27|28|29)$/.test(grade) ||
-        /^advanced\s*level\s*20?(27|28|29)$/.test(grade)
-    ) {
-        return "al";
-    }
-
-    return "grade11";
+    // Shared resolver (lms-cohort.js): never default to Grade 11.
+    // Unrecognised input is "unknown" and the caller fails closed.
+    return window.LmsCohort.typeFromValue(value) || "unknown";
 }
 
 
@@ -597,12 +569,31 @@ async function loadStudent() {
         }
 
         const data = snapshot.data();
-        const type = getGradeType(
+        let type = getGradeType(
             sessionStorage.getItem("studentType") ||
             data.studentType ||
             storedGrade ||
             data.grade
         );
+
+        // Fail closed: never fall back to Grade 11 data for an
+        // unrecognised cohort. resolveCohort also consults the student
+        // ID (numeric / admission patterns) before giving up.
+        // getDashboardData() takes the bare "al" type and resolves the
+        // year itself, so the year key is only used to detect unknown.
+        if (type === "unknown") {
+            const resolved = window.LmsCohort.resolveCohort(data, {
+                studentId: sessionStorage.getItem("studentId"),
+                studentType: sessionStorage.getItem("studentType"),
+                studentGrade: sessionStorage.getItem("studentGrade"),
+                alYear: sessionStorage.getItem("alYear")
+            });
+            if (resolved.key === "unknown") {
+                window.LmsCohort.showUnknownCohort();
+                return;
+            }
+            type = resolved.type;
+        }
 
         const gradeInfo = getDashboardData(type);
         const sessionStudentName =
