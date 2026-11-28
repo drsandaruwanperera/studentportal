@@ -705,18 +705,6 @@ function isInstalledLmsApp() {
     );
 }
 
-function redirectWebsiteLoginToAppInstall() {
-    if (isInstalledLmsApp()) return false;
-
-    showLoginSuccessAndRedirect(
-        "app-required.html",
-        "Verified!",
-        "Your account is verified. Opening app instructions..."
-    );
-    return true;
-}
-
-
 // =====================================================
 // INSTALLED LMS APP USAGE TRACKING
 // =====================================================
@@ -1076,8 +1064,6 @@ async function loginStudent() {
 
             clearPasswordChangeSession();
 
-            if (redirectWebsiteLoginToAppInstall()) return;
-
             showLoginSuccessAndRedirect(
                 "dashboard.html",
                 "Success!",
@@ -1138,8 +1124,6 @@ async function loginStudent() {
 
             clearPasswordChangeSession();
 
-            if (redirectWebsiteLoginToAppInstall()) return;
-
             showLoginSuccessAndRedirect(
                 "dashboard.html",
                 "Success!",
@@ -1157,8 +1141,6 @@ async function loginStudent() {
         // =================================================
 
         clearPasswordChangeSession();
-
-        if (redirectWebsiteLoginToAppInstall()) return;
 
         showLoginSuccessAndRedirect(
                 "dashboard.html",
