@@ -149,6 +149,7 @@
   window.addEventListener("beforeinstallprompt", (event) => {
     event.preventDefault();
     deferredPrompt = event;
+    window.lmsDeferredInstallPrompt = event;
     button.setAttribute("aria-label", "Install Dr. Sandaruwan LMS on this device");
   });
 
@@ -165,6 +166,7 @@
       await deferredPrompt.prompt();
       const choice = await deferredPrompt.userChoice;
       deferredPrompt = null;
+      window.lmsDeferredInstallPrompt = null;
       if (choice && choice.outcome === "accepted") {
         wrapper.remove();
       } else {
