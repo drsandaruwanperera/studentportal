@@ -101,7 +101,6 @@ function showLoginSuccessAndRedirect(
     if (nextPage === "dashboard.html") persistInstalledLmsStudentSession();
 
     loginRedirecting = true;
-
     if (loginBtn) {
         loginBtn.disabled = true;
         loginBtn.removeAttribute("aria-busy");
@@ -113,21 +112,76 @@ function showLoginSuccessAndRedirect(
             <span class="login-button-label">${buttonLabel}</span>
         `;
     }
-
     showMessage(statusMessage, "success");
     msg?.classList.remove("is-login-processing-message");
     msg?.classList.add("is-login-transition-message");
 
-    // Brief success state before the existing destination is opened.
     const target = nextPage === "dashboard.html" ? "./dashboard.html?lms-ui=20261122-dashboard-content-clearance" : destination;
     window.setTimeout(() => {
-        const continueToDestination = () => window.location.replace(target);
-        if (nextPage === "dashboard.html" && typeof window.showLmsPostLoginInstallPrompt === "function") {
-            window.showLmsPostLoginInstallPrompt(continueToDestination);
+        if (nextPage === "dashboard.html" && !isInstalledLmsApp()) {
+            showMandatoryOptionalInstallChoice(() => window.location.replace(target));
         } else {
-            continueToDestination();
+            window.location.replace(target);
         }
-    }, 900);
+    }, 700);
+}
+
+function showMandatoryOptionalInstallChoice(onContinue) {
+    if (isInstalledLmsApp()) { onContinue(); return; }
+
+    const backdrop = document.createElement("div");
+    backdrop.id = "lmsPostLoginInstallPrompt";
+    backdrop.style.cssText = "position:fixed;inset:0;z-index:999999;display:grid;place-items:center;padding:18px;background:rgba(3,10,24,.78);backdrop-filter:blur(12px);font-family:Inter,'Segoe UI',Arial,sans-serif;";
+    backdrop.innerHTML = `
+      <section role="dialog" aria-modal="true" aria-labelledby="lmsPostInstallTitle" style="position:relative;width:min(430px,100%);max-height:94svh;overflow:auto;padding:25px 24px 21px;border:1px solid rgba(148,190,220,.25);border-radius:24px;background:radial-gradient(circle at 50% 0,rgba(36,91,119,.45),transparent 43%),linear-gradient(155deg,#10263c,#071525 78%);color:#f6f9fc;text-align:center;box-shadow:0 28px 90px rgba(0,0,0,.48)">
+        <button id="lmsPostInstallClose" type="button" aria-label="Close" style="position:absolute;top:12px;right:14px;width:34px;height:34px;border:0;border-radius:50%;background:rgba(255,255,255,.08);color:#dce8f2;font-size:23px;cursor:pointer">×</button>
+        <div style="height:112px;display:grid;place-items:center;margin:0 0 12px"><div style="width:74px;height:108px;padding:12px 8px;border:3px solid #a8c2d1;border-radius:17px;background:linear-gradient(145deg,#173c56,#081a2d);transform:rotate(-6deg);box-shadow:0 12px 35px rgba(0,0,0,.35)"><div style="height:48px;width:48px;margin:2px auto 8px;display:grid;place-content:center;border-radius:13px;background:linear-gradient(145deg,#c7f36b,#72b83f);color:#102a36;font-weight:900;font-size:16px">DS<small style="font-size:8px;letter-spacing:1px">LMS</small></div><i style="display:block;height:4px;margin:6px 2px;border-radius:5px;background:rgba(199,231,242,.42)"></i><i style="display:block;height:4px;margin:6px 2px;border-radius:5px;background:rgba(199,231,242,.42)"></i></div></div>
+        <div style="color:#b8e96b;font-size:10px;font-weight:850;letter-spacing:2px">YOUR LEARNING SPACE</div>
+        <h2 id="lmsPostInstallTitle" style="margin:10px 0 9px;font-size:25px;line-height:1.17;font-weight:850;letter-spacing:-.7px">Install the Dr. Sandaruwan LMS App?</h2>
+        <p style="max-width:330px;margin:0 auto;color:#b8c7d4;font-size:13px;line-height:1.55">Get faster access to your learning dashboard with an app-like experience.</p>
+        <div style="display:flex;justify-content:center;flex-wrap:wrap;gap:7px;margin:17px 0;color:#dce8ee;font-size:10px;font-weight:700"><span style="padding:7px 9px;border:1px solid rgba(179,216,231,.13);border-radius:20px;background:rgba(255,255,255,.045)">✓ Faster access</span><span style="padding:7px 9px;border:1px solid rgba(179,216,231,.13);border-radius:20px;background:rgba(255,255,255,.045)">✓ Learning updates</span><span style="padding:7px 9px;border:1px solid rgba(179,216,231,.13);border-radius:20px;background:rgba(255,255,255,.045)">✓ Study materials</span></div>
+        <p id="lmsPostInstallHelp" role="status" aria-live="polite" style="margin:8px 0;color:#d9e7ef;font-size:12px;line-height:1.5"></p>
+        <button id="lmsPostInstallNow" type="button" style="width:100%;min-height:48px;margin-top:8px;border:0;border-radius:13px;background:linear-gradient(100deg,#d2f879,#9edc52);color:#142b24;font-weight:850;cursor:pointer">Install App</button>
+        <button id="lmsPostInstallLater" type="button" style="width:100%;min-height:48px;margin-top:9px;border:1px solid rgba(220,236,245,.24);border-radius:13px;background:rgba(255,255,255,.055);color:#e5edf4;font-weight:850;cursor:pointer">Maybe Later</button>
+        <div style="margin-top:14px;color:#91a4b5;font-size:10px">You can continue using the website anytime.</div>
+      </section>`;
+    const finish = () => { backdrop.remove(); onContinue(); };
+    backdrop.querySelector("#lmsPostInstallLater").addEventListener("click", finish);
+    backdrop.querySelector("#lmsPostInstallClose").addEventListener("click", finish);
+    backdrop.addEventListener("click", (event) => { if (event.target === backdrop) finish(); });
+    backdrop.querySelector("#lmsPostInstallNow").addEventListener("click", async () => {
+        const help = backdrop.querySelector("#lmsPostInstallHelp");
+        const installButton = backdrop.querySelector("#lmsPostInstallNow");
+        const promptEvent = window.lmsDeferredInstallPrompt || null;
+        if (promptEvent) {
+            installButton.disabled = true;
+            try {
+                await promptEvent.prompt();
+                await promptEvent.userChoice;
+                window.lmsDeferredInstallPrompt = null;
+                finish();
+            } catch (error) {
+                console.warn("LMS installation prompt unavailable:", error);
+                help.textContent = "Open your browser menu and choose Install app or Add to Home screen.";
+                installButton.disabled = false;
+                installButton.textContent = "Continue to LMS";
+                installButton.onclick = finish;
+            }
+            return;
+        }
+        const ua = navigator.userAgent || "";
+        const isApple = /iphone|ipad|ipod/i.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+        const isMac = !isApple && /macintosh|mac os x/i.test(ua);
+        help.textContent = isApple
+            ? "In Safari, tap Share → Add to Home Screen → Add."
+            : isMac
+                ? "In Safari, choose Share → Add to Dock. In Chrome or Edge, use the Install icon in the address bar or browser menu."
+                : "In Microsoft Edge or Chrome, open the browser menu and choose Apps → Install this site as an app (or Install app).";
+        installButton.textContent = "Continue to LMS";
+        installButton.onclick = finish;
+    });
+    document.body.appendChild(backdrop);
+    backdrop.querySelector("#lmsPostInstallNow").focus();
 }
 
 
