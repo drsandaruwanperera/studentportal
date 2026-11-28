@@ -120,7 +120,14 @@ function showLoginSuccessAndRedirect(
 
     // Brief success state before the existing destination is opened.
     const target = nextPage === "dashboard.html" ? "./dashboard.html?lms-ui=20261122-dashboard-content-clearance" : destination;
-    window.setTimeout(() => window.location.replace(target), 900);
+    window.setTimeout(() => {
+        const continueToDestination = () => window.location.replace(target);
+        if (nextPage === "dashboard.html" && typeof window.showLmsPostLoginInstallPrompt === "function") {
+            window.showLmsPostLoginInstallPrompt(continueToDestination);
+        } else {
+            continueToDestination();
+        }
+    }, 900);
 }
 
 
