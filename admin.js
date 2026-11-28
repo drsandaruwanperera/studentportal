@@ -29,6 +29,58 @@ const deleteDoc =
 const doc =
     firebase.doc;
 
+const setDoc = firebase.setDoc;
+
+const appInstallPromptToggle = document.getElementById("studentAppInstallPromptEnabled");
+const appInstallPromptStatus = document.getElementById("studentAppInstallPromptStatus");
+
+function initStudentAppInstallPromptControl() {
+    if (!isSuperAdmin || !appInstallPromptToggle || !appInstallPromptStatus) return;
+
+    const settingRef = doc(db, "appSettings", "studentAppInstallPrompt");
+    let settingLoaded = false;
+
+    onSnapshot(settingRef, (snapshot) => {
+        const enabled = snapshot.exists() ? snapshot.data().enabled !== false : true;
+        appInstallPromptToggle.checked = enabled;
+        appInstallPromptToggle.disabled = false;
+        appInstallPromptStatus.textContent = enabled
+            ? "LIVE: Popup is enabled for students who have not installed the app."
+            : "LIVE: Popup is disabled for all students.";
+        settingLoaded = true;
+    }, (error) => {
+        console.error("Could not load app install prompt setting:", error);
+        appInstallPromptStatus.textContent = "Could not load live setting. Check Firestore permissions.";
+        appInstallPromptToggle.disabled = true;
+    });
+
+    appInstallPromptToggle.disabled = true;
+    appInstallPromptToggle.addEventListener("change", async () => {
+        if (!settingLoaded) return;
+        const enabled = appInstallPromptToggle.checked;
+        appInstallPromptToggle.disabled = true;
+        appInstallPromptStatus.textContent = "Saving live setting…";
+        try {
+            await setDoc(settingRef, {
+                enabled,
+                updatedAt: Date.now(),
+                updatedBy: adminUsername
+            }, { merge: true });
+            appInstallPromptStatus.textContent = enabled
+                ? "Saved: popup is now enabled for students."
+                : "Saved: popup is now disabled for students.";
+        } catch (error) {
+            console.error("Could not save app install prompt setting:", error);
+            appInstallPromptToggle.checked = !enabled;
+            appInstallPromptStatus.textContent = "Save failed. Check Firestore permissions and try again.";
+        } finally {
+            appInstallPromptToggle.disabled = false;
+        }
+    });
+}
+
+initStudentAppInstallPromptControl();
+
 
 // =====================================================
 // SUPER ADMIN DELETE PASSWORD
