@@ -3,19 +3,17 @@
 <script id="lms-installed-app-mode">
 (function(){
   try {
-    const standalone =
-      (typeof window.matchMedia === "function" && window.matchMedia("(display-mode: standalone)").matches) ||
-      navigator.standalone === true;
     if (sessionStorage.getItem("loggedIn") !== "true") {
       window.location.replace("index.html");
       return;
     }
-    if (!standalone) {
-      window.location.replace("app-required.html");
-      return;
+    const standalone =
+      (typeof window.matchMedia === "function" && window.matchMedia("(display-mode: standalone)").matches) ||
+      navigator.standalone === true;
+    if (standalone) {
+      document.documentElement.classList.add("installed-lms-app");
+      document.documentElement.dataset.lmsDisplayMode = "standalone";
     }
-    document.documentElement.classList.add("installed-lms-app");
-    document.documentElement.dataset.lmsDisplayMode = "standalone";
   } catch (_) {
     window.location.replace("index.html");
   }
