@@ -951,21 +951,9 @@ async function loginStudent() {
 
         const loginStudentData = verifiedLogin.data || data;
 
-        // Website logins get a one-time Recovery Code handoff before the app-install gate.
-        // Existing keys are hash-only, so legacy users receive a replacement once.
-        const runningInInstalledApp = isInstalledLmsApp();
-        const hasWebsiteRecoveryHandoff = String(loginStudentData?.recoveryCodeDeliveryMethod || "")
-            .toLowerCase()
-            .startsWith("website-");
-        const recoveryHashIsValid = /^[a-f0-9]{64}$/i.test(String(loginStudentData?.recoveryCodeHash || "").trim());
-        const websiteHandoffRequired = !runningInInstalledApp && !hasWebsiteRecoveryHandoff;
-
-        await requireRecoveryCodeSetup(studentRef, studentId, loginStudentData, {
-            forceRegenerate: websiteHandoffRequired &&
-                loginStudentData?.recoveryCodeSetupComplete === true &&
-                recoveryHashIsValid,
-            websiteHandoff: websiteHandoffRequired
-        });
+        // Recovery Code setup is a one-time account-security step only.
+        // It must never require installing the app or block website dashboard access.
+        await requireRecoveryCodeSetup(studentRef, studentId, loginStudentData);
 
         saveStudentSession(
             studentId,
