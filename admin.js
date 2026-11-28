@@ -79,7 +79,6 @@ function initStudentAppInstallPromptControl() {
     });
 }
 
-initStudentAppInstallPromptControl();
 
 
 // =====================================================
@@ -137,6 +136,8 @@ const storedRole =
 const isSuperAdmin =
     storedRole === "superadmin" ||
     storedRole === "full";
+
+initStudentAppInstallPromptControl();
 
 
 // =====================================================
