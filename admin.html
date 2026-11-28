@@ -1126,6 +1126,18 @@
 
         <section class="management-grid">
 
+            <article class="management-card superadmin-card" id="studentAppInstallPromptCard">
+                <div class="management-icon green">📲</div>
+                <p class="card-label">STUDENT APP</p>
+                <h2>App Install Invitation</h2>
+                <p>Control the optional app-install popup shown after student login. Students who already use the installed app will not see it.</p>
+                <label style="display:flex;align-items:center;gap:12px;margin:14px 0;font-weight:700">
+                    <input type="checkbox" id="studentAppInstallPromptEnabled" checked style="width:20px;height:20px;accent-color:#72b83f">
+                    <span>Show install popup after student login</span>
+                </label>
+                <p id="studentAppInstallPromptStatus" role="status" aria-live="polite" style="font-size:12px;min-height:18px">Loading live setting…</p>
+            </article>
+
             <article class="management-card superadmin-card">
                 <div class="management-icon blue">📢</div>
                 <p class="card-label">COMMUNICATION</p>
