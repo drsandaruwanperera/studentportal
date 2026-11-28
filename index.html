@@ -87,7 +87,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+Sinhala:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./wow-login.css?v=4">
+    <link rel="stylesheet" href="./wow-login.css?v=5">
 </head>
 
 <body>
@@ -159,12 +159,23 @@
         </a>
     </header>
 
-    <section class="wow-hero">
-        <div class="wow-sinhala">ඔබගේ ඉගෙනුම් ගමන, එකම තැනකින්</div>
-        <h1>Learn.<br><em>Rank.</em> <span class="wow-fill">Rise.</span></h1>
-    </section>
+    <div class="wow-split">
+        <section class="wow-left" aria-label="About the student portal">
+            <div class="wow-left-orbit" aria-hidden="true"></div>
 
-    <div class="wow-scene">
+            <div class="wow-hero">
+                <div class="wow-sinhala">ඔබගේ ඉගෙනුම් ගමන, එකම තැනකින්</div>
+                <h1>Learn.<br><em>Rank.</em> <span class="wow-fill">Rise.</span></h1>
+                <p class="wow-lede">Papers, model answers, rankings and your results &mdash; everything you need for the exam, inside one student portal.</p>
+                <div class="wow-chips" aria-label="Classes covered">
+                    <span class="wow-chip">Grade 10</span>
+                    <span class="wow-chip">Grade 11</span>
+                    <span class="wow-chip">A/L 2027</span>
+                    <span class="wow-chip">A/L 2028</span>
+                </div>
+            </div>
+
+            <div class="wow-left-cards">
         <aside class="wow-float-card wow-fc1" aria-hidden="true">
             <small>Monthly Ranking</small><b>TOP Ranking Paper</b>
             <div class="wow-fc-row"><span class="wow-fc-note">Your progress</span><span class="wow-badge">82%</span></div>
@@ -183,6 +194,14 @@
             <small>Results</small><b>Check your marks &amp; rank</b>
             <div class="wow-fc-row"><span class="wow-badge">New</span><span class="wow-fc-note">Updated weekly</span></div>
         </aside>
+            </div>
+
+            <div class="wow-stats" aria-label="Portal highlights">
+                <div class="wow-stat"><b>25<em>+</em></b><span>Years teaching</span></div>
+                <div class="wow-stat"><b>10,000<em>+</em></b><span>Students taught</span></div>
+                <div class="wow-stat"><b>5</b><span>Island 1st places</span></div>
+            </div>
+        </section>
 
         <section class="login-panel">
 <div class="login-card" id="login-card">
