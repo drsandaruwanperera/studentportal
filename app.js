@@ -118,11 +118,30 @@ function showLoginSuccessAndRedirect(
 
     const target = nextPage === "dashboard.html" ? "./dashboard.html?lms-ui=20261122-dashboard-content-clearance" : destination;
     window.setTimeout(() => {
-        if (nextPage === "dashboard.html" && !isInstalledLmsApp()) {
-            showMandatoryOptionalInstallChoice(() => window.location.replace(target));
-        } else {
+        if (nextPage !== "dashboard.html" || isInstalledLmsApp()) {
             window.location.replace(target);
+            return;
         }
+
+        // Read the Super Admin's live Firestore setting on each successful login.
+        // If the setting document has not been created yet, the popup defaults to ON.
+        void (async () => {
+            let promptEnabled = true;
+            try {
+                const settingSnapshot = await getDoc(doc(db, "appSettings", "studentAppInstallPrompt"));
+                if (settingSnapshot.exists()) {
+                    promptEnabled = settingSnapshot.data()?.enabled !== false;
+                }
+            } catch (error) {
+                console.warn("Could not read the live app install prompt setting; using the default ON state.", error);
+            }
+
+            if (promptEnabled) {
+                showMandatoryOptionalInstallChoice(() => window.location.replace(target));
+            } else {
+                window.location.replace(target);
+            }
+        })();
     }, 700);
 }
 
