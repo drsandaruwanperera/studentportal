@@ -178,5 +178,93 @@
     }
   });
 
+
+  // Optional post-login install invitation. Website access is never gated.
+  window.showLmsPostLoginInstallPrompt = (onContinue) => {
+    const dismissedUntil = Number(localStorage.getItem("lmsInstallPromptDismissedUntil") || 0);
+    if (isStandalone() || dismissedUntil > Date.now()) {
+      onContinue?.();
+      return;
+    }
+
+    const overlay = document.createElement("div");
+    overlay.className = "lms-install-modal-backdrop";
+    overlay.innerHTML = `
+      <section class="lms-install-modal" role="dialog" aria-modal="true" aria-labelledby="lmsInstallTitle">
+        <button class="lms-install-close" type="button" aria-label="Close">×</button>
+        <div class="lms-install-art"><div class="lms-install-phone"><div class="lms-install-appicon">DS<span>LMS</span></div><i></i><i></i><i></i></div></div>
+        <div class="lms-install-eyebrow">YOUR LEARNING SPACE</div>
+        <h2 id="lmsInstallTitle">Install the Dr. Sandaruwan LMS App?</h2>
+        <p class="lms-install-description">Get faster access to your learning dashboard with an app-like experience.</p>
+        <div class="lms-install-benefits">
+          <span>✓ Faster access</span><span>✓ Learning updates</span><span>✓ Study materials</span>
+        </div>
+        <p class="lms-install-help" aria-live="polite"></p>
+        <button class="lms-install-primary" type="button">Install App</button>
+        <button class="lms-install-later" type="button">Maybe Later</button>
+        <div class="lms-install-footnote">You can continue using the website anytime.</div>
+      </section>`;
+    const close = () => { overlay.remove(); onContinue?.(); };
+    const primary = overlay.querySelector(".lms-install-primary");
+    const later = overlay.querySelector(".lms-install-later");
+    const helpText = overlay.querySelector(".lms-install-help");
+    const dismiss = () => {
+      try { localStorage.setItem("lmsInstallPromptDismissedUntil", String(Date.now() + 30 * 24 * 60 * 60 * 1000)); } catch (_) {}
+      close();
+    };
+    overlay.querySelector(".lms-install-close").addEventListener("click", dismiss);
+    later.addEventListener("click", dismiss);
+    overlay.addEventListener("click", (event) => { if (event.target === overlay) dismiss(); });
+    primary.addEventListener("click", async () => {
+      if (!deferredPrompt) {
+        helpText.textContent = getManualInstallHelp();
+        primary.textContent = "Continue to LMS";
+        primary.onclick = close;
+        return;
+      }
+      primary.disabled = true;
+      try {
+        await deferredPrompt.prompt();
+        await deferredPrompt.userChoice;
+        deferredPrompt = null;
+      } catch (error) {
+        console.warn("The LMS app installation prompt was unavailable.", error);
+        helpText.textContent = getManualInstallHelp();
+        primary.disabled = false;
+        primary.textContent = "Continue to LMS";
+        primary.onclick = close;
+        return;
+      }
+      close();
+    });
+    document.body.appendChild(overlay);
+    primary.focus();
+  };
+
+  const modalStyle = document.createElement("style");
+  modalStyle.textContent = `
+    .lms-install-modal-backdrop{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;padding:20px;background:rgba(3,10,24,.76);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);font-family:Inter,"Segoe UI",Arial,sans-serif}
+    .lms-install-modal{position:relative;width:min(430px,100%);padding:28px 26px 22px;border:1px solid rgba(148,190,220,.25);border-radius:25px;background:radial-gradient(circle at 50% 0,rgba(36,91,119,.45),transparent 43%),linear-gradient(155deg,#10263c,#071525 78%);color:#f6f9fc;text-align:center;box-shadow:0 28px 90px rgba(0,0,0,.48)}
+    .lms-install-close{position:absolute;top:13px;right:16px;width:34px;height:34px;border:0;border-radius:50%;background:rgba(255,255,255,.08);color:#dce8f2;font-size:23px;cursor:pointer}
+    .lms-install-art{height:130px;display:grid;place-items:center;margin:-2px 0 13px}
+    .lms-install-phone{width:78px;height:122px;padding:14px 9px 9px;border:3px solid #a8c2d1;border-radius:17px;background:linear-gradient(145deg,#173c56,#081a2d);box-shadow:0 12px 35px rgba(0,0,0,.35);transform:rotate(-7deg)}
+    .lms-install-appicon{height:48px;width:48px;margin:3px auto 10px;display:grid;place-content:center;border-radius:13px;background:linear-gradient(145deg,#c7f36b,#72b83f);color:#102a36;font-weight:900;font-size:17px}
+    .lms-install-appicon span{font-size:8px;letter-spacing:1px}
+    .lms-install-phone i{display:block;height:4px;margin:6px 2px;border-radius:5px;background:rgba(199,231,242,.42)}
+    .lms-install-eyebrow{color:#b8e96b;font-size:10px;font-weight:850;letter-spacing:2px}
+    .lms-install-modal h2{margin:10px 0 9px;font-size:25px;line-height:1.17;font-weight:850;letter-spacing:-.7px}
+    .lms-install-description{max-width:330px;margin:0 auto;color:#b8c7d4;font-size:13px;line-height:1.55}
+    .lms-install-benefits{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin:18px 0;color:#dce8ee;font-size:10px;font-weight:700}
+    .lms-install-benefits span{padding:7px 9px;border:1px solid rgba(179,216,231,.13);border-radius:20px;background:rgba(255,255,255,.045)}
+    .lms-install-help{margin:8px 0;color:#d9e7ef;font-size:12px;line-height:1.5}
+    .lms-install-primary,.lms-install-later{width:100%;min-height:48px;border-radius:13px;font-weight:850;cursor:pointer}
+    .lms-install-primary{margin-top:8px;border:0;background:linear-gradient(100deg,#d2f879,#9edc52);color:#142b24;box-shadow:0 9px 25px rgba(158,220,82,.18)}
+    .lms-install-primary:disabled{opacity:.65;cursor:wait}
+    .lms-install-later{margin-top:9px;border:1px solid rgba(220,236,245,.24);background:rgba(255,255,255,.055);color:#e5edf4}
+    .lms-install-footnote{margin-top:14px;color:#91a4b5;font-size:10px}
+    @media(max-width:420px){.lms-install-modal{padding:24px 19px 19px}.lms-install-modal h2{font-size:22px}}
+  `;
+  document.head.appendChild(modalStyle);
+
   window.addEventListener("appinstalled", () => wrapper.remove());
 })();
