@@ -58,8 +58,8 @@
       </header>
       <div class="install-content">
         <span class="step-label"><i class="step-dot"></i> ONE MORE STEP</span>
-        <h1>Install the LMS app to continue</h1>
-        <p class="intro">Your website sign-in and Recovery Key setup are complete. To protect your student dashboard, continue inside the installed LMS app.</p>
+        <h1>Continue to your LMS dashboard</h1>
+        <p class="intro">Your sign-in is complete. You can use the LMS website now, or install the app whenever you prefer.</p>
 
         <div class="recovery-state">
           <span class="check" aria-hidden="true">✓</span>
@@ -82,7 +82,7 @@
         </div>
 
         <button class="install-button" type="button" id="installNow">＋ Install LMS App</button>
-        <p class="install-status" id="installStatus" role="status" aria-live="polite">Dashboard access is available only from the installed app.</p>
+        <p class="install-status" id="installStatus" role="status" aria-live="polite">Opening your dashboard…</p>
 
         <div class="open-app-note" id="openAppNote">
           <strong>Already installed?</strong> Close this browser tab and open Dr. Sandaruwan LMS from your Home Screen. Sign in there to continue.
@@ -101,10 +101,10 @@
     window.location.replace("index.html");
     return;
   }
-  if (standalone()) {
-    window.location.replace("dashboard.html");
-    return;
-  }
+  // Legacy install-instruction URL: installation is optional now.
+  // Any authenticated website session should proceed straight to the dashboard.
+  window.location.replace("dashboard.html");
+  return;
 
   const userAgent = String(navigator.userAgent || "");
   const platform = String(navigator.platform || "");
