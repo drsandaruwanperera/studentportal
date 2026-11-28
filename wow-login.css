@@ -1,6 +1,7 @@
 /* ============================================================
    WOW STUDENT LOGIN DESIGN — cinematic redesign (PR: New WOW
-   student login design)
+   student login design), split-screen layout (PR #41: desktop
+   left hero / right login card, stacked on phones)
    Presentation only. No auth, password, Firestore, cohort
    routing or login logic is touched here. Loaded last in
    index.html so these rules win over the stacked login theme
@@ -67,7 +68,7 @@ html.lms-brand-glass body .background-shape { display: none !important; }
 html.lms-brand-glass body .wow-hero h1 .wow-fill { animation: wow-fill-glow 3.4s ease-in-out 1.2s infinite; }
 @keyframes wow-rise { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
 @keyframes wow-fill-glow { 0%, 100% { text-shadow: 0 0 0 rgba(166, 255, 46, 0); } 50% { text-shadow: 0 0 36px rgba(166, 255, 46, .5); } }
-.wow-scene .login-card { animation: wow-card-in .9s .18s cubic-bezier(.2, .7, .2, 1) both; }
+.wow-split .login-card { animation: wow-card-in .9s .18s cubic-bezier(.2, .7, .2, 1) both; }
 @keyframes wow-card-in { from { opacity: 0; transform: translateY(36px) scale(.97); } to { opacity: 1; transform: none; } }
 .wow-float-card { animation: wow-bob 6s ease-in-out infinite; }
 .wow-fc2 { animation-delay: -1.6s; animation-duration: 7.2s; }
@@ -79,7 +80,7 @@ html.lms-brand-glass body .wow-hero h1 .wow-fill { animation: wow-fill-glow 3.4s
 .wow-page {
   position: relative; z-index: 1;
   min-height: 100dvh; display: flex; flex-direction: column;
-  max-width: 1240px; margin: 0 auto; padding: 22px 20px 0;
+  max-width: 1560px; margin: 0 auto; padding: 22px 32px 0;
 }
 .wow-topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .wow-brand { display: flex; align-items: center; gap: 12px; min-width: 0; text-decoration: none; }
@@ -107,7 +108,7 @@ html.lms-brand-glass body .wow-hero h1 em { font-style: normal; color: transpare
 html.lms-brand-glass body .wow-hero h1 .wow-fill { color: var(--wow-lime) !important; }
 
 /* ---------- Scene: floating proof cards around the login card ---------- */
-.wow-scene { position: relative; flex: 1; display: flex; flex-direction: column; align-items: center; padding: 28px 0 10px; }
+.wow-split { position: relative; flex: 1; display: grid; grid-template-columns: 1.08fr .92fr; gap: clamp(28px, 4vw, 72px); align-items: stretch; padding: 6px 0 26px; }
 .wow-float-card {
   position: absolute; z-index: 2; background: rgba(13, 26, 58, .82);
   -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
@@ -127,11 +128,11 @@ html.lms-brand-glass body .wow-float-card b { display: block; font-size: 15px; m
 .wow-fc4 { right: 4%; bottom: 30px; transform: rotate(-4deg); }
 
 /* ---------- Login panel / card (existing markup, WOW skin) ---------- */
-html.lms-brand-glass body .wow-scene .login-panel {
+html.lms-brand-glass body .wow-split .login-panel {
   background: transparent !important; border: 0 !important; box-shadow: none !important;
   padding: 0 !important; width: 100% !important; display: flex !important; justify-content: center !important;
 }
-html.lms-brand-glass body .wow-scene .login-card {
+html.lms-brand-glass body .wow-split .login-card {
   position: relative; z-index: 3; width: min(440px, 100%) !important; margin: 0 auto !important;
   background: linear-gradient(180deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .02)), var(--wow-card) !important;
   border: 1px solid rgba(255, 255, 255, .12) !important; border-radius: 28px !important;
@@ -139,7 +140,7 @@ html.lms-brand-glass body .wow-scene .login-card {
   box-shadow: 0 0 0 1px rgba(166, 255, 46, .08), 0 40px 90px rgba(0, 0, 0, .6), 0 0 90px rgba(166, 255, 46, .10) !important;
   transform-style: preserve-3d;
 }
-html.lms-brand-glass body .wow-scene .login-card::before {
+html.lms-brand-glass body .wow-split .login-card::before {
   content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1px;
   background: linear-gradient(135deg, rgba(166, 255, 46, .7), transparent 35%, transparent 65%, rgba(166, 255, 46, .35));
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
@@ -147,17 +148,17 @@ html.lms-brand-glass body .wow-scene .login-card::before {
 }
 /* Mobile logo (graduation cap) is not used in the WOW layout — the
    real logo lives in the topbar. Keep it hidden, not removed. */
-html.lms-brand-glass body .wow-scene .login-card .mobile-logo { display: none !important; }
+html.lms-brand-glass body .wow-split .login-card .mobile-logo { display: none !important; }
 
-html.lms-brand-glass body .wow-scene .login-header { margin-bottom: 24px !important; }
-html.lms-brand-glass body .wow-scene .login-header .welcome-label { color: var(--wow-lime) !important; }
-html.lms-brand-glass body .wow-scene .login-header h2 { color: var(--wow-white) !important; font-size: 28px !important; letter-spacing: -.02em !important; }
-html.lms-brand-glass body .wow-scene .login-header p { color: var(--wow-muted) !important; }
+html.lms-brand-glass body .wow-split .login-header { margin-bottom: 24px !important; }
+html.lms-brand-glass body .wow-split .login-header .welcome-label { color: var(--wow-lime) !important; }
+html.lms-brand-glass body .wow-split .login-header h2 { color: var(--wow-white) !important; font-size: 28px !important; letter-spacing: -.02em !important; }
+html.lms-brand-glass body .wow-split .login-header p { color: var(--wow-muted) !important; }
 
 /* Inputs: keep the live theme's dark fields, WOW radius + focus glow. */
-html.lms-brand-glass body .wow-scene .input-wrapper { border-radius: 16px !important; background: #060f26 !important; }
-html.lms-brand-glass body .wow-scene .input-wrapper input { border-radius: 16px !important; font-size: 16px !important; }
-html.lms-brand-glass body .wow-scene .input-wrapper:focus-within {
+html.lms-brand-glass body .wow-split .input-wrapper { border-radius: 16px !important; background: #060f26 !important; }
+html.lms-brand-glass body .wow-split .input-wrapper input { border-radius: 16px !important; font-size: 16px !important; }
+html.lms-brand-glass body .wow-split .input-wrapper:focus-within {
   border-color: rgba(166, 255, 46, .72) !important;
   box-shadow: 0 0 0 4px rgba(166, 255, 46, .15) !important;
 }
@@ -165,16 +166,16 @@ html.lms-brand-glass body .wow-scene .input-wrapper:focus-within {
 /* Sign In button: lime, with a shine sweep. The button's inner HTML
    is replaced by app.js while signing in (spinner / success check),
    so the sweep must never cover or block its content. */
-html.lms-brand-glass body .wow-scene .login-btn {
+html.lms-brand-glass body .wow-split .login-btn {
   position: relative !important; overflow: hidden !important;
   min-height: 54px !important; border-radius: 16px !important;
   background: linear-gradient(115deg, var(--wow-lime), #ceff83) !important;
   color: #0a1500 !important; font-weight: 800 !important; font-size: 16px !important;
   box-shadow: 0 14px 34px rgba(166, 255, 46, .28) !important;
 }
-html.lms-brand-glass body .wow-scene .login-btn span { position: relative; z-index: 1; }
-html.lms-brand-glass body .wow-scene .login-btn .login-arrow { color: #0a1500 !important; }
-html.lms-brand-glass body .wow-scene .login-btn::after {
+html.lms-brand-glass body .wow-split .login-btn span { position: relative; z-index: 1; }
+html.lms-brand-glass body .wow-split .login-btn .login-arrow { color: #0a1500 !important; }
+html.lms-brand-glass body .wow-split .login-btn::after {
   content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
   background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, .55) 50%, transparent 70%);
   transform: translateX(-130%); animation: wow-shine 3.4s ease-in-out infinite;
@@ -183,15 +184,15 @@ html.lms-brand-glass body .wow-scene .login-btn::after {
 
 /* Recovery trigger, message, support box, footer: keep live styling,
    only tighten colours to the WOW palette. */
-html.lms-brand-glass body .wow-scene .recovery-reset-trigger { color: var(--wow-lime) !important; }
-html.lms-brand-glass body .wow-scene .support-box { background: rgba(255, 255, 255, .045) !important; }
-html.lms-brand-glass body .wow-scene .open-whatsapp-help { color: var(--wow-lime) !important; }
-html.lms-brand-glass body .wow-scene .login-footer { color: #8997b1 !important; }
-html.lms-brand-glass body .wow-scene .wow-secure-note {
+html.lms-brand-glass body .wow-split .recovery-reset-trigger { color: var(--wow-lime) !important; }
+html.lms-brand-glass body .wow-split .support-box { background: rgba(255, 255, 255, .045) !important; }
+html.lms-brand-glass body .wow-split .open-whatsapp-help { color: var(--wow-lime) !important; }
+html.lms-brand-glass body .wow-split .login-footer { color: #8997b1 !important; }
+html.lms-brand-glass body .wow-split .wow-secure-note {
   display: flex; align-items: center; justify-content: center; gap: 8px;
   color: var(--wow-muted-2); font-size: 12px; font-weight: 700; margin-top: 16px; text-align: center;
 }
-html.lms-brand-glass body .wow-scene .wow-secure-note svg { width: 14px; height: 14px; flex: 0 0 auto; }
+html.lms-brand-glass body .wow-split .wow-secure-note svg { width: 14px; height: 14px; flex: 0 0 auto; }
 
 /* ---------- Marquee + footer ---------- */
 .wow-marquee {
@@ -220,23 +221,27 @@ html.lms-brand-glass body .wow-track b { color: var(--wow-lime); }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1020px) {
-  .wow-fc1, .wow-fc2, .wow-fc3, .wow-fc4 { display: none; }
+  /* Split stacks: hero on top, login card below. Float cards stay
+     visible as an in-flow grid (they no longer overlap the card). */
+  .wow-split { grid-template-columns: 1fr; gap: 6px; padding-bottom: 20px; }
+  .wow-left { overflow: visible; }
+  .wow-left-cards { max-width: 640px; }
 }
 @media (max-width: 560px) {
   .wow-page { padding: 16px 14px 0; }
   .wow-brand span { letter-spacing: .08em; }
   .wow-hero { padding-top: 26px; }
   .wow-hero h1 { font-size: 58px; }
-  html.lms-brand-glass body .wow-scene .login-card { padding: 24px 20px 20px !important; border-radius: 24px !important; }
-  .wow-scene { padding-top: 20px; }
+  html.lms-brand-glass body .wow-split .login-card { padding: 24px 20px 20px !important; border-radius: 24px !important; }
+  .wow-split { padding-top: 20px; }
 }
 
 /* ---------- Reduced motion: all WOW animation off ---------- */
 @media (prefers-reduced-motion: reduce) {
   .wow-stage .wow-orb-b, .wow-stage .wow-orb-c, .wow-float-card,
   .wow-hero .wow-sinhala, .wow-hero h1, .wow-hero h1 .wow-fill,
-  .wow-scene .login-card, .wow-track { animation: none !important; }
-  html.lms-brand-glass body .wow-scene .login-btn::after { animation: none !important; }
+  .wow-split .login-card, .wow-track { animation: none !important; }
+  html.lms-brand-glass body .wow-split .login-btn::after { animation: none !important; }
 }
 
 /* ---------- Side buttons: Install (left) / WhatsApp (right) ----------
@@ -352,22 +357,95 @@ html.lms-brand-glass body .wow-action-row .pwa-install-help.visible {
 
 
 /* Login field text and recovery action: enforce readable white text on dark glass. */
-html.lms-brand-glass body .wow-scene .login-card .input-wrapper input,
-html.lms-brand-glass body .wow-scene .login-card .input-wrapper input:focus,
-html.lms-brand-glass body .wow-scene .login-card .input-wrapper input:-webkit-autofill,
-html.lms-brand-glass body .wow-scene .login-card .input-wrapper input:-webkit-autofill:hover,
-html.lms-brand-glass body .wow-scene .login-card .input-wrapper input:-webkit-autofill:focus {
+html.lms-brand-glass body .wow-split .login-card .input-wrapper input,
+html.lms-brand-glass body .wow-split .login-card .input-wrapper input:focus,
+html.lms-brand-glass body .wow-split .login-card .input-wrapper input:-webkit-autofill,
+html.lms-brand-glass body .wow-split .login-card .input-wrapper input:-webkit-autofill:hover,
+html.lms-brand-glass body .wow-split .login-card .input-wrapper input:-webkit-autofill:focus {
   color:#ffffff !important;
   -webkit-text-fill-color:#ffffff !important;
   caret-color:#a6ff2e !important;
 }
-html.lms-brand-glass body .wow-scene .login-card .input-wrapper input::placeholder {
+html.lms-brand-glass body .wow-split .login-card .input-wrapper input::placeholder {
   color:#cbd5e1 !important;
   -webkit-text-fill-color:#cbd5e1 !important;
   opacity:1 !important;
 }
-html.lms-brand-glass body .wow-scene .login-card .recovery-reset-trigger,
-html.lms-brand-glass body .wow-scene .login-card .recovery-reset-trigger strong {
+html.lms-brand-glass body .wow-split .login-card .recovery-reset-trigger,
+html.lms-brand-glass body .wow-split .login-card .recovery-reset-trigger strong {
   color:#ffffff !important;
   -webkit-text-fill-color:#ffffff !important;
+}
+
+/* ============================================================
+   SPLIT SCREEN (PR #41) — desktop: LEFT hero, RIGHT login card.
+   Follows the approved split-screen draft: same deep navy +
+   lime #A6FF2E, same hero copy, cohort chips with NO student
+   ID-series mapping, the same four float cards as in-flow grid
+   items, stats, and the full-width marquee at the page bottom.
+   The login card itself is untouched (see .wow-split
+   .login-panel / .login-card rules above, carried over from the
+   centred layout). PR #40 side buttons (fixed 72vh) are NOT
+   changed here — see PR body for the overlap note at narrow
+   desktop widths.
+   ============================================================ */
+
+/* Left column: dot field + orbit rings (from the draft), hero
+   left-aligned, lede, cohort chips, cards, stats pinned low. */
+.wow-left { position: relative; display: flex; flex-direction: column; padding: 26px 0 0; overflow: hidden; }
+.wow-left::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image: radial-gradient(rgba(190, 205, 255, .16) 1px, transparent 1.4px);
+  background-size: 46px 46px;
+  -webkit-mask-image: radial-gradient(80% 70% at 40% 40%, #000 30%, transparent 100%);
+  mask-image: radial-gradient(80% 70% at 40% 40%, #000 30%, transparent 100%);
+}
+.wow-left > * { position: relative; z-index: 1; }
+.wow-left-orbit {
+  position: absolute; width: 560px; height: 560px; right: -190px; top: 4%;
+  border: 1px solid rgba(166, 255, 46, .13); border-radius: 50%; pointer-events: none;
+}
+.wow-left-orbit::before {
+  content: ""; position: absolute; inset: 64px;
+  border: 1px dashed rgba(255, 255, 255, .08); border-radius: 50%;
+}
+.wow-split .wow-hero { text-align: left; padding: 26px 0 0; }
+html.lms-brand-glass body .wow-split .wow-hero h1 { font-size: clamp(56px, 6vw, 96px); }
+.wow-lede {
+  margin: 18px 0 0; max-width: 46ch; color: var(--wow-muted);
+  font-size: clamp(15px, 1.15vw, 17px); line-height: 1.65; font-weight: 500;
+}
+.wow-chips { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 22px; }
+.wow-chip {
+  padding: 8px 15px; border-radius: 999px;
+  border: 1px solid rgba(150, 170, 255, .22); background: rgba(120, 145, 255, .07);
+  font-size: 13px; font-weight: 700; color: var(--wow-white);
+}
+/* Float cards become in-flow grid items (position: static kills
+   the old absolute left/top/right/bottom; the rotate() in
+   .wow-fc1..4 and the wow-bob translate animation are kept). */
+.wow-left-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; max-width: 560px; margin-top: 32px; }
+html.lms-brand-glass body .wow-split .wow-float-card { position: static; width: auto; z-index: 1; }
+.wow-stats { display: flex; gap: clamp(24px, 3vw, 48px); flex-wrap: wrap; margin-top: auto; padding-top: 30px; }
+.wow-stat b {
+  display: block; font-family: "Bricolage Grotesque", "Noto Sans Sinhala", sans-serif;
+  font-weight: 800; font-size: clamp(24px, 2.4vw, 32px); line-height: 1; color: var(--wow-white);
+}
+.wow-stat b em { font-style: normal; color: var(--wow-lime); }
+.wow-stat span { display: block; margin-top: 6px; color: var(--wow-muted-2); font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+/* Right column: vertically centre the login card in its half. */
+html.lms-brand-glass body .wow-split .login-panel { align-items: center !important; }
+
+@media (max-width: 1020px) {
+  .wow-split .wow-hero h1 { font-size: clamp(52px, 13vw, 72px); }
+}
+@media (max-width: 560px) {
+  html.lms-brand-glass body .wow-split .wow-hero h1 { font-size: clamp(48px, 15vw, 64px); }
+  .wow-left-cards { gap: 10px; margin-top: 24px; }
+  html.lms-brand-glass body .wow-split .wow-float-card { padding: 12px 13px; }
+  .wow-stats { gap: 20px; padding-top: 22px; }
+  .wow-lede { margin-top: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wow-left-cards .wow-float-card { animation: none !important; }
 }
